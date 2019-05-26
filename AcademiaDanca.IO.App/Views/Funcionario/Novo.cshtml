@@ -1,0 +1,263 @@
+﻿@{
+    ViewData["Title"] = "Novo Funcionário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content custom-scrollbar ps">
+    <div class="doc forms-doc page-layout simple full-width">
+
+
+        <!-- HEADER -->
+
+        <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
+            <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                <div class="logo-icon mr-3 mt-1">
+                    <i class="icon-account-location s-6"></i>
+                </div>
+                <div class="logo-text">
+                    <div class="h4">  Novo Funcionário</div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="page-content">
+
+            <div class="tab-pane fade show active resetForm" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
+
+                <div class="card p-6">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="example">
+
+
+                                <div class="source-preview-wrapper">
+                                    <div class="preview">
+                                        <div class="preview-elements">
+                                            <form id="formFuncionario">
+
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        <input type="text" class="form-control" id="inputNome" name="inputNome" placeholder="Nome">
+                                                        <label for="inputNome" class="col-form-label">Nome</label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="email" class="form-control" id="inputAddress" name="inputAddress" placeholder="Email">
+                                                        <label for="inputAddress" class="col-form-label">Email</label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="text" class="form-control" id="inputCpf" name="inputCpf" placeholder="CPF">
+                                                        <label for="inputCpf" class="col-form-label">CPF</label>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="form-row">
+
+                                                    <div class="form-group col-md-6">
+                                                        <input type="date" len="" class="form-control" id="inputData" name="inputData" placeholder="">
+                                                        <label for="inputData" class="col-form-label">Data NAscimento</label>
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <label for="Perfis" class="col-form-label">Perfil</label>
+                                                        @Html.DropDownList("Perfis", null, "", new { @class = "form-control   select" })
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-12">
+                                                        <input type="text" class="form-control" id="inputLogin" name="inputLogin" placeholder="Login">
+                                                        <label for="inputLogin" class="col-form-label">Login</label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Senha">
+                                                        <label for="inputPassword" class="col-form-label">Senha</label>
+                                                    </div>
+                                                    <div class="form-group col-md-12">
+                                                        <input type="password" class="form-control" id="inputPasswordConfirm" name="inputPasswordConfirm" placeholder="Senha">
+                                                        <label for="inputPasswordConfirm" class="col-form-label">Confirme a Senha</label>
+                                                    </div>
+                                                </div>
+                                                <button type="submit" class="btn btn-primary fuse-ripple-ready">Cadastrar</button>
+                                            </form>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @section Scripts{
+        <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
+        <script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
+        <script src="~/js/Helper/Helper.js"></script>
+        <script src="~/js/Helper/CookieHelper.js"></script>
+        <script>
+            $(function () {
+                //$("#formFuncionario").submit(function (e) {
+                //    e.preventDefault(); var addAntiForgeryToken = function () {
+                //var token = $('input[name="__RequestVerificationToken"]', $('#formFuncionario')).val();
+                //var myData = { isHardcover: $("#IsHardcover").val() };
+                //var dataWithAntiforgeryToken = $.extend(myData, { '__RequestVerificationToken': token });
+
+
+                $.validator.addMethod("dateFormat",
+                    function (value, element) {
+                        return value.match(/^dd?-mm?-yyyy$/);
+                    });
+                var jvalidate = $("#formFuncionario").validate({
+                    ignore: [],
+                    rules: {
+
+                        inputLogin: {
+                            required: true,
+                            minlength: 4,
+
+
+                        },
+
+                        inputPassword: {
+                            required: true,
+                            minlength: 4,
+                            maxlength: 12
+
+                        },
+
+                        inputPasswordConfirm: {
+                            required: true,
+                            minlength: 4,
+                            maxlength: 12,
+                            equalTo: "#inputPassword"
+
+                        },
+                        inputNome: {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 300
+
+                        },
+                        inputEmail: {
+                            required: true,
+                            minlength: 6,
+                            maxlength: 300,
+                            email: true
+
+                        },
+                        inputCpf: {
+                            required: true,
+                            maxlength: 21
+
+                        },
+                        inputData: {
+                            required: true
+                            //dateFormat: true
+
+                        },
+                        Perfis: {
+                            required: true
+                        }
+
+
+                    },
+                    messages: {
+
+                        inputLogin: {
+                            required: "Informe o login.",
+                            minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
+                            maxlength: $.validator.format("O nome não pode serr superior há {0} characters")
+
+                        },
+                        inputPassword: {
+                            required: "Informe a senha.",
+                            minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
+                            maxlength: $.validator.format("O nome não pode serr superior há {0} characters")
+
+                        },
+                        inputPasswordConfirm: {
+                            required: "Confirme a senha.",
+                            equalTo: 'Senha digitada não é válida.'
+
+                        },
+                        inputNome: {
+                            required: "Informe o nome.",
+                            minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
+                            maxlength: $.validator.format("O nome não pode serr superior há {0} characters")
+
+                        },
+                        inputEmail: {
+                            required: "Informe o nome para avaliação",
+                            minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
+                            maxlength: $.validator.format("O nome não pode serr superior há {0} characters")
+
+                        },
+                        Perfis: {
+                            required: "Informe o perfil."
+
+                        },
+
+                    },
+                    submitHandler: function (form) {
+                        var dataT = {
+
+                            Id: 0,
+                            Nome: $("#formFuncionario #inputNome").val(),
+                            DataNascimento: $("#formFuncionario #inputData").val(),
+                            Email: $("#formFuncionario #inputAddress").val(),
+                            Cpf: $("#formFuncionario #inputCpf").val(),
+                            Foto: 'profile.jpg',
+                            Login: $("#formFuncionario #inputLogin").val(),
+                            Senha: $("#formFuncionario #inputPassword").val(),
+                            ContraSenha: $("#formFuncionario #inputPasswordConfirm").val(),
+                            IdPerfil: $("#formFuncionario #Perfis").val()
+
+                        }
+                        var callback = function (data) {
+                            if (JSON.parse(data).success) {
+                                PNotify.success({
+                                    title: ':-)',
+                                    text: 'Cadastro realizado com sucesso.'
+                                });
+                                document.getElementById("formFuncionario").reset();
+                                return false;
+                            } else {
+                                var msg = '';
+                                $.each(JSON.parse(data).data, function (index, item) {
+                                    msg = msg + item.property + ' > ' + item.message + '\n';
+                                });
+
+                                PNotify.error({
+                                    title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+                                    text: msg
+                                });
+
+
+                            }
+                        }
+                        var callbackErro = function (data) {
+                            PNotify.error({
+                                title: 'Ops! :-(',
+                                text: 'Ocorreu um erro ao processar sua solicitação'
+                            });
+
+                        }
+
+                        academia.helper.rest.utils.POST("/Funcionario/Novo/", dataT, callback, callbackErro, $('#loader'));
+
+                    }
+                });
+            });
+        </script>
+    }
+
+</div>
+
+

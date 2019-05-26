@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
+    <PackageReference Include="MySql.Data" Version="8.0.15" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AcademiaDanca.Dominio\AcademiaDanca.IO.Dominio.csproj" />
+    <ProjectReference Include="..\AcademiaDanca.IO.Compartilhado\AcademiaDanca.IO.Compartilhado.csproj" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,380 @@
+﻿@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content custom-scrollbar ps">
+
+
+    <div id="e-commerce-product" class="page-layout simple tabbed">
+
+        <!-- HEADER -->
+        <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
+
+            <div class="row no-gutters align-items-center">
+
+                <a href="apps-e-commerce-products.html" class="btn btn-icon mr-4">
+                    <i class="icon icon-arrow-left"></i>
+                </a>
+
+                <div class="product-image mr-4">
+                    <img src="/images/ecommerce/product-image-placeholder.png">
+                </div>
+
+                <div>Editar Funcionário</div>
+            </div>
+
+
+
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        @if (@ViewBag.Funcionario != null)
+        {
+            <div class="page-content">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                    <li class="nav-item">
+                        <a class="nav-link btn active" id="basic-info-tab" data-toggle="tab" href="#basic-info-tab-pane" role="tab" aria-controls="basic-info-tab-pane" aria-expanded="true">Básico</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn" id="product-images-tab" data-toggle="tab" href="#product-images-tab-pane" role="tab" aria-controls="product-images-tab-pane">Foto</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link btn" id="pricing-tab" data-toggle="tab" href="#pricing-tab-pane" role="tab" aria-controls="pricing-tab-pane">Acesso</a>
+                    </li>
+
+
+
+                </ul>
+
+                <div class="tab-content">
+
+                    <div class="tab-pane fade show active" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
+
+                        <div class="card p-6">
+                            <div class="row">
+                                <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/@ViewBag.Funcionario.Foto"></div>
+                                <div class="col-xl-11">
+                                    <form id="formFuncionario">
+                                        <input type="hidden" id="hiddenIdAtual" value="@ViewBag.Funcionario.IdUsuario" />
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <input type="text" class="form-control" id="inputNome" name="inputNome" value="@ViewBag.Funcionario.NomeFuncionario">
+                                                <label for="inputNome" class="col-form-label">Nome</label>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input type="email" class="form-control" id="inputAddress" name="inputAddress" value="@ViewBag.Funcionario.Email">
+                                                <input type="hidden" id="hiddenEmailAtual" value="@ViewBag.Funcionario.Email" />
+                                                <label for="inputAddress" class="col-form-label">Email</label>
+                                            </div>
+                                            <div class="form-group col-md-12">
+                                                <input type="text" class="form-control" id="inputCpf" name="inputCpf" value="@ViewBag.Funcionario.CPF">
+                                                <label for="inputCpf" class="col-form-label">CPF</label>
+                                                <input type="hidden" id="hiddenCpfAtual" value="@ViewBag.Funcionario.CPF" />
+
+                                            </div>
+
+                                        </div>
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-6">
+                                                <input type="text" len="10" class="form-control" id="inputData" name="inputData" value="@ViewBag.Funcionario.DataNascimento.ToShortDateString()">
+                                                <label for="inputData" class="col-form-label">Data NAscimento</label>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label for="Perfis" class="col-form-label">Perfil</label>
+                                                @Html.DropDownList("Perfis", null, "", new { @class = "form-control   select" })
+
+
+                                            </div>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary fuse-ripple-ready">Atulizar</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="product-images-tab-pane" role="tabpanel" aria-labelledby="product-images-tab">
+
+                        <div class="card p-6">
+
+                            <div class="row">
+                                <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/@ViewBag.Funcionario.Foto"></div>
+                                <form id="formFuncionarioFoto" method="post">
+                                    <div class="col-xl-11">
+
+                                        <input type="hidden" id="hiddenIdFuncFt" value="@ViewBag.Funcionario.IdUsuario" />
+                                        <div class="form-row">
+                                            <div class="form-group col-md-12">
+                                                <input type="file" class="form-control" id="file" name="file">
+
+                                            </div>
+
+                                        </div>
+                                        <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- / CONTENT -->
+        }
+        else
+        {
+            <center style="margin-top: 15%">
+                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                    <div class="card-body">
+                        <h4 class="card-title">Ops! :-(</h4>
+                        <p class="card-text">Funcionário não encontrado.</p>
+                    </div>
+                </div>
+            </center>
+        }
+    </div>
+
+</div>
+@section Scripts{
+    <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
+    <script src="~/js/Helper/Helper.js"></script>
+    <script src="~/js/Helper/CookieHelper.js"></script>
+    <script type="text/javascript" src="/js/apps/e-commerce/product/product.js"></script>
+    <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+    <script>
+        $("#inputData").mask("00/00/0000");
+        $(function () {
+            //$("#formFuncionario").submit(function (e) {
+            //    e.preventDefault(); var addAntiForgeryToken = function () {
+            //var token = $('input[name="__RequestVerificationToken"]', $('#formFuncionario')).val();
+            //var myData = { isHardcover: $("#IsHardcover").val() };
+            //var dataWithAntiforgeryToken = $.extend(myData, { '__RequestVerificationToken': token });
+
+
+            $.validator.addMethod("dateFormat",
+                function (value, element) {
+                    return value.match(/^dd?-mm?-yyyy$/);
+                });
+            var jvalidate = $("#formFuncionario").validate({
+                ignore: [],
+                rules: {
+
+                    inputNome: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 300
+
+                    },
+                    inputEmail: {
+                        required: true,
+                        minlength: 6,
+                        maxlength: 300,
+                        email: true
+
+                    },
+                    inputCpf: {
+                        required: true,
+                        maxlength: 21
+
+                    },
+                    inputData: {
+                        required: true
+                        //dateFormat: true
+
+                    },
+                    Perfis: {
+                        required: true
+                    }
+
+
+                },
+                messages: {
+
+
+                    inputNome: {
+                        required: "Informe o nome.",
+                        minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
+                        maxlength: $.validator.format("O nome não pode serr superior há {0} characters")
+
+                    },
+                    inputEmail: {
+                        required: "Informe o nome para avaliação",
+                        minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
+                        maxlength: $.validator.format("O nome não pode serr superior há {0} characters")
+
+                    },
+                    Perfis: {
+                        required: "Informe o perfil."
+
+                    }
+
+                },
+                submitHandler: function (form) {
+
+                    var dataT = {
+
+                        Id: $("#formFuncionario #hiddenIdAtual").val(),
+                        Nome: $("#formFuncionario #inputNome").val(),
+                        DataNascimento: $("#formFuncionario #inputData").val(),
+                        EmailAtual: $("#formFuncionario #hiddenEmailAtual").val(),
+                        Email: $("#formFuncionario #inputAddress").val(),
+                        CpfAtual: $("#formFuncionario #hiddenCpfAtual").val(),
+                        Cpf: $("#formFuncionario #inputCpf").val(),
+                        IdPerfil: $("#formFuncionario #Perfis").val(),
+                        DescPerfil: $("#formFuncionario #Perfis :selected").text()
+
+                    }
+                    var callback = function (data) {
+                        if (JSON.parse(data).success) {
+                            PNotify.success({
+                                title: ':-)',
+                                text: 'Cadastro realizado com sucesso.'
+                            });
+                            document.getElementById("formFuncionario").reset();
+                            return false;
+                        } else {
+                            var msg = '';
+                            $.each(JSON.parse(data).data, function (index, item) {
+                                msg = msg + item.property + ' > ' + item.message + '\n';
+                            });
+
+                            PNotify.error({
+                                title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+                                text: msg
+                            });
+
+
+                        }
+                    }
+                    var callbackErro = function (data) {
+                        PNotify.error({
+                            title: 'Ops! :-(',
+                            text: 'Ocorreu um erro ao processar sua solicitação'
+                        });
+
+                    }
+
+                    academia.helper.rest.utils.POST("/Funcionario/Editar/Base", dataT, callback, callbackErro, $('#loader'));
+
+                }
+            });
+        });
+
+        $("#formFuncionarioFoto").submit(function (event) {
+
+            event.preventDefault();
+            var input = document.getElementById("file");
+            var files = input.files;
+            var formData = new FormData();
+            formData.append('Id', $("#formFuncionarioFoto #hiddenIdFuncFt").val());
+            formData.append('Foto', '');
+            for (var i = 0; i != files.length; i++) {
+                formData.append("file", files[i]);
+            }
+            var dataT = {
+
+                Id: $("#formFuncionarioFoto #hiddenIdFuncFt").val(),
+                Foto: "",
+                file: files[0]
+
+            }
+
+            var callback = function (data) {
+                if (data.success) {
+                    PNotify.success({
+                        title: ':-)',
+                        text: 'Atualizado com sucesso.'
+                    });
+                    document.getElementById("formFuncionario").reset();
+                    return false;
+                } else {
+                    var msg = '';
+                    $.each(data.data, function (index, item) {
+                        msg = msg + item.property + ' > ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+                        title: 'Ops! ' + data.message + ' :-( ',
+                        text: msg
+                    });
+
+
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ops! :-(',
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            }
+
+            academia.helper.rest.utils.POSTFORM("/Funcionario/Editar/Foto", formData, callback, callbackErro, $('#loader'));
+
+            return false;
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Funcionario/Editar/Foto",
+            //    data: formData,
+
+
+            //    beforeSend: function () {
+            //        Loading(true, $('#loader'));
+            //        // xhr.setRequestHeader("Authorization", "Basic " + utf8_to_b64(global.token));
+            //    },
+            //    success: function (data) {
+            //        //if (JSON.parse(data).success) {
+            //        //    PNotify.success({
+            //        //        title: ':-)',
+            //        //        text: 'Atualizado com sucesso.'
+            //        //    });
+            //        //    document.getElementById("formFuncionario").reset();
+
+            //        //} else {
+            //        //    var msg = '';
+            //        //    $.each(JSON.parse(data).data, function (index, item) {
+            //        //        msg = msg + item.property + ' > ' + item.message + '\n';
+            //        //    });
+
+            //        //    PNotify.error({
+            //        //        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+            //        //        text: msg
+            //        //    });
+
+
+            //        //};
+
+            //        Loading(false);
+            //        event.preventDefault();
+            //        return false;
+
+            //    },
+            //    complete: function () {
+
+            //        Loading(false, Loader);
+            //        return false;
+            //    },
+            //    error: function (data) {
+            //        PNotify.error({
+            //            title: 'Ops! :-(',
+            //            text: 'Ocorreu um erro ao processar sua solicitação'
+            //        });
+            //        Loading(false);
+            //    }
+
+
+            //});
+            //event.preventDefault();
+            //return false;
+
+        });
+    </script>
+}
+

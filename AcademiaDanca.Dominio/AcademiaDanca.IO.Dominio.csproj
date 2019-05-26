@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Contexto\Comandos\AlunoComando\Saida\**" />
+    <EmbeddedResource Remove="Contexto\Comandos\AlunoComando\Saida\**" />
+    <None Remove="Contexto\Comandos\AlunoComando\Saida\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidator" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AcademiaDanca.IO.Compartilhado\AcademiaDanca.IO.Compartilhado.csproj" />
+  </ItemGroup>
+
+</Project>

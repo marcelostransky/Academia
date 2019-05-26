@@ -1,0 +1,1795 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+
+    <li class="nav-item">
+        <a class="nav-link btn fuse-ripple-ready active show" id="home-tab" data-toggle="tab" href="#home-tab-pane" role="tab" aria-controls="home-tab-pane" aria-expanded="true" aria-selected="true">Home</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link btn fuse-ripple-ready" id="budget-summary-tab" data-toggle="tab" href="#budget-summary-tab-pane" role="tab" aria-controls="budget-summary-tab-pane" aria-selected="false">Budget Summary</a>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link btn fuse-ripple-ready" id="team-members-tab" data-toggle="tab" href="#team-members-tab-pane" role="tab" aria-controls="team-members-tab-pane" aria-selected="false">Team Members</a>
+    </li>
+</ul>
+
+<div class="tab-content">
+    <div class="tab-pane fade p-3 active show" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
+
+        <!-- WIDGET GROUP -->
+        <div class="widget-group row no-gutters">
+
+            <!-- WIDGET 1 -->
+            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                <div class="widget widget1 card">
+
+                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+
+                            <select class="h6 custom-select">
+                                <option selected="" value="today">Today</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="tomorrow">Tomorrow</option>
+                            </select>
+
+                        </div>
+
+                        <button type="button" class="btn btn-icon fuse-ripple-ready">
+                            <i class="icon icon-dots-vertical"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+
+                        <div class="title text-secondary">25</div>
+
+                        <div class="sub-title h6 text-muted">DUE TASKS</div>
+
+                    </div>
+
+                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+
+                        <span class="text-muted">Completed:</span>
+
+                        <span class="ml-2">7</span>
+
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 1 -->
+            <!-- WIDGET 2 -->
+            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                <div class="widget widget2 card">
+
+                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h6">Overdue</span>
+                        </div>
+
+                        <button type="button" class="btn btn-icon fuse-ripple-ready">
+                            <i class="icon icon-dots-vertical"></i>
+                        </button>
+                    </div>
+
+                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                        <div class="title text-danger">4</div>
+                        <div class="sub-title h6 text-muted">TASKS</div>
+                    </div>
+
+                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                        <span class="text-muted">Yesterday's:</span>
+                        <span class="ml-2">2</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 2 -->
+            <!-- WIDGET 3 -->
+            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                <div class="widget widget3 card">
+
+                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h6">Issues</span>
+                        </div>
+
+                        <button type="button" class="btn btn-icon fuse-ripple-ready">
+                            <i class="icon icon-dots-vertical"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                        <div class="title text-warning">32</div>
+                        <div class="sub-title h6 text-muted">OPEN</div>
+                    </div>
+
+                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                        <span class="text-muted">Closed today:</span>
+                        <span class="ml-2">0</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 3 -->
+            <!-- WIDGET 4 -->
+            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                <div class="widget widget4 card">
+
+                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h6">Features</span>
+                        </div>
+
+                        <button type="button" class="btn btn-icon fuse-ripple-ready">
+                            <i class="icon icon-dots-vertical"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                        <div class="title text-info">42</div>
+                        <div class="sub-title h6 text-muted">PROPOSALS</div>
+                    </div>
+
+                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                        <span class="text-muted">Implemented:</span>
+                        <span class="ml-2">8</span>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 4 -->
+            <!-- WIDGET 5 -->
+            <div class="col-12 p-3">
+
+                <div class="widget widget5 card">
+
+                    <div class="widget-header px-4 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h6">Github Issues</span>
+                        </div>
+
+                        <div>
+
+                            <button type="button" class="widget5-option-change-btn btn btn-link fuse-ripple-ready" data-interval="TW">
+                                This Week
+                            </button>
+
+                            <button type="button" class="widget5-option-change-btn btn btn-link fuse-ripple-ready" data-interval="LW">
+                                Last Week
+                            </button>
+
+                            <button type="button" class="widget5-option-change-btn btn btn-link fuse-ripple-ready" data-interval="2W">
+                                2 WEEKS AGO
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <div class="widget-content p-4">
+
+                        <div class="row">
+
+                            <div class="col-12 col-lg-6">
+
+                                <div id="widget5-main-chart">
+                                    <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-multiBarWithLegend" transform="translate(32,48)"><g><g class="nv-x nv-axis nvd3-svg" transform="translate(0,356)"><g class="nvd3 nv-wrap nv-axis"><g><g class="tick zero" transform="translate(73.90410614013672,0)" style="opacity: 1;"><line y2="-356" style="opacity: 1;" x2="0"></line><text dy=".71em" y="7" transform="translate(0,0)" style="text-anchor: middle; opacity: 1;" x="0">Mon</text></g><g class="tick zero" transform="translate(187.6027374267578,0)" style="opacity: 1;"><line y2="-356" style="opacity: 1;" x2="0"></line><text dy=".71em" y="7" transform="translate(0,0)" style="text-anchor: middle; opacity: 1;" x="0">Tue</text></g><g class="tick zero" transform="translate(301.3013610839844,0)" style="opacity: 1;"><line y2="-356" style="opacity: 1;" x2="0"></line><text dy=".71em" y="7" transform="translate(0,0)" style="text-anchor: middle; opacity: 1;" x="0">Wed</text></g><g class="tick zero" transform="translate(415,0)" style="opacity: 1;"><line y2="-356" style="opacity: 1;" x2="0"></line><text dy=".71em" y="7" transform="translate(0,0)" style="text-anchor: middle; opacity: 1;" x="0">Thu</text></g><g class="tick zero" transform="translate(528.6986083984375,0)" style="opacity: 1;"><line y2="-356" style="opacity: 1;" x2="0"></line><text dy=".71em" y="7" transform="translate(0,0)" style="text-anchor: middle; opacity: 1;" x="0">Fri</text></g><g class="tick zero" transform="translate(642.3972778320312,0)" style="opacity: 1;"><line y2="-356" style="opacity: 1;" x2="0"></line><text dy=".71em" y="7" transform="translate(0,0)" style="text-anchor: middle; opacity: 1;" x="0">Sat</text></g><g class="tick zero" transform="translate(756.0958862304688,0)" style="opacity: 1;"><line y2="-356" style="opacity: 1;" x2="0"></line><text dy=".71em" y="7" transform="translate(0,0)" style="text-anchor: middle; opacity: 1;" x="0">Sun</text></g><path class="domain" d="M0,0V0H830V0"></path><text class="nv-axislabel" text-anchor="middle" y="36" x="415" style="opacity: 1;"></text></g></g></g><g class="nv-y nv-axis nvd3-svg"><g class="nvd3 nv-wrap nv-axis"><g><g class="tick zero" transform="translate(0,356)" style="opacity: 1;"><line x2="830" y2="0"></line><text dy=".32em" x="-3" opacity="0" style="text-anchor: end;" y="0">0.0</text></g><g class="tick" transform="translate(0,288.8302001953125)" style="opacity: 1;"><line x2="830" y2="0"></line><text dy=".32em" x="-3" opacity="1" style="text-anchor: end;" y="0">10.0</text></g><g class="tick" transform="translate(0,221.66036987304688)" style="opacity: 1;"><line x2="830" y2="0"></line><text dy=".32em" x="-3" opacity="1" style="text-anchor: end;" y="0">20.0</text></g><g class="tick" transform="translate(0,154.49057006835938)" style="opacity: 1;"><line x2="830" y2="0"></line><text dy=".32em" x="-3" opacity="1" style="text-anchor: end;" y="0">30.0</text></g><g class="tick" transform="translate(0,87.32075500488281)" style="opacity: 1;"><line x2="830" y2="0"></line><text dy=".32em" x="-3" opacity="1" style="text-anchor: end;" y="0">40.0</text></g><g class="tick" transform="translate(0,20.150943756103516)" style="opacity: 1;" opacity="0"><line x2="830" y2="0"></line><text dy=".32em" x="-3" opacity="1" style="text-anchor: end;" y="0">50.0</text></g><path class="domain" d="M0,0H0V356H0"></path><text class="nv-axislabel" transform="rotate(-90)" y="-50" x="-178" style="text-anchor: middle;"></text></g><g class="nv-axisMaxMin nv-axisMaxMin-y nv-axisMin-y" transform="translate(0,356)"><text dy=".32em" y="0" x="-3" text-anchor="end" style="opacity: 1;">0.0</text></g><g class="nv-axisMaxMin nv-axisMaxMin-y nv-axisMax-y" transform="translate(0,0)"><text dy=".32em" y="0" x="-3" text-anchor="end" style="opacity: 1;">53.0</text></g></g></g><g class="nv-barsWrap nvd3-svg"><g class="nvd3 nv-wrap nv-multibar" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-6051"><rect width="830" height="356"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-6051)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><rect class="nv-bar positive" x="0" y="282.11320754716985" height="73.88679245283015" width="79.58904109589041" transform="translate(34.109589041095894,0)" style="fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"></rect><rect class="nv-bar positive" x="0" y="288.8301886792453" height="67.16981132075472" width="79.58904109589041" transform="translate(147.8082191780822,0)" style="fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"></rect><rect class="nv-bar positive" x="0" y="302.26415094339626" height="53.73584905660374" width="79.58904109589041" transform="translate(261.5068493150685,0)" style="fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"></rect><rect class="nv-bar positive" x="0" y="282.11320754716985" height="73.88679245283015" width="79.58904109589041" transform="translate(375.2054794520548,0)" style="fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"></rect><rect class="nv-bar positive" x="0" y="302.26415094339626" height="53.73584905660374" width="79.58904109589041" transform="translate(488.9041095890411,0)" style="fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"></rect><rect class="nv-bar positive" x="0" y="288.8301886792453" height="67.16981132075472" width="79.58904109589041" transform="translate(602.6027397260275,0)" style="fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"></rect><rect class="nv-bar positive" x="0" y="241.811320754717" height="114.188679245283" width="79.58904109589041" transform="translate(716.3013698630137,0)" style="fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"></rect></g><g class="nv-group nv-series-1" style="stroke-opacity: 1; fill-opacity: 0.75; fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"><rect class="nv-bar positive" x="0" y="0" height="282.11320754716985" width="79.58904109589041" transform="translate(34.109589041095894,0)" style="fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"></rect><rect class="nv-bar positive" x="0" y="100.75471698113209" height="188.07547169811318" width="79.58904109589041" transform="translate(147.8082191780822,0)" style="fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"></rect><rect class="nv-bar positive" x="0" y="13.43396226415094" height="288.83018867924534" width="79.58904109589041" transform="translate(261.5068493150685,0)" style="fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"></rect><rect class="nv-bar positive" x="0" y="53.73584905660376" height="228.37735849056608" width="79.58904109589041" transform="translate(375.2054794520548,0)" style="fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"></rect><rect class="nv-bar positive" x="0" y="167.9245283018868" height="134.33962264150946" width="79.58904109589041" transform="translate(488.9041095890411,0)" style="fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"></rect><rect class="nv-bar positive" x="0" y="120.9056603773585" height="167.92452830188677" width="79.58904109589041" transform="translate(602.6027397260275,0)" style="fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"></rect><rect class="nv-bar positive" x="0" y="94.03773584905662" height="147.77358490566039" width="79.58904109589041" transform="translate(716.3013698630137,0)" style="fill: rgb(179, 229, 252); stroke: rgb(179, 229, 252);"></rect></g></g></g></g></g><g class="nv-legendWrap nvd3-svg" transform="translate(180,-48)"><g class="nvd3 nv-legend" transform="translate(0,5)"><g transform="translate(476.552734375,5)"><g class="nv-series" transform="translate(0,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(3, 169, 244); fill-opacity: 1; stroke: rgb(3, 169, 244);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Closed Issues</text></g><g class="nv-series" transform="translate(106.6484375,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(179, 229, 252); fill-opacity: 1; stroke: rgb(179, 229, 252);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Issues</text></g></g></g></g><g class="nv-controlsWrap nvd3-svg" transform="translate(0,-48)"><g class="nvd3 nv-legend" transform="translate(0,5)"><g transform="translate(27.62890625,5)"><g class="nv-series" transform="translate(0,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(68, 68, 68); fill-opacity: 0; stroke: rgb(68, 68, 68);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Grouped</text></g><g class="nv-series" transform="translate(77.43359375,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(68, 68, 68); fill-opacity: 1; stroke: rgb(68, 68, 68);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Stacked</text></g></g></g></g><g class="nv-interactive"></g></g></g></svg>
+                                </div>
+
+                            </div>
+
+                            <div class="col-12 col-lg-6">
+
+                                <div id="widget5-supporting-charts" class="row">
+
+                                    <div class="col-6 p-4">
+
+                                        <div id="widget5-created-chart">
+                                            <div class="h6 text-muted">CREATED</div>
+                                            <div class="h2 count">48</div>
+                                            <div class="chart-wrapper">
+                                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="423" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-43911"><rect width="423" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-43911)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q56.4,42,70.5,42C91.65,42,119.85,42,141,42S190.35,42,211.5,42S260.85,42,282,42S331.35,42,352.5,42Q366.6,42,423,42L423,23.333333333333336Q366.6,6.533333333333336,352.5,4.666666666666669C331.35,1.866666666666668,303.15,1.866666666666668,282,4.666666666666669S232.65,18.433333333333337,211.5,23.333333333333336S162.15,35.93333333333333,141,37.33333333333333S91.65,34.06666666666666,70.5,32.666666666666664Q56.4,31.73333333333333,0,28.000000000000004Z"></path><path class="nv-line" d="M0,28.000000000000004Q56.4,31.73333333333333,70.5,32.666666666666664C91.65,34.06666666666666,119.85,38.73333333333333,141,37.33333333333333S190.35,28.233333333333334,211.5,23.333333333333336S260.85,7.4666666666666694,282,4.666666666666669S331.35,1.866666666666668,352.5,4.666666666666669Q366.6,6.533333333333336,423,23.333333333333336"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-43911)"><g class="nvd3 nv-wrap nv-scatter nv-chart-43911" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-43911"><rect transform="translate( -10, -10)" width="443" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,28.000000000000004)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(70.5,32.66666793823242)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(141,37.33333206176758)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(211.5,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(282,4.666666507720947)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(352.5,4.666666507720947)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(423,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-6 p-4">
+
+                                        <div id="widget5-closed-chart">
+                                            <div class="h6 text-muted">CLOSED</div>
+                                            <div class="h2 count">26</div>
+                                            <div class="chart-wrapper">
+                                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="423" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-43503"><rect width="423" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-43503)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q56.4,42,70.5,42C91.65,42,119.85,42,141,42S190.35,42,211.5,42S260.85,42,282,42S331.35,42,352.5,42Q366.6,42,423,42L423,9.333333333333332Q366.6,22.400000000000002,352.5,23.333333333333336C331.35,24.733333333333334,303.15,19.366666666666664,282,18.666666666666664S232.65,20.066666666666663,211.5,18.666666666666664S162.15,7.933333333333331,141,9.333333333333332S91.65,27.300000000000004,70.5,28.000000000000004Q56.4,28.466666666666672,0,14.000000000000002Z"></path><path class="nv-line" d="M0,14.000000000000002Q56.4,28.466666666666672,70.5,28.000000000000004C91.65,27.300000000000004,119.85,10.733333333333333,141,9.333333333333332S190.35,17.266666666666666,211.5,18.666666666666664S260.85,17.966666666666665,282,18.666666666666664S331.35,24.733333333333334,352.5,23.333333333333336Q366.6,22.400000000000002,423,9.333333333333332"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-43503)"><g class="nvd3 nv-wrap nv-scatter nv-chart-43503" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-43503"><rect transform="translate( -10, -10)" width="443" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,14.000000000000002)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(70.5,28)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(141,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(211.5,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(282,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(352.5,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(423,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-6 p-4">
+
+                                        <div id="widget5-re-opened-chart">
+                                            <div class="h6 text-muted">RE-OPENED</div>
+                                            <div class="h2 count">2</div>
+                                            <div class="chart-wrapper">
+                                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="423" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-98085"><rect width="423" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-98085)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q56.4,42,70.5,42C91.65,42,119.85,42,141,42S190.35,42,211.5,42S260.85,42,282,42S331.35,42,352.5,42Q366.6,42,423,42L423,23.333333333333336Q366.6,6.533333333333336,352.5,4.666666666666669C331.35,1.866666666666668,303.15,1.866666666666668,282,4.666666666666669S232.65,18.433333333333337,211.5,23.333333333333336S162.15,35.93333333333333,141,37.33333333333333S91.65,34.06666666666666,70.5,32.666666666666664Q56.4,31.73333333333333,0,28.000000000000004Z"></path><path class="nv-line" d="M0,28.000000000000004Q56.4,31.73333333333333,70.5,32.666666666666664C91.65,34.06666666666666,119.85,38.73333333333333,141,37.33333333333333S190.35,28.233333333333334,211.5,23.333333333333336S260.85,7.4666666666666694,282,4.666666666666669S331.35,1.866666666666668,352.5,4.666666666666669Q366.6,6.533333333333336,423,23.333333333333336"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-98085)"><g class="nvd3 nv-wrap nv-scatter nv-chart-98085" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-98085"><rect transform="translate( -10, -10)" width="443" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,28.000000000000004)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(70.5,32.66666793823242)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(141,37.33333206176758)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(211.5,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(282,4.666666507720947)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(352.5,4.666666507720947)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(423,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-6 p-4">
+
+                                        <div id="widget5-wont-fix-chart">
+                                            <div class="h6 text-muted">WON'T FIX</div>
+                                            <div class="h2 count">4</div>
+                                            <div class="chart-wrapper">
+                                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="423" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-28282"><rect width="423" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-28282)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q56.4,42,70.5,42C91.65,42,119.85,42,141,42S190.35,42,211.5,42S260.85,42,282,42S331.35,42,352.5,42Q366.6,42,423,42L423,9.333333333333332Q366.6,23.333333333333336,352.5,23.333333333333336C331.35,23.333333333333336,303.15,10.033333333333333,282,9.333333333333332S232.65,16.566666666666663,211.5,18.666666666666664S162.15,23.333333333333336,141,23.333333333333336S91.65,20.066666666666663,70.5,18.666666666666664Q56.4,17.73333333333333,0,14.000000000000002Z"></path><path class="nv-line" d="M0,14.000000000000002Q56.4,17.73333333333333,70.5,18.666666666666664C91.65,20.066666666666663,119.85,23.333333333333336,141,23.333333333333336S190.35,20.766666666666666,211.5,18.666666666666664S260.85,8.633333333333331,282,9.333333333333332S331.35,23.333333333333336,352.5,23.333333333333336Q366.6,23.333333333333336,423,9.333333333333332"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-28282)"><g class="nvd3 nv-wrap nv-scatter nv-chart-28282" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-28282"><rect transform="translate( -10, -10)" width="443" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,14.000000000000002)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(70.5,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(141,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(211.5,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(282,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(352.5,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(423,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-6 p-4">
+
+                                        <div id="widget5-needs-test-chart">
+                                            <div class="h6 text-muted">NEED'S TEST</div>
+                                            <div class="h2 count">8</div>
+                                            <div class="chart-wrapper">
+                                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="423" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-15586"><rect width="423" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-15586)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q56.4,42,70.5,42C91.65,42,119.85,42,141,42S190.35,42,211.5,42S260.85,42,282,42S331.35,42,352.5,42Q366.6,42,423,42L423,9.333333333333332Q366.6,22.400000000000002,352.5,23.333333333333336C331.35,24.733333333333334,303.15,19.366666666666664,282,18.666666666666664S232.65,20.066666666666663,211.5,18.666666666666664S162.15,7.933333333333331,141,9.333333333333332S91.65,27.300000000000004,70.5,28.000000000000004Q56.4,28.466666666666672,0,14.000000000000002Z"></path><path class="nv-line" d="M0,14.000000000000002Q56.4,28.466666666666672,70.5,28.000000000000004C91.65,27.300000000000004,119.85,10.733333333333333,141,9.333333333333332S190.35,17.266666666666666,211.5,18.666666666666664S260.85,17.966666666666665,282,18.666666666666664S331.35,24.733333333333334,352.5,23.333333333333336Q366.6,22.400000000000002,423,9.333333333333332"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-15586)"><g class="nvd3 nv-wrap nv-scatter nv-chart-15586" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-15586"><rect transform="translate( -10, -10)" width="443" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,14.000000000000002)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(70.5,28)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(141,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(211.5,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(282,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(352.5,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(423,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-6 p-4">
+
+                                        <div id="widget5-fixed-chart">
+                                            <div class="h6 text-muted">FIXED</div>
+                                            <div class="h2 count">14</div>
+                                            <div class="chart-wrapper">
+                                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="423" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-83085"><rect width="423" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-83085)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q56.4,42,70.5,42C91.65,42,119.85,42,141,42S190.35,42,211.5,42S260.85,42,282,42S331.35,42,352.5,42Q366.6,42,423,42L423,32.666666666666664Q366.6,29.400000000000006,352.5,28.000000000000004C331.35,25.900000000000002,303.15,20.766666666666666,282,18.666666666666664S232.65,13.3,211.5,14.000000000000002S162.15,24.033333333333335,141,23.333333333333336S91.65,10.033333333333333,70.5,9.333333333333332Q56.4,8.866666666666665,0,18.666666666666664Z"></path><path class="nv-line" d="M0,18.666666666666664Q56.4,8.866666666666665,70.5,9.333333333333332C91.65,10.033333333333333,119.85,22.633333333333336,141,23.333333333333336S190.35,14.700000000000003,211.5,14.000000000000002S260.85,16.566666666666663,282,18.666666666666664S331.35,25.900000000000002,352.5,28.000000000000004Q366.6,29.400000000000006,423,32.666666666666664"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-83085)"><g class="nvd3 nv-wrap nv-scatter nv-chart-83085" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-83085"><rect transform="translate( -10, -10)" width="443" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,18.666666666666664)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(70.5,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(141,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(211.5,14)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(282,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(352.5,28)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(423,32.66666793823242)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 5 -->
+            <!-- WIDGET 6 -->
+            <div class="col-12 col-lg-6 p-3">
+
+                <div class="widget widget6 card">
+
+                    <div class="widget-header px-4 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h6">Task Distrubition</span>
+                        </div>
+
+                        <div class="">
+                            <select id="widget6-option-select" class="h6 custom-select">
+                                <option selected="" value="TW">This Week</option>
+                                <option value="LW">Last Week</option>
+                                <option value="2W">2 Weeks Ago</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="widget-content">
+
+                        <div class="row no-gutters">
+
+                            <div class="col-12">
+
+                                <div id="widget6-main-chart" class="p-4">
+                                    <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-pieChart" transform="translate(0,30)"><g><g class="nv-pieWrap nvd3-svg"><g class="nvd3 nv-wrap nv-pie nv-chart-3194" transform="translate(0,0)"><g><g class="nv-pie" transform="translate(439,169)"><g class="nv-slice" fill="#f44336" stroke="#f44336"><path d="M1.7399324946135724,-152.0900477839171A152.1,152.1 0 0,1 122.74324565768362,-89.82486095406733L67.73109651038642,-50.5247322160219A84.5,84.5 0 0,0 1.7399324946135664,-84.48208469796533Z"></path></g><g class="nv-slice" fill="#9c27b0" stroke="#9c27b0"><path d="M124.76607160636331,-86.99331799578528A152.1,152.1 0 0,1 123.00136885265992,89.47107499282603L68.78617194408668,49.07863638365009A84.5,84.5 0 0,0 69.75392245906613,-47.69318925773982Z"></path></g><g class="nv-slice" fill="#03a9f4" stroke="#03a9f4"><path d="M120.92232037183409,92.26159783946686A152.1,152.1 0 0,1 -150.70576912924685,20.547047261398614L-83.61744324792187,12.180853200025222A84.5,84.5 0 0,0 66.70712346326083,51.86915923029095Z"></path></g><g class="nv-slice" fill="#e91e63" stroke="#e91e63"><path d="M-151.1363874244651,17.093928638027496A152.1,152.1 0 0,1 -1.7399324946135573,-152.0900477839171L-1.7399324946135957,-84.48208469796533A84.5,84.5 0 0,0 -84.04806154314016,8.727734576654134Z"></path></g></g><g class="nv-pieLabels" transform="translate(439,169)"><g class="nv-label" transform="translate(54.12826919555664,-105.19039916992188)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">15%</text></g><g class="nv-label" transform="translate(118.29408264160156,1.1829802989959717)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">20%</text></g><g class="nv-label" transform="translate(-30.19849395751953,114.38068389892578)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">38%</text></g><g class="nv-label" transform="translate(-88.67552185058594,-78.30416107177734)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">27%</text></g></g></g></g></g><g class="nv-legendWrap nvd3-svg" transform="translate(0,-30)"><g class="nvd3 nv-legend" transform="translate(0,5)"><g transform="translate(610.37109375,5)"><g class="nv-series" transform="translate(0,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(244, 67, 54); fill-opacity: 1; stroke: rgb(244, 67, 54);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Frontend</text></g><g class="nv-series" transform="translate(79.5546875,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(156, 39, 176); fill-opacity: 1; stroke: rgb(156, 39, 176);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Backend</text></g><g class="nv-series" transform="translate(157.544921875,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(3, 169, 244); fill-opacity: 1; stroke: rgb(3, 169, 244);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Api</text></g><g class="nv-series" transform="translate(207.017578125,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(233, 30, 99); fill-opacity: 1; stroke: rgb(233, 30, 99);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Isues</text></g></g></g></g></g></g></svg>
+                                </div>
+
+                            </div>
+
+                            <div class="divider col-12"></div>
+
+                            <div id="added-tasks" class="col-6 d-flex flex-column align-items-center justify-content-center py-4">
+
+                                <div class="count h2">594</div>
+
+                                <div class="count-title">Tasks Added</div>
+
+                            </div>
+
+                            <div id="completed-tasks" class="col-6 d-flex flex-column align-items-center justify-content-center py-4">
+
+                                <div class="count h2">287</div>
+
+                                <div class="count-title">Tasks Completed</div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 6 -->
+            <!-- WIDGET 7 -->
+            <div class="col-12 col-lg-6 p-3">
+
+                <div class="widget widget-7 card">
+
+                    <div class="widget-header px-4 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h6">Schedule</span>
+                        </div>
+
+                        <div class="">
+                            <select class="h6 custom-select">
+                                <option selected="" value="today">Today</option>
+                                <option value="yesterday">Yesterday</option>
+                                <option value="tomorrow">Tomorrow</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="widget-content p-4">
+
+                        <div class="py-4 row no-gutters align-items-center justify-content-between">
+
+                            <div class="col">
+
+                                <div class="h6">Group Meeting</div>
+
+                                <div>
+                                    <span class="text-muted">In 32 minutes</span>
+
+                                    <span>, Room 1B</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="py-4 row no-gutters align-items-center justify-content-between">
+
+                            <div class="col">
+
+                                <div class="h6">Coffee Break</div>
+
+                                <div>
+                                    <span class="text-muted">10:30 AM</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="py-4 row no-gutters align-items-center justify-content-between">
+
+                            <div class="col">
+
+                                <div class="h6">Public Beta Release</div>
+
+                                <div>
+                                    <span class="text-muted">11:00 AM</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="py-4 row no-gutters align-items-center justify-content-between">
+
+                            <div class="col">
+
+                                <div class="h6">Lunch</div>
+
+                                <div>
+                                    <span class="text-muted">12:10 PM</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="py-4 row no-gutters align-items-center justify-content-between">
+
+                            <div class="col">
+
+                                <div class="h6">Dinner with David</div>
+
+                                <div>
+                                    <span class="text-muted">17:30 PM</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="py-4 row no-gutters align-items-center justify-content-between">
+
+                            <div class="col">
+
+                                <div class="h6">Jane's Birthday Party</div>
+
+                                <div>
+                                    <span class="text-muted">19:30 PM</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="py-4 row no-gutters align-items-center justify-content-between">
+
+                            <div class="col">
+
+                                <div class="h6">Overseer's Retirement Party</div>
+
+                                <div>
+                                    <span class="text-muted">21:30 PM</span>
+
+                                </div>
+
+                            </div>
+
+                            <div class="col-auto">
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 7 -->
+        </div>
+        <!-- / WIDGET GROUP -->
+    </div>
+    <div class="tab-pane fade p-3" id="budget-summary-tab-pane" role="tabpanel" aria-labelledby="budget-summary-tab">
+
+        <!-- WIDGET GROUP -->
+        <div class="widget-group row no-gutters">
+
+            <!-- WIDGET 8 -->
+            <div class="col-12 col-lg-6 p-3">
+
+                <div class="widget widget8 card">
+
+                    <div class="widget-header px-4 row no-gutters align-items-center justify-content-between">
+                        <div class="col">
+                            <span class="h6">Budget Distribution</span>
+                        </div>
+                    </div>
+
+                    <div class="widget-content row">
+
+                        <div class="col-12">
+
+                            <div id="widget8-main-chart" class="p-4">
+                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-pieChart" transform="translate(0,110)"><g><g class="nv-pieWrap nvd3-svg"><g class="nvd3 nv-wrap nv-pie nv-chart-3002" transform="translate(0,0)"><g><g class="nv-pie" transform="translate(50,0)"><g class="nv-slice" fill="#f44336" stroke="#f44336"><path d="M0,0L0,0Z"></path></g><g class="nv-slice" fill="#9c27b0" stroke="#9c27b0"><path d="M0,0L0,0Z"></path></g><g class="nv-slice" fill="#03a9f4" stroke="#03a9f4"><path d="M0,0L0,0Z"></path></g><g class="nv-slice" fill="#e91e63" stroke="#e91e63"><path d="M0,0L0,0Z"></path></g><g class="nv-slice" fill="#ffc107" stroke="#ffc107"><path d="M0,0L0,0Z"></path></g></g><g class="nv-pieLabels" transform="translate(50,0)"><g class="nv-label" transform="translate(0,0)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">12%</text></g><g class="nv-label" transform="translate(0,-14)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">18%</text></g><g class="nv-label" transform="translate(0,-14)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">29%</text></g><g class="nv-label" transform="translate(0,-14)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">26%</text></g><g class="nv-label" transform="translate(0,-14)"><rect rx="3" ry="3" style="stroke: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></rect><text style="text-anchor: middle; fill: rgb(0, 0, 0);">15%</text></g></g></g></g></g><g class="nv-legendWrap nvd3-svg" transform="translate(0,-110)"><g class="nvd3 nv-legend" transform="translate(0,5)"><g transform="translate(2,5)"><g class="nv-series" transform="translate(0,5)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(244, 67, 54); fill-opacity: 1; stroke: rgb(244, 67, 54);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Wireframing</text></g><g class="nv-series" transform="translate(0,25)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(156, 39, 176); fill-opacity: 1; stroke: rgb(156, 39, 176);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Design</text></g><g class="nv-series" transform="translate(0,45)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(3, 169, 244); fill-opacity: 1; stroke: rgb(3, 169, 244);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Coding</text></g><g class="nv-series" transform="translate(0,65)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(233, 30, 99); fill-opacity: 1; stroke: rgb(233, 30, 99);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Marketing</text></g><g class="nv-series" transform="translate(0,85)"><circle class="nv-legend-symbol" r="5" style="stroke-width: 2; fill: rgb(255, 193, 7); fill-opacity: 1; stroke: rgb(255, 193, 7);"></circle><text text-anchor="start" class="nv-legend-text" dy=".32em" dx="8" fill="#000">Extra</text></g></g></g></g></g></g></svg>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 8 -->
+            <!-- WIDGET 9 -->
+            <div class="col-12 col-lg-6 p-3">
+
+                <div class="widget widget9 card">
+
+                    <div class="widget-header px-4 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h6">Spent</span>
+                        </div>
+
+                        <div class="">
+                            <select id="widget9-option-select" class="h6 custom-select">
+                                <option selected="" value="TW">This Week</option>
+                                <option value="LW">Last Week</option>
+                                <option value="2W">2 Weeks Ago</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="widget-content">
+
+                        <div id="widget9-weeklySpent" class="budget-item p-4 row no-gutters align-items-center">
+
+                            <div class="col-12 col-sm-auto p-2">
+
+                                <div class="item-title text-muted">WEEKLY SPENT</div>
+
+                                <div class="pt-2 h2">
+                                    <span class="text-muted">$</span>
+                                    <span class="item-value">3,630.15</span>
+                                </div>
+
+                            </div>
+
+                            <div class="chart-wrapper col-12 col-sm">
+                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="100" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-66049"><rect width="100" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-66049)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q13.33333333333333,42,16.666666666666664,42C21.666666666666664,42,28.33333333333333,42,33.33333333333333,42S45,42,50,42S61.66666666666666,42,66.66666666666666,42S78.33333333333334,42,83.33333333333334,42Q86.66666666666667,42,100,42L100,14.000000000000002Q86.66666666666667,27.53333333333334,83.33333333333334,28.000000000000004C78.33333333333334,28.700000000000003,71.66666666666666,19.366666666666664,66.66666666666666,18.666666666666664S55,23.333333333333336,50,23.333333333333336S38.33333333333333,20.066666666666663,33.33333333333333,18.666666666666664S21.666666666666664,11.900000000000002,16.666666666666664,14.000000000000002Q13.33333333333333,15.400000000000002,0,32.666666666666664Z"></path><path class="nv-line" d="M0,32.666666666666664Q13.33333333333333,15.400000000000002,16.666666666666664,14.000000000000002C21.666666666666664,11.900000000000002,28.33333333333333,17.266666666666666,33.33333333333333,18.666666666666664S45,23.333333333333336,50,23.333333333333336S61.66666666666666,17.966666666666665,66.66666666666666,18.666666666666664S78.33333333333334,28.700000000000003,83.33333333333334,28.000000000000004Q86.66666666666667,27.53333333333334,100,14.000000000000002"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-66049)"><g class="nvd3 nv-wrap nv-scatter nv-chart-66049" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-66049"><rect transform="translate( -10, -10)" width="120" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,32.666666666666664)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(16.66666603088379,14)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(33.33333206176758,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(50,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(66.66666412353516,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(83.33333587646484,28)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(100,14)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                            </div>
+                        </div>
+
+                        <div id="widget9-totalSpent" class="budget-item p-4 row no-gutters align-items-center">
+
+                            <div class="col-12 col-sm-auto p-2">
+
+                                <div class="item-title text-muted">TOTAL SPENT</div>
+
+                                <div class="pt-2 h2">
+                                    <span class="text-muted">$</span>
+                                    <span class="item-value">34,758.34</span>
+                                </div>
+                            </div>
+
+                            <div class="chart-wrapper col-12 col-sm">
+                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="100" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-42045"><rect width="100" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-42045)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q13.33333333333333,42,16.666666666666664,42C21.666666666666664,42,28.33333333333333,42,33.33333333333333,42S45,42,50,42S61.66666666666666,42,66.66666666666666,42S78.33333333333334,42,83.33333333333334,42Q86.66666666666667,42,100,42L100,9.333333333333332Q86.66666666666667,22.400000000000002,83.33333333333334,23.333333333333336C78.33333333333334,24.733333333333334,71.66666666666666,19.366666666666664,66.66666666666666,18.666666666666664S55,20.066666666666663,50,18.666666666666664S38.33333333333333,7.933333333333331,33.33333333333333,9.333333333333332S21.666666666666664,27.300000000000004,16.666666666666664,28.000000000000004Q13.33333333333333,28.466666666666672,0,14.000000000000002Z"></path><path class="nv-line" d="M0,14.000000000000002Q13.33333333333333,28.466666666666672,16.666666666666664,28.000000000000004C21.666666666666664,27.300000000000004,28.33333333333333,10.733333333333333,33.33333333333333,9.333333333333332S45,17.266666666666666,50,18.666666666666664S61.66666666666666,17.966666666666665,66.66666666666666,18.666666666666664S78.33333333333334,24.733333333333334,83.33333333333334,23.333333333333336Q86.66666666666667,22.400000000000002,100,9.333333333333332"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-42045)"><g class="nvd3 nv-wrap nv-scatter nv-chart-42045" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-42045"><rect transform="translate( -10, -10)" width="120" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,14.000000000000002)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(16.66666603088379,28)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(33.33333206176758,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(50,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(66.66666412353516,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(83.33333587646484,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(100,9.333333015441895)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                            </div>
+                        </div>
+
+                        <div id="widget9-remaining" class="budget-item p-4 row no-gutters align-items-center">
+
+                            <div class="col-12 col-sm-auto p-2">
+
+                                <div class="item-title text-muted">REMAINING</div>
+
+                                <div class="pt-2 h2">
+                                    <span class="text-muted">$</span>
+                                    <span class="item-value">89.241,66</span>
+                                </div>
+
+                            </div>
+
+                            <div class="chart-wrapper col-12 col-sm">
+                                <svg class="nvd3-svg"><g class="nvd3 nv-wrap nv-lineChart" transform="translate(0,8)"><g><g class="nv-legendWrap"></g><g class="nv-focus"><g class="nv-background"><rect width="100" height="42"></rect></g><g class="nv-x nv-axis" transform="translate(0,42)"></g><g class="nv-y nv-axis"></g><g class="nv-linesWrap nvd3-svg"><g class="nvd3 nv-wrap nv-line" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-50445"><rect width="100" height="42"></rect></clipPath></defs><g clip-path="url(#nv-edge-clip-50445)"><g class="nv-groups"><g class="nv-group nv-series-0" style="stroke-opacity: 1; stroke-width: 1.5; fill-opacity: 0.5; fill: rgb(3, 169, 244); stroke: rgb(3, 169, 244);"><path class="nv-area" d="M0,42Q13.33333333333333,42,16.666666666666664,42C21.666666666666664,42,28.33333333333333,42,33.33333333333333,42S45,42,50,42S61.66666666666666,42,66.66666666666666,42S78.33333333333334,42,83.33333333333334,42Q86.66666666666667,42,100,42L100,37.33333333333333Q86.66666666666667,19.13333333333333,83.33333333333334,18.666666666666664C78.33333333333334,17.966666666666665,71.66666666666666,33.36666666666667,66.66666666666666,32.666666666666664S55,18.200000000000003,50,14.000000000000002S38.33333333333333,3.2666666666666684,33.33333333333333,4.666666666666669S21.666666666666664,19.133333333333336,16.666666666666664,23.333333333333336Q13.33333333333333,26.133333333333336,0,32.666666666666664Z"></path><path class="nv-line" d="M0,32.666666666666664Q13.33333333333333,26.133333333333336,16.666666666666664,23.333333333333336C21.666666666666664,19.133333333333336,28.33333333333333,6.066666666666669,33.33333333333333,4.666666666666669S45,9.8,50,14.000000000000002S61.66666666666666,31.966666666666665,66.66666666666666,32.666666666666664S78.33333333333334,17.966666666666665,83.33333333333334,18.666666666666664Q86.66666666666667,19.13333333333333,100,37.33333333333333"></path></g></g><g class="nv-scatterWrap nvd3-svg" clip-path="url(#nv-edge-clip-50445)"><g class="nvd3 nv-wrap nv-scatter nv-chart-50445" transform="translate(0,0)"><defs><clipPath id="nv-edge-clip-50445"><rect transform="translate( -10, -10)" width="120" height="62"></rect></clipPath></defs><g clip-path=""><g class="nv-groups"><g class="nv-group nv-series-0 nv-noninteractive" style="stroke-opacity: 1; fill-opacity: 0.5; stroke: rgb(3, 169, 244); fill: rgb(3, 169, 244);"><path class="nv-point nv-point-0" transform="translate(0,32.666666666666664)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-1" transform="translate(16.66666603088379,23.33333396911621)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-2" transform="translate(33.33333206176758,4.666666507720947)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-3" transform="translate(50,14)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-4" transform="translate(66.66666412353516,32.66666793823242)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-5" transform="translate(83.33333587646484,18.66666603088379)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path><path class="nv-point nv-point-6" transform="translate(100,37.33333206176758)" d="M0,2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,-2.256758334191025A2.256758334191025,2.256758334191025 0 1,1 0,2.256758334191025Z"></path></g></g><g class="nv-point-paths"></g></g><g class="nv-point-clips"></g></g></g></g></g></g><g class="nv-interactive"><g class=" nv-wrap nv-interactiveLineLayer"><g class="nv-interactiveGuideLine"></g></g></g></g><g class="nv-focusWrap"></g></g></g></svg>
+                            </div>
+
+                        </div>
+
+                        <div class="divider w-100 my-2"></div>
+
+                        <div id="widget9-total-budget" class="p-4">
+
+                            <div class="item-title text-muted">TOTAL BUDGET</div>
+
+                            <div class="pt-2 h2">
+                                <span class="text-muted">$</span>
+                                <span class="item-value">124.000,00</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 9 -->
+            <!-- WIDGET 10 -->
+            <div class="col-12 p-3">
+
+                <div class="widget widget10 card">
+
+                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h5">Budget Details</span>
+                        </div>
+
+                        <button type="button" class="btn btn-icon fuse-ripple-ready">
+                            <i class="icon icon-dots-vertical"></i>
+                        </button>
+
+                    </div>
+
+                    <div class="widget-content p-4 table-responsive">
+
+                        <table class="table">
+
+                            <thead>
+                                <tr>
+
+                                    <th>
+                                        Budget Type
+                                    </th>
+
+                                    <th>
+                                        Total Budget
+                                    </th>
+
+                                    <th>
+                                        Spent ($)
+                                    </th>
+
+                                    <th>
+                                        Spent (%)
+                                    </th>
+
+                                    <th>
+                                        Remaining ($)
+                                    </th>
+
+                                    <th>
+                                        Remaining (%)
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        <span class="badge badge-primary">
+                                            Wireframing
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-bold">
+                                            $14,880.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $14,000.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-success">
+                                            %94.08
+                                        </span>
+
+                                        <i class="icon icon-trending-up text-success s-4"></i>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $880.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            %5.92
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        <span class="badge badge-success">
+                                            Design
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-bold">
+                                            $21,080.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $17,240.34
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-success">
+                                            %81.78
+                                        </span>
+
+                                        <i class="icon icon-trending-up text-success s-4"></i>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $3,839.66
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            %18.22
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        <span class="badge badge-warning">
+                                            Coding
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-bold">
+                                            $34,720.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $3,518.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-danger">
+                                            %10.13
+                                        </span>
+
+                                        <i class="icon icon-trending-down text-danger s-4"></i>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $31,202.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            %89.87
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        <span class="badge badge-info">
+                                            Marketing
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-bold">
+                                            $34,720.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $0.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-info">
+                                            %0.00
+                                        </span>
+
+                                        <i class="icon icon-minus text-info s-4"></i>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $34,720.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            %100.00
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        <span class="badge badge-danger">
+                                            Extra
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-bold">
+                                            $18,600.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $0.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="text-info">
+                                            %0.00
+                                        </span>
+
+                                        <i class="icon icon-minus text-info s-4"></i>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            $34,720.00
+                                        </span>
+
+                                    </td>
+
+                                    <td>
+                                        <span class="">
+                                            %100.00
+                                        </span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- / WIDGET 10 -->
+        </div>
+        <!-- / WIDGET GROUP -->
+    </div>
+    <div class="tab-pane fade p-6" id="team-members-tab-pane" role="tabpanel" aria-labelledby="team-members-tab">
+
+        <!-- WIDGET GROUP -->
+        <div class="widget-group row no-gutters">
+
+            <!-- WIDGET 1 -->
+            <div class="col-12">
+
+                <div class="card">
+
+                    <div class="widget-header px-4 py-6 row no-gutters align-items-center justify-content-between">
+
+                        <div class="col">
+                            <span class="h5">Team Members</span>
+                        </div>
+
+                        <div>
+                            <span class="badge badge-danger">20 members</span>
+                        </div>
+
+                    </div>
+
+                    <div class="divider"></div>
+
+                    <div class="widget-content table-responsive">
+
+                        <table class="table">
+
+                            <thead>
+                                <tr>
+
+                                    <th>
+
+                                    </th>
+
+                                    <th>
+                                        Name
+                                    </th>
+
+                                    <th>
+                                        Position
+                                    </th>
+
+                                    <th>
+                                        Office
+                                    </th>
+
+                                    <th>
+                                        E-Mail
+                                    </th>
+
+                                    <th>
+                                        Phone
+                                    </th>
+
+                                </tr>
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/james.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Jack Gilbert</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Design Manager</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Johor Bahru</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>jgilbert48@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+16 298 032 7774</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/katherine.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Kathy Anderson</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Recruiting Manager</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Solţānābād</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>kanderson49@mail.com.br</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+23 572 311 1136</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/andrew.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Mark Turner</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Recruiting Manager</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Neftegorsk</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>mturner4a@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+01 139 803 9263</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/jane.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Kathryn Martinez</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Director of Sales</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Palekastro</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>kmartinez4b@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+25 467 022 5393</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/alice.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Annie Gonzales</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Actuary</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Candon</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>agonzales4c@mail.edu</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+99 891 619 7138</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/vincent.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Howard King</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Human Resources</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Bergen op Zoom</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>hking4d@mail.gov</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+46 984 348 1409</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/joyce.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Elizabeth Dixon</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Electrical Engineer</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Písečná</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>edixon4e@mail.gov</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+33 332 067 9063</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/danielle.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Dorothy Morris</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Office Assistant</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Magsaysay</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>dmorris4f@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+05 490 958 6120</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/carl.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Mark Gonzales</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Quality Control</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Matsue-shi</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>mgonzales4g@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+03 168 394 9935</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/profile.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Catherine Rogers</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Programmer Analyst</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Kangar</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>crogers4h@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+86 235 407 5373</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/garry.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Ruth Grant</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Community Outreach</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Beaune</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>rgrant4i@mail.pl</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+36 288 083 8460</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/james.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Phyllis Gutierrez</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Administrative Assistant</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Shlissel’burg</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>pgutierrez4j@mail.net</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+52 749 861 9304</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/alice.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Lillian Morris</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Media Planner</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Berlin</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>lmorris4k@mail.de</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+59 695 110 3856</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/vincent.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Jeremy Anderson</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Systems Engineer</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Lũng Hồ</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>janderson4l@mail.uk</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+40 384 115 1448</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/carl.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Arthur Lawrence</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Nurse Practicioner</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Sarkanjut</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>alawrence4m@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+36 631 599 7867</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/andrew.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>David Simmons</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Social Worker</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Ushumun</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>dsimmons4n@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+01 189 681 4417</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/danielle.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Daniel Johnston</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Help Desk</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>São Carlos</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>djohnston4o@mail.gov</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+60 028 943 7919</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/joyce.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Ann King</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Internal Auditor</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Liren</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>aking4p@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+91 103 932 6545</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/james.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Phillip Franklin</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>VP Accounting</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Soba</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>pfranklin4q@mail.com</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+25 820 986 7626</span>
+
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+
+                                        <img class="avatar" src="../assets/images/avatars/garry.jpg">
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Gary Gonzalez</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Speech Pathologist</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>Gangkou</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>ggonzalez4r@mail.cc</span>
+
+                                    </td>
+
+                                    <td>
+
+                                        <span>+10 862 046 7916</span>
+
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- WIDGET 1 -->
+        </div>
+    </div>
+</div>
