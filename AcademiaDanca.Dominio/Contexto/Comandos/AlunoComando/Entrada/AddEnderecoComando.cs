@@ -11,11 +11,13 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.AlunoComando.Entrada
     {
         public int Id { get; set; }
         public string Logradouro { get; set; }
+        public string Complemento { get; set; }
         public string Numero { get; set; }
         public string Bairro { get; set; }
         public string Cidade { get; set; }
-        public int Uf { get; set; }
+        public string Uf { get; set; }
         public string Cep { get; set; }
+        public int IdAluno { get; set; }
 
         public bool Valido()
         {
@@ -35,9 +37,9 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.AlunoComando.Entrada
                 .HasMaxLen(Cidade, 150, "Cidade", "A Cidade deve conter no máximo 150 caracteres")
                 .IsNotNull(Cidade, "Cidade", "A Cidade não pode ser nulo")
 
-                .IsTrue(Uf > 0, "Uf", "Informe o Estado.")
+                .HasMinLen(Uf , 2, "Uf", "Estado deve conter apenas 2 letras.")
 
-                .HasMaxLen(Cep, 150, "Cep", "O Cep deve conter no máximo 150 caracteres")
+                .HasMaxLen(Cep, 10, "Cep", "O Cep deve conter no máximo 150 caracteres")
                 .IsNotNull(Cep, "Cep", "O Cep não pode ser nulo")
 
                 );

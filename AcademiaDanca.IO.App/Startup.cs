@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AcademiaDanca.IO.App.Filtros;
-using AcademiaDanca.IO.Compartilhado;
-using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
+﻿using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -14,7 +8,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,6 +56,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<ISalaRepositorio, SalaRepositorio>();
             services.AddTransient<IAlunoRepositorio, AlunoRepositorio>();
             services.AddTransient<IFuncionarioRepositorio, FuncionarioRepositorio>();
+            services.AddTransient<IEnderecoRepositorio, EnderecoRepositorio>();
             services.AddTransient<TipoTelefoneManipulador, TipoTelefoneManipulador>();
             services.AddTransient<TipoFiliacaoManipulador, TipoFiliacaoManipulador>();
             services.AddTransient<AlunoManipulador, AlunoManipulador>();
@@ -71,7 +65,9 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<EditarFuncionarioManipulador, EditarFuncionarioManipulador>();
             services.AddTransient<EditarFotoFuncionarioManipulador, EditarFotoFuncionarioManipulador>();
             services.AddTransient<AgendarTurmaManipulador, AgendarTurmaManipulador>();
+            services.AddTransient<AddEnderecoManipulador, AddEnderecoManipulador>();
             services.AddTransient<DeletarAgendaTurmaManipulador, DeletarAgendaTurmaManipulador>();
+            services.AddTransient<EditarFotoAlunoManipulador, EditarFotoAlunoManipulador>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";
         }

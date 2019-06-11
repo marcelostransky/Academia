@@ -1,5 +1,6 @@
 ﻿
 using AcademiaDanca.IO.Dominio.Contexto.Vo;
+using FluentValidator;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,13 +8,13 @@ using System.Text;
 
 namespace AcademiaDanca.Dominio.Contexto.Entidade
 {
-    public class Aluno
+    public class Aluno : Notifiable
     {
         public Aluno(
-            int id, 
+            int id,
             string nome,
-            DateTime dataNascimento, 
-            Endereco endereco, 
+            DateTime dataNascimento,
+            Endereco endereco,
             Email email)
         {
             _turmas = new List<Turma>();
@@ -30,7 +31,7 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
             DateTime dataNascimento,
             Endereco endereco,
             Email email, Guid uifId
-            ,string telefone, string celular, string foto)
+            , string telefone, string celular, string foto)
         {
             _turmas = new List<Turma>();
             _filiacoes = new List<Filiacao>();
@@ -44,6 +45,13 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
             Celular = celular;
             Foto = foto;
         }
+
+        public Aluno(int id, string foto)
+        {
+            Id = id;
+            Foto = foto;
+        }
+
         private readonly IList<Turma> _turmas;
         private readonly IList<Filiacao> _filiacoes;
         public int Id { get; private set; }
@@ -64,7 +72,7 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
         {
             _filiacoes.Add(filiacao);
         }
-      
+
         public void AddTurma(Turma turma)
         {
             _turmas.Add(turma);

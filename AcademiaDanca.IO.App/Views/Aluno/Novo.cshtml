@@ -4,13 +4,9 @@
 }
 
 <div class="content custom-scrollbar ps">
-
-
     <div id="e-commerce-product" class="page-layout simple tabbed">
-
         <!-- HEADER -->
         <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
-
             <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
                 <div class="logo-icon mr-3 mt-1">
                     <i class="icon-account-location s-6"></i>
@@ -19,20 +15,18 @@
                     <div class="h4">  Novo Aluno</div>
                 </div>
             </div>
-
-
-
         </div>
         <!-- / HEADER -->
         <!-- CONTENT -->
-        @*@if (@ViewBag.Funcionario != null)
-            {*@
         <div class="page-content">
 
             <ul class="nav nav-tabs" id="myTab" role="tablist">
 
                 <li class="nav-item">
                     <a class="nav-link btn active" id="basic-info-tab" data-toggle="tab" href="#basic-info-tab-pane" role="tab" aria-controls="basic-info-tab-pane" aria-expanded="true">Básico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn " id="foto-info-tab" data-toggle="tab" href="#foto-tab-pane" role="tab" aria-controls="foto-tab-pane">Foto</a>
                 </li>
 
                 <li class="nav-item">
@@ -43,15 +37,16 @@
                     <a class="nav-link btn" id="filiacao-tab" data-toggle="tab" href="#filiacao-tab-pane" role="tab" aria-controls="filiacao-tab-pane">Filiação</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn" id="pricing-tab" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
+                    <a class="nav-link btn" id="matricula-tab" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
                 </li>
-
-
-
+                <li class="nav-item">
+                    <a class="nav-link btn" id="turma-tab" data-toggle="tab" href="#turma-tab-pane" role="tab" aria-controls="turma-tab-pane">Turma</a>
+                </li>
             </ul>
 
             <div class="tab-content">
-
+                <input type="hidden" id="hiddenIdAluno" value="9" />
+                <input type="hidden" id="hiddenHashAluno" value="@ViewBag.Id" />
                 <div class="tab-pane fade show active" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
 
                     <div class="card p-6">
@@ -99,18 +94,47 @@
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Cadastrar</button>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
 
                     </div>
                 </div>
-                <div class="tab-pane fade" id="logradouro-tab-pane" role="tabpanel" aria-labelledby="logradouro-tab-pane">
+                <div class="tab-pane fade" id="foto-tab-pane" role="tabpanel" aria-labelledby="foto-info-tab">
+                    <div class="card p-6">
+                        <form id="formAlunoFoto" style="display:none" class="invisible form" method="post">
+                            <div class="col-xl-11">
 
+                                <div class="form-row">
+                                    <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/Aluno/profile.jpg"></div>
+
+                                    <div class="form-group col-md-5">
+                                        <input type="file" class="form-control" id="file" name="file">
+
+                                    </div>
+                                    <div class="col-sm-2" style="margin-top:30px">
+                                        <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="base invisible col-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="logradouro-tab-pane" role="tabpanel" aria-labelledby="logradouro-tab-pane">
                     <div class="card p-6">
 
-
-                        <form id="formLogradouro">
-
+                        <form id="formLogradouro" style="display:none" class="invisible form formReset">
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputCep" class="col-form-label">Cep</label>
@@ -158,16 +182,24 @@
                                 </div>
 
                             </div>
-
-                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Cadastrar</button>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
+                        <div class="base invisible col-md-12" style="display:none">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
 
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="filiacao-tab-pane" role="tabpanel" aria-labelledby="filiacao-tab-pane">
-
                     <div class="card p-6">
-                        <form id="formResponsavel">
+                        <form id="formResponsavel" style="display:none" class="invisible form formReset">
 
                             <div class="form-row">
                                 <div class="form-group col-md-12">
@@ -189,38 +221,42 @@
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Cadastrar</button>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
+                        <div class="base invisible col-md-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="matricula-tab-pane" role="tabpanel" aria-labelledby="matricula-tab-pane">
-
                     <div class="card p-6">
-
-                        <form id="formMatricula">
-
+                        <form id="formMatricula" style="display:none" class="invisible form formReset">
                             <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputId" class="col-form-label">Id</label>
-                                    <input type="text" disabled class="form-control" id="inputId" name="inputId" placeholder="" value="@ViewBag.Id">
 
-                                </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label for="inputNome" class="col-form-label">Valor Matricula</label>
-                                    <input type="text" class="form-control" id="inputNome" name="inputNome">
+                                    <input type="text" class="form-control" id="inputValor" name="inputValor">
 
                                 </div>
-                                <div class="form-group col-md-6">
+                                <div class="form-group col-md-4">
                                     <label for="inputNome" class="col-form-label">Desconto Matricula</label>
                                     <input type="text" class="form-control" id="inputNome" name="inputNome">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label for="inputNome" class="col-form-label">Valor Parcelas</label>
-                                    <input type="text" class="form-control" id="inputNome" name="inputNome">
+                                    <input type="text" class="form-control" id="inputValorParcela" name="inputValorParcela">
                                 </div>
-                                <div class="form-group col-md-4">
+                                <div class="form-group col-md-6">
                                     <label for="inputNome" class="col-form-label">Desconto Parcelas</label>
-                                    <input type="text" class="form-control" id="inputNome" name="inputNome">
+                                    <input type="text" class="form-control" id="inputDescontoParcela" name="inputDescontoParcela">
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputNome" class="col-form-label">Vencimento</label>
@@ -255,37 +291,56 @@
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputNome" class="col-form-label">Ano/Vigencia</label>
-                                    <input type="text" class="form-control" id="inputNome" name="inputNome">
+                                    <input type="text" class="form-control" id="inputVigencia" name="inputVigencia">
 
                                 </div>
 
                             </div>
 
 
-                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Cadastrar</button>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
+                        <div class="base invisible col-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados base do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="turma-tab-pane" role="tabpanel" aria-labelledby="turma-tab-pane">
+                    <div class="card p-6">
+                        <form id="formTurma" style="display:none" class="invisible form formReset">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputId" class="col-form-label">Id</label>
+                                    <input type="text" disabled class="form-control" id="inputId" name="inputId" placeholder="" value="@ViewBag.Id">
 
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                        </form>
+                        <div class="base invisible col-md-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <!-- / CONTENT -->
-        @*}
-            else
-            {
-            <center style="margin-top: 15%">
-                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
-
-                    <div class="card-body">
-                        <h4 class="card-title">Ops! :-(</h4>
-                        <p class="card-text">Funcionário não encontrado.</p>
-                    </div>
-                </div>
-            </center>
-            }*@
     </div>
-
 </div>
 @section Scripts{
     <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
@@ -294,10 +349,35 @@
     <script src="~/js/Helper/CookieHelper.js"></script>
     <script type="text/javascript" src="/js/apps/e-commerce/product/product.js"></script>
     <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+    <script src="~/Modulo/Mask/maskmoney.js"></script>
     <script>
+        $(document).ready(function () {
+            ValidaDadosBase();
+        })
+        function ValidaDadosBase() {
+            if ($("#hiddenIdAluno").val().length > 0) {
+                $(".base").removeClass('visible');
+                $(".base").addClass("invisible")
+                $(".form").removeClass('invisible');
+                $(".base").hide();
+                $(".form").show();
+                $("#formAluno :input").prop("disabled", true);
+                $(".form").addClass("visible")
+                $(".formReset").trigger("reset");
 
+            }
+            else {
+                $(".base").removeClass('invisible');
+                $(".base").addClass("visible");
+
+            }
+        }
         //Mascaras de campos Inicio
         $("#inputData").mask("00/00/0000");
+        $("#inputDescontoParcela").mask("%99");
+        $("#inputVigencia").mask("9999");
+        $("#inputValor").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+        $("#inputValorParcela").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
         jQuery("#inputTelefone")
             .mask("(99) 9999-9999?9")
             .focusout(function (event) {
@@ -328,6 +408,7 @@
                 }
             });
         //Mascaras de campos Fim
+
         function BuscaCep(cep) {
             if (cep.value !== '') {
                 var dataT = {
@@ -358,13 +439,6 @@
 
         }
         $(function () {
-            //$("#formFuncionario").submit(function (e) {
-            //    e.preventDefault(); var addAntiForgeryToken = function () {
-            //var token = $('input[name="__RequestVerificationToken"]', $('#formFuncionario')).val();
-            //var myData = { isHardcover: $("#IsHardcover").val() };
-            //var dataWithAntiforgeryToken = $.extend(myData, { '__RequestVerificationToken': token });
-
-
             $.validator.addMethod("dateFormat",
                 function (value, element) {
                     return value.match(/^dd?-mm?-yyyy$/);
@@ -409,7 +483,7 @@
 
                     var dataT = {
 
-                        Id: 0,
+                        Id: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
                         UifId: $("#formAluno #inputId").val(),
                         Nome: $("#formAluno #inputNome").val(),
                         DataNascimento: $("#formAluno #inputData").val(),
@@ -427,7 +501,9 @@
                                 title: ':-)',
                                 text: 'Cadastro realizado com sucesso.'
                             });
+                            document.getElementById('hiddenIdAluno').value = JSON.parse(data).data.id;
                             document.getElementById("formAluno").reset();
+                            ValidaDadosBase();
                             return false;
                         } else {
                             var msg = '';
@@ -456,20 +532,20 @@
                 }
             });
         });
-        $("#formFuncionarioFoto").submit(function (event) {
+        $("#formAlunoFoto").submit(function (event) {
 
             event.preventDefault();
             var input = document.getElementById("file");
             var files = input.files;
             var formData = new FormData();
-            formData.append('Id', $("#formFuncionarioFoto #hiddenIdFuncFt").val());
+            formData.append('Id', $("#hiddenIdAluno").val());
             formData.append('Foto', '');
             for (var i = 0; i != files.length; i++) {
                 formData.append("file", files[i]);
             }
             var dataT = {
 
-                Id: $("#formFuncionarioFoto #hiddenIdFuncFt").val(),
+                Id: $("#hiddenIdAluno").val(),
                 Foto: "",
                 file: files[0]
 
@@ -481,7 +557,7 @@
                         title: ':-)',
                         text: 'Atualizado com sucesso.'
                     });
-                    document.getElementById("formFuncionario").reset();
+                    document.getElementById("formAlunoFoto").reset();
                     return false;
                 } else {
                     var msg = '';
@@ -505,64 +581,129 @@
 
             }
 
-            academia.helper.rest.utils.POSTFORM("/Funcionario/Editar/Foto", formData, callback, callbackErro, $('#loader'));
+            academia.helper.rest.utils.POSTFORM("/Aluno/Editar/Foto", formData, callback, callbackErro, $('#loader'));
 
             return false;
-            //$.ajax({
-            //    type: "POST",
-            //    url: "/Funcionario/Editar/Foto",
-            //    data: formData,
+
+        });
+        $(function () {
+            $("#formLogradouro").validate({
+                ignore: [],
+                rules: {
+
+                    inputRua: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 300
+
+                    },
+                    inputCep: {
+                        required: true
+                        //dateFormat: true
+
+                    },
+                    inputNumero: {
+                        required: true
+                        //dateFormat: true
+
+                    },
+                    inputBairro: {
+                        required: true
+                        //dateFormat: true
+
+                    },
+                    Estados: {
+                        required: true
+                        //dateFormat: true
+
+                    },
+                    inputCidade: {
+                        required: true
+                        //dateFormat: true
+
+                    },
 
 
-            //    beforeSend: function () {
-            //        Loading(true, $('#loader'));
-            //        // xhr.setRequestHeader("Authorization", "Basic " + utf8_to_b64(global.token));
-            //    },
-            //    success: function (data) {
-            //        //if (JSON.parse(data).success) {
-            //        //    PNotify.success({
-            //        //        title: ':-)',
-            //        //        text: 'Atualizado com sucesso.'
-            //        //    });
-            //        //    document.getElementById("formFuncionario").reset();
-
-            //        //} else {
-            //        //    var msg = '';
-            //        //    $.each(JSON.parse(data).data, function (index, item) {
-            //        //        msg = msg + item.property + ' > ' + item.message + '\n';
-            //        //    });
-
-            //        //    PNotify.error({
-            //        //        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
-            //        //        text: msg
-            //        //    });
+                },
+                messages: {
 
 
-            //        //};
+                    inputRua: {
+                        required: "Informe o logradouro.",
+                        minlength: $.validator.format("O logradouro precisa ter pelo menos {0} characters"),
+                        maxlength: $.validator.format("O logradouro não pode serr superior há {0} characters")
 
-            //        Loading(false);
-            //        event.preventDefault();
-            //        return false;
+                    },
+                    inputNumero: {
+                        required: "Informe o número."
 
-            //    },
-            //    complete: function () {
+                    },
+                    inputCep: {
+                        required: "Informe o cep."
 
-            //        Loading(false, Loader);
-            //        return false;
-            //    },
-            //    error: function (data) {
-            //        PNotify.error({
-            //            title: 'Ops! :-(',
-            //            text: 'Ocorreu um erro ao processar sua solicitação'
-            //        });
-            //        Loading(false);
-            //    }
+                    },
+                    inputBairro: {
+                        required: "Informe o bairro.",
+                        minlength: $.validator.format("O bairro precisa ter pelo menos {0} characters"),
+                        maxlength: $.validator.format("O bairro não pode serr superior há {0} characters")
+
+                    },
+                    inputCidade: {
+                        required: "Informe a cidade.",
+
+                    },
+                    Estados: {
+                        required: "Informe o estado.",
+
+                    }
+
+                },
+                submitHandler: function (form) {
+
+                    var dataT = {
+
+                        idAluno: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
+                        Logradouro: $("#formLogradouro #inputRua").val(),
+                        Complemento: $("#formLogradouro #inputComplemento").val(),
+                        Numero: $("#formLogradouro #inputNumero").val(),
+                        Bairro: $("#formLogradouro #inputBairro").val(),
+                        Cidade: $("#formLogradouro #inputCidade").val(),
+                        Uf: $("#formLogradouro #Estados").val(),
+                        Cep: $("#formLogradouro #inputCep").val()
+                    }
+                    var callback = function (data) {
+                        if (JSON.parse(data).success) {
+                            PNotify.success({
+                                title: ':-)',
+                                text: 'Cadastro realizado com sucesso.'
+                            });
+                            return false;
+                        } else {
+                            var msg = '';
+                            $.each(JSON.parse(data).data, function (index, item) {
+                                msg = msg + item.property + ' > ' + item.message + '\n';
+                            });
+
+                            PNotify.error({
+                                title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+                                text: msg
+                            });
 
 
-            //});
-            //event.preventDefault();
-            //return false;
+                        }
+                    }
+                    var callbackErro = function (data) {
+                        PNotify.error({
+                            title: 'Ops! :-(',
+                            text: 'Ocorreu um erro ao processar sua solicitação'
+                        });
 
+                    }
+
+                    academia.helper.rest.utils.POST("/Aluno/Logradouro/Novo", dataT, callback, callbackErro, $('#loader'));
+
+                }
+            });
         });
     </script>
 }

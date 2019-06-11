@@ -141,7 +141,7 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         [Route("/Funcionario/Editar/Foto")]
         [HttpPost]
-        public async Task<IComandoResultado> Editar([FromForm]FuncionarioFotoModel funcFoto)
+        public async Task<IComandoResultado> Editar([FromForm]FotoModel funcFoto)
         {
 
             string nomeArquivo = ContentDispositionHeaderValue.Parse(funcFoto.file.ContentDisposition).FileName.Trim('"');

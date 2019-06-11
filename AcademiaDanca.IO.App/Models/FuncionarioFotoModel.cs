@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.App.Models
 {
-    public class FuncionarioFotoModel
+    public class FotoModel
     {
         public int Id { get; set; }
         public string Foto { get; set; }

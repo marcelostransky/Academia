@@ -49,12 +49,12 @@ namespace Academia.Io.Tests.Entidades
             _turma.AddAluno(
                 new Aluno(0, "Marcelo",  
                 DateTime.Now,
-                new Endereco("sdsada", 0, "1220", "bairro", "alagoas","02935090", new Uf(0, "Minas", "MG")), 
+                new Endereco("sdsada", 0, "1220","xzczxc", "bairro", "alagoas","02935090", new Uf(0, "Minas", "MG")), 
                 new Email("marcelo@gmail.com")));
             _turma.AddAluno(
                new Aluno(0, "Marcelogggg",
                DateTime.Now,
-               new Endereco("sdsada", 0, "1220", "bairro", "alagoas", "02935090", new Uf(0, "Minas", "MG")),
+               new Endereco("sdsada", 0, "1220","fsdfsdf","bairro", "alagoas", "02935090", new Uf(0, "Minas", "MG")),
                new Email("marcelo@gmail.com")));
             Assert.AreEqual(2, _turma.Alunos.Count);
         }

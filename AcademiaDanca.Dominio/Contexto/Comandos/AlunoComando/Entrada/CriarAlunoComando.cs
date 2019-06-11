@@ -9,10 +9,10 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.Aluno.Entrada
 {
     public class CriarAlunoComando : Notifiable, IComando
     {
-        public int Id { get;  set; }
+        public int Id { get; set; }
         public Guid UifId { get; set; }
-        public string Nome { get;  set; }
-        public DateTime DataNascimento { get;  set; }
+        public string Nome { get; set; }
+        public DateTime DataNascimento { get; set; }
         public string Email { get; set; }
         public string Cpf { get; set; }
         public string Foto { get; set; }
@@ -28,6 +28,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.Aluno.Entrada
                .IsEmail(Email, "Email", "O E-mail é inválido")
                .IsBetween(DataNascimento, Convert.ToDateTime("01/01/1930"), DateTime.Now, "Data Nascimento", "Data informada não é válida")
                .HasMaxLen(Cpf, 11, "Cpf", "CPF inválido")
+               .IsTrue(Id > 0, "Id", "Id informado não é valido")
            );
             return Valid;
         }

@@ -29,6 +29,21 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             throw new NotImplementedException();
         }
 
+        public async Task<int> EditarFotoAsync(Aluno aluno)
+        {
+            var parametros = new DynamicParameters();
+
+            parametros.Add("sp_id", aluno.Id);
+            parametros.Add("sp_foto", aluno.Foto);
+            var editado = await _contexto
+                  .Connection
+                  .ExecuteAsync("sp_edit_foto_aluno",
+                  parametros,
+                  commandType: System.Data.CommandType.StoredProcedure);
+
+            return editado;
+        }
+
         public Task<Aluno> ObterPorAsync(int id)
         {
             throw new NotImplementedException();
