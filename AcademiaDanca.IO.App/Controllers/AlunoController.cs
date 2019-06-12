@@ -27,11 +27,15 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly AlunoManipulador _manipulador;
         private readonly EditarFotoAlunoManipulador _manipuladorFoto;
         private readonly AddEnderecoManipulador _manipuladorLogrador;
+        private readonly AddResponsavelManipulador _manipuladorResponsavel;
         private readonly IHostingEnvironment _environment;
 
-        public AlunoController(IAlunoRepositorio repositorio, AlunoManipulador manipulador,
+        public AlunoController(
+            IAlunoRepositorio repositorio,
+            AlunoManipulador manipulador,
             EditarFotoAlunoManipulador manipuladorFoto,
-                  AddEnderecoManipulador manipuladorLogrador,
+            AddEnderecoManipulador manipuladorLogrador,
+            AddResponsavelManipulador manipuladorResponsavel,
             IHostingEnvironment environment)
         {
             _repositorio = repositorio;
@@ -39,6 +43,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _manipuladorFoto = manipuladorFoto;
             _environment = environment;
             _manipuladorLogrador = manipuladorLogrador;
+            _manipuladorResponsavel = manipuladorResponsavel;
         }
         public IActionResult Index()
         {
@@ -49,6 +54,7 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
+            ViewBag.TipoFiliacao = new SelectList(await _repositorio.ObterTipoFiliacaoAsync(), "Id", "Nome");
             return View();
         }
         public IActionResult ObterLogradouroPor(string cep)
@@ -74,9 +80,21 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         [Route("/Aluno/Logradouro/Novo")]
         [HttpPost]
-        public async Task<IActionResult>Logradouro(AddEnderecoComando comando, int idAluno)
+        public async Task<IActionResult> Logradouro(AddEnderecoComando comando, int idAluno)
         {
             var resultado = await _manipuladorLogrador.ManipuladorAsync(comando);
+            if (resultado.Success)
+                return Json(resultado);
+            else
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(resultado);
+            }
+        }
+        [Route("/Aluno/Responsavel/Novo")]
+        public async Task<IActionResult> Responsavel(AddFiliacaoComando comando)
+        {
+            var resultado = await _manipuladorResponsavel.ManipuladorAsync(comando);
             if (resultado.Success)
                 return Json(resultado);
             else

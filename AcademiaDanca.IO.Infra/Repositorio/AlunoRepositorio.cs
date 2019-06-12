@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Dapper;
 using System;
@@ -44,6 +45,16 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             return editado;
         }
 
+        public Task<IEnumerable<Filiacao>> ObterFiliacaoAsync()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Filiacao> ObterFiliacaoPorAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<Aluno> ObterPorAsync(int id)
         {
             throw new NotImplementedException();
@@ -52,6 +63,13 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             throw new NotImplementedException();
         }
+
+        public async Task<IEnumerable<AddResponsavelQuery>> ObterTipoFiliacaoAsync()
+        {
+            var query = @"SELECT id as Id, des_tipo_filiacao as Nome FROM academia.tipo_filiacao;";
+            return await _contexto.Connection.QueryAsync<AddResponsavelQuery>(query, commandType: CommandType.Text);
+        }
+
         public Task<IEnumerable<Aluno>> ObterTodosAsync()
         {
             throw new NotImplementedException();
@@ -62,7 +80,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var parametros = new DynamicParameters();
             parametros.Add("sp_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
             parametros.Add("sp_nome", aluno.Nome);
-            parametros.Add("sp_email", aluno.Email!=null? aluno.Email.Endereco:null);
+            parametros.Add("sp_email", aluno.Email != null ? aluno.Email.Endereco : null);
             parametros.Add("sp_cpf", aluno.Cpf != null ? aluno.Cpf.Numero : null);
             parametros.Add("sp_foto", aluno.Foto);
             parametros.Add("sp_data_nascimento", aluno.DataNascimento);
@@ -76,6 +94,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 commandType: System.Data.CommandType.StoredProcedure);
 
             return parametros.Get<int>("sp_id");
+        }
+
+        public Task<int> SalvarResponsavelAsync(Filiacao filiacao)
+        {
+            throw new NotImplementedException();
         }
     }
 }
