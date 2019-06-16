@@ -222,9 +222,6 @@
                                     <input type="text" class="form-control telefone" id="inputTelefoneResponsavel" name="inputTelefoneResponsavel">
                                 </div>
                             </div>
-
-
-
                             <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
                         <div class="base invisible col-md-12">
@@ -246,16 +243,16 @@
                             <div class="form-row">
 
                                 <div class="form-group col-md-4">
-                                    <label for="inputNome" class="col-form-label">Valor Matricula</label>
-                                    <input type="text" class="form-control" id="inputValor" name="inputValor">
+                                    <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
+                                    <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula">
 
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="inputNome" class="col-form-label">Desconto Matricula</label>
-                                    <input type="text" class="form-control" id="inputNome" name="inputNome">
+                                    <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
+                                    <input type="text" class="form-control" id="inputDescontoMatricula" name="inputDescontoMatricula">
                                 </div>
                                 <div class="form-group col-md-6">
-                                    <label for="inputNome" class="col-form-label">Valor Parcelas</label>
+                                    <label for="inputValorParcela" class="col-form-label">Valor Parcelas</label>
                                     <input type="text" class="form-control" id="inputValorParcela" name="inputValorParcela">
                                 </div>
                                 <div class="form-group col-md-6">
@@ -263,8 +260,8 @@
                                     <input type="text" class="form-control" id="inputDescontoParcela" name="inputDescontoParcela">
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="inputNome" class="col-form-label">Vencimento</label>
-                                    <select class="form-control" id="inputNome" name="inputNome">
+                                    <label for="inputDiaVencimento" class="col-form-label">Vencimento</label>
+                                    <select class="form-control" id="inputDiaVencimento" name="inputDiaVencimento">
                                         <option>1</option>
                                         <option>5</option>
                                         <option>10</option>
@@ -275,8 +272,8 @@
                                     </select>
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="inputNome" class="col-form-label">Total Parcelas</label>
-                                    <select class="form-control" id="inputNome" name="inputNome">
+                                    <label for="inputTotalParcelas" class="col-form-label">Total Parcelas</label>
+                                    <select class="form-control" id="inputTotalParcelas" name="inputTotalParcelas">
                                         <option>1</option>
                                         <option>2</option>
                                         <option>3</option>
@@ -294,7 +291,7 @@
 
                                 </div>
                                 <div class="form-group col-md-4">
-                                    <label for="inputNome" class="col-form-label">Ano/Vigencia</label>
+                                    <label for="inputVigencia" class="col-form-label">Ano/Vigencia</label>
                                     <input type="text" class="form-control" id="inputVigencia" name="inputVigencia">
 
                                 </div>
@@ -747,7 +744,7 @@
 
                 },
                 TipoFiliacao: {
-                        required: "Informe o tipo de responsavel.",
+                    required: "Informe o tipo de responsavel.",
                 }
 
             },
@@ -757,7 +754,7 @@
 
                     idAluno: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
                     Nome: $("#formResponsavel #inputResponsavel").val(),
-                    Telefone: $("#formResponsavel #inputTelefoneResponsavel").val() ,
+                    Telefone: $("#formResponsavel #inputTelefoneResponsavel").val(),
                     TipoFiliacao: $("#formResponsavel #TipoFiliacao").val()
 
                 }
@@ -796,6 +793,124 @@
             }
         });
     });
+    $(function () {
+        $("#formMatricula").validate({
+
+            ignore: [],
+            rules: {
+
+                inputValorMatricula: {
+                    required: true,
+                  
+
+                },
+                inputDescontoMatricula: {
+                    required: true,
+                   
+
+                },
+                inputValorParcela: {
+                    required: true,
+                   
+
+                },
+                inputDescontoParcela: {
+                    required: true,
+                   
+
+                },
+                inputDiaVencimento: {
+                    required: true,
+                  
+
+                },
+                inputTotalParcelas: {
+                    required: true,
+                    
+
+                },
+                TipoFiliacao: {
+                    required: true
+                }
+            },
+            messages: {
+
+
+                inputValorMatricula: {
+                    required: "Campo Obrigatório."
+
+                },
+                inputDescontoMatricula: {
+                    required: "Campo Obrigatório."
+
+                },
+                inputValorParcela: {
+                    required: "Campo Obrigatório."
+
+                },
+                inputDescontoParcela: {
+                    required: "Campo Obrigatório."
+
+                },
+                inputDiaVencimento: {
+                    required: "Campo Obrigatório."
+
+                },
+                inputTotalParcelas: {
+                    required: "Campo Obrigatório."
+
+                },
+                TipoFiliacao: {
+                    required: "Informe o tipo de responsavel.",
+                }
+
+            },
+            submitHandler: function (form) {
+
+                var dataT = {
+
+                    idAluno: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
+                    Nome: $("#formResponsavel #inputResponsavel").val(),
+                    Telefone: $("#formResponsavel #inputTelefoneResponsavel").val(),
+                    TipoFiliacao: $("#formResponsavel #TipoFiliacao").val()
+
+                }
+                var callback = function (data) {
+                    if (JSON.parse(data).success) {
+                        PNotify.success({
+                            title: ':-)',
+                            text: 'Matriculado com sucesso.'
+                        });
+                        document.getElementById("formResponsavel").reset();
+                        return false;
+                    } else {
+                        var msg = '';
+                        $.each(JSON.parse(data).data, function (index, item) {
+                            msg = msg + item.property + ' > ' + item.message + '\n';
+                        });
+
+                        PNotify.error({
+                            title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+                            text: msg
+                        });
+
+
+                    }
+                }
+                var callbackErro = function (data) {
+                    PNotify.error({
+                        title: 'Ops! :-(',
+                        text: 'Ocorreu um erro ao processar sua solicitação'
+                    });
+
+                }
+
+                academia.helper.rest.utils.POST("/Aluno/Matricular/", dataT, callback, callbackErro, $('#loader'));
+
+            }
+        });
+    })
+
 </script>
 }
 

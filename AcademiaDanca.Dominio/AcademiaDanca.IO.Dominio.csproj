@@ -18,4 +18,8 @@
     <ProjectReference Include="..\AcademiaDanca.IO.Compartilhado\AcademiaDanca.IO.Compartilhado.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contexto\Comandos\MensalidadeComando\" />
+  </ItemGroup>
+
 </Project>
