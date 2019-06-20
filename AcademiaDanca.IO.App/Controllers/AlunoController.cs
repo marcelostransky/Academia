@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
+using AcademiaDanca.IO.App.Enums;
 using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.App.Helper;
 using AcademiaDanca.IO.App.Models;
@@ -51,10 +52,16 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         public async Task<IActionResult> Novo()
         {
+            var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
             ViewBag.TipoFiliacao = new SelectList(await _repositorio.ObterTipoFiliacaoAsync(), "Id", "Nome");
+            ViewBag.Mes = new SelectList(lista.Select(x => new SelectListItem
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            }), "Value", "Text");
             return View();
         }
         public IActionResult ObterLogradouroPor(string cep)
