@@ -36,11 +36,12 @@
                 <li class="nav-item">
                     <a class="nav-link btn" id="filiacao-tab" data-toggle="tab" href="#filiacao-tab-pane" role="tab" aria-controls="filiacao-tab-pane">Filiação</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link btn" id="matricula-tab" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
-                </li>
+
                 <li class="nav-item">
                     <a class="nav-link btn" id="turma-tab" data-toggle="tab" href="#turma-tab-pane" role="tab" aria-controls="turma-tab-pane">Turma</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn" id="matricula-tab" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
                 </li>
             </ul>
 
@@ -237,6 +238,57 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane fade" id="turma-tab-pane" role="tabpanel" aria-labelledby="turma-tab-pane">
+                    <div class="card p-6">
+                        <form id="formTurma" style="display:none" class="invisible form formReset">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="inputUF" class="col-form-label">Turma</label>
+                                    @Html.DropDownList("Turmas", null, "Selecione uma Turma", new { @class = "form-control   select" })
+
+                                </div>
+                                <div class="form-group" col-md-5>
+                                    <button type="button" onclick="tabelaTurma($('#Turmas option:selected'))" class="btn btn-primary fuse-ripple-ready">Adicionar</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="base invisible col-md-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                    <hr />
+                    <div id="dadosTurmas" class="card invisible">
+                        <table id="tb_turma" class="table dataTable ">
+                            <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Código</td>
+                                    <td>Curso</td>
+                                    <td>Professor</td>
+                                    <td>Ação</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="tab-pane fade" id="matricula-tab-pane" role="tabpanel" aria-labelledby="matricula-tab-pane">
                     <div class="card p-6">
                         <form id="formMatricula" style="display:none" class="invisible form formReset">
@@ -318,31 +370,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="turma-tab-pane" role="tabpanel" aria-labelledby="turma-tab-pane">
-                    <div class="card p-6">
-                        <form id="formTurma" style="display:none" class="invisible form formReset">
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label for="inputId" class="col-form-label">Id</label>
-                                    <input type="text" disabled class="form-control" id="inputId" name="inputId" placeholder="" value="@ViewBag.Id">
 
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
-                        </form>
-                        <div class="base invisible col-md-12">
-                            <center style="margin-top: 5%">
-                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
-
-                                    <div class="card-body">
-                                        <h4 class="card-title">Ops! :-(</h4>
-                                        <p class="card-text">Informe os dados básico do aluno.</p>
-                                    </div>
-                                </div>
-                            </center>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -351,10 +379,10 @@
     <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
     <script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
     <script src="~/js/Helper/Helper.js"></script>
-    <script src="~/js/Helper/CookieHelper.js"></script>
     <script type="text/javascript" src="/js/apps/e-commerce/product/product.js"></script>
     <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
     <script src="~/Modulo/Mask/maskmoney.js"></script>
+    <script src="~/js/Helper/Tabela.js"></script>
     <script>
         $(document).ready(function () {
             ValidaDadosBase();
@@ -551,6 +579,64 @@
                 }
             });
         });
+        function tabelaTurma(turma) {
+            if (turma.val().length > 0) {
+                $("#dadosTurmas").show();
+                $("#dadosTurmas").removeClass('invisible');
+                $("#dadosTurmas").addClass("visible")
+                var dados = turma.text().split("-");
+                var tabela = $("#tb_turma tbody");
+                var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[0] + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td><a href=\"#\" onclick=\"javascript:Deletar('" + turma.val() + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td></tr>"
+                tabela.append(linha);
+            }
+            else {
+                PNotify.error({
+                    title: 'Ops! Informe uma turma. :-( ',
+                    text: ''
+                });
+
+            }
+
+    }
+    function Deletar(turmaId) {
+        var dataT = {
+            id: turmaId
+        }
+
+        var callback = function (data) {
+
+            if (data.success) {
+                removeLinha(turmaId);
+                PNotify.success({
+                    title: ':-)',
+                    text: 'Deletado com sucesso.'
+                });
+
+            } else {
+                var msg = '';
+                $.each(JSON.parse(data).data, function (index, item) {
+                    msg = msg + item.property + ' > ' + item.message + '\n';
+                });
+
+                PNotify.error({
+                    title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+                    text: msg
+                });
+
+
+            }
+        }
+        var callbackErro = function (data) {
+            PNotify.error({
+                title: 'Ops! :-(',
+                text: 'Ocorreu um erro ao processar sua solicitação'
+            });
+
+        }
+
+        academia.helper.rest.utils.DELETE("/Turma/Calendario/Agendamento/Deletar", dataT, callback, callbackErro, $('#loader'));
+
+    }
         $("#formAlunoFoto").submit(function (event) {
 
             event.preventDefault();

@@ -25,6 +25,7 @@ namespace AcademiaDanca.IO.App.Controllers
     public class AlunoController : Controller
     {
         private readonly IAlunoRepositorio _repositorio;
+        private readonly ITurmaRepositorio _repositorioTurma;
         private readonly AlunoManipulador _manipulador;
         private readonly EditarFotoAlunoManipulador _manipuladorFoto;
         private readonly AddEnderecoManipulador _manipuladorLogrador;
@@ -33,6 +34,7 @@ namespace AcademiaDanca.IO.App.Controllers
 
         public AlunoController(
             IAlunoRepositorio repositorio,
+            ITurmaRepositorio turmaRepositorio,
             AlunoManipulador manipulador,
             EditarFotoAlunoManipulador manipuladorFoto,
             AddEnderecoManipulador manipuladorLogrador,
@@ -40,6 +42,7 @@ namespace AcademiaDanca.IO.App.Controllers
             IHostingEnvironment environment)
         {
             _repositorio = repositorio;
+            _repositorioTurma = turmaRepositorio;
             _manipulador = manipulador;
             _manipuladorFoto = manipuladorFoto;
             _environment = environment;
@@ -53,6 +56,7 @@ namespace AcademiaDanca.IO.App.Controllers
         public async Task<IActionResult> Novo()
         {
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
+            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null);
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
@@ -61,6 +65,11 @@ namespace AcademiaDanca.IO.App.Controllers
             {
                 Value = x.ToString(),
                 Text = x.ToString()
+            }), "Value", "Text");
+            ViewBag.Turmas = new SelectList(turmas.Select(x => new SelectListItem
+            {
+                Value = x.IdTurma.ToString(),
+                Text = $"{ x.CodTurma} - { x.DesTurma} - {x.NomeProfessor}"
             }), "Value", "Text");
             return View();
         }

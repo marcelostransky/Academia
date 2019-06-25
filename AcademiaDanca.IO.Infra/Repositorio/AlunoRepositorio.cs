@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Dapper;
@@ -99,6 +100,22 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         public Task<int> SalvarResponsavelAsync(Filiacao filiacao)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parametros.Add("sp_id_turma", turmaAluno.IdTurma);
+            parametros.Add("sp_id_aluno", turmaAluno.IdAluno) ;
+          
+            await _contexto
+                .Connection
+                .ExecuteAsync("sp_insert_turma_aluno",
+                parametros,
+                commandType: System.Data.CommandType.StoredProcedure);
+
+            return parametros.Get<int>("sp_id");
         }
     }
 }

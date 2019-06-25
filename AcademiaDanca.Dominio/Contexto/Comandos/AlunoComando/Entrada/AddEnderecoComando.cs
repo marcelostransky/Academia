@@ -1,4 +1,4 @@
-﻿using AcademiaDanca.IO.Compartilhado.Comando;
+﻿    using AcademiaDanca.IO.Compartilhado.Comando;
 using FluentValidator;
 using FluentValidator.Validation;
 using System;

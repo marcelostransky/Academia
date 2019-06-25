@@ -10,6 +10,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
 {
     public class AddResponsavelManipulador : Notifiable, IComandoManipulador<AddFiliacaoComando>
     {
+
         public Task<IComandoResultado> ManipuladorAsync(AddFiliacaoComando comando)
         {
             throw new NotImplementedException();

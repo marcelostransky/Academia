@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using System;
 using System.Collections.Generic;
@@ -19,5 +20,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<bool> CheckCpfAsync(string cpf);
         Task<bool> CheckEmailAsync(string email);
         Task<int> EditarFotoAsync(Aluno aluno);
+        Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno);
     }
 }
