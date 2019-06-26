@@ -29,6 +29,7 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly AlunoManipulador _manipulador;
         private readonly EditarFotoAlunoManipulador _manipuladorFoto;
         private readonly AddEnderecoManipulador _manipuladorLogrador;
+        private readonly AddTurmaAlunoManipulador _manipuladorAlunoTurma;
         private readonly AddResponsavelManipulador _manipuladorResponsavel;
         private readonly IHostingEnvironment _environment;
 
@@ -39,6 +40,7 @@ namespace AcademiaDanca.IO.App.Controllers
             EditarFotoAlunoManipulador manipuladorFoto,
             AddEnderecoManipulador manipuladorLogrador,
             AddResponsavelManipulador manipuladorResponsavel,
+            AddTurmaAlunoManipulador manipuladorAlunoTurma,
             IHostingEnvironment environment)
         {
             _repositorio = repositorio;
@@ -48,6 +50,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _environment = environment;
             _manipuladorLogrador = manipuladorLogrador;
             _manipuladorResponsavel = manipuladorResponsavel;
+            _manipuladorAlunoTurma = manipuladorAlunoTurma;
         }
         public IActionResult Index()
         {
@@ -94,6 +97,29 @@ namespace AcademiaDanca.IO.App.Controllers
                 return Json(resultado);
             }
         }
+        [Route("/Aluno/Turma/Novo")]
+        [HttpPost]
+        public async Task<IActionResult> NovaTurma(AddTurmaComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorAlunoTurma.ManipuladorAsync(comando);
+                if (resultado.Success)
+                    return Json(resultado);
+                else
+                {
+                    Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                    return Json(resultado);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+        }
+
         [Route("/Aluno/Logradouro/Novo")]
         [HttpPost]
         public async Task<IActionResult> Logradouro(AddEnderecoComando comando, int idAluno)

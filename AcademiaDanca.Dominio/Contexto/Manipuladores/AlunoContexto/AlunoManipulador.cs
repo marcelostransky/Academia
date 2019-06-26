@@ -4,9 +4,6 @@ using AcademiaDanca.IO.Compartilhado.Comando;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.Aluno.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using FluentValidator;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto

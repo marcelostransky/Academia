@@ -30,12 +30,12 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
                 return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);
             }
             //Persistir Dados
-            var id = await _repositorio.SalvarTurmaAsync(turmaAluno);
+            var total = await _repositorio.SalvarTurmaAsync(turmaAluno);
             // Retornar o resultado para tela
-            return new ComandoResultado(true, "Aluno cadastrado com sucesso", new
+            return new ComandoResultado(true, "Turma/Aluno cadastrado com sucesso", new
             {
-                Id = id,
-                //Nome = aluno.Nome,
+                Id = total,
+                Nome = "OK",
                 Status = true
             });
         }

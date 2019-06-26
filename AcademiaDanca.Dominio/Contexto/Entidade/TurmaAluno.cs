@@ -11,7 +11,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
         public TurmaAluno(int idTurma, int idAluno)
         {
             IdAluno = idAluno;
-            IdTurma = IdTurma;
+            IdTurma = idTurma;
         }
     }
 }
