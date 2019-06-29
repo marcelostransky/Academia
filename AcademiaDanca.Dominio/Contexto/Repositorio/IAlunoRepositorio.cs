@@ -21,5 +21,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<bool> CheckEmailAsync(string email);
         Task<int> EditarFotoAsync(Aluno aluno);
         Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno);
+        Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno);
     }
 }

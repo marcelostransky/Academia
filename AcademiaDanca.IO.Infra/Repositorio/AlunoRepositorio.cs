@@ -6,8 +6,10 @@ using Dapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace AcademiaDanca.IO.Infra.Repositorio
 {
@@ -30,7 +32,19 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             throw new NotImplementedException();
         }
+        public async Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_id_aluno", turmaAluno.IdAluno);
+            parametros.Add("sp_id_turma", turmaAluno.IdTurma);
+            var existe = (await _contexto
+                  .Connection
+                  .QueryAsync<int>("SELECT Count(1) FROM academia.turma_aluno where id_aluno = @sp_id_aluno and id_turma = @sp_id_turma;",
+                  parametros,
+                  commandType: System.Data.CommandType.Text)).FirstOrDefault();
 
+            return existe > 0;
+        }
         public async Task<int> EditarFotoAsync(Aluno aluno)
         {
             var parametros = new DynamicParameters();

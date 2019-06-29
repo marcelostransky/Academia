@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
 {
-  public  interface ITurmaRepositorio
+    public interface ITurmaRepositorio
     {
         Task<int> SalvarAsync(Turma turma);
-        Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma, int? idProfessor, int? idTipoTurma);
+        Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma, int? idProfessor, int? idTipoTurma, int? ano);
         Task<IEnumerable<TurmaQueryResultado>> ObterTodosAsync();
+        Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int ano);
         Task<TurmaQueryResultado> ObterPorAsync(int id);
         Task<bool> CheckTurmaAsync(Turma turma);
     }

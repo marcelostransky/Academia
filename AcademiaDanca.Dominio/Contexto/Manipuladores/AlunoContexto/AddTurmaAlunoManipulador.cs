@@ -20,8 +20,13 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
         }
         public async Task<IComandoResultado> ManipuladorAsync(AddTurmaComando comando)
         {
+
             //Criar Entidade
             var turmaAluno = new TurmaAluno(comando.IdTurma, comando.IdAluno);
+
+            //Validar Turma/Aluno Unico
+            if (await _repositorio.CheckTurmaAlunoAsync(turmaAluno))
+                AddNotification("Turma", "Aluno já está cadastrado para turma informada");
 
             //Validar Comando
             comando.Valido();

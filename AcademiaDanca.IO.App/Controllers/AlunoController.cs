@@ -59,7 +59,7 @@ namespace AcademiaDanca.IO.App.Controllers
         public async Task<IActionResult> Novo()
         {
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
-            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null);
+            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null);
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
@@ -72,7 +72,7 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Turmas = new SelectList(turmas.Select(x => new SelectListItem
             {
                 Value = x.IdTurma.ToString(),
-                Text = $"{ x.CodTurma} - { x.DesTurma} - {x.NomeProfessor}"
+                Text = $"{ x.CodTurma} | { x.DesTurma} | {x.NomeProfessor} | {Math.Round(x.Valor, 2)} | {x.Ano}"
             }), "Value", "Text");
             return View();
         }
@@ -104,20 +104,16 @@ namespace AcademiaDanca.IO.App.Controllers
             try
             {
                 var resultado = await _manipuladorAlunoTurma.ManipuladorAsync(comando);
-                if (resultado.Success)
-                    return Json(resultado);
-                else
-                {
-                    Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
-                    return Json(resultado);
-                }
+
+                return Json(resultado);
+
             }
             catch (Exception ex)
             {
-
-                throw;
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
             }
-           
+
         }
 
         [Route("/Aluno/Logradouro/Novo")]

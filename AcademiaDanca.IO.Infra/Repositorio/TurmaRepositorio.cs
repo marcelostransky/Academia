@@ -40,17 +40,24 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0)
+        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0, int? ano=0)
         {
             var parametros = new DynamicParameters();
             parametros.Add("sp_id_turma", idTurma == 0 ? null : idTurma);
             parametros.Add("sp_id_turma_tipo", idTipoTurma == 0 ? null : idTipoTurma);
             parametros.Add("sp_id_professor", idProfessor == 0 ? null : idProfessor);
+            parametros.Add("sp_ano", ano == 0 ? null : ano);
             var lista = await _contexto.Connection.QueryAsync<TurmaQueryResultado>
                 ("sp_sel_turma", param: parametros, commandType: System.Data.CommandType.StoredProcedure);
             return lista;
-          
+
         }
+
+        public Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int ano)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<int> SalvarAsync(Turma turma)
         {
             try

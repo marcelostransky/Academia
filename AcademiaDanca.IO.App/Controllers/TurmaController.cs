@@ -56,7 +56,7 @@ namespace AcademiaDanca.IO.App.Controllers
 
         public async Task<IActionResult> Calendario(int id)
         {
-            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null)).FirstOrDefault();
+            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null)).FirstOrDefault();
             var salas = new SelectList(await _repositorioSala.ObterTodosAsync(), "Id", "DesSala");
             var diasSemana = new SelectList(await _repositorioAgenda.ObterTodosDiaSemanaAsync(), "Id", "DiaSemana");
             ViewBag.Turma = turma;
@@ -123,7 +123,7 @@ namespace AcademiaDanca.IO.App.Controllers
         [PermissaoAcesso(1, "Editar", "Put")]
         public async Task<IActionResult> Editar(int id)
         {
-            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null)).FirstOrDefault();
+            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null,null)).FirstOrDefault();
             var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync());
             var professores = (await _repositorioFuncionario.ObterFuncionarioProfessorPorNomeAsync(string.Empty, null));
             ViewBag.TipoTurma = new SelectList(tipoTurma, "Id", "DesTurmaTipo", turma.IdTipoTurma);
@@ -166,7 +166,7 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             try
             {
-                var lista = (await _repositorio.ObterTodosPorAsync(modelFiltro.IdTurma, modelFiltro.IdProfessor, modelFiltro.IdTurmaTipo)).AsQueryable();
+                var lista = (await _repositorio.ObterTodosPorAsync(modelFiltro.IdTurma, modelFiltro.IdProfessor, modelFiltro.IdTurmaTipo, null)).AsQueryable();
 
                 if (request.sSearch != null && request.sSearch.Length > 0)
                 {
@@ -182,7 +182,7 @@ namespace AcademiaDanca.IO.App.Controllers
                                  r.DesTurma,
                                  r.CodTurma,
                                  r.DesTurmaTipo,
-
+                                 r.Valor,
                                  acao = ObterMenuAcaoDataTable(r)
 
 
@@ -194,7 +194,6 @@ namespace AcademiaDanca.IO.App.Controllers
             }
             catch (System.Exception ex)
             {
-
                 throw;
             }
             //var draw = requestformdata["draw"];

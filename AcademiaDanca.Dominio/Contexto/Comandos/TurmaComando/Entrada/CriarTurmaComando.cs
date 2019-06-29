@@ -16,7 +16,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada
         public int IdProfessor { get; set; }
         public int TipoTurmaId { get; set; }
         public int Ano { get; set; }
-
+        public double Valor { get; set; }
 
         public bool Valido()
         {

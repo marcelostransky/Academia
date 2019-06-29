@@ -9,7 +9,7 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
     {
         private readonly IList<Aluno> _alunos;
         private readonly IList<Agenda> _agendas;
- 
+
 
         public int Id { get; private set; }
         public string CodTurma { get; private set; }
@@ -19,8 +19,8 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
         public IReadOnlyCollection<Agenda> Agendamentos => _agendas.ToArray();
         public TurmaTipo TurmaTipo { get; private set; }
         public int Ano { get; private set; }
-
-        public Turma(int id, string codTurma, string desTurma, Funcionario professor, TurmaTipo turmaTipo, int ano)
+        public double Valor { get; private set; }
+        public Turma(int id, string codTurma, string desTurma, Funcionario professor, TurmaTipo turmaTipo, int ano, double valor)
         {
             Id = id;
             DesTurma = desTurma;
@@ -28,6 +28,7 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
             TurmaTipo = turmaTipo;
             CodTurma = codTurma;
             Ano = ano;
+            Valor = valor;
             _alunos = new List<Aluno>();
             _agendas = new List<Agenda>();
         }

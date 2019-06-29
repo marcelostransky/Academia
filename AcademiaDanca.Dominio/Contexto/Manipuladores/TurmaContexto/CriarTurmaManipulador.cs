@@ -22,7 +22,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
             //Criar Entidades
             var tipoTurma = new TurmaTipo(comando.TipoTurmaId);
             var funcionario = new Funcionario(comando.IdProfessor);
-            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Ano);
+            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Ano, comando.Valor);
             
             //verificar turma existente
             if (await _repositorio.CheckTurmaAsync(turma))
