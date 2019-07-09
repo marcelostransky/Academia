@@ -11,7 +11,9 @@ using AcademiaDanca.IO.App.Models;
 using AcademiaDanca.IO.Compartilhado.Comando;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.Aluno.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.AlunoComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +33,8 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly AddEnderecoManipulador _manipuladorLogrador;
         private readonly AddTurmaAlunoManipulador _manipuladorAlunoTurma;
         private readonly AddResponsavelManipulador _manipuladorResponsavel;
+        private readonly DelTurmaAlunoManipulador _manipuladorDelTurmaAluno;
+        private readonly MatricularManipulador _manipuladorMatricula;
         private readonly IHostingEnvironment _environment;
 
         public AlunoController(
@@ -41,6 +45,8 @@ namespace AcademiaDanca.IO.App.Controllers
             AddEnderecoManipulador manipuladorLogrador,
             AddResponsavelManipulador manipuladorResponsavel,
             AddTurmaAlunoManipulador manipuladorAlunoTurma,
+            DelTurmaAlunoManipulador manipuladorDelTurmaAluno,
+            MatricularManipulador matricularManipulador,
             IHostingEnvironment environment)
         {
             _repositorio = repositorio;
@@ -51,6 +57,8 @@ namespace AcademiaDanca.IO.App.Controllers
             _manipuladorLogrador = manipuladorLogrador;
             _manipuladorResponsavel = manipuladorResponsavel;
             _manipuladorAlunoTurma = manipuladorAlunoTurma;
+            _manipuladorDelTurmaAluno = manipuladorDelTurmaAluno;
+            _manipuladorMatricula = matricularManipulador;
         }
         public IActionResult Index()
         {
@@ -60,7 +68,7 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
             var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null);
-            ViewBag.Id = Guid.NewGuid();
+            ViewBag.Id = Guid.Parse("b8a35e32-5e59-4ce3-92f7-77caf6a5e0e2");
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
             ViewBag.TipoFiliacao = new SelectList(await _repositorio.ObterTipoFiliacaoAsync(), "Id", "Nome");
@@ -97,6 +105,20 @@ namespace AcademiaDanca.IO.App.Controllers
                 return Json(resultado);
             }
         }
+        [Route("/Aluno/TotalTurmas")]
+        public async Task<IActionResult> TotalTurmas(Guid alunoId)
+        {
+            try
+            {
+                var resultado = await _repositorio.ObterTotalTurmaAsync(alunoId);
+                return Json(resultado);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
         [Route("/Aluno/Turma/Novo")]
         [HttpPost]
         public async Task<IActionResult> NovaTurma(AddTurmaComando comando)
@@ -104,9 +126,7 @@ namespace AcademiaDanca.IO.App.Controllers
             try
             {
                 var resultado = await _manipuladorAlunoTurma.ManipuladorAsync(comando);
-
                 return Json(resultado);
-
             }
             catch (Exception ex)
             {
@@ -115,7 +135,22 @@ namespace AcademiaDanca.IO.App.Controllers
             }
 
         }
+        [Route("/Aluno/Turma/Deletar")]
+        [HttpDelete]
+        public async Task<IActionResult> DeletarTurma(DelTurmaAlunoComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorDelTurmaAluno.ManipuladorAsync(comando);
+                return Json(resultado);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
 
+        }
         [Route("/Aluno/Logradouro/Novo")]
         [HttpPost]
         public async Task<IActionResult> Logradouro(AddEnderecoComando comando, int idAluno)
@@ -160,6 +195,21 @@ namespace AcademiaDanca.IO.App.Controllers
             var resultado = await _manipuladorFoto.ManipuladorAsync(comando);
             return resultado;
         }
-
+        [Route("/Aluno/Matricular")]
+        [HttpPost]
+        public async Task<IActionResult> Matricular(MatricularComando comando)
+        {
+            var resultado = await _manipuladorMatricula.ManipuladorAsync(comando);
+            try
+            {
+                return Json(resultado);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(resultado);
+            }
+           
+        }
     }
 }

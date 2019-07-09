@@ -1,5 +1,6 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using AcademiaDanca.IO.Infra;
@@ -47,6 +48,7 @@ namespace AcademiaDanca.IO.App
                 ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<AcademiaContexto, AcademiaContexto>();
             services.AddTransient<ITipoTelefoneRepositorio, TipoTelefoneRepositorio>();
+            services.AddTransient<IFinanceiroRepositorio, FinanceiroRepositorio>();
             services.AddTransient<ILoginRepositorio, LoginRepositorio>();
             services.AddTransient<IPerfilRepositorio, PerfilRepositorio>();
             services.AddTransient<ITipoFiliacaoRepositorio, TipoFiliacaoRepositorio>();
@@ -67,9 +69,11 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<AgendarTurmaManipulador, AgendarTurmaManipulador>();
             services.AddTransient<AddEnderecoManipulador, AddEnderecoManipulador>();
             services.AddTransient<DeletarAgendaTurmaManipulador, DeletarAgendaTurmaManipulador>();
+            services.AddTransient<DelTurmaAlunoManipulador, DelTurmaAlunoManipulador>();
             services.AddTransient<EditarFotoAlunoManipulador, EditarFotoAlunoManipulador>();
             services.AddTransient<AddResponsavelManipulador, AddResponsavelManipulador>();
             services.AddTransient<AddTurmaAlunoManipulador, AddTurmaAlunoManipulador>();
+            services.AddTransient<MatricularManipulador, MatricularManipulador>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";
         }

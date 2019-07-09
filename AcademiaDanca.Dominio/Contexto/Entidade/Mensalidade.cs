@@ -9,7 +9,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
     {
         public int IdAluno { get; private set; }
         public int Id { get; private set; }
-        public int DiaPagamento { get; private set; }
         public int Parcela { get; private set; }
         public DateTime DataVencimento { get;private set; }
         public decimal Valor { get; private set; }

@@ -45,6 +45,30 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
             return existe > 0;
         }
+
+        public async Task<int> DeletarTurmaAluno(TurmaAluno turmaAluno)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_turma", turmaAluno.IdTurma);
+                parametros.Add("sp_id_aluno", turmaAluno.IdAluno);
+
+                var total = await _contexto
+                      .Connection
+                      .ExecuteAsync("sp_delete_turma_aluno",
+                      parametros,
+                      commandType: System.Data.CommandType.StoredProcedure);
+
+                return total;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<int> EditarFotoAsync(Aluno aluno)
         {
             var parametros = new DynamicParameters();
@@ -58,6 +82,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                   commandType: System.Data.CommandType.StoredProcedure);
 
             return editado;
+        }
+
+        public Task<int> MatricularAssync(Matricula matricula)
+        {
+            throw new NotImplementedException();
         }
 
         public Task<IEnumerable<Filiacao>> ObterFiliacaoAsync()
@@ -88,6 +117,19 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         public Task<IEnumerable<Aluno>> ObterTodosAsync()
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<TotalTurmasQuery> ObterTotalTurmaAsync(Guid id)
+        {
+            var query = @"SELECT count(ta.id_turma) as Total, 
+                         CAST(sum(t.valor) as decimal(7,2)) Valor FROM academia.turma as t
+                         join academia.turma_aluno as ta on t.id = ta.id_turma
+                         join academia.aluno as a on ta.id_aluno = a.id
+                         where a.uif_id = @id";
+            var parametros = new DynamicParameters();
+            parametros.Add("id", id);
+
+            return  (await _contexto.Connection.QueryAsync<TotalTurmasQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
         }
 
         public async Task<int> SalvarAsync(Aluno aluno)
@@ -125,11 +167,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_id_turma", turmaAluno.IdTurma);
                 parametros.Add("sp_id_aluno", turmaAluno.IdAluno);
 
-              var total =  await _contexto
-                    .Connection
-                    .ExecuteAsync("sp_insert_turma_aluno",
-                    parametros,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                var total = await _contexto
+                      .Connection
+                      .ExecuteAsync("sp_insert_turma_aluno",
+                      parametros,
+                      commandType: System.Data.CommandType.StoredProcedure);
 
                 return total;
             }
@@ -138,7 +180,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
-            
+
         }
     }
 }

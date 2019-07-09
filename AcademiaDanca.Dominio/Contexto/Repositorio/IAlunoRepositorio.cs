@@ -11,6 +11,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
     public interface IAlunoRepositorio
     {
         Task<int> SalvarAsync(Aluno aluno);
+        Task<int> DeletarTurmaAluno(TurmaAluno turmaAluno);
         Task<int> SalvarResponsavelAsync(Filiacao filiacao);
         Task<IEnumerable<Aluno>> ObterTodosAsync();
         Task<IEnumerable<Filiacao>> ObterFiliacaoAsync();
@@ -22,5 +23,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<int> EditarFotoAsync(Aluno aluno);
         Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno);
         Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno);
+        Task<TotalTurmasQuery> ObterTotalTurmaAsync(Guid id);
+       
     }
 }

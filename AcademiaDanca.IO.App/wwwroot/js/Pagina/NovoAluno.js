@@ -10,7 +10,7 @@ function ValidaDadosBase() {
         $(".base").hide();
         $(".form").show();
         $("#formAluno :input").prop("disabled", true);
-        $(".form").addClass("visible")
+        $(".form").addClass("visible");
         $(".formReset").trigger("reset");
 
     }
@@ -19,6 +19,33 @@ function ValidaDadosBase() {
         $(".base").addClass("visible");
 
     }
+}
+function ObeterValorCursoSelecionado(alunoId) {
+    var dataT = {
+        alunoId: alunoId
+    };
+    var callback = function (data) {
+        if (parseFloat(data.valor) > 0) {
+            $("#tb_turma tfoot").html('');
+            document.getElementById("inputValorParcela").value = data.valor;
+            var tabela = $("#tb_turma");
+            var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + data.valor + "</td><td></td ></tr > </tfoot>";
+            tabela.append(linha);
+            return false;
+        }
+        else {
+            $("#tb_turma tfoot").html('');
+        }
+    };
+    var callbackErro = function (data) {
+        PNotify.error({
+            title: 'Ops',
+            text: 'Não localizado'
+        });
+
+    };
+
+    academia.helper.rest.utils.GET("/Aluno/TotalTurmas", dataT, callback, callbackErro, $('#loader'));
 }
 //Mascaras de campos Inicio
 $("#inputData").mask("00/00/0000");
@@ -198,10 +225,10 @@ function AdicionarLinhaTabelaTurma(turma) {
     if (turma.val().length > 0) {
         $("#dadosTurmas").show();
         $("#dadosTurmas").removeClass('invisible');
-        $("#dadosTurmas").addClass("visible")
+        $("#dadosTurmas").addClass("visible");
         var dados = turma.text().split("|");
         var tabela = $("#tb_turma tbody");
-        var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[0] + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[3] + "</td><td><a href=\"#\" onclick=\"javascript:Deletar('" + turma.val() + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr > "
+        var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[0] + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[3] + "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + turma.val() + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
         tabela.append(linha);
     }
     else {
@@ -213,43 +240,43 @@ function AdicionarLinhaTabelaTurma(turma) {
     }
 
 }
-function Deletar(turmaId) {
+function DeletarTurmaAluno(turmaId, alunoId) {
     var dataT = {
-        id: turmaId
-    }
+        IdTurma: turmaId,
+        IdAluno: alunoId
+    };
 
     var callback = function (data) {
 
         if (data.success) {
             removeLinha(turmaId);
+            ObeterValorCursoSelecionado($("#hiddenHashAluno").val());
             PNotify.success({
-                title: ':-)',
                 text: 'Deletado com sucesso.'
             });
 
         } else {
             var msg = '';
             $.each(JSON.parse(data).data, function (index, item) {
-                msg = msg + item.property + ' > ' + item.message + '\n';
+                msg = msg + item.property + ' : ' + item.message + '\n';
             });
 
             PNotify.error({
-                title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+                title: JSON.parse(data).message,
                 text: msg
             });
 
 
         }
-    }
+    };
     var callbackErro = function (data) {
         PNotify.error({
-            title: 'Ops! :-(',
             text: 'Ocorreu um erro ao processar sua solicitação'
         });
 
-    }
+    };
 
-    academia.helper.rest.utils.DELETE("/Turma/Calendario/Agendamento/Deletar", dataT, callback, callbackErro, $('#loader'));
+    academia.helper.rest.utils.DELETE("/Aluno/Turma/Deletar", dataT, callback, callbackErro, $('#loader'));
 
 }
 $.extend($.expr[":"], {
@@ -263,7 +290,7 @@ $("#formTurma").submit(function (event) {
         var dataT = {
             IdAluno: $("#hiddenIdAluno").val(),
             IdTurma: $("#Turmas").val()
-        }
+        };
         var callback = function (data) {
             if (JSON.parse(data).success) {
                 AdicionarLinhaTabelaTurma($('#Turmas option:selected'));
@@ -271,6 +298,7 @@ $("#formTurma").submit(function (event) {
                     text: 'Atualizado com sucesso.'
                 });
                 document.getElementById("formTurma").reset();
+                ObeterValorCursoSelecionado($("#hiddenHashAluno").val());
                 return false;
             } else {
                 var msg = '';
@@ -283,13 +311,13 @@ $("#formTurma").submit(function (event) {
                     text: msg
                 });
             }
-        }
+        };
         var callbackErro = function (data) {
             PNotify.error({
                 text: 'Ocorreu um erro ao processar sua solicitação'
             });
 
-        }
+        };
         academia.helper.rest.utils.POST("/Aluno/Turma/Novo", dataT, callback, callbackErro, $('#loader'));
     }
     else {
@@ -301,7 +329,7 @@ $("#formTurma").submit(function (event) {
 
 
     return false;
-})
+});
 $("#formAlunoFoto").submit(function (event) {
 
     event.preventDefault();
@@ -310,7 +338,7 @@ $("#formAlunoFoto").submit(function (event) {
     var formData = new FormData();
     formData.append('Id', $("#hiddenIdAluno").val());
     formData.append('Foto', '');
-    for (var i = 0; i != files.length; i++) {
+    for (var i = 0; i !== files.length; i++) {
         formData.append("file", files[i]);
     }
     var dataT = {
@@ -319,7 +347,7 @@ $("#formAlunoFoto").submit(function (event) {
         Foto: "",
         file: files[0]
 
-    }
+    };
 
     var callback = function (data) {
         if (data.success) {
@@ -342,14 +370,14 @@ $("#formAlunoFoto").submit(function (event) {
 
 
         }
-    }
+    };
     var callbackErro = function (data) {
         PNotify.error({
             title: 'Ops! :-(',
             text: 'Ocorreu um erro ao processar sua solicitação'
         });
 
-    }
+    };
 
     academia.helper.rest.utils.POSTFORM("/Aluno/Editar/Foto", formData, callback, callbackErro, $('#loader'));
 
@@ -556,38 +584,45 @@ $(function () {
         rules: {
 
             inputValorMatricula: {
-                required: true,
+                required: true
 
 
             },
             inputDescontoMatricula: {
-                required: true,
+                required: true
 
 
             },
             inputValorParcela: {
-                required: true,
+                required: true
 
 
             },
             inputDescontoParcela: {
-                required: true,
+                required: true
 
 
             },
             inputDiaVencimento: {
-                required: true,
+                required: true
 
 
             },
             inputTotalParcelas: {
-                required: true,
+                required: true
 
 
             },
             TipoFiliacao: {
                 required: true
+            },
+            inputVigencia: {
+                required: true
+            },
+            inputMesVencimento: {
+                required: true
             }
+
         },
         messages: {
 
@@ -617,7 +652,7 @@ $(function () {
 
             },
             TipoFiliacao: {
-                required: "Informe o tipo de responsavel.",
+                required: "Informe o tipo de responsavel."
             }
 
         },
@@ -625,17 +660,20 @@ $(function () {
 
             var dataT = {
 
-                idAluno: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
-                Nome: $("#formResponsavel #inputResponsavel").val(),
-                Telefone: $("#formResponsavel #inputTelefoneResponsavel").val(),
-                TipoFiliacao: $("#formResponsavel #TipoFiliacao").val()
-
-            }
+                IdAluno: $("#hiddenIdAluno").val(),
+                PercentualDesconto: $("#formMatricula #inputDescontoParcela").val().replace('%', ''),
+                ValorMaricula: $("#formMatricula #inputValorMatricula").val(),
+                ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', ''),
+                DiaVencimento: $("#formMatricula #inputDiaVencimento").val(),
+                TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
+                DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
+                DataContrato: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
+                Ano: $("#formMatricula #inputVigencia").val()
+            };
             var callback = function (data) {
                 if (JSON.parse(data).success) {
                     PNotify.success({
-                        title: ':-)',
-                        text: 'Matriculado com sucesso.'
+                        title: 'Matriculado com sucesso.',
                     });
                     document.getElementById("formResponsavel").reset();
                     return false;
@@ -645,24 +683,22 @@ $(function () {
                         msg = msg + item.property + ' > ' + item.message + '\n';
                     });
 
-                    PNotify.error({
-                        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
-                        text: msg
+                    PNotify.info({
+                        title: msg
                     });
 
 
                 }
-            }
+            };
             var callbackErro = function (data) {
                 PNotify.error({
-                    title: 'Ops! :-(',
-                    text: 'Ocorreu um erro ao processar sua solicitação'
+                    title: 'Ocorreu um erro ao processar sua solicitação'
                 });
 
-            }
+            };
 
             academia.helper.rest.utils.POST("/Aluno/Matricular/", dataT, callback, callbackErro, $('#loader'));
 
         }
     });
-})
+});
