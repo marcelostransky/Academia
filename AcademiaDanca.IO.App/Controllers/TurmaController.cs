@@ -177,7 +177,7 @@ namespace AcademiaDanca.IO.App.Controllers
                              select new
                              {
                                  r.IdTurma,
-                                 Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/{r.Foto}\">",
+                                 Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Funcionario/{r.Foto}\">",
                                  r.NomeProfessor,
                                  r.DesTurma,
                                  r.CodTurma,

@@ -8,7 +8,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
 {
     public interface IFinanceiroRepositorio
     {
-        Task<int> MatricularAssyncAsync(Matricula matricula);
+        Task<int> MatricularAsync(Matricula matricula);
         Task<bool> CheckMatriculaExisteAsync(Matricula matricula);
+        Task GerarMensalidade(Mensalidade mensalidade);
     }
 }

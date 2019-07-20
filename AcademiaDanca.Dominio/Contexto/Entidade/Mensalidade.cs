@@ -9,22 +9,25 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
     {
         public int IdAluno { get; private set; }
         public int Id { get; private set; }
+        public int IdMatricula { get; set; }
         public int Parcela { get; private set; }
-        public DateTime DataVencimento { get;private set; }
+        public DateTime DataVencimento { get; private set; }
         public decimal Valor { get; private set; }
         public decimal Desconto { get; private set; }
-
+        public Matricula MatriculaMensalidade { get; set; }
 
         public Mensalidade(
             int id,
-            int idAluno, 
-            int parcela, 
-            decimal valor, 
-            decimal desconto, 
+            int idAluno,
+            int idMatricula,
+            int parcela,
+            decimal valor,
+            decimal desconto,
             DateTime dataVencimento)
         {
             Id = id;
             IdAluno = idAluno;
+            IdMatricula = idMatricula;
             Parcela = parcela;
             Valor = valor;
             Desconto = desconto;
@@ -37,7 +40,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             var data = this.DataVencimento;
             for (int i = 1; i <= Parcela; i++)
             {
-                mensalidadesRetorno.Add(new Mensalidade(Id, IdAluno, i, Valor, Desconto, data));
+                mensalidadesRetorno.Add(new Mensalidade(Id, IdAluno, IdMatricula, i, Valor, Desconto, data));
                 data = data.AddMonths(1);
             }
             return mensalidadesRetorno;

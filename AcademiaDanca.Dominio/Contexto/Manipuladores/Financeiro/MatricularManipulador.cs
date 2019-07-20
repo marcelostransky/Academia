@@ -4,6 +4,7 @@ using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using FluentValidator;
+using System;
 using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
@@ -21,7 +22,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
             //Criar Entidade
             var matricula = new Matricula(comando.Id, comando.IdAluno, comando.TotalParcelas,
                 comando.DataContrato, comando.PercentualDesconto, comando.ValorDesconto, comando.ValorMaricula,
-                comando.ValorContrato, comando.DiaVencimento, comando.DataIncialPagamento, ChaveRegistro.Gerar(), comando.Ano);
+               Convert.ToDecimal(comando.ValorContrato), comando.DiaVencimento, comando.DataIncialPagamento, ChaveRegistro.Gerar(), comando.Ano);
 
             //check Matricula Existe
             if (await _repositorio.CheckMatriculaExisteAsync(matricula))
@@ -33,7 +34,9 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
                 return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);
             }
             //Persistir Dados
-            var id = await _repositorio.MatricularAssyncAsync(matricula);
+            var id = await _repositorio.MatricularAsync(matricula);
+            //Persistir Mensalidades
+            await _repositorio.GerarMensalidade(new Mensalidade(0, id,matricula.Id, matricula.TotalParcelas, Convert.ToDecimal(matricula.ValorContrato), matricula.ValorDesconto, matricula.DataIncialPagamento));
             // Retornar o resultado para tela
             return new ComandoResultado(true, "Matricula realizada com sucesso", new
             {

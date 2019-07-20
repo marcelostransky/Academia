@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using AcademiaDanca.IO.App.Enums;
 using AcademiaDanca.IO.App.Filtros;
@@ -14,7 +15,9 @@ using AcademiaDanca.IO.Dominio.Contexto.Comandos.AlunoComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
+using Leanwork.CodePack.DataTables;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -64,11 +67,24 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
+        public IActionResult Detalhar()
+        {
+            return View();
+        }
+       
+        public IActionResult Editar()
+        {
+            return View();
+        }
+        public IActionResult Consultar()
+        {
+            return View();
+        }
         public async Task<IActionResult> Novo()
         {
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
             var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null);
-            ViewBag.Id = Guid.Parse("b8a35e32-5e59-4ce3-92f7-77caf6a5e0e2");
+            ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
             ViewBag.TipoFiliacao = new SelectList(await _repositorio.ObterTipoFiliacaoAsync(), "Id", "Nome");
@@ -210,6 +226,54 @@ namespace AcademiaDanca.IO.App.Controllers
                 return Json(resultado);
             }
            
+        }
+
+        public async Task<IActionResult> ObterAlunos(string nome, jQueryDataTableRequestModel request)
+        {
+            try
+            {
+                var lista = (await _repositorio.ObterTodosPorAsync(nome)).AsQueryable();
+
+                if (request.sSearch != null && request.sSearch.Length > 0)
+                {
+                    lista = lista.Where(x => x.Nome.ToUpper().Contains(request.sSearch.ToUpper()));
+                }
+
+                var model = (from r in lista
+                             select new
+                             {
+                                 r.Id,
+                                 Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Aluno/{r.Foto}\">",
+                                 r.Nome,
+                                 r.Email,
+                                 r.Telefone,
+                                 r.Celular,
+                                 DataNascimento = r.DataNascimento.ToShortDateString(),
+                                 acao = ObterMenuAcaoDataTable(r)
+
+
+                             })
+                                .DataTableResponse(request);
+
+                return Ok(model);
+
+            }
+            catch (System.Exception ex)
+            {
+                throw;
+            }
+          
+        }
+
+        private object ObterMenuAcaoDataTable(AlunoPorNomeQuery r)
+        {
+            //var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            StringBuilder menu = new StringBuilder();
+            menu.AppendFormat("<a href =\"/Financeiro/Matricula/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricilar\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Aluno/Detalhe/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.UifId);
+            return menu.ToString();
         }
     }
 }

@@ -30,8 +30,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
             return existe > 0;
         }
-
-        public async Task<int> MatricularAssyncAsync(Matricula matricula)
+        public async Task<int> MatricularAsync(Matricula matricula)
         {
             try
             {
@@ -63,5 +62,16 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
 
         }
+
+        public async Task GerarMensalidade(Mensalidade mensalidade)
+        {
+            var lista = mensalidade.Mensalidades();
+            foreach (var mes in lista)
+            {
+
+            }
+        }
+
+
     }
 }

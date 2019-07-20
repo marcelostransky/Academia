@@ -201,8 +201,7 @@ $(function () {
                     });
 
                     PNotify.error({
-                        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
-                        text: msg
+                        title: msg
                     });
 
 
@@ -210,8 +209,7 @@ $(function () {
             }
             var callbackErro = function (data) {
                 PNotify.error({
-                    title: 'Ops! :-(',
-                    text: 'Ocorreu um erro ao processar sua solicitação'
+                    title: 'Ocorreu um erro ao processar sua solicitação'
                 });
 
             }
@@ -262,8 +260,7 @@ function DeletarTurmaAluno(turmaId, alunoId) {
             });
 
             PNotify.error({
-                title: JSON.parse(data).message,
-                text: msg
+                title: msg
             });
 
 
@@ -352,8 +349,7 @@ $("#formAlunoFoto").submit(function (event) {
     var callback = function (data) {
         if (data.success) {
             PNotify.success({
-                title: ':-)',
-                text: 'Atualizado com sucesso.'
+                title: 'Atualizado com sucesso.'
             });
             document.getElementById("formAlunoFoto").reset();
             return false;
@@ -514,6 +510,10 @@ $(function () {
                 maxlength: 300
 
             },
+            inputEmailResponsavel: {
+                required: true,
+                email: true
+            },
             TipoFiliacao: {
                 required: true
             }
@@ -527,8 +527,12 @@ $(function () {
                 maxlength: $.validator.format("O logradouro não pode serr superior há {0} characters")
 
             },
+            inputEmailResponsavel: {
+                required: "Informe o email do responsavel.",
+                email: "Email informado não é valido"
+            },
             TipoFiliacao: {
-                required: "Informe o tipo de responsavel.",
+                required: "Informe o tipo de responsavel."
             }
 
         },
@@ -539,41 +543,37 @@ $(function () {
                 idAluno: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
                 Nome: $("#formResponsavel #inputResponsavel").val(),
                 Telefone: $("#formResponsavel #inputTelefoneResponsavel").val(),
+                Email: $("#formResponsavel #inputEmailResponsavel").val(),
+                Docmento: $("#formResponsavel #inputDocumentoResponsavel").val(),
                 TipoFiliacao: $("#formResponsavel #TipoFiliacao").val()
 
-            }
+            };
             var callback = function (data) {
                 if (JSON.parse(data).success) {
                     PNotify.success({
-                        title: ':-)',
-                        text: 'Cadastro realizado com sucesso.'
+                        title: 'Cadastro realizado com sucesso.'
                     });
                     document.getElementById("formResponsavel").reset();
                     return false;
                 } else {
                     var msg = '';
                     $.each(JSON.parse(data).data, function (index, item) {
-                        msg = msg + item.property + ' > ' + item.message + '\n';
+                        msg = msg + item.property + ' - ' + item.message + '\n';
                     });
 
                     PNotify.error({
-                        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
-                        text: msg
+                        title: msg
                     });
-
-
                 }
-            }
+            };
             var callbackErro = function (data) {
                 PNotify.error({
-                    title: 'Ops! :-(',
-                    text: 'Ocorreu um erro ao processar sua solicitação'
+
+                    title: 'Ocorreu um erro ao processar sua solicitação. [' + data + ']'
                 });
 
-            }
-
+            };
             academia.helper.rest.utils.POST("/Aluno/Responsavel/Novo", dataT, callback, callbackErro, $('#loader'));
-
         }
     });
 });
@@ -663,7 +663,7 @@ $(function () {
                 IdAluno: $("#hiddenIdAluno").val(),
                 PercentualDesconto: $("#formMatricula #inputDescontoParcela").val().replace('%', ''),
                 ValorMaricula: $("#formMatricula #inputValorMatricula").val(),
-                ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', ''),
+                ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', '').replace('.',','),
                 DiaVencimento: $("#formMatricula #inputDiaVencimento").val(),
                 TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
                 DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),

@@ -32,6 +32,28 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             throw new NotImplementedException();
         }
+
+        public async Task<int> CheckFiliacaoAsync(Filiacao filiacao)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_email", filiacao.Email.Endereco);
+                var id = (await _contexto
+                      .Connection
+                      .QueryAsync<int>("SELECT id FROM academia.filiacao where  email = @sp_email;",
+                      parametros,
+                      commandType: System.Data.CommandType.Text)).FirstOrDefault();
+
+                return id;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
+        }
         public async Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno)
         {
             var parametros = new DynamicParameters();
@@ -129,7 +151,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var parametros = new DynamicParameters();
             parametros.Add("id", id);
 
-            return  (await _contexto.Connection.QueryAsync<TotalTurmasQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
+            return (await _contexto.Connection.QueryAsync<TotalTurmasQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
         }
 
         public async Task<int> SalvarAsync(Aluno aluno)
@@ -153,11 +175,56 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             return parametros.Get<int>("sp_id");
         }
 
-        public Task<int> SalvarResponsavelAsync(Filiacao filiacao)
+
+
+        public async Task<int> SalvarFiliacaoAsync(Filiacao filiacao)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                parametros.Add("sp_nome", filiacao.Nome);
+                parametros.Add("sp_telefone", filiacao.Telefone);
+                parametros.Add("sp_email", filiacao.Email != null ? filiacao.Email.Endereco : null);
+                parametros.Add("sp_documento", filiacao.Documento != null ? filiacao.Documento.Numero : null);
+                parametros.Add("sp_id_tipo_filiacao", filiacao.IdTipoFiliacao);
+                await _contexto
+                    .Connection
+                    .ExecuteAsync("sp_insert_filiacao",
+                    parametros,
+                    commandType: System.Data.CommandType.StoredProcedure);
+                return parametros.Get<int>("sp_id");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
         }
 
+        public async Task<int> SalvarFiliacaoAlunoAsync(int IdAluno, int IdFiliacao)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+
+                parametros.Add("sp_id_aluno", IdAluno);
+                parametros.Add("sp_id_filiacao", IdFiliacao);
+
+                var inserido = await _contexto
+                    .Connection
+                    .ExecuteAsync("sp_insert_filiacao_aluno",
+                    parametros,
+                    commandType: System.Data.CommandType.StoredProcedure);
+                return inserido;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
         public async Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno)
         {
             try
@@ -180,6 +247,17 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+
+        }
+
+        public async Task<IEnumerable<AlunoPorNomeQuery>> ObterTodosPorAsync(string nome)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_nome", nome);
+          
+            var lista = await _contexto.Connection.QueryAsync<AlunoPorNomeQuery>
+                ("sp_sel_aluno_por_nome", param: parametros, commandType: System.Data.CommandType.StoredProcedure);
+            return lista;
 
         }
     }

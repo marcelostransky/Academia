@@ -14,7 +14,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Vo
                 .IsTrue(Validate(Numero), "CPF", "CPF inválido")
             );
         }
-
+     
         public string Numero { get; private set; }
 
         public override string ToString()

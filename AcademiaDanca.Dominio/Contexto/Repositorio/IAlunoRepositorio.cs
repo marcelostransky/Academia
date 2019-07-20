@@ -12,7 +12,9 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
     {
         Task<int> SalvarAsync(Aluno aluno);
         Task<int> DeletarTurmaAluno(TurmaAluno turmaAluno);
-        Task<int> SalvarResponsavelAsync(Filiacao filiacao);
+        Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno);
+        Task<int> SalvarFiliacaoAsync(Filiacao filiacao);
+        Task<int> SalvarFiliacaoAlunoAsync(int IdAluno, int IdResponsavel);
         Task<IEnumerable<Aluno>> ObterTodosAsync();
         Task<IEnumerable<Filiacao>> ObterFiliacaoAsync();
         Task<IEnumerable<AddResponsavelQuery>> ObterTipoFiliacaoAsync();
@@ -21,9 +23,10 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<bool> CheckCpfAsync(string cpf);
         Task<bool> CheckEmailAsync(string email);
         Task<int> EditarFotoAsync(Aluno aluno);
-        Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno);
-        Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno);
-        Task<TotalTurmasQuery> ObterTotalTurmaAsync(Guid id);
        
+        Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno);
+        Task<int> CheckFiliacaoAsync(Filiacao filiacao);
+        Task<TotalTurmasQuery> ObterTotalTurmaAsync(Guid id);
+        Task<IEnumerable<AlunoPorNomeQuery>> ObterTodosPorAsync(string nome);
     }
 }

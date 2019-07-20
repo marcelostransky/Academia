@@ -53,7 +53,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             Ano = ano;
         }
 
-        
+
         private decimal ObterValorComDesconto(decimal valorDesconto)
         {
             if (valorDesconto > 0)
@@ -70,7 +70,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             var data = this.DataIncialPagamento;
             for (int i = 1; i <= this.TotalParcelas; i++)
             {
-                mensalidadesRetorno.Add(new Mensalidade(Id, IdAluno, i, ValorContrato, ValorDesconto, data));
+                mensalidadesRetorno.Add(new Mensalidade(Id, IdAluno, Id, i, ValorContrato, ValorDesconto, data));
                 data = data.AddMonths(1);
             }
             return mensalidadesRetorno;

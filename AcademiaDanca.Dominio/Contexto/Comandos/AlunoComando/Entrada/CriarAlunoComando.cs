@@ -27,7 +27,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.Aluno.Entrada
                .HasMaxLen(Foto, 300, "Foto", "O nome deve conter no máximo 300 caracteres")
                .IsEmail(Email, "Email", "O E-mail é inválido")
                .IsBetween(DataNascimento, Convert.ToDateTime("01/01/1930"), DateTime.Now, "Data Nascimento", "Data informada não é válida")
-               .HasMaxLen(Cpf, 11, "Cpf", "CPF inválido")
                .IsTrue((Id > 0), "Id", "Id informado não é valido")
            );
             return Valid;

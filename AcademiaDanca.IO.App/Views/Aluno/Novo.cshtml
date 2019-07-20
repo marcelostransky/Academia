@@ -2,7 +2,6 @@
     ViewData["Title"] = "Novo Aluno";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
 <div class="content custom-scrollbar ps">
     <div id="e-commerce-product" class="page-layout simple tabbed">
         <!-- HEADER -->
@@ -44,16 +43,12 @@
                     <a class="nav-link btn" id="matricula-tab" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
                 </li>
             </ul>
-
             <div class="tab-content">
-                <input type="hidden" id="hiddenIdAluno" value="9" />
+                <input type="hidden" id="hiddenIdAluno" value="" />
                 <input type="hidden" id="hiddenHashAluno" value="@ViewBag.Id" />
                 <div class="tab-pane fade show active" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
-
                     <div class="card p-6">
-
                         <form id="formAluno">
-
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label for="inputId" class="col-form-label">Id</label>
@@ -93,11 +88,8 @@
 
                                 </div>
                             </div>
-
-
                             <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
-
                     </div>
                 </div>
                 <div class="tab-pane fade" id="foto-tab-pane" role="tabpanel" aria-labelledby="foto-info-tab">
@@ -211,9 +203,18 @@
                                 </div>
                             </div>
                             <div class="form-row">
-                                <div class="form-group col-md-5">
-                                    <label for="inputUF" class="col-form-label">Tipo Filiação</label>
-                                    @Html.DropDownList("TipoFiliacao", null, "Selecione um tipo", new { @class = "form-control   select" })
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputDocumentoResponsavel" class="col-form-label">Cpf</label>
+                                    <input type="text" class="form-control" id="inputDocumentoResponsavel" name="inputDocumentoResponsavel">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmailResponsavel" class="col-form-label">Email</label>
+                                    <input type="text" class="form-control" id="inputEmailResponsavel" name="inputEmailResponsavel">
 
                                 </div>
                             </div>
@@ -223,6 +224,14 @@
                                     <input type="text" class="form-control telefone" id="inputTelefoneResponsavel" name="inputTelefoneResponsavel">
                                 </div>
                             </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="inputUF" class="col-form-label">Tipo Filiação</label>
+                                    @Html.DropDownList("TipoFiliacao", null, "Selecione um tipo", new { @class = "form-control   select" })
+
+                                </div>
+                            </div>
+
                             <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
                         <div class="base invisible col-md-12">
@@ -295,11 +304,9 @@
                     <div class="card p-6">
                         <form id="formMatricula" style="display:none" class="invisible form formReset">
                             <div class="form-row">
-
                                 <div class="form-group col-md-6">
                                     <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
                                     <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula" value="0">
-
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
@@ -328,9 +335,7 @@
                                         <option>10</option>
                                         <option>11</option>
                                         <option>12</option>
-
                                     </select>
-
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputDiaVencimento" class="col-form-label">Dia Vencimento</label>
@@ -351,12 +356,8 @@
                                 <div class="form-group col-md-4">
                                     <label for="inputVigencia" class="col-form-label">Ano/Vigencia</label>
                                     <input type="text" class="form-control" id="inputVigencia" name="inputVigencia">
-
                                 </div>
-
                             </div>
-
-
                             <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
                         </form>
                         <div class="base invisible col-12">
@@ -372,7 +373,6 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -385,7 +385,5 @@
 <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
 <script src="~/Modulo/Mask/maskmoney.js"></script>
 <script src="~/js/Helper/Tabela.js"></script>
-<script src="~/js/Pagina/NovoAluno.js"></script>
+<script src="~/js/apps/Aluno/Pagina/NovoAluno.js"></script>
 }
-
-

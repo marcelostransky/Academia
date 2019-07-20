@@ -10,7 +10,7 @@ namespace Academia.Io.Tests.Entidades
     public class MensalidadeTests
     {
         int Dia = 5;
-        Mensalidade mensalidade = new Mensalidade(0, 1, 5, Convert.ToDecimal(568.32), 20, Convert.ToDateTime("30/03/2019"));
+        Mensalidade mensalidade = new Mensalidade(0, 1, 5,6, Convert.ToDecimal(568.32), 20, Convert.ToDateTime("30/03/2019"));
         [TestMethod]
         public void DeveRetornar12datasVencimentoPorDia()
         {
