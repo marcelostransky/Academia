@@ -68,10 +68,28 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = mensalidade.Mensalidades();
             foreach (var mes in lista)
             {
-
+                try
+                {
+                    var parametros = new DynamicParameters();
+                    parametros.Add("sp_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                    parametros.Add("sp_id_matricula", mensalidade.IdMatricula);
+                    parametros.Add("sp_data_vencimento", mensalidade.DataVencimento);
+                    parametros.Add("sp_valor", mensalidade.Valor);
+                    parametros.Add("sp_desconto", mensalidade.Desconto);
+                    parametros.Add("sp_parcela", mensalidade.Parcela);
+                    parametros.Add("sp_id_aluno", mensalidade.IdAluno);
+                    
+                    await _contexto
+                        .Connection
+                        .ExecuteAsync("sp_insert_mensalidade",
+                        parametros,
+                        commandType: System.Data.CommandType.StoredProcedure);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
             }
         }
-
-
     }
 }

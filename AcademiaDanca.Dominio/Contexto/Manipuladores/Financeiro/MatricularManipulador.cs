@@ -36,7 +36,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
             //Persistir Dados
             var id = await _repositorio.MatricularAsync(matricula);
             //Persistir Mensalidades
-            await _repositorio.GerarMensalidade(new Mensalidade(0, id,matricula.Id, matricula.TotalParcelas, Convert.ToDecimal(matricula.ValorContrato), matricula.ValorDesconto, matricula.DataIncialPagamento));
+            await _repositorio.GerarMensalidade(new Mensalidade(0, matricula.IdAluno, id, matricula.TotalParcelas, Convert.ToDecimal(matricula.ValorContrato), matricula.ValorDesconto, matricula.DataIncialPagamento));
             // Retornar o resultado para tela
             return new ComandoResultado(true, "Matricula realizada com sucesso", new
             {

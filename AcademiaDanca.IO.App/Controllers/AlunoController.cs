@@ -67,11 +67,11 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
-        public IActionResult Detalhar()
+        public IActionResult Detalhar(Guid id)
         {
             return View();
         }
-       
+
         public IActionResult Editar()
         {
             return View();
@@ -225,7 +225,7 @@ namespace AcademiaDanca.IO.App.Controllers
                 Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
                 return Json(resultado);
             }
-           
+
         }
 
         public async Task<IActionResult> ObterAlunos(string nome, jQueryDataTableRequestModel request)
@@ -262,17 +262,16 @@ namespace AcademiaDanca.IO.App.Controllers
             {
                 throw;
             }
-          
+
         }
 
         private object ObterMenuAcaoDataTable(AlunoPorNomeQuery r)
         {
             //var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"/Financeiro/Matricula/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricilar\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.UifId);
-            menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.UifId);
-            menu.AppendFormat("<a href =\"/Aluno/Detalhe/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.UifId);
-            menu.AppendFormat("<a href =\"/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Financeiro/Matricula/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-cash-usd\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Aluno/Detalhar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Detalhar Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.UifId);
             return menu.ToString();
         }
     }
