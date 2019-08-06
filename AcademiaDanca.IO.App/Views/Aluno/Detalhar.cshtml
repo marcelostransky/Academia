@@ -1,8 +1,374 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Detalhar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Css{
+    <style>
+        .page-layout.simple .page-sidebar {
+            width: 320px;
+            min-width: 220px;
+            max-width: 320px;
+            z-index: 2;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            background: transparent;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+}
+<div class="content custom-scrollbar ps ps--active-y">
 
-<h2>Detalhar</h2>
+    <div id="contacts" class="page-layout simple left-sidebar-floating">
 
+        <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-4 p-sm-6">
+
+            <div class="col">
+
+                <div class="row no-gutters align-items-center flex-nowrap">
+
+                    <button type="button" class="sidebar-toggle-button btn btn-icon d-inline-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="contacts-sidebar">
+                        <i class="icon icon-menu"></i>
+                    </button>
+
+                    <!-- APP TITLE -->
+                    <div class="logo row no-gutters align-items-center flex-nowrap">
+                        <span class="logo-icon mr-4">
+                            <i class="icon-account-box s-6"></i>
+                        </span>
+                        <span class="logo-text h4">Aluno</span>
+                    </div>
+                </div>
+                <!-- / APP TITLE -->
+            </div>
+
+
+        </div>
+        <!-- / HEADER -->
+
+        <div class="page-content-wrapper">
+
+            <aside class="page-sidebar p-6" data-fuse-bar="contacts-sidebar" data-fuse-bar-media-step="md">
+                <div class="page-sidebar-card">
+                    <!-- SIDENAV HEADER -->
+                    <div class="header p-4">
+
+                        <!-- USER -->
+                        <div class="row no-gutters align-items-center">
+                            <img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/12.jpg">
+                            <span class="font-weight-bold">Marcelo Stransky</span>
+                        </div>
+                        <!-- / USER -->
+
+                    </div>
+                    <!-- / SIDENAV HEADER -->
+
+                    <div class="divider"></div>
+
+                    <!-- SIDENAV CONTENT -->
+                    <div class="content">
+
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Email</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Telefone</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Celular</td><td>Marcelostransky@gmail.com</td></tr>
+
+                            </tbody>
+                        </table>
+                        <div class="divider"></div>
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Cep</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Logradouro</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Complemento</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>N°</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Bairro</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Cidade</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Estado</td><td>Marcelostransky@gmail.com</td></tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- / SIDENAV CONTENT -->
+                </div>
+            </aside>
+
+            <!-- CONTENT -->
+            <div class="page-content p-4 p-sm-6">
+                <!-- CONTACT LIST -->
+                <div class="contacts-list card">
+
+                    <!-- CONTACT LIST HEADER -->
+                    <dvi class="contacts-list-header p-4">
+
+                        <div class="row no-gutters align-items-center justify-content-between">
+
+                            <div class="list-title text-muted">
+                                Responsavel
+                            </div>
+
+                            <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                <i class="icon icon-sort-alphabetical"></i>
+                            </button>
+                        </div>
+
+                    </dvi>
+                    <!-- / CONTACT LIST HEADER -->
+                    <!-- CONTACT ITEM -->
+                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator fuse-ripple-ready"></span>
+                        </label>
+
+                        <img class="avatar mx-4" alt="Abbott" src="../assets/images/avatars/Abbott.jpg">
+
+                        <div class="col text-truncate font-weight-bold">Abbott Keitch</div>
+
+                        <div class="col email text-truncate px-1 d-none d-xl-flex">
+                            abbott@withinpixels.com
+                        </div>
+
+                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                            +1-202-555-0175
+                        </div>
+
+                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                            Digital Archivist
+                        </div>
+
+                        <div class="col company text-truncate px-1 d-none d-sm-flex">
+                            Saois
+                        </div>
+
+                        <div class="col-auto actions">
+
+                            <div class="row no-gutters">
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon-star"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTACT ITEM -->
+                    <!-- CONTACT ITEM -->
+                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator fuse-ripple-ready"></span>
+                        </label>
+
+                        <img class="avatar mx-4" alt="Arnold" src="../assets/images/avatars/Arnold.jpg">
+
+                        <div class="col text-truncate font-weight-bold">Arnold Matlock</div>
+
+                        <div class="col email text-truncate px-1 d-none d-xl-flex">
+                            arnold@withinpixels.com
+                        </div>
+
+                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                            +1-202-555-0141
+                        </div>
+
+                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                            Graphic Artist
+                        </div>
+
+                        <div class="col company text-truncate px-1 d-none d-sm-flex">
+                            Laotcone
+                        </div>
+
+                        <div class="col-auto actions">
+
+                            <div class="row no-gutters">
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon-star"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTACT ITEM -->
+                    <!-- CONTACT ITEM -->
+
+
+                </div>
+                <!-- / CONTACT LIST -->
+                <div class="contacts-list card" style="top:10px">
+
+                    <!-- CONTACT LIST HEADER -->
+                    <dvi class="contacts-list-header p-4">
+
+                        <div class="row no-gutters align-items-center justify-content-between">
+
+                            <div class="list-title text-muted">
+                                Turmas()
+                            </div>
+
+                            <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                <i class="icon icon-sort-alphabetical"></i>
+                            </button>
+                        </div>
+
+                    </dvi>
+                    <!-- / CONTACT LIST HEADER -->
+                    <!-- CONTACT ITEM -->
+                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator fuse-ripple-ready"></span>
+                        </label>
+
+                        <img class="avatar mx-4" alt="Abbott" src="../assets/images/avatars/Abbott.jpg">
+
+                        <div class="col text-truncate font-weight-bold">Abbott Keitch</div>
+
+                        <div class="col email text-truncate px-1 d-none d-xl-flex">
+                            abbott@withinpixels.com
+                        </div>
+
+                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                            +1-202-555-0175
+                        </div>
+
+                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                            Digital Archivist
+                        </div>
+
+                        <div class="col company text-truncate px-1 d-none d-sm-flex">
+                            Saois
+                        </div>
+
+                        <div class="col-auto actions">
+
+                            <div class="row no-gutters">
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon-star"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTACT ITEM -->
+                    <!-- CONTACT ITEM -->
+                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+                        <label class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input">
+                            <span class="custom-control-indicator fuse-ripple-ready"></span>
+                        </label>
+
+                        <img class="avatar mx-4" alt="Arnold" src="../assets/images/avatars/Arnold.jpg">
+
+                        <div class="col text-truncate font-weight-bold">Arnold Matlock</div>
+
+                        <div class="col email text-truncate px-1 d-none d-xl-flex">
+                            arnold@withinpixels.com
+                        </div>
+
+                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                            +1-202-555-0141
+                        </div>
+
+                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                            Graphic Artist
+                        </div>
+
+                        <div class="col company text-truncate px-1 d-none d-sm-flex">
+                            Laotcone
+                        </div>
+
+                        <div class="col-auto actions">
+
+                            <div class="row no-gutters">
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon-star"></i>
+                                </button>
+
+                                <button type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-dots-vertical"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- CONTACT ITEM -->
+                    <!-- CONTACT ITEM -->
+
+
+                </div>
+            </div>
+            <!-- / CONTENT -->
+            <aside class="page-sidebar p-6" data-fuse-bar="contacts-sidebar" data-fuse-bar-media-step="md">
+                <div class="page-sidebar-card">
+                    <!-- SIDENAV HEADER -->
+                    <div class="header p-4">
+
+                        <!-- USER -->
+                        <div class="row no-gutters align-items-center">
+                            @*<img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/12.jpg">*@
+                            <span class="font-weight-bold">Financeiro</span>
+                        </div>
+                        <!-- / USER -->
+
+                    </div>
+                    <!-- / SIDENAV HEADER -->
+
+                    <div class="divider"></div>
+
+                    <!-- SIDENAV CONTENT -->
+                    <div class="content">
+
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Email</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Telefone</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Celular</td><td>Marcelostransky@gmail.com</td></tr>
+
+                            </tbody>
+                        </table>
+                        <div class="divider"></div>
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Cep</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Logradouro</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Complemento</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>N°</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Bairro</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Cidade</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Estado</td><td>Marcelostransky@gmail.com</td></tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <!-- / SIDENAV CONTENT -->
+                </div>
+            </aside>
+        </div>
+
+    </div>
+
+    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 841px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 349px;"></div></div>
+</div>
+@section Scripts{
+    <script src="~/js/Helper/Helper.js"></script>
+    <script type="text/javascript" src="/js/apps/e-commerce/product/product.js"></script>
+    <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+}

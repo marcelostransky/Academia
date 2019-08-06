@@ -22,7 +22,7 @@ namespace Academia.Io.Tests.Manipuladores
                 DataContrato = DateTime.Now,
                 TotalParcelas = 5,
                 PercentualDesconto = 10,
-                ValorDesconto = Convert.ToDecimal("56,15"),
+                ValorDesconto = Convert.ToDecimal("0"),
                 ValorMaricula = 0,
                 ValorContrato = Convert.ToDouble("560,00"),
                 DiaVencimento = 1,
@@ -34,7 +34,6 @@ namespace Academia.Io.Tests.Manipuladores
             };
             var manipulador = new MatricularManipulador(new FakeFinanceiroRepositorio());
             var result = await manipulador.ManipuladorAsync(comando);
-
             Assert.AreNotEqual(null, result);
             Assert.AreEqual(true, manipulador.Valid);
         }

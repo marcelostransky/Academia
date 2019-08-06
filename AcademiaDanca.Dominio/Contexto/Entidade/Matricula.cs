@@ -56,13 +56,9 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
 
         private decimal ObterValorComDesconto(decimal valorDesconto)
         {
-            if (valorDesconto > 0)
-            {
-                return ValorDesconto;
-            }
-            else if (PercentualDesconto > 0)
-                return (PercentualDesconto / 100 * ValorContrato);
-            return 0;
+            if (PercentualDesconto > 0)
+                valorDesconto = (PercentualDesconto / 100 * ValorContrato);
+            return valorDesconto;
         }
         public IList<Mensalidade> GerarListaMensalidades()
         {
