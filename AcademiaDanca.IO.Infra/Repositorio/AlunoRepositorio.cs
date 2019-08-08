@@ -3,6 +3,7 @@ using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Dapper;
+using Slapper;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -154,6 +155,131 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             return (await _contexto.Connection.QueryAsync<TotalTurmasQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
         }
 
+        public async Task<AlunoQuery> ObterAlunoCompletotesteAsync(Guid id)
+        {
+            try
+            {
+                var query = @"SELECT Distinct
+                          a.id as AlunoId,
+                          a.nome as AlunoNome,
+                          a.email as AlunoEmail,
+                          a.cpf as AlunoCpf,
+                          a.foto as AlunoFoto,
+                          a.data_nascimento as AlunoDataNascimento,
+                          a.uif_id as AlunoGuid,
+                          a.telefone as AlunoTelefone,
+                          a.celular as AlunoCelular,
+                          l.id as LogradouroId, 
+                        l.rua as LogradouroRua, 
+                        l.numero as LogradouroNumenro,
+                        l.bairro as LogradouroBairro,
+                        l.cep as LogradouroCep,
+                        l.complemento as LogradouroComplemento,
+                        l.cidade as LogradouroCidade,
+                        l.estado as LogradouroEstado,
+                        f.id as FiliacaoId,
+                        f.nome as FiliacaoNome,
+                        f.telefone as FiliacaoTelefone,
+                        f.documento as FiliacaoDocumento,
+                        f.email as FiliacaoEmail,
+                        t.id as TurmaId,
+                        t.des_turma as TurmaDescricao,
+                        t.cod_turma as TurmaCodigo,
+                        t.ano as TurmaAno,
+                        t.valor as TurmaValor
+                        FROM academia.logradouro as l
+                        left join academia.logradouro_aluno as la on l.id = la.id_logradouro
+                        left join academia.aluno as a on la.id_aluno = a.id
+                        left join academia.aluno_filiacao as af on a.id = af.id_aluno
+                        left join academia.filiacao as f on af.id_filiacao = f.id
+                        left join academia.turma_aluno as ta on a.id = ta.id_aluno
+                        left join academia.turma as t on ta.id_turma = t.id
+                        left join academia.matricula as ma on a.id = ma.id_aluno
+                        where a.uif_id=@id
+                        Order by a.id,l.id,f.id,t.id;";
+                var parametros = new DynamicParameters();
+                parametros.Add("id", id);
+                AlunoQuery aluno = new AlunoQuery();
+
+                var alunoRetorno = (await _contexto.Connection.QueryAsync<AlunoQuery, AlunoEnderecoQuery, AlunoFiliacaoQuery, AlunoTurmaQuery, AlunoQuery>(query,
+                    (a, l, f, t) =>
+                    {
+                        aluno = a;
+                        aluno.AlunoTurmas.Add(t);
+                        aluno.AlunoLogradouro = l;
+                        //aluno.Alun.Add(f);
+                        return aluno;
+                    }, parametros, splitOn: "AlunoId,LogradouroId,FiliacaoId,TurmaId", commandType: CommandType.Text));
+                return alunoRetorno.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public async Task<AlunoQuery> ObterAlunoCompletoAsync(Guid id)
+        {
+            try
+            {
+                var query = @"SELECT Distinct
+                          a.id as AlunoId,
+                          a.nome as AlunoNome,
+                          a.email as AlunoEmail,
+                          a.cpf as AlunoCpf,
+                          a.foto as AlunoFoto,
+                          a.data_nascimento as AlunoDataNascimento,
+                          a.uif_id as AlunoGuid,
+                          a.telefone as AlunoTelefone,
+                          a.celular as AlunoCelular,
+                          l.id as AlunoLogradouro_LogradouroId, 
+                        l.rua as AlunoLogradouro_LogradouroRua, 
+                        l.numero as AlunoLogradouro_LogradouroNumenro,
+                        l.bairro as AlunoLogradouro_LogradouroBairro,
+                        l.cep as AlunoLogradouro_LogradouroCep,
+                        l.complemento as AlunoLogradouro_LogradouroComplemento,
+                        l.cidade as AlunoLogradouro_LogradouroCidade,
+                        l.estado as AlunoLogradouro_LogradouroEstado,
+                        f.id as AlunoFiliacoes_FiliacaoId,
+                        f.nome as AlunoFiliacoes_FiliacaoNome,
+                        f.telefone as AlunoFiliacoes_FiliacaoTelefone,
+                        f.documento as AlunoFiliacoes_FiliacaoDocumento,
+                        f.email as AlunoFiliacoes_FiliacaoEmail,
+                        t.id as AlunoTurmas_TurmaId,
+                        t.des_turma as AlunoTurmas_TurmaDescricao,
+                        t.cod_turma as AlunoTurmas_TurmaCodigo,
+                        t.ano as AlunoTurmas_TurmaAno,
+                        t.valor as AlunoTurmas_TurmaValor
+                        FROM academia.logradouro as l
+                        left join academia.logradouro_aluno as la on l.id = la.id_logradouro
+                        left join academia.aluno as a on la.id_aluno = a.id
+                        left join academia.aluno_filiacao as af on a.id = af.id_aluno
+                        left join academia.filiacao as f on af.id_filiacao = f.id
+                        left join academia.turma_aluno as ta on a.id = ta.id_aluno
+                        left join academia.turma as t on ta.id_turma = t.id
+                        left join academia.matricula as ma on a.id = ma.id_aluno
+                        where a.uif_id=@id
+                        Order by a.id,l.id,f.id,t.id;";
+                var parametros = new DynamicParameters();
+                parametros.Add("id", id);
+                AlunoQuery aluno = new AlunoQuery();
+
+                var alunoRetorno = (await _contexto.Connection.QueryAsync<dynamic>(query,
+                  parametros, commandType: CommandType.Text));
+                AutoMapper.Configuration.AddIdentifier(typeof(AlunoQuery), "AlunoId");
+                AutoMapper.Configuration.AddIdentifier(typeof(AlunoEnderecoQuery), "LogradouroId");
+                AutoMapper.Configuration.AddIdentifier(typeof(AlunoFiliacaoQuery), "FiliacaoId");
+                AutoMapper.Configuration.AddIdentifier(typeof(AlunoTurmaQuery), "TurmaId");
+                var aaluno = (AutoMapper.MapDynamic<AlunoQuery>(alunoRetorno) as IEnumerable<AlunoQuery>).FirstOrDefault();
+                return new AlunoQuery();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
         public async Task<int> SalvarAsync(Aluno aluno)
         {
             var parametros = new DynamicParameters();
@@ -254,7 +380,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             var parametros = new DynamicParameters();
             parametros.Add("sp_nome", nome);
-          
+
             var lista = await _contexto.Connection.QueryAsync<AlunoPorNomeQuery>
                 ("sp_sel_aluno_por_nome", param: parametros, commandType: System.Data.CommandType.StoredProcedure);
             return lista;

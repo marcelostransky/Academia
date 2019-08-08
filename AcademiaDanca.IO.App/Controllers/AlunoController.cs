@@ -65,10 +65,12 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         public IActionResult Index()
         {
+
             return View();
         }
-        public IActionResult Detalhar(Guid id)
+        public async Task<IActionResult> Detalhar(Guid id)
         {
+            var aluno = await _repositorio.ObterAlunoCompletoAsync(id);
             return View();
         }
 

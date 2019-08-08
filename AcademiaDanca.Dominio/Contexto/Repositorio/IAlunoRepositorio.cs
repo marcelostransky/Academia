@@ -28,5 +28,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<int> CheckFiliacaoAsync(Filiacao filiacao);
         Task<TotalTurmasQuery> ObterTotalTurmaAsync(Guid id);
         Task<IEnumerable<AlunoPorNomeQuery>> ObterTodosPorAsync(string nome);
+        Task<AlunoQuery> ObterAlunoCompletoAsync(Guid id);
     }
 }
