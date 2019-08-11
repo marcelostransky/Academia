@@ -55,8 +55,8 @@
 
                         <!-- USER -->
                         <div class="row no-gutters align-items-center">
-                            <img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/12.jpg">
-                            <span class="font-weight-bold">Marcelo Stransky</span>
+                            <img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/@ViewBag.Aluno.AlunoFoto">
+                            <span class="font-weight-bold">@ViewBag.Aluno.AlunoNome</span>
                         </div>
                         <!-- / USER -->
 
@@ -70,25 +70,27 @@
 
                         <table class="table table-responsive">
                             <tbody>
-                                <tr><td>Email</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Telefone</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Celular</td><td>Marcelostransky@gmail.com</td></tr>
+                                <tr><td>Email</td><td>@ViewBag.Aluno.AlunoEmail</td></tr>
+                                <tr><td>Telefone</td><td>@ViewBag.Aluno.AlunoTelefone</td></tr>
+                                <tr><td>Celular</td><td>@ViewBag.Aluno.AlunoCelular</td></tr>
 
                             </tbody>
                         </table>
                         <div class="divider"></div>
-                        <table class="table table-responsive">
-                            <tbody>
-                                <tr><td>Cep</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Logradouro</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Complemento</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>N°</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Bairro</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Cidade</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Estado</td><td>Marcelostransky@gmail.com</td></tr>
-                            </tbody>
-                        </table>
-
+                        @if (@ViewBag.Aluno.AlunoLogradouro != null)
+                        {
+                            <table class="table table-responsive">
+                                <tbody>
+                                    <tr><td>Cep</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroCep</td></tr>
+                                    <tr><td>Logradouro</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroRua</td></tr>
+                                    <tr><td>Complemento</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroComplemento</td></tr>
+                                    <tr><td>N°</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroNumero</td></tr>
+                                    <tr><td>Bairro</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroBairro</td></tr>
+                                    <tr><td>Cidade</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroCidade</td></tr>
+                                    <tr><td>Estado</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroEstado</td></tr>
+                                </tbody>
+                            </table>
+                        }
                     </div>
                     <!-- / SIDENAV CONTENT -->
                 </div>
@@ -108,101 +110,40 @@
                                 Responsavel
                             </div>
 
-                            <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                <i class="icon icon-sort-alphabetical"></i>
-                            </button>
                         </div>
 
                     </dvi>
                     <!-- / CONTACT LIST HEADER -->
                     <!-- CONTACT ITEM -->
-                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+                    @if (@ViewBag.Aluno.AlunoFiliacoes != null)
+                    {
+                        @foreach (var item in @ViewBag.Aluno.AlunoFiliacoes)
+                        {
+                            <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
 
-                        <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input">
-                            <span class="custom-control-indicator fuse-ripple-ready"></span>
-                        </label>
 
-                        <img class="avatar mx-4" alt="Abbott" src="../assets/images/avatars/Abbott.jpg">
+                                <img class="avatar mx-4" alt="Pais" src="~/images/avatars/pais.jpeg">
 
-                        <div class="col text-truncate font-weight-bold">Abbott Keitch</div>
+                                <div class="col text-truncate font-weight-bold">@item.FiliacaoNome</div>
 
-                        <div class="col email text-truncate px-1 d-none d-xl-flex">
-                            abbott@withinpixels.com
-                        </div>
+                                <div class="col email text-truncate px-1 d-none d-xl-flex">
+                                    @item.FiliacaoEmail
+                                </div>
 
-                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
-                            +1-202-555-0175
-                        </div>
 
-                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
-                            Digital Archivist
-                        </div>
 
-                        <div class="col company text-truncate px-1 d-none d-sm-flex">
-                            Saois
-                        </div>
+                                <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                                    @item.FiliacaoDocumento
+                                </div>
 
-                        <div class="col-auto actions">
+                                <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                    @item.FiliacaoTelefone
+                                </div>
 
-                            <div class="row no-gutters">
-
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon-star"></i>
-                                </button>
-
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon icon-dots-vertical"></i>
-                                </button>
                             </div>
-                        </div>
-                    </div>
-                    <!-- CONTACT ITEM -->
-                    <!-- CONTACT ITEM -->
-                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
 
-                        <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input">
-                            <span class="custom-control-indicator fuse-ripple-ready"></span>
-                        </label>
-
-                        <img class="avatar mx-4" alt="Arnold" src="../assets/images/avatars/Arnold.jpg">
-
-                        <div class="col text-truncate font-weight-bold">Arnold Matlock</div>
-
-                        <div class="col email text-truncate px-1 d-none d-xl-flex">
-                            arnold@withinpixels.com
-                        </div>
-
-                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
-                            +1-202-555-0141
-                        </div>
-
-                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
-                            Graphic Artist
-                        </div>
-
-                        <div class="col company text-truncate px-1 d-none d-sm-flex">
-                            Laotcone
-                        </div>
-
-                        <div class="col-auto actions">
-
-                            <div class="row no-gutters">
-
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon-star"></i>
-                                </button>
-
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon icon-dots-vertical"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- CONTACT ITEM -->
-                    <!-- CONTACT ITEM -->
-
+                        }
+                    }
 
                 </div>
                 <!-- / CONTACT LIST -->
@@ -214,104 +155,113 @@
                         <div class="row no-gutters align-items-center justify-content-between">
 
                             <div class="list-title text-muted">
-                                Turmas()
+                                Turmas(
+                                @if (ViewBag.Aluno.AlunoTurmas != null)
+                                {
+                                    @ViewBag.Aluno.AlunoTurmas.Count;
+                                }
+                                )
                             </div>
 
-                            <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                <i class="icon icon-sort-alphabetical"></i>
-                            </button>
+
                         </div>
 
                     </dvi>
                     <!-- / CONTACT LIST HEADER -->
                     <!-- CONTACT ITEM -->
-                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+                    @if (@ViewBag.Aluno.AlunoTurmas != null)
+                    {
+                        @foreach (var item in @ViewBag.Aluno.AlunoTurmas)
+                        {
+                            <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
 
-                        <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input">
-                            <span class="custom-control-indicator fuse-ripple-ready"></span>
-                        </label>
 
-                        <img class="avatar mx-4" alt="Abbott" src="../assets/images/avatars/Abbott.jpg">
 
-                        <div class="col text-truncate font-weight-bold">Abbott Keitch</div>
 
-                        <div class="col email text-truncate px-1 d-none d-xl-flex">
-                            abbott@withinpixels.com
-                        </div>
+                                <img class="avatar mx-4" alt="Abbott" src="~/images/avatars/turmadanca.jpeg">
 
-                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
-                            +1-202-555-0175
-                        </div>
+                                <div class="col text-truncate font-weight-bold">@item.TurmaCodigo</div>
 
-                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
-                            Digital Archivist
-                        </div>
+                                <div class="col email text-truncate px-1 d-none d-xl-flex">
+                                    @item.TurmaDescricao
+                                </div>
 
-                        <div class="col company text-truncate px-1 d-none d-sm-flex">
-                            Saois
-                        </div>
+                                <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                                    @item.TurmaAno
+                                </div>
 
-                        <div class="col-auto actions">
+                                <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                                    @item.TurmaValor
+                                </div>
 
-                            <div class="row no-gutters">
+                                <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                    Saois
+                                </div>
 
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon-star"></i>
-                                </button>
 
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon icon-dots-vertical"></i>
-                                </button>
                             </div>
-                        </div>
-                    </div>
-                    <!-- CONTACT ITEM -->
-                    <!-- CONTACT ITEM -->
-                    <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
 
-                        <label class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input">
-                            <span class="custom-control-indicator fuse-ripple-ready"></span>
-                        </label>
+                        }
+                    }<!-- CONTACT ITEM -->
 
-                        <img class="avatar mx-4" alt="Arnold" src="../assets/images/avatars/Arnold.jpg">
+                </div>
+                <!-- / Mensalidade LIST -->
+                <div class="contacts-list card" style="top:20px">
 
-                        <div class="col text-truncate font-weight-bold">Arnold Matlock</div>
+                    <!-- CONTACT LIST HEADER -->
+                    <dvi class="contacts-list-header p-4">
 
-                        <div class="col email text-truncate px-1 d-none d-xl-flex">
-                            arnold@withinpixels.com
-                        </div>
+                        <div class="row no-gutters align-items-center justify-content-between">
 
-                        <div class="col phone text-truncate px-1 d-none d-xl-flex">
-                            +1-202-555-0141
-                        </div>
-
-                        <div class="col job-title text-truncate px-1 d-none d-sm-flex">
-                            Graphic Artist
-                        </div>
-
-                        <div class="col company text-truncate px-1 d-none d-sm-flex">
-                            Laotcone
-                        </div>
-
-                        <div class="col-auto actions">
-
-                            <div class="row no-gutters">
-
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon-star"></i>
-                                </button>
-
-                                <button type="button" class="btn btn-icon fuse-ripple-ready">
-                                    <i class="icon icon-dots-vertical"></i>
-                                </button>
+                            <div class="list-title text-muted">
+                                Mensalidades ( 
+                                @if (ViewBag.Aluno.AlunoMensalidades != null)
+                                {
+                                    @ViewBag.Aluno.AlunoMensalidades.Count;
+                                } 
+                                )
                             </div>
-                        </div>
-                    </div>
-                    <!-- CONTACT ITEM -->
-                    <!-- CONTACT ITEM -->
 
+
+                        </div>
+
+                    </dvi>
+                    <!-- / CONTACT LIST HEADER -->
+                    <!-- Mensalidade ITEM -->
+                    @if (@ViewBag.Aluno.AlunoMensalidades != null)
+                    {
+                        @foreach (var item in @ViewBag.Aluno.AlunoMensalidades)
+                        {
+                            <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+
+
+                                
+                                <img class="avatar mx-4" alt="Mensalidade" src="~/images/avatars/pagamento.png">
+
+                                <div class="col text-truncate font-weight-bold">@item.MensalidadeParcela</div>
+
+                                <div class="col email text-truncate px-1 d-none d-xl-flex">
+                                    @item.MensalidadeDataVencimento
+                                </div>
+
+                                <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                                    @item.MensalidadeValor
+                                </div>
+
+                                <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                                    @item.MensalidadeValor
+                                </div>
+
+                                <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                    @item.MensalidadePago
+                                </div>
+
+
+                            </div>
+
+                        }
+                    }<!-- CONTACT ITEM -->
 
                 </div>
             </div>
@@ -324,7 +274,7 @@
                         <!-- USER -->
                         <div class="row no-gutters align-items-center">
                             @*<img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/12.jpg">*@
-                            <span class="font-weight-bold">Financeiro</span>
+                            <span class="font-weight-bold">Matricula</span>
                         </div>
                         <!-- / USER -->
 
@@ -335,28 +285,24 @@
 
                     <!-- SIDENAV CONTENT -->
                     <div class="content">
+                        @if (@ViewBag.Aluno.AlunoMatricula != null)
+                        {
+                            <table class="table table-responsive">
+                                <tbody>
+                                    <tr><td>Valor Contrato</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaValorContrato</td></tr>
+                                    <tr><td>Desconto %</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaPercentualDesconto</td></tr>
+                                    <tr><td>Valor Desconto</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaValorDesconto</td></tr>
+                                    <tr><td>Dia Vencimento</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaDiaVencimento</td></tr>
+                                    <tr><td>Data Inicial Pagamento Vencimento</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaDataInicialPagamento</td></tr>
+                                    <tr><td>Valor Matricula</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaValorMatricula</td></tr>
+                                    <tr><td>Total Parcelas</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaTotalParcelas</td></tr>
+                                    <tr><td>Ano Vigencia</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaAno</td></tr>
+                                    <tr><td>Status</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaStatus</td></tr>
 
-                        <table class="table table-responsive">
-                            <tbody>
-                                <tr><td>Email</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Telefone</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Celular</td><td>Marcelostransky@gmail.com</td></tr>
-
-                            </tbody>
-                        </table>
-                        <div class="divider"></div>
-                        <table class="table table-responsive">
-                            <tbody>
-                                <tr><td>Cep</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Logradouro</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Complemento</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>N°</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Bairro</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Cidade</td><td>Marcelostransky@gmail.com</td></tr>
-                                <tr><td>Estado</td><td>Marcelostransky@gmail.com</td></tr>
-                            </tbody>
-                        </table>
-
+                                </tbody>
+                            </table>
+                        }
+                       
                     </div>
                     <!-- / SIDENAV CONTENT -->
                 </div>

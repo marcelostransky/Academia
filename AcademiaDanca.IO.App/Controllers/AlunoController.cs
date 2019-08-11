@@ -71,6 +71,8 @@ namespace AcademiaDanca.IO.App.Controllers
         public async Task<IActionResult> Detalhar(Guid id)
         {
             var aluno = await _repositorio.ObterAlunoCompletoAsync(id);
+            var total = aluno.AlunoTurmas.Count;
+            ViewBag.Aluno = aluno;
             return View();
         }
 

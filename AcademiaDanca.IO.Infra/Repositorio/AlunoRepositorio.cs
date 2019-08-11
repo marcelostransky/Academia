@@ -214,7 +214,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -234,33 +233,53 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                           a.telefone as AlunoTelefone,
                           a.celular as AlunoCelular,
                           l.id as AlunoLogradouro_LogradouroId, 
-                        l.rua as AlunoLogradouro_LogradouroRua, 
-                        l.numero as AlunoLogradouro_LogradouroNumenro,
-                        l.bairro as AlunoLogradouro_LogradouroBairro,
-                        l.cep as AlunoLogradouro_LogradouroCep,
-                        l.complemento as AlunoLogradouro_LogradouroComplemento,
-                        l.cidade as AlunoLogradouro_LogradouroCidade,
-                        l.estado as AlunoLogradouro_LogradouroEstado,
-                        f.id as AlunoFiliacoes_FiliacaoId,
-                        f.nome as AlunoFiliacoes_FiliacaoNome,
-                        f.telefone as AlunoFiliacoes_FiliacaoTelefone,
-                        f.documento as AlunoFiliacoes_FiliacaoDocumento,
-                        f.email as AlunoFiliacoes_FiliacaoEmail,
-                        t.id as AlunoTurmas_TurmaId,
-                        t.des_turma as AlunoTurmas_TurmaDescricao,
-                        t.cod_turma as AlunoTurmas_TurmaCodigo,
-                        t.ano as AlunoTurmas_TurmaAno,
-                        t.valor as AlunoTurmas_TurmaValor
-                        FROM academia.logradouro as l
-                        left join academia.logradouro_aluno as la on l.id = la.id_logradouro
-                        left join academia.aluno as a on la.id_aluno = a.id
-                        left join academia.aluno_filiacao as af on a.id = af.id_aluno
-                        left join academia.filiacao as f on af.id_filiacao = f.id
-                        left join academia.turma_aluno as ta on a.id = ta.id_aluno
-                        left join academia.turma as t on ta.id_turma = t.id
-                        left join academia.matricula as ma on a.id = ma.id_aluno
-                        where a.uif_id=@id
-                        Order by a.id,l.id,f.id,t.id;";
+                          l.rua as AlunoLogradouro_LogradouroRua, 
+                          l.numero as AlunoLogradouro_LogradouroNumenro,
+                          l.bairro as AlunoLogradouro_LogradouroBairro,
+                          l.cep as AlunoLogradouro_LogradouroCep,
+                          l.complemento as AlunoLogradouro_LogradouroComplemento,
+                          l.cidade as AlunoLogradouro_LogradouroCidade,
+                          l.estado as AlunoLogradouro_LogradouroEstado,
+                          f.id as AlunoFiliacoes_FiliacaoId,
+                          f.nome as AlunoFiliacoes_FiliacaoNome,
+                          f.telefone as AlunoFiliacoes_FiliacaoTelefone,
+                          f.documento as AlunoFiliacoes_FiliacaoDocumento,
+                          f.email as AlunoFiliacoes_FiliacaoEmail,
+                          t.id as AlunoTurmas_TurmaId,
+                          t.des_turma as AlunoTurmas_TurmaDescricao,
+                          t.cod_turma as AlunoTurmas_TurmaCodigo,
+                          t.ano as AlunoTurmas_TurmaAno,
+                          t.valor as AlunoTurmas_TurmaValor,
+                          ma.id as AlunoMatricula_MatriculaId,
+                          ma.valor_contrato as AlunoMatricula_MatriculaValorContrato,
+                          ma.percentual_desconto as AlunoMatricula_MatriculaPercentualDesconto,
+                          ma.valor_desconto as AlunoMatricula_MatriculaValorDesconto,
+                          ma.dia_venciamento as AlunoMatricula_MatriculaDiaVencimento,
+                          ma.data_inicial_pagamento as AlunoMatricula_MatriculaDataInicialPagamento,
+                          ma.uif_id as AlunoMatricula_MatriculaGuid,
+                          ma.valor_matricula as AlunoMatricula_MatriculaValorMatricula,
+                          ma.total_parcelas as AlunoMatricula_MatriculaTotalParcelas,
+                          ma.ano as AlunoMatricula_MatriculaAno,
+                          case when ma.status = 1 then 'Ativo' else 'Inativo' end as AlunoMatricula_MatriculaStatus,
+                          me.id as AlunoMensalidades_MensalidadeId,
+                          me.data_vencimento as AlunoMensalidades_MensalidadeDataVencimento,
+                          me.valor as AlunoMensalidades_MensalidadeValor,
+                          me.desconto as AlunoMensalidades_MensalidadeDesconto,
+                          me.pago as AlunoMensalidades_MensalidadePago,
+                          me.data_pagamento as AlunoMensalidades_MensalidadeDataPagamento,
+                          me.juros as AlunoMensalidades_MensalidadeJuros,
+                          me.parcela as AlunoMensalidades_MensalidadeParcela
+                          FROM  academia.aluno as a
+                          left join academia.logradouro_aluno as la on a.id = la.id_aluno
+                          left join academia.logradouro as l on la.id_logradouro = l.id
+                          left join academia.aluno_filiacao as af on a.id = af.id_aluno
+                          left join academia.filiacao as f on af.id_filiacao = f.id
+                          left join academia.turma_aluno as ta on a.id = ta.id_aluno
+                          left join academia.turma as t on ta.id_turma = t.id
+                          left join academia.matricula as ma on a.id = ma.id_aluno
+                          left outer join academia.mensalidade as me on a.id = me.id_aluno and ma.id = me.id_matricula
+                          where a.uif_id=@id
+                          Order by a.id,l.id,f.id,t.id;";
                 var parametros = new DynamicParameters();
                 parametros.Add("id", id);
                 AlunoQuery aluno = new AlunoQuery();
@@ -271,8 +290,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 AutoMapper.Configuration.AddIdentifier(typeof(AlunoEnderecoQuery), "LogradouroId");
                 AutoMapper.Configuration.AddIdentifier(typeof(AlunoFiliacaoQuery), "FiliacaoId");
                 AutoMapper.Configuration.AddIdentifier(typeof(AlunoTurmaQuery), "TurmaId");
-                var aaluno = (AutoMapper.MapDynamic<AlunoQuery>(alunoRetorno) as IEnumerable<AlunoQuery>).FirstOrDefault();
-                return new AlunoQuery();
+                AutoMapper.Configuration.AddIdentifier(typeof(AlunoMatriculaQuery), "MatriculaId");
+                AutoMapper.Configuration.AddIdentifier(typeof(AlunoMensalidadeQuery), "MensalidadeId");
+                aluno = (AutoMapper.MapDynamic<AlunoQuery>(alunoRetorno)).FirstOrDefault();
+                return aluno;
             }
             catch (Exception ex)
             {

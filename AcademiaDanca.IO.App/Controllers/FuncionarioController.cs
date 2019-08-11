@@ -168,7 +168,7 @@ namespace AcademiaDanca.IO.App.Controllers
 
         private string ObterCaminhoArquivo(string nomeArquivo)
         {
-            return _environment.WebRootPath + $"\\images\\avatars\\{nomeArquivo}";
+            return _environment.WebRootPath + $"\\images\\avatars\\Funcionario\\{nomeArquivo}";
         }
         private object ObterMenuAcaoDataTable(FuncioanrioQueryPorNomeResultado r)
         {

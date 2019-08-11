@@ -12,9 +12,7 @@
 
             <div class="row no-gutters align-items-center">
 
-                <a href="apps-e-commerce-products.html" class="btn btn-icon mr-4">
-                    <i class="icon icon-arrow-left"></i>
-                </a>
+                
 
                 <div class="product-image mr-4">
                     <img src="/images/ecommerce/product-image-placeholder.png">
@@ -43,7 +41,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link btn" id="pricing-tab" data-toggle="tab" href="#pricing-tab-pane" role="tab" aria-controls="pricing-tab-pane">Acesso</a>
+                        <a class="nav-link btn" id="pricing-tab" data-toggle="tab" href="#product-login-tab-pane" role="tab" aria-controls="product-login-tab-pane">Acesso</a>
                     </li>
 
 
@@ -102,7 +100,7 @@
                         <div class="card p-6">
 
                             <div class="row">
-                                <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/@ViewBag.Funcionario.Foto"></div>
+                                <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/Funcionario/@ViewBag.Funcionario.Foto"></div>
                                 <form id="formFuncionarioFoto" method="post">
                                     <div class="col-xl-11">
 
@@ -117,6 +115,15 @@
                                         <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="product-login-tab-pane" role="tabpanel" aria-labelledby="product-login-tab">
+
+                        <div class="card p-6">
+
+                            <div class="row">
+                               
                             </div>
                         </div>
                     </div>
@@ -289,8 +296,7 @@
             var callback = function (data) {
                 if (data.success) {
                     PNotify.success({
-                        title: ':-)',
-                        text: 'Atualizado com sucesso.'
+                         text: 'Atualizado com sucesso.'
                     });
                     document.getElementById("formFuncionario").reset();
                     return false;

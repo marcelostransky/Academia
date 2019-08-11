@@ -16,6 +16,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
         public string AlunoTelefone { get; set; }
         public string AlunoCelular { get; set; }
         public  AlunoEnderecoQuery AlunoLogradouro { get; set; }
+        public AlunoMatriculaQuery AlunoMatricula { get; set; }
+        public List<AlunoMensalidadeQuery> AlunoMensalidades { get; set; }
         public  List<AlunoTurmaQuery> AlunoTurmas { get; set; }
         public  List<AlunoFiliacaoQuery> AlunoFiliacoes { get; set; }
 

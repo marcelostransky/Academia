@@ -8,7 +8,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
     {
         public int LogradouroId { get; set; }
         public string LogradouroRua { get; set; }
-        public string LogradouroNumenro { get; set; }
+        public string LogradouroNumero { get; set; }
         public string LogradouroBairro { get; set; }
         public string LogradouroCep { get; set; }
         public string LogradouroComplemento { get; set; }
