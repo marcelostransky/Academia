@@ -14,5 +14,7 @@ namespace AcademiaDanca.IO.App.Models
         }
          public string Login { get; set; }
          public string Senha { get;  set; }
+         public string ContraSenha { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -2,7 +2,7 @@
 <html lang="pt-br">
 
 <head>
-    <title>Project Dashboard</title>
+
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -42,18 +42,23 @@
     <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
     <!-- Mobile Detect -->
     <script type="text/javascript" src="/node_modules/mobile-detect/mobile-detect.min.js"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- Perfect Scrollbar -->
     <script type="text/javascript" src="/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
     <!-- Popper.js -->
     <script type="text/javascript" src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
-    <!-- Bootstrap -->
-    <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
     <!-- Nvd3 - D3 Charts -->
-    @*<script type="text/javascript" src="/node_modules/d3/d3.min.js"></script>*@
-    @*<script type="text/javascript" src="/node_modules/nvd3/build/nv.d3.min.js"></script>*@
+    @*
+        <script type="text/javascript" src="/node_modules/d3/d3.min.js"></script>*@
+    @*
+        <script type="text/javascript" src="/node_modules/nvd3/build/nv.d3.min.js"></script>*@
     <!-- Data tables -->
-    @*<script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>*@
-    @*<script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>*@
+    @*
+        <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>*@
+    @*
+        <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>*@
     <!-- PNotify -->
     <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotify.js"></script>
     <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyStyleMaterial.js"></script>
@@ -67,7 +72,7 @@
     <!-- Fuse Html -->
     <script type="text/javascript" src="/fuse-html/fuse-html.min.js"></script>
     <!-- Main JS -->
-   
+    <script type="text/javascript" src="~/js/main.js"></script>
     <!-- / JAVASCRIPT -->
 </head>
 
@@ -183,14 +188,14 @@
                     @*//Menu*@
                     <partial name="_Menu.cshtml" />
                 </div>
-
             </aside>
             <div class="content-wrapper">
-                @RenderBody()
+                <div class="content custom-scrollbar">
+                     @RenderBody()
+                </div>
             </div>
         </div>
         <nav id="footer" class="bg-dark text-auto row no-gutters align-items-center px-6">
-
         </nav>
     </main>
     @Html.Partial("_PartialLoader")

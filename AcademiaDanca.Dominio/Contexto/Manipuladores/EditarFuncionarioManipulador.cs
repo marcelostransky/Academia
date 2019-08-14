@@ -24,14 +24,19 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores
             {
                 AddNotification("Cpf", "Cpf informado já está em uso no sistema");
             }
-
             //Validar Email Unico
             if (comando.Email != comando.EmailAtual && await _repositorio.CheckEmailAsync(comando.Email))
             {
                 AddNotification("Email", "Email informado já está em uso no sistema");
             }
+            //Se o perfil for  =  professor, deve validar se possui turmas ativa. Se sim não prosseguir com atualização
+            if (comando.DescPerfilAtual != comando.DescPerfil && await _repositorio.CheckPerfilProfessorTurmaAtivaAsync(comando.Id))
+            {
+                AddNotification("Perfil", "Funcionario não pode ser atualizado. Exclua as turmas para este professor e tente novamente");
+            }
             // Validar Comando
             comando.Valido();
+
             AddNotifications(comando.Notifications);
             // Validara Vo
             var email = new Email(comando.Email);
@@ -41,11 +46,9 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores
             AddNotifications(email.Notifications);
             AddNotifications(nome.Notifications);
             AddNotifications(cpf.Notifications);
-
-
-
+            
             //Criar a entidade
-            var funcionario = new Funcionario(comando.Id, nome, email, cpf, comando.DataNascimento);
+            var funcionario = new Funcionario(comando.Id, nome, email, cpf, comando.DataNascimento, comando.IdPerfil, null);
 
             AddNotifications(funcionario.Notifications);
             if (Invalid)
@@ -58,9 +61,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores
             //Persistir os dados
 
             await _repositorio.EditarAsync(funcionario);
-
-            //Se for usuario diferente de professor validar se tem q desalocar turma
-
 
             // Retornar o resultado para tela
             return new ComandoResultado(true, "Funcionario cadastrado com sucesso", new

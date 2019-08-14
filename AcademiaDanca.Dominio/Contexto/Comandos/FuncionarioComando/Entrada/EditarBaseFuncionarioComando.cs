@@ -18,6 +18,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FuncionarioComando.Entrada
         public string CpfAtual { get; set; }
         public int IdPerfil { get; set; }
         public string DescPerfil { get; set; }
+        public string DescPerfilAtual { get; set; }
 
         public bool Valido()
         {

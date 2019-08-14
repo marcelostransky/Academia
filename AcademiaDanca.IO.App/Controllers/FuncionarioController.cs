@@ -29,6 +29,7 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly CriarFuncionarioManipulador _manipulador;
         private readonly EditarFuncionarioManipulador _editarManipulador;
         private readonly EditarFotoFuncionarioManipulador _editarFotoManipulador;
+        private readonly EditarAcessoFuncionarioManipulador _editarAcessoManipulador;
         private object hostingEnvironment;
 
         public FuncionarioController(IFuncionarioRepositorio repositorio,
@@ -36,6 +37,7 @@ namespace AcademiaDanca.IO.App.Controllers
             CriarFuncionarioManipulador manipulador,
             EditarFuncionarioManipulador editarManipulador,
             EditarFotoFuncionarioManipulador editarFotoManipulador,
+            EditarAcessoFuncionarioManipulador editarAcessoFuncionario,
             IHostingEnvironment environment
             )
         {
@@ -45,6 +47,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _editarManipulador = editarManipulador;
             _environment = environment;
             _editarFotoManipulador = editarFotoManipulador;
+            _editarAcessoManipulador = editarAcessoFuncionario;
         }
         public async Task<IActionResult> Novo()
         {
@@ -110,15 +113,6 @@ namespace AcademiaDanca.IO.App.Controllers
 
                 throw;
             }
-            //var draw = requestformdata["draw"];
-            //dynamic response = new
-            //{
-            //    Data = lista.ToList(),
-            //    Draw = "1",
-            //    RecordsFiltered = lista.Count(),
-            //    RecordsTotal = lista.Count()
-            //};
-
         }
         public async Task<IActionResult> Editar(int id)
         {
@@ -157,6 +151,23 @@ namespace AcademiaDanca.IO.App.Controllers
             comando.Foto = $"{funcFoto.Id}.{extensao}";
             var resultado = await _editarFotoManipulador.ManipuladorAsync(comando);
             return resultado;
+        }
+        [Route("/Funcionario/Editar/Acesso")]
+        [HttpPost]
+        public async Task<IComandoResultado> Editar(EditarAcessoFuncionarioComando comando)
+        {
+            try
+            {
+                comando.Senha = Criptografia.RetornaSenhaCriptografada(comando.Senha);
+                comando.ContraSenha = Criptografia.RetornaSenhaCriptografada(comando.ContraSenha);
+                var resultado = await _editarAcessoManipulador.ManipuladorAsync(comando);
+                return resultado;
+            }
+            catch (System.Exception ex)
+            {
+                throw ex;
+            }
+
         }
         private string VerificarNomeArquivoCorreto(string filename)
         {

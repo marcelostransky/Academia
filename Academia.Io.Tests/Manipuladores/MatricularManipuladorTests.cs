@@ -23,7 +23,7 @@ namespace Academia.Io.Tests.Manipuladores
                 TotalParcelas = 5,
                 PercentualDesconto = 10,
                 ValorDesconto = Convert.ToDecimal("0"),
-                ValorMaricula = 0,
+                ValorMatricula = 0,
                 ValorContrato = Convert.ToDouble("560,00"),
                 DiaVencimento = 1,
                 Ano = 2019,

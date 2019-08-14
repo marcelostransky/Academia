@@ -14,7 +14,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada
         public DateTime DataContrato { get; set; }
         public decimal PercentualDesconto { get; set; }
         public decimal ValorDesconto { get; set; }
-        public decimal ValorMaricula { get; set; }
+        public decimal ValorMatricula { get; set; }
         public double ValorContrato { get; set; }
         public int DiaVencimento { get; set; }
         public int TotalParcelas { get; set; }

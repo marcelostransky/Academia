@@ -123,7 +123,7 @@ namespace AcademiaDanca.IO.App.Controllers
         [PermissaoAcesso(1, "Editar", "Put")]
         public async Task<IActionResult> Editar(int id)
         {
-            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null,null)).FirstOrDefault();
+            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null)).FirstOrDefault();
             var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync());
             var professores = (await _repositorioFuncionario.ObterFuncionarioProfessorPorNomeAsync(string.Empty, null));
             ViewBag.TipoTurma = new SelectList(tipoTurma, "Id", "DesTurmaTipo", turma.IdTipoTurma);
@@ -161,7 +161,21 @@ namespace AcademiaDanca.IO.App.Controllers
 
 
         }
+        public async Task<IActionResult> Alunos(int idTurma)
+        {
+            try
+            {
+                var resultado = await _repositorio.ObterAlunosPorAsync(idTurma);
+                return Json(new { success = true, alunos = resultado });
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
 
+
+        }
         public async Task<IActionResult> ObterTurmas(FiltroTurmaModel modelFiltro, jQueryDataTableRequestModel request)
         {
             try
@@ -212,7 +226,7 @@ namespace AcademiaDanca.IO.App.Controllers
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
             menu.AppendFormat("<a href =\"/Turma/Calendario/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Calendário\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.IdTurma);
-            menu.AppendFormat("<a href =\"/Turma/Aluno/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.IdTurma);
+            menu.AppendFormat("<a href =\"#\" onclick=ModalAluno({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.IdTurma);
             menu.AppendFormat("<a href =\"/Turma/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.IdTurma);
             return menu.ToString();
         }

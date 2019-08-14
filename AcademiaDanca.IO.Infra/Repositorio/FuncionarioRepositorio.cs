@@ -62,7 +62,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw ex;
             }
-           
+
         }
 
         public async Task<int> EditarFotoAsync(Funcionario funcionario)
@@ -80,6 +80,31 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             return editado;
         }
 
+        public async Task<int> EditarAcessoAsync(int funcionarioId, string senha)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+
+                parametros.Add("sp_id", funcionarioId);
+                parametros.Add("sp_senha", senha);
+                var editado = await _contexto
+                      .Connection
+                      .ExecuteAsync(@"update  academia.usuario as F 
+                                      Inner Join academia.usuario_funcionario_papel as FP On F.id = FP.id_usuario
+                                      set senha = @sp_senha where FP.id_funcionario = @sp_id; ",
+                      parametros,
+                      commandType: System.Data.CommandType.Text);
+
+                return editado;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+           
+        }
         public async Task<FuncioanrioQueryPorNomeResultado> ObterPorAsync(int id)
         {
             var parametros = new DynamicParameters();
@@ -137,6 +162,18 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             return parametros.Get<int>("sp_status");
         }
 
+        public async Task<bool> CheckPerfilProfessorTurmaAtivaAsync(int id)
+        {
+            var permitido = await _contexto
+             .Connection
+             .QueryAsync<int>(@"SELECT count(PO.id_turma) as Total
+                                FROM academia.funcionario as F
+                                Join academia.usuario_funcionario_papel as UFP ON F.id = UFP.id_funcionario
+                                Join academia.papel as P On UFP.id_papel = P.id
+                                Join academia.turma_professor as PO on F.id = PO.id_funcionario
+                                Where  ufp.id_papel = 4 and F.id = @FuncionarioId;", new { FuncionarioId = id }, commandType: CommandType.Text);
 
+            return permitido.FirstOrDefault() > 0;
+        }
     }
 }

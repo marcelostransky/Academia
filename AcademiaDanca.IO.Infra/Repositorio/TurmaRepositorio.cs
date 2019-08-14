@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Turma;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Dapper;
@@ -28,6 +29,28 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                               commandType: CommandType.Text);
 
             return existe.FirstOrDefault() <= 0 ? false : true;
+        }
+
+        public async Task<IEnumerable<AlunoPorNomeQuery>> ObterAlunosPorAsync(int idTurma)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_id_turma", idTurma);
+
+
+            var listaAluno = await _contexto
+                  .Connection
+                  .QueryAsync<AlunoPorNomeQuery>(@"
+                                      SELECT A.email as Email, A.id as Id, A.uif_id as UifId, 
+                                      A.nome as Nome, A.telefone as Telefone, A.celular as Celular, 
+                                      A.data_nascimento as DataNascimento, A.foto as Foto 
+                                      FROM academia.turma as T
+                                      Join academia.turma_aluno as TA on T.id = TA.id_turma
+                                      Join academia.aluno as A On TA.id_aluno = A.id
+                                      where T.id = @sp_id_turma;",
+                  parametros,
+                  commandType: System.Data.CommandType.Text);
+
+            return listaAluno;
         }
 
         public Task<TurmaQueryResultado> ObterPorAsync(int id)

@@ -1,60 +1,39 @@
 ﻿@{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Editar Funcionário";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="content custom-scrollbar ps">
-
-
     <div id="e-commerce-product" class="page-layout simple tabbed">
-
         <!-- HEADER -->
         <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
-
             <div class="row no-gutters align-items-center">
-
-                
-
                 <div class="product-image mr-4">
                     <img src="/images/ecommerce/product-image-placeholder.png">
                 </div>
-
                 <div>Editar Funcionário</div>
             </div>
-
-
-
         </div>
         <!-- / HEADER -->
         <!-- CONTENT -->
         @if (@ViewBag.Funcionario != null)
         {
             <div class="page-content">
-
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-
                     <li class="nav-item">
                         <a class="nav-link btn active" id="basic-info-tab" data-toggle="tab" href="#basic-info-tab-pane" role="tab" aria-controls="basic-info-tab-pane" aria-expanded="true">Básico</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link btn" id="product-images-tab" data-toggle="tab" href="#product-images-tab-pane" role="tab" aria-controls="product-images-tab-pane">Foto</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link btn" id="pricing-tab" data-toggle="tab" href="#product-login-tab-pane" role="tab" aria-controls="product-login-tab-pane">Acesso</a>
                     </li>
-
-
-
                 </ul>
-
                 <div class="tab-content">
-
                     <div class="tab-pane fade show active" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
-
                         <div class="card p-6">
                             <div class="row">
-                                <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/@ViewBag.Funcionario.Foto"></div>
+                                <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/Funcionario/@ViewBag.Funcionario.Foto"></div>
                                 <div class="col-xl-11">
                                     <form id="formFuncionario">
                                         <input type="hidden" id="hiddenIdAtual" value="@ViewBag.Funcionario.IdUsuario" />
@@ -72,12 +51,9 @@
                                                 <input type="text" class="form-control" id="inputCpf" name="inputCpf" value="@ViewBag.Funcionario.CPF">
                                                 <label for="inputCpf" class="col-form-label">CPF</label>
                                                 <input type="hidden" id="hiddenCpfAtual" value="@ViewBag.Funcionario.CPF" />
-
                                             </div>
-
                                         </div>
                                         <div class="form-row">
-
                                             <div class="form-group col-md-6">
                                                 <input type="text" len="10" class="form-control" id="inputData" name="inputData" value="@ViewBag.Funcionario.DataNascimento.ToShortDateString()">
                                                 <label for="inputData" class="col-form-label">Data NAscimento</label>
@@ -85,8 +61,7 @@
                                             <div class="form-group col-md-6">
                                                 <label for="Perfis" class="col-form-label">Perfil</label>
                                                 @Html.DropDownList("Perfis", null, "", new { @class = "form-control   select" })
-
-
+                                                <input type="hidden" id="hiddenPerfilAtual" value="@ViewBag.Funcionario.Perfil" />
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary fuse-ripple-ready">Atulizar</button>
@@ -96,21 +71,16 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="product-images-tab-pane" role="tabpanel" aria-labelledby="product-images-tab">
-
                         <div class="card p-6">
-
                             <div class="row">
                                 <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/Funcionario/@ViewBag.Funcionario.Foto"></div>
                                 <form id="formFuncionarioFoto" method="post">
                                     <div class="col-xl-11">
-
                                         <input type="hidden" id="hiddenIdFuncFt" value="@ViewBag.Funcionario.IdUsuario" />
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <input type="file" class="form-control" id="file" name="file">
-
                                             </div>
-
                                         </div>
                                         <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
                                     </div>
@@ -119,19 +89,26 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="product-login-tab-pane" role="tabpanel" aria-labelledby="product-login-tab">
-
                         <div class="card p-6">
-
                             <div class="row">
-                               
+                                <form id="formAcesso">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12">
+                                            <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Senha">
+                                            <label for="inputPassword" class="col-form-label">Senha</label>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <input type="password" class="form-control" id="inputPasswordConfirm" name="inputPasswordConfirm" placeholder="Senha">
+                                            <label for="inputPasswordConfirm" class="col-form-label">Confirme a Senha</label>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary fuse-ripple-ready">Alterar</button>
+                                </form>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
-
-            <!-- / CONTENT -->
         }
         else
         {
@@ -235,16 +212,17 @@
                         CpfAtual: $("#formFuncionario #hiddenCpfAtual").val(),
                         Cpf: $("#formFuncionario #inputCpf").val(),
                         IdPerfil: $("#formFuncionario #Perfis").val(),
-                        DescPerfil: $("#formFuncionario #Perfis :selected").text()
+                        DescPerfil: $("#formFuncionario #Perfis :selected").text(),
+                        DescPerfilAtual: $("#hiddenPerfilAtual").val()
 
                     }
                     var callback = function (data) {
                         if (JSON.parse(data).success) {
                             PNotify.success({
-                                title: ':-)',
-                                text: 'Cadastro realizado com sucesso.'
+
+                                text: 'Dado atualizado com sucesso.'
                             });
-                            document.getElementById("formFuncionario").reset();
+                            //document.getElementById("formFuncionario").reset();
                             return false;
                         } else {
                             var msg = '';
@@ -273,7 +251,59 @@
                 }
             });
         });
+        $("#formAcesso").submit(function (event) {
+            event.preventDefault();
+            if ($("#inputPassword").val() !== null && $("#inputPassword").val() != '') {
+                if ($("#inputPassword").val() === $("#inputPasswordConfirm").val()) {
+                    var dataT = {
+                        Id: $("#formFuncionarioFoto #hiddenIdFuncFt").val(),
+                        Senha: $("#formAcesso #inputPassword").val(),
+                        ContraSenha: $("#formAcesso #inputPasswordConfirm").val()
+                    }
+                    var callback = function (data) {
+                        if (JSON.parse(data).success) {
+                            PNotify.success({
+                                text: 'Atualizado com sucesso.'
+                            });
+                            document.getElementById("formAcesso").reset();
+                            return false;
+                        } else {
+                            var msg = '';
+                            $.each(JSON.parse(data).data, function (index, item) {
+                                msg = msg + item.property + ' > ' + item.message + '\n';
+                            });
 
+                            PNotify.error({
+                                title: 'Ops! ' + data.message + ' :-( ',
+                                text: msg
+                            });
+
+
+                        }
+                    }
+                    var callbackErro = function (data) {
+                        PNotify.error({
+                            title: 'Ops! :-(',
+                            text: 'Ocorreu um erro ao processar sua solicitação'
+                        });
+
+                        return false;
+
+                    }
+                    academia.helper.rest.utils.POST("/Funcionario/Editar/Acesso", dataT, callback, callbackErro, $('#loader'));
+                }
+                else {
+                    PNotify.error({
+                        text: 'Os campos senhe e contra-senha devem ser identicos'
+                    });
+                }
+            }
+            else {
+                PNotify.error({
+                    text: 'Informe a senha'
+                });
+            }
+        });
         $("#formFuncionarioFoto").submit(function (event) {
 
             event.preventDefault();
@@ -296,7 +326,7 @@
             var callback = function (data) {
                 if (data.success) {
                     PNotify.success({
-                         text: 'Atualizado com sucesso.'
+                        text: 'Atualizado com sucesso.'
                     });
                     document.getElementById("formFuncionario").reset();
                     return false;

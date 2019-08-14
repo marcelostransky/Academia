@@ -72,12 +72,12 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 {
                     var parametros = new DynamicParameters();
                     parametros.Add("sp_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                    parametros.Add("sp_id_matricula", mensalidade.IdMatricula);
-                    parametros.Add("sp_data_vencimento", mensalidade.DataVencimento);
-                    parametros.Add("sp_valor", mensalidade.Valor);
-                    parametros.Add("sp_desconto", mensalidade.Desconto);
-                    parametros.Add("sp_parcela", mensalidade.Parcela);
-                    parametros.Add("sp_id_aluno", mensalidade.IdAluno);
+                    parametros.Add("sp_id_matricula", mes.IdMatricula);
+                    parametros.Add("sp_data_vencimento", mes.DataVencimento);
+                    parametros.Add("sp_valor", mes.Valor);
+                    parametros.Add("sp_desconto", mes.Desconto);
+                    parametros.Add("sp_parcela", mes.Parcela);
+                    parametros.Add("sp_id_aluno", mes.IdAluno);
                     
                     await _contexto
                         .Connection

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
@@ -15,17 +16,19 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
         public string AlunoGuid { get; set; }
         public string AlunoTelefone { get; set; }
         public string AlunoCelular { get; set; }
-        public  AlunoEnderecoQuery AlunoLogradouro { get; set; }
+        public AlunoEnderecoQuery AlunoLogradouro { get; set; }
         public AlunoMatriculaQuery AlunoMatricula { get; set; }
         public List<AlunoMensalidadeQuery> AlunoMensalidades { get; set; }
-        public  List<AlunoTurmaQuery> AlunoTurmas { get; set; }
-        public  List<AlunoFiliacaoQuery> AlunoFiliacoes { get; set; }
+        public List<AlunoMensalidadeQuery> AlunoMensalidadesOrdenado => AlunoMensalidades.OrderBy(x => x.MensalidadeParcela).ToList();
+
+        public List<AlunoTurmaQuery> AlunoTurmas { get; set; }
+        public List<AlunoFiliacaoQuery> AlunoFiliacoes { get; set; }
 
         //public AlunoQuery()
         //{
         //    AlunoFiliacao = new List<AlunoFiliacaoQuery>();
         //    AlunoTurmas = new List<AlunoTurmaQuery>();
         //}
-      
+
     }
 }

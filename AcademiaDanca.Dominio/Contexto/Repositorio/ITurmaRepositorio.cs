@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Turma;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int ano);
         Task<TurmaQueryResultado> ObterPorAsync(int id);
         Task<bool> CheckTurmaAsync(Turma turma);
+        Task<IEnumerable<AlunoPorNomeQuery>> ObterAlunosPorAsync(int idTurma);
     }
 }

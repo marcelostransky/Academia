@@ -66,6 +66,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<CriarTurmaManipulador, CriarTurmaManipulador>();
             services.AddTransient<EditarFuncionarioManipulador, EditarFuncionarioManipulador>();
             services.AddTransient<EditarFotoFuncionarioManipulador, EditarFotoFuncionarioManipulador>();
+            services.AddTransient<EditarAcessoFuncionarioManipulador, EditarAcessoFuncionarioManipulador>();
             services.AddTransient<AgendarTurmaManipulador, AgendarTurmaManipulador>();
             services.AddTransient<AddEnderecoManipulador, AddEnderecoManipulador>();
             services.AddTransient<DeletarAgendaTurmaManipulador, DeletarAgendaTurmaManipulador>();

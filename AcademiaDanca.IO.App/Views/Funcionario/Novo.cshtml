@@ -233,18 +233,14 @@
                                 $.each(JSON.parse(data).data, function (index, item) {
                                     msg = msg + item.property + ' > ' + item.message + '\n';
                                 });
-
                                 PNotify.error({
                                     title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
                                     text: msg
                                 });
-
-
                             }
                         }
                         var callbackErro = function (data) {
                             PNotify.error({
-                                title: 'Ops! :-(',
                                 text: 'Ocorreu um erro ao processar sua solicitação'
                             });
 

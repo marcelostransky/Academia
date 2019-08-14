@@ -181,9 +181,7 @@ $(function () {
                 Celular: $("#formAluno #inputCelular").val(),
                 Cpf: $("#formAluno #inputCpf").val(),
                 Foto: 'profile.jpg'
-
-
-            }
+            };
             var callback = function (data) {
                 if (JSON.parse(data).success) {
                     PNotify.success({
@@ -662,7 +660,7 @@ $(function () {
 
                 IdAluno: $("#hiddenIdAluno").val(),
                 PercentualDesconto: $("#formMatricula #inputDescontoParcela").val().replace('%', ''),
-                ValorMaricula: $("#formMatricula #inputValorMatricula").val(),
+                ValorMatricula: $("#formMatricula #inputValorMatricula").val().replace('R$', '').replace('.', ','),
                 ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', '').replace('.',','),
                 DiaVencimento: $("#formMatricula #inputDiaVencimento").val(),
                 TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
