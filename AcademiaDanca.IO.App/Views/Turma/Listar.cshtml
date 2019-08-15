@@ -93,6 +93,45 @@
             </div>
         </div>
     </div>
+
+
+    <div id="modalAgenda" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAgendaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgendaLabel">Agendamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="turmaCalendario" class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <td>Turma</td>
+                                <td>Tipo</td>
+                                <td>Sala</td>
+
+                                <td>Dia</td>
+                                <td>Hora</td>
+                                <td>Professor</td>
+
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+
+                    <a href="" id="novaAgenda">
+                        <button type="button" class="btn btn-success">Novo Agendamento</button>
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @*@section CSS          {*@
 @*<link href="~/Modulo/datatables/jquery.dataTables.min.css" rel="stylesheet" />}*@
@@ -111,8 +150,8 @@
         var callback = function (data) {
             if (data.success) {
                 var linhas = '';
-                $.each(data.AlunoMensalidadesOrdenado, function (index, item) {
-                    linhas = linhas + " <tr><td>  <img class=\"avatar mr-4\" alt=\"" + item.nome + "\" src=\"/images/avatars/Aluno/" + item.foto + "\"></td><td>" + item.nome + "</td><td>" + item.dataToShortDate + "</td><td>" + item.telefone + "</td><td>" + item.celular + "</td><td><a href=\"/Aluno/Detalhar/" + item.uifId + " target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\"> <i class=\"icon-account-search s-6\"></i></a></td></tr>";
+                $.each(data.alunos, function (index, item) {
+                    linhas = linhas + " <tr><td>  <img class=\"avatar mr-4\" alt=\"" + item.nome + "\" src=\"/images/avatars/Aluno/" + item.foto + "\"></td><td>" + item.nome + "</td><td>" + item.dataToShortDate + "</td><td>" + item.telefone + "</td><td>" + item.celular + "</td><td><a href=\"/Aluno/Detalhar/" + item.uifId + "\"  target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\"> <i class=\"icon-account-search s-6\"></i></a></td></tr>";
 
                 });
                 $("#turmaAlunos tbody").html(linhas);
@@ -128,6 +167,33 @@
         };
 
         academia.helper.rest.utils.GET("/Turma/Alunos/", dataT, callback, callbackErro, $('#loader'));
+
+    }
+    function ModalCalendario(idTurma) {
+        $("#novaAgenda").attr("href", "/Turma/Calendario/" + idTurma);
+        var dataT = {
+            idTurma: idTurma
+        };
+        var callback = function (data) {
+            if (data.success) {
+                var linhas = '';
+                $.each(data.agenda, function (index, item) {
+                    linhas = linhas + " <tr><td>" + item.desTurma + " </td><td>" + item.tipoTurma + " </td><td>" + item.desSala + " </td><td>" + item.siglaDia + " </td><td>" + item.hora + " </td><td>" + item.professor + " </td><td><a href=\"/Aluno/Detalhar/" + item.idTurma + "\"  target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\"> <i class=\"icon-account-search s-6\"></i></a></td></tr>";
+
+                });
+                $("#turmaCalendario tbody").html(linhas);
+                //$("#turmaAlunos tbody").add(linhas);
+                $('#modalAgenda').modal("show");
+            }
+        };
+        var callbackErro = function (data) {
+            PNotify.error({
+                title: 'Ocorreu um erro ao processar sua solicitação'
+            });
+
+        };
+
+        academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
 
     }
 </script>

@@ -49,14 +49,15 @@
             <div class="page-sidebar-card">
                 <!-- SIDENAV HEADER -->
                 <div class="header p-4">
-
-                    <!-- USER -->
-                    <div class="row no-gutters align-items-center">
-                        <img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/@ViewBag.Aluno.AlunoFoto">
-                        <span class="font-weight-bold">@ViewBag.Aluno.AlunoNome</span>
-                    </div>
-                    <!-- / USER -->
-
+                    @if (@ViewBag.Aluno != null)
+                    {
+                        <!-- USER -->
+                        <div class="row no-gutters align-items-center">
+                            <img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/@ViewBag.Aluno.AlunoFoto">
+                            <span class="font-weight-bold">@ViewBag.Aluno.AlunoNome</span>
+                        </div>
+                        <!-- / USER -->
+                    }
                 </div>
                 <!-- / SIDENAV HEADER -->
 
@@ -64,17 +65,19 @@
 
                 <!-- SIDENAV CONTENT -->
                 <div class="content">
+                    @if (@ViewBag.Aluno != null)
+                    {
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Email</td><td>@ViewBag.Aluno.AlunoEmail</td></tr>
+                                <tr><td>Telefone</td><td>@ViewBag.Aluno.AlunoTelefone</td></tr>
+                                <tr><td>Celular</td><td>@ViewBag.Aluno.AlunoCelular</td></tr>
 
-                    <table class="table table-responsive">
-                        <tbody>
-                            <tr><td>Email</td><td>@ViewBag.Aluno.AlunoEmail</td></tr>
-                            <tr><td>Telefone</td><td>@ViewBag.Aluno.AlunoTelefone</td></tr>
-                            <tr><td>Celular</td><td>@ViewBag.Aluno.AlunoCelular</td></tr>
-
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    }
                     <div class="divider"></div>
-                    @if (@ViewBag.Aluno.AlunoLogradouro != null)
+                    @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoLogradouro != null)
                     {
                         <table class="table table-responsive">
                             <tbody>
@@ -112,7 +115,7 @@
                 </dvi>
                 <!-- / CONTACT LIST HEADER -->
                 <!-- CONTACT ITEM -->
-                @if (@ViewBag.Aluno.AlunoFiliacoes != null)
+                @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoFiliacoes != null)
                 {
                     @foreach (var item in @ViewBag.Aluno.AlunoFiliacoes)
                     {
@@ -148,7 +151,7 @@
 
                         <div class="list-title text-muted">
                             Turmas(
-                            @if (ViewBag.Aluno.AlunoTurmas != null)
+                            @if (@ViewBag.Aluno != null && ViewBag.Aluno.AlunoTurmas != null)
                             {
                                 @ViewBag.Aluno.AlunoTurmas.Count;
                             }
@@ -161,7 +164,7 @@
                 </dvi>
                 <!-- / CONTACT LIST HEADER -->
                 <!-- CONTACT ITEM -->
-                @if (@ViewBag.Aluno.AlunoTurmas != null)
+                @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoTurmas != null)
                 {
                     @foreach (var item in @ViewBag.Aluno.AlunoTurmas)
                     {
@@ -203,7 +206,7 @@
 
                         <div class="list-title text-muted">
                             Mensalidades (
-                            @if (ViewBag.Aluno.AlunoMensalidades != null)
+                            @if (@ViewBag.Aluno != null && ViewBag.Aluno.AlunoMensalidades != null)
                             {
                                 @ViewBag.Aluno.AlunoMensalidades.Count;
                             }
@@ -238,7 +241,7 @@
 
                 </div>
 
-                @if (@ViewBag.Aluno.AlunoMensalidades != null)
+                @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoMensalidades != null)
                 {
 
                     @foreach (var item in @ViewBag.Aluno.AlunoMensalidadesOrdenado)
@@ -305,7 +308,7 @@
 
                 <!-- SIDENAV CONTENT -->
                 <div class="content">
-                    @if (@ViewBag.Aluno.AlunoMatricula != null)
+                    @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoMatricula != null)
                     {
                         <table class="table table-responsive">
                             <tbody>

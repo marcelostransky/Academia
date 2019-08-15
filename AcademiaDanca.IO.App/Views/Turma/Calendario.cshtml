@@ -216,9 +216,9 @@
 
         var callback = function (data) {
             var tabela = $("#tbAgendamento tbody");
-            if (JSON.parse(data).success) {
+            if (data.success) {
                 $("#tbAgendamento tbody").html('');
-                $.each(JSON.parse(data).agenda, function (index, item) {
+                $.each(data.agenda, function (index, item) {
                     ;
                     var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + ' | ' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td><a href=\"#\" onclick=\"javascript:Deletar('" + item.idAgenda + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td></tr>"
                     //var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + '|' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td>            <button onclick=\"Deletar('"+item.idAgenda+"')\"><i class=\"icon-delete-forever\"></i> </button></td></tr>"
@@ -234,7 +234,7 @@
 
         }
 
-        academia.helper.rest.utils.POST("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
+        academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
 
     }
 

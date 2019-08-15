@@ -73,7 +73,12 @@ namespace AcademiaDanca.IO.App.Controllers
             var aluno = await _repositorio.ObterAlunoCompletoAsync(id);
             //aluno.AlunoMensalidades = aluno.AlunoMensalidades.OrderBy(x => x.MensalidadeParcela).ToList();
             //aluno.AlunoMensalidades[0].MensalidadeDataPagamento.ToShortDateString()
-            var total = aluno.AlunoTurmas.Count;
+            var total = 0;
+            if (aluno != null)
+            {
+                total = aluno.AlunoTurmas.Count;
+            }
+
             ViewBag.Aluno = aluno;
             return View();
         }

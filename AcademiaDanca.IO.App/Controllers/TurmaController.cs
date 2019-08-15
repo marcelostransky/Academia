@@ -65,8 +65,8 @@ namespace AcademiaDanca.IO.App.Controllers
             return View();
         }
         [Route("/Turma/Calendario/Agendamentos")]
-        [HttpPost]
-        [PermissaoAcesso(1, "Nova", "Post")]
+        [HttpGet]
+        //[PermissaoAcesso(1, "Nova", "Post")]
         public async Task<IActionResult> AgendamentoPorTurma(int idTurma)
         {
             try
@@ -225,7 +225,7 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"/Turma/Calendario/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Calendário\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.IdTurma);
+            menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Calendário\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.IdTurma);
             menu.AppendFormat("<a href =\"#\" onclick=ModalAluno({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.IdTurma);
             menu.AppendFormat("<a href =\"/Turma/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.IdTurma);
             return menu.ToString();
