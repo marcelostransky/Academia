@@ -45,9 +45,10 @@
 
         if ( !mobileDetect.mobile() )
         {
-            $('.custom-scrollbar').each(function () {
+            $('.custom-scrollbar').each(function ()
+            {
                 new PerfectScrollbar(this);
-            });
+            })
         }
         else
         {
@@ -63,7 +64,7 @@
 
             if ( lines[0] === '' )
             {
-                lines.shift();
+                lines.shift()
             }
 
             var matches;

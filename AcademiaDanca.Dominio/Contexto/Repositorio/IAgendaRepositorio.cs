@@ -15,6 +15,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<IEnumerable<DiaQueryResultado>> ObterTodosDiaSemanaAsync();
         Task<IEnumerable<AgendaQueryResultado>> ObterTodosAsync();
         Task<IEnumerable<AgendaQueryResultado>> ObterPorTurmaAsync(int id);
+        Task<IEnumerable<AgendaQueryResultado>> ObterCalendarioPorDiaSemanaAsync(string diaSemana);
         Task<AgendaQueryResultado> ObterPorAsync(int id);
         Task<bool> CheckAgendamentoAsync(Agenda agenda);
         Task<IEnumerable<AgendaQueryResultado>> ObterPorAsync(int? id, int? idTurma, int? idSala, int? idDia, int? idProfessor,int? idTipoTurma, string hora);

@@ -105,5 +105,57 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
             return deletado;
         }
+
+        public async Task<IEnumerable<AgendaQueryResultado>> ObterCalendarioPorDiaSemanaAsync(string diaSemana)
+        {
+            var parametros = new DynamicParameters();
+           
+            parametros.Add("sp_dia_semana", diaSemana);
+            
+           
+            var lista = await _contexto
+                .Connection
+                .QueryAsync<AgendaQueryResultado>(@"SELECT 
+                                                    A.id as IdAgenda,
+                                                    T.id as IdTurma,
+                                                    T.cod_turma as CodTurma,
+                                                    T.des_turma as DesTurma,
+                                                    S.id as IdSala,
+                                                    S.des_sala as DesSala,
+                                                    D.id AS IdDia,
+                                                    D.sgl_dia_semana as SiglaDia,
+                                                    D.des_dia_semana as DiaSemna,
+                                                    A.hora as Hora,
+                                                    F.id as IdProfessor,
+                                                    F.nome as Professor,
+                                                    TT.id as idTipoTurma,
+                                                    TT.des_turma_tipo AS TipoTurma,
+                                                    Count(TA.id_aluno) As TotalAluno
+                                                    FROM academia.agenda as A
+                                                    Join academia.turma as T on A.id_turma = T.id
+                                                    left join academia.turma_aluno as TA on T.id = TA.id_turma
+                                                    Join academia.sala as S on A.id_sala = S.id
+                                                    Join academia.dia_semana as D on A.id_dia_semana = D.id
+                                                    Join academia.turma_professor as TU On T.id = TU.id_turma
+                                                    Join academia.funcionario as F On TU.id_funcionario = F.id
+                                                    Join academia.turma_tipo as TT On  T.id_turma_tipo = TT.id
+                                                    where T.status = 1 and  D.des_dia_semana = @sp_dia_semana
+                                                    Group By
+                                                    A.id,
+                                                    T.id,
+                                                    T.cod_turma,
+                                                    T.des_turma,
+                                                    S.id,
+                                                    S.des_sala,
+                                                    D.id,
+                                                    D.sgl_dia_semana,
+                                                    D.des_dia_semana,
+                                                    A.hora,
+                                                    F.id,
+                                                    F.nome,
+                                                    TT.id,
+                                                    TT.des_turma_tipo    ", parametros, commandType: CommandType.Text);
+            return lista;
+        }
     }
 }

@@ -15,5 +15,7 @@
         public int IdTipoTurma { get; set; }
         public string Professor { get; set; }
         public string TipoTurma { get; set; }
+        public int TotalAluno { get; set; }
+        
     }
 }
