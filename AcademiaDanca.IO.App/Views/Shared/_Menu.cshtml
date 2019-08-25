@@ -15,24 +15,86 @@
         <ul id="collapse-dashboards" class='collapse' role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
             <li class="nav-item">
                 <a class="nav-link ripple" href="/Aluno/Novo" data-url="apps-dashboards-server.html">
-                    <span>Novo</span>
+                    <span>Novo Matrícula</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ripple" href="/Aluno/Listar" data-url="apps-dashboards-server.html">
-                    <span>Consultar</span>
+                <a class="nav-link ripple" href="/Financeiro/Mensalidade" data-url="apps-dashboards-server.html">
+                    <span>Mensalidade</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link ripple " href="apps-dashboards-server.html" data-url="/Aluno/Matricular">
+                    <span>Relatório</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item" role="tab" id="heading-page-layouts">
+
+        <a class="nav-link ripple with-arrow fuse-ripple-ready collapsed" data-toggle="collapse" data-target="#collapse-page-layouts" href="#" aria-expanded="false" aria-controls="collapse-page-layouts" data-parent="#sidenav">
+
+            <i class="icon s-6 icon-cash-usd"></i>
+
+            <span>Financeiro</span>
+        </a>
+        <ul id="collapse-page-layouts" class="collapse" role="tabpanel" aria-labelledby="heading-page-layouts" data-children=".nav-item" style="">
+            <li class="nav-item">
+                <a class="nav-link ripple" href="/Aluno/Novo" data-url="apps-dashboards-server.html">
                     <span>Matricular</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link ripple " href="apps-dashboards-server.html" data-url="/Aluno/Matricular">
-                    <span>Relatorio</span>
+            <li class="nav-item" role="tab" id="heading-carded">
+
+                <a class="nav-link ripple with-arrow fuse-ripple-ready" data-toggle="collapse" data-target="#collapse-carded" href="#" aria-expanded="true" aria-controls="collapse-carded" data-parent="#collapse-page-layouts">
+
+                    <span>Mensalidade</span>
                 </a>
+                <ul id="collapse-carded" class="collapse show" role="tabpanel" aria-labelledby="heading-carded" data-children=".nav-item" style="">
+
+                    <li class="nav-item">
+                        <a class="nav-link ripple fuse-ripple-ready" href="/Financeiro/" data-url="Financeiro">
+
+                            <span>Consultar</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link ripple fuse-ripple-ready" href="user-interface-page-layouts-carded-full-width-2.html" data-url="pages-auth-forgot-password.html">
+
+                            <span>Mensalidades Vencidas</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link ripple fuse-ripple-ready" href="user-interface-page-layouts-carded-left-sidebar.html" data-url="pages-auth-forgot-password.html">
+
+                            <span>Left Sidebar</span>
+                        </a>
+                    </li>
+
+                  
+
+                </ul>
             </li>
+
+            <li class="nav-item" role="tab" id="heading-simple">
+
+                <a class="nav-link ripple with-arrow fuse-ripple-ready collapsed" data-toggle="collapse" data-target="#collapse-simple" href="#" aria-expanded="false" aria-controls="collapse-simple" data-parent="#collapse-page-layouts">
+
+                    <span>Relatório</span>
+                </a>
+                <ul id="collapse-simple" class="collapse" role="tabpanel" aria-labelledby="heading-simple" data-children=".nav-item" style="">
+
+                    <li class="nav-item">
+                        <a class="nav-link ripple fuse-ripple-ready" href="/Financeiro/" data-url="Financeiro">
+
+                            <span>?????</span>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
         </ul>
     </li>
     <li class="nav-item" role="tab" id="Agenda">
@@ -51,7 +113,7 @@
                     <span>Calendário</span>
                 </a>
             </li>
-           
+
         </ul>
     </li>
     <li class="nav-item" role="tab" id="heading-turmas">

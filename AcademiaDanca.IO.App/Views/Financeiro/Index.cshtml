@@ -1,0 +1,362 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="content custom-scrollbar ps ps--active-y">
+
+    <div class="doc collapse-doc page-layout simple full-width">
+
+        <!-- HEADER -->
+        <div class="page-header bg-primary text-auto p-6 row no-gutters align-items-center justify-content-between">
+            <h1 class="doc-title h4" id="content">Financeiro</h1>
+
+
+        </div>
+
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="page-content">
+            <div class="row">
+                <div class="col-md-2">
+
+
+                    <ul class="nav flex-column">
+                        <li>
+                            <div class="p-2">
+                                <center>
+                                    <button id="abrirSelectAluno" type="button" onclick="ModalAluno()" class="btn btn-secondary btn-fab"><i class="icon icon-magnify"></i></button>
+                                    <button id="fecharSelectAluno" onclick="LimparFiltroAluno()" class="btn btn-sm btn-fab btn-secondary" style="display:none">x</button>
+
+                                </center>
+                            </div>
+                        </li>
+                        <li id="lialuno" class="nav-item invisible">
+
+                            <div class="nav-link ripple fuse-ripple-ready ">
+                                <input type="hidden" id="alunoId" />
+                                <i class="icon-account-location s-6"></i>
+                                <span id="alunoNome"></span>
+
+                            </div>
+
+                        </li>
+                        <li class="divider"></li>
+
+
+
+                        <li class="subheader">
+                            Status
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable('Avencer');" href="#">
+                                <i class="icon s-4 icon-label" style="color:#388E3C"></i>
+                                <span>A vencer</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable('Vencida');" href="#">
+                                <i class="icon s-4 icon-label" style="color:#F44336"></i>
+                                <span>Vencida</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable('Hoje');" href="#">
+                                <i class="icon s-4 icon-label" style="color:#FF9800"></i>
+                                <span>Vencendo Hoje</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+
+                </div>
+                <div class="col-md-10">
+                    <div class="page-content-card">
+
+                        <table id="financeiroMensalidades" class="table dataTable"></table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 841px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 637px;"></div></div>
+</div>
+
+
+<div id="modalFinanceiroAluno" style="height:600px" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLiveLabel">Lista de Alunos</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="page-content-wrapper">
+
+                    <!-- HEADER -->
+                    <div class="page-header d-flex flex-column justify-content-center light-fg">
+
+                        <div class="search-bar row align-items-center no-gutters bg-white text-auto">
+
+                            <div id="divLoad" style="width: 15%; display:none">
+
+                                <img width="25px" src="~/images/loaders/ajax_loader.gif" />
+
+                            </div>
+                            <input id="alunoNomeDigitado" class="search-bar-input col" type="text" placeholder="Digite o nome do aluno:">
+                            <span class="input-group-btn">
+                                <button id="pesquisarAlunoBtn" onclick="BuscarAlunoPorNome()" type="button" class="btn btn-icon fuse-ripple-ready">
+                                    <i class="icon icon-magnify"></i>
+                                </button>
+                            </span>
+
+                        </div>
+
+                    </div>
+                    <!-- / HEADER -->
+
+                    <div class="page-content-card">
+                        <!-- CONTENT -->
+                        <!-- CONTENT TOOLBAR -->
+                        <!-- / CONTENT TOOLBAR -->
+
+                        <div class="page-content custom-scrollbar ps ps--active-y">
+                            <div style="max-height:600px" class="todo-items w-100">
+                                <hr />
+                                <table id="financeiroAlunos" class="table dataTable  invisible">
+                                    <thead>
+                                        <tr>
+                                            <td>Foto</td>
+                                            <td style="width:30%">Nome</td>
+                                            <td>Data Nascimento</td>
+
+                                            <td>Telefone</td>
+                                            <td>Celular</td>
+                                            <td>Detalhe</td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="ps__rail-x" style="left: 0px; bottom: -221px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 221px; height: 641px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 66px; height: 193px;"></div></div>
+                        </div>
+                        <!-- / CONTENT -->
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <hr />
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @*
+<script src="~/Modulo/datatables/jquery.dataTables.min.js"></script>*@
+<!-- Data tables -->
+<script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+<script>
+    $(document).ready(function () {
+        MontarDataTable(null);
+    })
+    function LimparFiltroAluno() {
+        $("#alunoId").val('');
+        $("#lialuno").removeClass("visible");
+        $("#lialuno").addClass("invisible");
+        $("#alunoNome").html('');
+        $("#abrirSelectAluno").show();
+        $("#fecharSelectAluno").hide();
+        MontarDataTable(null);
+    };
+
+    function ModalAluno() {
+        $('#modalFinanceiroAluno').modal("show");
+
+    }
+    function SetarValorAluno(id, nome) {
+        $("#alunoId").val(id);
+        $("#lialuno").removeClass("invisible");
+        $("#lialuno").addClass("visible");
+        $("#alunoNome").html(nome);
+        $('#modalFinanceiroAluno').modal("hide");
+        MontarDataTable(null);
+        $("#financeiroAlunos").removeClass("visible");
+        $("#financeiroAlunos").addClass("invisible");
+        $("#abrirSelectAluno").hide();
+        $("#fecharSelectAluno").show();
+
+    }
+
+    function BuscarAlunoPorNome() {
+        //$('#modalFinanceiroAluno').modal("show");
+        if ($("#alunoNomeDigitado").val().length < 3) {
+            PNotify.error({
+                text: 'Informe pelo menos 3 caracteres do nome. ',
+
+            });
+            //alert("Informe pelo menos 3 caracteres do nome. ");
+            return;
+        }
+        var dataT = {
+            nome: $("#alunoNomeDigitado").val()
+        };
+        var callback = function (data) {
+            if (data.success) {
+                var linhas = '';
+                $.each(data.alunos, function (index, item) {
+                    var func =
+                        linhas = linhas + `"
+<tr><td><img class=\"avatar mr-4\" alt=\" ${item.nome} \" src=\"/images/avatars/Aluno/${item.foto}\"></td>
+<td>${item.nome}</td>
+<td>${item.dataToShortDate}</td>
+<td>${item.telefone}</td><td>${item.celular}</td>
+<td><button type=\"button\" class=\"btn btn-sm btn-secondary fuse-ripple-ready\" onclick="SetarValorAluno('${item.uifId}','${item.nome}')">Selecionar</button></td></tr>"`;
+
+                });
+                $("#financeiroAlunos tbody").html(linhas);
+                $("#alunoNomeDigitado").val('');
+                $("#financeiroAlunos").removeClass("invisible");
+                $("#financeiroAlunos").addClass("visible");
+                //$("#turmaAlunos tbody").add(linhas);
+
+            }
+        };
+        var callbackErro = function (data) {
+            PNotify.error({
+                title: 'Ocorreu um erro ao processar sua solicitação'
+            });
+
+        };
+
+        academia.helper.rest.utils.GET("/Financeiro/Alunos/", dataT, callback, callbackErro, $('#divLoad'));
+    }
+    function MontarDataTable(status) {
+        var id = $("#alunoId").val();
+        $('#financeiroMensalidades').DataTable(
+            {
+                "sEmptyTable": "Nenhum registro encontrado",
+                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                "sInfoPostFix": "",
+                "sInfoThousands": ".",
+                "sLengthMenu": "_MENU_ resultados por página",
+                "sLoadingRecords": "Carregando...",
+                "sProcessing": "Processando...",
+                "sZeroRecords": "Nenhum registro encontrado",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                    "sNext": "Próximo",
+                    "sPrevious": "Anterior",
+                    "sFirst": "Primeiro",
+                    "sLast": "Último"
+                },
+                "oAria": {
+                    "sSortAscending": ": Ordenar colunas de forma ascendente",
+                    "sSortDescending": ": Ordenar colunas de forma descendente"
+                },
+                "bDestroy": true,
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": `/Financeiro/MensalidadeAsync?id=${id}&status=${status}`,
+                "aoColumns": [
+                    {
+                        "sTitle": "Aluno",
+                        "mDataProp": "alunoNome",
+                        "bSortable": true
+
+                    },
+                    {
+                        "sTitle": "Parcela",
+                        "mDataProp": "parcela"
+
+                    },
+
+                    {
+                        "sTitle": "Data Vencimento",
+                        "mDataProp": "dataVencimento"
+                    },
+                    {
+                        "sTitle": "Valor",
+                        "mDataProp": "valor",
+
+                    },
+                    {
+                        "sTitle": "Desconto",
+                        "mDataProp": "desconto"
+                    },
+                    {
+                        "sTitle": "Total",
+                        "mDataProp": "total",
+
+                    },
+                    {
+                        "sTitle": "Status",
+                        "mDataProp": "pago"
+                    },
+                    {
+                        "sTitle": "Acao",
+                        "mDataProp": "acao",
+                        "className": 'details-control pointer',
+                        "bSortable": false
+                    }
+
+                ],
+                dom: 'rt<"dataTables_footer"ip>',
+
+                language: {
+                    lengthMenu: "Exibe _MENU_ Registros por pagina",
+                    search: "Procurar",
+                    paginate: { "previous": "Retornar", "next": "Avancar" },
+                    zeroRecords: "Nenhum registro encontrado",
+                    info: "Exibindo pagina _PAGE_ de _PAGES_",
+                    infoEmpty: "Sem registros",
+                    infoFiltered: "(filtrado de _MAX_ regitros totais)",
+                    processing: "Aguarde Estamos Processando..."
+                },
+
+                "filter": true,            // habilita o filtro(search box)
+                "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
+
+                pageLength: 10,
+                scrollY: 'auto',
+                scrollX: false,
+                responsive: true,
+                autoWidth: false,
+                scrollCollapse: true,
+                initComplete: function () {
+                    var api = this.api(),
+                        searchBox = $('#products-search-input');
+
+                    // Bind an external input as a table wide search box
+                    if (searchBox.length > 0) {
+                        searchBox.on('keyup', function (event) {
+                            api.search(event.target.value).draw();
+                        });
+                    }
+                }
+            }
+        );
+    }
+</script>
+
+
+
+
+
+}

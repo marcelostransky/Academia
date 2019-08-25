@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,11 @@ namespace Academia.Io.Tests.Fakes
         public async Task<int> MatricularAsync(Matricula matricula)
         {
             return await Task.Run(() => 1);
+        }
+
+        public Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status)
+        {
+            throw new NotImplementedException();
         }
     }
 }

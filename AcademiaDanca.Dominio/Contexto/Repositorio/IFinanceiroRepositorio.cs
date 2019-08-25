@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
     {
         Task<int> MatricularAsync(Matricula matricula);
         Task<bool> CheckMatriculaExisteAsync(Matricula matricula);
+        Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status);
         Task GerarMensalidade(Mensalidade mensalidade);
     }
 }

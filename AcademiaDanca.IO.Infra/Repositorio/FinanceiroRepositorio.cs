@@ -1,7 +1,9 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Dapper;
 using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -78,7 +80,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                     parametros.Add("sp_desconto", mes.Desconto);
                     parametros.Add("sp_parcela", mes.Parcela);
                     parametros.Add("sp_id_aluno", mes.IdAluno);
-                    
+
                     await _contexto
                         .Connection
                         .ExecuteAsync("sp_insert_mensalidade",
@@ -90,6 +92,57 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                     throw ex;
                 }
             }
+        }
+
+        public async Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_id_aluno", uifIdAluno);
+            var limit = string.Empty;
+            var data = string.Empty;
+            var dataConsulta = ObterDataFormatoUnix(DateTime.Now);
+            if (uifIdAluno.Equals(null))
+            {
+                limit = "limit 100";
+            }
+            switch (status)
+            {
+                case "Vencida":
+                    data = $" and  M.data_vencimento < '{dataConsulta}'";
+                    break;
+                case "Avencer":
+                    data = $" and  M.data_vencimento > '{dataConsulta}'";
+                    break;
+                case "Hoje":
+                    data = $" and  M.data_vencimento = '{dataConsulta}'";
+                    break;
+
+            }
+            var query = $@"SELECT  M.id as  MensalidadeId, 
+                                                            M.id_aluno as AlunoId,
+                                                            a.uif_id AS GuidAluno,
+                                                            M.parcela as Parcela,
+                                                            M.valor as Valor, M.data_vencimento as DataVencimento,
+                                                            M.desconto as Desconto,
+                                                            M.pago as Pago,
+                                                            M.data_pagamento as DataPagamento,
+                                                            M.juros as Juros,
+                                                            A.nome as AlunoNome FROM academia.mensalidade as M
+                                                            join academia.aluno as A on M.id_aluno = A.id
+                                                            where  a.uif_id =ifnull(@sp_id_aluno,a.uif_id) {data}  {limit}";
+            var resultado = (await _contexto
+                  .Connection
+                  .QueryAsync<MensalidadesQueryResultado>(query,
+                  parametros,
+                  commandType: System.Data.CommandType.Text)).ToList();
+
+            return resultado;
+        }
+
+        private string ObterDataFormatoUnix(DateTime data)
+        {
+            var d = data.ToShortDateString().Split('/');
+            return $"{d[2]}-{d[1]}-{d[0]}";
         }
     }
 }
