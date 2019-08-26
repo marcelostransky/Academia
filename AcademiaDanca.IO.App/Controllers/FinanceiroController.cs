@@ -83,8 +83,8 @@ namespace AcademiaDanca.IO.App.Controllers
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
             menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Calendário\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.MensalidadeId);
-            menu.AppendFormat("<a href =\"#\" onclick=ModalAluno({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.MensalidadeId);
-            menu.AppendFormat("<a href =\"/Turma/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.MensalidadeId);
+            menu.AppendFormat("<a href =\"#\" onclick=ModalAluno({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-square-inc-cash\"></i>    </a>", r.MensalidadeId);
+            menu.AppendFormat("<a href =\"#\" onclick=ModalPagamento({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-barcode-scan \"></i>    </a>", r.MensalidadeId);
             return menu.ToString();
         }
 
