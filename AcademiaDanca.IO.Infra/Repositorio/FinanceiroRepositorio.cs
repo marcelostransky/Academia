@@ -94,13 +94,16 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
         }
 
-        public async Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status)
+        public async Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano)
         {
-            var parametros = new DynamicParameters();
-            parametros.Add("sp_id_aluno", uifIdAluno);
+            ;
             var limit = string.Empty;
             var data = string.Empty;
             var dataConsulta = ObterDataFormatoUnix(DateTime.Now);
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_id_aluno", uifIdAluno);
+            parametros.Add("sp_data_consulta", dataConsulta);
+           
             if (uifIdAluno.Equals(null))
             {
                 limit = "limit 100";
@@ -108,15 +111,23 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             switch (status)
             {
                 case "Vencida":
-                    data = $" and  M.data_vencimento < '{dataConsulta}'";
+                    data = $" and  M.data_vencimento < @sp_data_consulta";
                     break;
                 case "Avencer":
-                    data = $" and  M.data_vencimento > '{dataConsulta}'";
+                    data = $" and M.Pago = 0  and  M.data_vencimento > @sp_data_consulta";
                     break;
                 case "Hoje":
-                    data = $" and  M.data_vencimento = '{dataConsulta}'";
+                    data = $" and  M.data_vencimento = @sp_data_consulta";
+                    break;
+                case "Pago":
+                    data = $" and  M.Pago = 1";
                     break;
 
+            }
+            if (!ano.Equals(null))
+            {
+                parametros.Add("sp_Ano", ano);
+                data += $" and  year(M.data_vencimento) = @sp_Ano";
             }
             var query = $@"SELECT  M.id as  MensalidadeId, 
                                                             M.id_aluno as AlunoId,
@@ -129,7 +140,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                                                             M.juros as Juros,
                                                             A.nome as AlunoNome FROM academia.mensalidade as M
                                                             join academia.aluno as A on M.id_aluno = A.id
-                                                            where  a.uif_id =ifnull(@sp_id_aluno,a.uif_id) {data}  {limit}";
+                                                            where  a.uif_id = ifnull(@sp_id_aluno,a.uif_id) {data}  {limit}";
             var resultado = (await _contexto
                   .Connection
                   .QueryAsync<MensalidadesQueryResultado>(query,

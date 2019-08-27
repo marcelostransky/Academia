@@ -39,12 +39,12 @@ namespace AcademiaDanca.IO.App.Controllers
 
 
         }
-        public async Task<IActionResult> MensalidadeAsync(Guid? id, string status, jQueryDataTableRequestModel request)
+        public async Task<IActionResult> MensalidadeAsync(Guid? id, string status, int? ano, jQueryDataTableRequestModel request)
         {
             try
             {
-                var t = status;
-                var lista = (await _repositorio.ObterMensalidadesPorAlunoAsync(id, status)).AsQueryable();
+
+                var lista = (await _repositorio.ObterMensalidadesPorAlunoAsync(id, status, ano)).AsQueryable();
 
                 if (request.sSearch != null && request.sSearch.Length > 0)
                 {
@@ -82,9 +82,11 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Calendário\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.MensalidadeId);
-            menu.AppendFormat("<a href =\"#\" onclick=ModalAluno({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-square-inc-cash\"></i>    </a>", r.MensalidadeId);
-            menu.AppendFormat("<a href =\"#\" onclick=ModalPagamento({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-barcode-scan \"></i>    </a>", r.MensalidadeId);
+            menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Mensalidade\"> <i class=\"icon-border-color\"></i>    </a>", r.MensalidadeId);
+            if (!r.Pago)
+            {
+                menu.AppendFormat("<a href =\"#\" onclick=ModalPagamento({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-barcode-scan \"></i>    </a>", r.MensalidadeId);
+            }
             return menu.ToString();
         }
 

@@ -29,7 +29,7 @@ namespace Academia.Io.Tests.Fakes
             return await Task.Run(() => 1);
         }
 
-        public Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status)
+        public Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano)
         {
             throw new NotImplementedException();
         }

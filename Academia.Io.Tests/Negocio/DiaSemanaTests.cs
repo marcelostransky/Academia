@@ -19,7 +19,7 @@ namespace Academia.Io.Tests.Negocio
             var culture = new System.Globalization.CultureInfo("pt-Br");
             var dayFalse =Convert.ToDateTime("15/08/2019").GetDayOfWeek(culture);
             var dayTrue = DateTime.Now.GetDayOfWeek(culture);
-            int num =Convert.ToInt32(DateTime.Now.GetDayOfWeek(culture));
+            //int num =Convert.ToInt32(DateTime.Now.GetDayOfWeek(culture));
             var dia = DateTime.Now.DayOfWeek;
 
             Assert.AreEqual(dayTrue, "sábado");
