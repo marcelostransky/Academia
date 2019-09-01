@@ -47,7 +47,7 @@
                             Ano
                         </li>
                         <li class="nav-item">
-                            <input style="padding-right:25px;  text-align:center; font-weight:bold" id="inputAno" placeholder="Digite o ano de pesquisa" type="text"  class="form-control h8"/>
+                            <input style="padding-right:25px;  text-align:center; font-weight:bold" id="inputAno" placeholder="Digite o ano de pesquisa" type="text" class="form-control h8" />
                         </li>
                         <li class="subheader">
                             Status
@@ -101,7 +101,7 @@
             </div>
             <div class="modal-body">
                 <div class="page-content-wrapper">
-
+                    <input type="hidden" id="mElemento" />
                     <!-- HEADER -->
                     <div class="page-header d-flex flex-column justify-content-center light-fg">
 
@@ -115,13 +115,14 @@
                                             <td class="h10">Parcela</td>
                                         </tr>
                                         <tr>
-                                            <td class="h10">Marcelo Benes Stransky Silva</td>
-                                            <td class="h10">5699</td>
-                                            <td class="h10">10</td>
+                                            <td id="mAluno" class="h10"></td>
+                                            <td id="mCodigo" class="h10"></td>
+                                            <td id="mParcela" class="h10"></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
                             <div class="col-sm-4">
 
                                 <table class="table table-bordered">
@@ -132,8 +133,8 @@
 
                                         </tr>
                                         <tr>
-                                            <td>20/08/2019</td>
-                                            <td>25/08/2019</td>
+                                            <td id="mVencimento"></td>
+                                            <td id="mPagamento"></td>
 
                                         </tr>
                                     </tbody>
@@ -141,27 +142,43 @@
 
                             </div>
                             <hr style="height:3px" class="border-blue-100" />
-                            <table class="table table-responsive">
-                                <tbody>
-                                    <tr>
-                                        <td class="h7">Valor</td>
-                                        <td style="font-weight:bold" class="h9"> + R$ 1555,90</td>
-                                    </tr>
-                                    <tr>
-                                        <td class="h7">Desconto</td>
-                                        <td style="color:crimson; font-weight:bold" class="h9"> - <input id="inputJuros" type="text" value="23,25" /></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="h7">Juros</td>
-                                        <td style="font-weight:bold" class="h9"> + R$ 65,32</td>
-                                    </tr>
-                                    <tr style="border-top:solid">
-                                        <td class="h7">Total</td>
-                                        <td style="font-weight:bold">R$ 777,89</td>
-                                    </tr>
+                            <div class="col-sm-6">
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <td class="h7">Valor</td>
+                                            <td id="mValorParcela" style="font-weight:bold" class="h9"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="h7">Desconto</td>
+                                            <td id="mDesconto" style="color:crimson; font-weight:bold" class="h9"> </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="h7">Juros</td>
+                                            <td id="mJuros" style="font-weight:bold" class="h9">
+                                                <table>
+                                                    <tr>
+                                                        <td> <input id="inputJuros" class="form-control" width="10" type="text" value="0" /></td>
+                                                        <td>
+                                                            <button class="btn btn-light btn-fab btn-sm fuse-ripple-ready" onclick="$('#mTotal').html(CalcularTotal($('#mValorParcela').html().trim(), $('#inputJuros').val().replace('R$', '').replace(',', '.'), $('#mDesconto').html().trim())); $('#modalPagamentoMensaliade').modal('show')"><i class="icon-plus"></i></button>
+                                                        </td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr style="border-top:solid">
+                                            <td class="h7">Total</td>
+                                            <td id="mTotal" style="font-weight:bold"></td>
+                                        </tr>
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-6">
+                                <div style=" text-align:right; padding-top: 50px; padding-right:10px">
+                                    <button class="btn btn-outline-dark fuse-ripple-ready" onclick="RegistrarPagamento()">Registrar Pagamento</button>
+                                </div>
+                            </div>
 
                         </div>
 
@@ -270,6 +287,13 @@
     .doc > .page-header {
         height: 6.5rem;
     }
+    /*.btn-fab {
+            line-height: 5.6rem;
+            width: 20.6rem;
+            min-width: 10.6rem;
+            height: 10.6rem;
+            min-height: 20.6rem;
+        }*/
 </style>
 }
 @section Scripts{
@@ -281,7 +305,50 @@
 <script src="~/Modulo/Mask/maskmoney.js"></script>
 <script>
     $("#inputAno").mask("9999");
-    
+    $("#inputJuros").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+    function RegistrarPagamento() {
+        var dataT = {
+
+            IdMensalidade: $("#mCodigo").html(),
+            Pago: true,
+            Juros: $("#inputJuros").val().replace('R$', '').replace('.', ','),
+
+        };
+        var callback = function (data) {
+            var pagamento = JSON.parse(data);
+            if (pagamento.success) {
+                $('#modalPagamentoMensaliade').modal("hide");
+                var hoje = new Date();
+                $("#mPagamento").html(`${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()}`);
+                document.getElementById("financeiroMensalidades").rows[$("#mElemento").val()].cells[7].innerHTML = `<span class=\"badge badge-success\"> Pago - ${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()} </ span>`;
+                PNotify.success({
+                    title: pagamento.message
+                });
+
+
+            } else {
+                var msg = '';
+                $.each(pagamento.data, function (index, item) {
+                    msg = msg + item.property + ' - ' + item.message + '\n';
+                });
+
+                PNotify.info({
+                    title: msg
+                });
+
+                $('#modalPagamentoMensaliade').modal("show");
+            }
+        };
+        var callbackErro = function (data) {
+            PNotify.error({
+                title: 'Ocorreu um erro ao processar sua solicitação'
+            });
+            $('#modalPagamentoMensaliade').modal("show");
+        };
+
+        academia.helper.rest.utils.POST("/Financeiro/RegistrarPagamento/", dataT, callback, callbackErro, $('#loader'));
+
+    }
 </script>
 <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
@@ -289,6 +356,8 @@
     $(document).ready(function () {
         MontarDataTable(null);
     })
+
+
     function LimparFiltroAluno() {
         $("#alunoId").val('');
         $("#lialuno").removeClass("visible");
@@ -298,12 +367,39 @@
         $("#fecharSelectAluno").hide();
         MontarDataTable(null);
     };
+    function pegar_valor_linha_tabela(elemento) {
+        var mAluno = $(elemento).closest('tr').find('td').eq('0').html().trim();
+        var mCodigo = $(elemento).closest('tr').find('td').eq('1').text().trim();
+        var mParcela = $(elemento).closest('tr').find('td').eq('2').text().trim();
+        var mVencimento = $(elemento).closest('tr').find('td').eq('3').text().trim();
+        var mValorParcela = $(elemento).closest('tr').find('td').eq('4').text().trim();
+        var mDesconto = $(elemento).closest('tr').find('td').eq('5').text().trim();
+        //$('#resultDescricao').val(modelo + ' [' + medida + '] [BRE' + bracoesq + '] [' + modulo + '] [BRD' + bracodir + '] [' + revestimento + ']');
+        $('#mAluno').html(mAluno);
+        $('#mCodigo').html(mCodigo);
+        $('#mParcela').html(mParcela);
+        $('#mVencimento').html(mVencimento);
+        $('#mPagamento').html('');
+        $('#mValorParcela').html(mValorParcela);
+        $('#mDesconto').html(mDesconto);
+        $('#mElemento').val(elemento.rowIndex);
+        $('#mTotal').html(CalcularTotal(mValorParcela, 0, mDesconto));
 
+        //$('#revestimento option:contains(' + revestimento + ')').prop('selected', true);
+        //var botao = document.getElementById("modulo");
+        //botao.click();
+    }
+    function CalcularTotal(valor, juros, desconto) {
+        var calculo = (parseFloat(valor) + parseFloat(juros)) - parseFloat(desconto);
+        return calculo;
+    }
     function ModalAluno() {
         $('#modalFinanceiroAluno').modal("show");
 
     }
-    function ModalPagamento() {
+    function ModalPagamento(linha) {
+        //alert(linha);
+        pegar_valor_linha_tabela(linha.parentElement.parentElement);
         $('#modalPagamentoMensaliade').modal("show");
 
     }
@@ -399,6 +495,11 @@
                         "sTitle": "Aluno",
                         "mDataProp": "alunoNome",
                         "bSortable": true
+
+                    },
+                    {
+                        "sTitle": "Código",
+                        "mDataProp": "mensalidadeId"
 
                     },
                     {

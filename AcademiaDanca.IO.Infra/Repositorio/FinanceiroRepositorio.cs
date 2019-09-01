@@ -96,14 +96,14 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
         public async Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano)
         {
-            ;
+
             var limit = string.Empty;
             var data = string.Empty;
             var dataConsulta = ObterDataFormatoUnix(DateTime.Now);
             var parametros = new DynamicParameters();
             parametros.Add("sp_id_aluno", uifIdAluno);
             parametros.Add("sp_data_consulta", dataConsulta);
-           
+
             if (uifIdAluno.Equals(null))
             {
                 limit = "limit 100";
@@ -111,7 +111,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             switch (status)
             {
                 case "Vencida":
-                    data = $" and  M.data_vencimento < @sp_data_consulta";
+                    data = $" and M.Pago = 0 and  M.data_vencimento < @sp_data_consulta";
                     break;
                 case "Avencer":
                     data = $" and M.Pago = 0  and  M.data_vencimento > @sp_data_consulta";
@@ -154,6 +154,30 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             var d = data.ToShortDateString().Split('/');
             return $"{d[2]}-{d[1]}-{d[0]}";
+        }
+
+        public async Task<bool> RegistrarPagamentoAsync(int idMensalidade, bool pago, double juros)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", idMensalidade);
+                parametros.Add("sp_pago", pago);
+                parametros.Add("sp_juros", juros);
+                parametros.Add("sp_data", DateTime.Now);
+
+                var query = "update academia.mensalidade set pago = @sp_pago , juros = @sp_juros, data_pagamento = @sp_data where id = @sp_id";
+                var atualizado = await _contexto
+                     .Connection
+                     .ExecuteAsync(query,
+                     parametros,
+                     commandType: System.Data.CommandType.Text);
+                return atualizado > 0;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

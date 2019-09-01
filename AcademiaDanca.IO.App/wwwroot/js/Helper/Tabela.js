@@ -5,6 +5,10 @@
         return false;
     };
     existeLinha = function (item) { return $("#" + item + " td:contains-ci('" + $("#Turmas").val() + "')").parent("tr").length };
+
+
+
+
 })(jQuery);
 $.extend($.expr[":"], {
     "contains-ci": function (elem, i, match, array) {

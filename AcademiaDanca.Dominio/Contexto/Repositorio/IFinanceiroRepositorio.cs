@@ -13,5 +13,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<bool> CheckMatriculaExisteAsync(Matricula matricula);
         Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano);
         Task GerarMensalidade(Mensalidade mensalidade);
+        Task<bool> RegistrarPagamentoAsync(int idMensalidade, bool pago, double juros);
+        
     }
 }

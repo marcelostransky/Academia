@@ -1,9 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Leanwork.CodePack.DataTables;
@@ -15,14 +16,32 @@ namespace AcademiaDanca.IO.App.Controllers
     {
         private readonly IFinanceiroRepositorio _repositorio;
         private readonly IAlunoRepositorio _repositorioAluno;
-        public FinanceiroController(IFinanceiroRepositorio repositorio, IAlunoRepositorio repositorioAluno)
+        private readonly RegistrarPagamentoMensalidadeManipulador _registrarManipulador;
+        public FinanceiroController(IFinanceiroRepositorio repositorio,
+            IAlunoRepositorio repositorioAluno
+            , RegistrarPagamentoMensalidadeManipulador registrarManipulador)
         {
             _repositorio = repositorio;
             _repositorioAluno = repositorioAluno;
+            _registrarManipulador = registrarManipulador;
         }
         public IActionResult Index()
         {
             return View();
+        }
+        public async Task<IActionResult> RegistrarPagamento(RegistrarPagamentoMensalidadeComando comando)
+        {
+            var resultado = await _registrarManipulador.ManipuladorAsync(comando);
+            try
+            {
+                return Json(resultado);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(resultado);
+            }
+
         }
         public async Task<IActionResult> Alunos(string nome)
         {
@@ -55,6 +74,7 @@ namespace AcademiaDanca.IO.App.Controllers
                              select new
                              {
                                  r.AlunoNome,
+                                 r.MensalidadeId,
                                  //Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Funcionario/{r.Foto}\">",
                                  r.Parcela,
                                  r.Valor,
@@ -85,7 +105,7 @@ namespace AcademiaDanca.IO.App.Controllers
             menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Mensalidade\"> <i class=\"icon-border-color\"></i>    </a>", r.MensalidadeId);
             if (!r.Pago)
             {
-                menu.AppendFormat("<a href =\"#\" onclick=ModalPagamento({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-barcode-scan \"></i>    </a>", r.MensalidadeId);
+                menu.AppendFormat("<a href =\"#\" onclick=ModalPagamento(this)  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-barcode-scan \"></i>    </a>", r.MensalidadeId);
             }
             return menu.ToString();
         }

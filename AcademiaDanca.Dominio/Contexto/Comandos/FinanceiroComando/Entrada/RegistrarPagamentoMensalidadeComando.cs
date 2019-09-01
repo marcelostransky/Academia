@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada
 {
-    public class CriarMensalidadeComando : Notifiable, IComando
+    public class RegistrarPagamentoMensalidadeComando : Notifiable, IComando
     {
         public int IdMensalidade { get; set; }
         public bool Pago { get; set; }

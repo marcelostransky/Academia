@@ -33,5 +33,10 @@ namespace Academia.Io.Tests.Fakes
         {
             throw new NotImplementedException();
         }
+
+        public Task<bool> RegistrarPagamentoAsync(int idMensalidade, bool pago, double juros)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
