@@ -59,6 +59,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<IAlunoRepositorio, AlunoRepositorio>();
             services.AddTransient<IFuncionarioRepositorio, FuncionarioRepositorio>();
             services.AddTransient<IEnderecoRepositorio, EnderecoRepositorio>();
+            services.AddTransient<IDashBoardRepositorio, DashBoardRepositorio>();
             services.AddTransient<TipoTelefoneManipulador, TipoTelefoneManipulador>();
             services.AddTransient<TipoFiliacaoManipulador, TipoFiliacaoManipulador>();
             services.AddTransient<AlunoManipulador, AlunoManipulador>();

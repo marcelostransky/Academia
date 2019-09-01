@@ -7,20 +7,38 @@ using Microsoft.AspNetCore.Mvc;
 using AcademiaDanca.IO.App.Models;
 using Microsoft.AspNetCore.Authorization;
 using AcademiaDanca.IO.App.Filtros;
+using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
+using System.Net;
 
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
     public class HomeController : Controller
     {
-        
+
+        private readonly IDashBoardRepositorio _repositorio;
+        public HomeController(IDashBoardRepositorio repositorio)
+        {
+            _repositorio = repositorio;
+        }
         public IActionResult Index()
         {
-            //var fto = User.Claims.FirstOrDefault(x => x.Type == "Foto").Value;
             return View();
         }
+        public async Task<IActionResult> ObterQuantitativoAlunoMensalidadeAgendamentoAsync()
+        {
+            var resultado = await _repositorio.ObterQuantitativoAsync();
+            try
+            {
+                return Json(new { success = true, resultado });
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(resultado);
+            }
+        }
 
-       
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
