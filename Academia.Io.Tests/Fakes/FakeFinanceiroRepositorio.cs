@@ -20,7 +20,6 @@ namespace Academia.Io.Tests.Fakes
             var lista = mensalidade.Mensalidades();
             foreach (var mes in lista)
             {
-
             }
         }
 

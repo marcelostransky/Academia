@@ -14,6 +14,7 @@
         public int IdProfessor { get; set; }
         public int IdTipoTurma { get; set; }
         public string Professor { get; set; }
+        public string FotoProfessor { get; set; }
         public string TipoTurma { get; set; }
         public int TotalAluno { get; set; }
         

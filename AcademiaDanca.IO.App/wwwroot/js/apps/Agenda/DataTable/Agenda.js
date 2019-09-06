@@ -4,8 +4,8 @@ $(document).ready(function () {
 });
 function MontarAgendaDataTable() {
     var dNow = new Date();
-    var data = dNow.getDate() + '/' + dNow.getMonth() + '/' + dNow.getFullYear();
-    if ($("#inputData").val() !== '') {
+    var data = dNow.getDate() + '/' + (dNow.getMonth() + 1) + '/' + dNow.getFullYear();
+    if ($("#inputData").val() !== undefined && $("#inputData").val() !== '') {
         data = $("#inputData").val();
     }
     if (isDate(data)) {
@@ -63,9 +63,18 @@ function MontarAgendaDataTable() {
                         "mDataProp": "hora"
                     },
                     {
+                        "sTitle": "Sala",
+                        "mDataProp": "sala"
+                    },
+                    {
+                        "sTitle": "Foto",
+                        "mDataProp": "foto"
+                    },
+                    {
                         "sTitle": "Professor",
                         "mDataProp": "professor"
                     },
+                   
                     {
                         "sTitle": "Total de Alunos",
                         "mDataProp": "totalAluno"
@@ -111,7 +120,7 @@ function MontarAgendaDataTable() {
         );
     }
     else {
-        var msg = "Informe uma data valida. Ex.: " + dNow.getDate() + '/' + IncluirZero(dNow.getMonth())+ dNow.getMonth() + '/' + dNow.getFullYear();
+        var msg = "Informe uma data valida. Ex.: " + dNow.getDate() + '/' + IncluirZero(dNow.getMonth()) + dNow.getMonth() + '/' + dNow.getFullYear();
         PNotify.error({
             title: msg
         });

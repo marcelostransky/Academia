@@ -38,8 +38,7 @@ namespace AcademiaDanca.IO.App.Controllers
                 return Json(resultado);
             }
         }
-
-
+        [AllowAnonymous]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

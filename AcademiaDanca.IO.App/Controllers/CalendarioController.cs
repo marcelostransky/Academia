@@ -30,7 +30,7 @@ namespace AcademiaDanca.IO.App.Controllers
                 {
                     dataConsulta = Convert.ToDateTime(data);
                 }
-               
+
                 var diaSemana = DateTimeExtension.GetDayOfWeek(dataConsulta, new System.Globalization.CultureInfo("pt-Br"));
                 var lista = (await _repositorio.ObterCalendarioPorDiaSemanaAsync(diaSemana)).AsQueryable();
 
@@ -41,15 +41,20 @@ namespace AcademiaDanca.IO.App.Controllers
 
                 var model = (from r in lista
                              select new
-                             {   data= dataConsulta.ToShortDateString(),
+                             {
+                                 data = dataConsulta.ToShortDateString(),
                                  r.IdTurma,
                                  r.Professor,
+                                 r.FotoProfessor,
                                  r.DesTurma,
                                  r.CodTurma,
                                  r.TipoTurma,
                                  r.SiglaDia,
                                  r.Hora,
-                                 r.TotalAluno
+                                 r.TotalAluno,
+                                 sala = r.DesSala,
+                                 Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Funcionario/{r.FotoProfessor}\">",
+
 
 
                              }).DataTableResponse(request);

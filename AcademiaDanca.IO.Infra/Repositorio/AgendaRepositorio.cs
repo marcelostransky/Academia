@@ -128,6 +128,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                                                     A.hora as Hora,
                                                     F.id as IdProfessor,
                                                     F.nome as Professor,
+                                                    F.foto as FotoProfessor,
                                                     TT.id as idTipoTurma,
                                                     TT.des_turma_tipo AS TipoTurma,
                                                     Count(TA.id_aluno) As TotalAluno
@@ -154,7 +155,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                                                     F.id,
                                                     F.nome,
                                                     TT.id,
-                                                    TT.des_turma_tipo    ", parametros, commandType: CommandType.Text);
+                                                    TT.des_turma_tipo
+                                                    Order by  A.hora
+
+
+", parametros, commandType: CommandType.Text);
             return lista;
         }
     }

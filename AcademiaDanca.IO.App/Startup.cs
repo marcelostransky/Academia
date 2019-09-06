@@ -91,6 +91,7 @@ namespace AcademiaDanca.IO.App
             }
             else
             {
+                app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }

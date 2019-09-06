@@ -4,6 +4,7 @@
     <TargetFramework>net461</TargetFramework>
     <DebugType>full</DebugType>
     <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
+    <Platforms>AnyCPU;x64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
