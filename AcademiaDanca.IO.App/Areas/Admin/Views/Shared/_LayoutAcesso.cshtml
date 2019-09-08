@@ -1,0 +1,41 @@
+﻿@{
+    ViewData["Title"] = "Pagina";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-layout carded left-sidebar single-scroll">
+
+    <div class="top-bg bg-primary text-auto"></div>
+
+    <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+        <!-- HEADER -->
+        <div class="header p-6">
+            <span class="h4"> <img style="height:150px" src="~/images/permissions-reset-icon.png" /></span>
+        </div>
+        <!-- / HEADER -->
+
+        <div class="content">
+            <!-- DEMO CONTENT -->
+            <div class="demo-sidebar">
+                @Html.Partial("~/Areas/Admin/Views/Shared/_MenuAcesso.cshtml")
+
+            </div>
+            <!-- / DEMO CONTENT -->
+        </div>
+
+    </aside>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        @RenderBody()
+       
+
+    </div>
+    <!-- / PAGE CONTENT WRAPPER -->
+</div>
+@RenderSection("Scripts", required: false)
+
+
+
+

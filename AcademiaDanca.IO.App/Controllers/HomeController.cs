@@ -25,6 +25,7 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
+        [ResponseCache(Duration = 10, Location = ResponseCacheLocation.None, NoStore = true)]
         public async Task<IActionResult> ObterQuantitativoAlunoMensalidadeAgendamentoAsync()
         {
             var resultado = await _repositorio.ObterQuantitativoAsync();

@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto;
@@ -60,6 +61,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<IFuncionarioRepositorio, FuncionarioRepositorio>();
             services.AddTransient<IEnderecoRepositorio, EnderecoRepositorio>();
             services.AddTransient<IDashBoardRepositorio, DashBoardRepositorio>();
+            services.AddTransient<IAcessoRepositorio, AcessoRepositorio>();
             services.AddTransient<TipoTelefoneManipulador, TipoTelefoneManipulador>();
             services.AddTransient<TipoFiliacaoManipulador, TipoFiliacaoManipulador>();
             services.AddTransient<AlunoManipulador, AlunoManipulador>();
@@ -77,6 +79,8 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<AddTurmaAlunoManipulador, AddTurmaAlunoManipulador>();
             services.AddTransient<MatricularManipulador, MatricularManipulador>();
             services.AddTransient<RegistrarPagamentoMensalidadeManipulador, RegistrarPagamentoMensalidadeManipulador>();
+            services.AddTransient<AddPaginaManipulador, AddPaginaManipulador>();
+            services.AddTransient<AddPerfilManipulador, AddPerfilManipulador>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";
         }
