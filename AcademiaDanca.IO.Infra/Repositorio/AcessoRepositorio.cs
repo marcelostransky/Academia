@@ -61,6 +61,28 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
         }
 
+        public async Task<bool> CheckPermissaoAsync(int paginaId, int perfilId)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_pagina_id", paginaId);
+                parametros.Add("sp_papel_id", perfilId);
+                var total = (await _contexto
+                      .Connection
+                      .QueryAsync<int>("SELECT count(1) FROM academia.pagina_papel where id_pagina = @sp_pagina_id and id_papel=@sp_papel_id;",
+                      parametros,
+                      commandType: System.Data.CommandType.Text)).FirstOrDefault();
+
+                return total > 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         public Task<int> DeletarAsync(int id)
         {
             throw new NotImplementedException();
@@ -106,6 +128,45 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 throw;
             }
         }
+
+        public async Task<IEnumerable<PermissaoResultadoQuery>> ObterPermissaosAsync(
+            string paginaId, string perfilId)
+        {
+
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_pagina", paginaId);
+                parametros.Add("sp_id_perfil", perfilId);
+                return await _contexto
+                        .Connection
+                        .QueryAsync<PermissaoResultadoQuery>(@"
+                        SELECT 
+                        pg.id as PaginaId,
+                        pg.des_pagina as DesPagina,
+                        p.id as PapelId,
+                        p.nome_papel as DesPapel,
+                        pp.Criar as Criar,
+	                    pp.deletar as Excluir,
+                        pp.atualizar as Editar,
+                        pp.ler as Ler
+                        FROM academia.pagina as pg
+                        LEFT JOIN academia.pagina_papel as pp  on pg.id = pp.id_pagina
+                        LEFT JOIN academia.papel as p on pp.id_papel = p.id
+                        Where
+                        pg.id = ifnull(@sp_id_pagina, pg.id)
+                        And
+                        p.id = ifnull(@sp_id_perfil, p.id);", param: parametros,
+
+                        commandType: System.Data.CommandType.Text);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
         public async Task<int> SalvarAsync(Pagina pagina)
         {
             try
@@ -148,6 +209,33 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             catch (Exception ex)
             {
 
+                throw;
+            }
+        }
+
+        public async Task<int> SalvarPermissaoAsync(Permissao permissao)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_pagina_id", permissao.PaginaId);
+                parametros.Add("sp_papel_id", permissao.PerfilId);
+                parametros.Add("sp_criar", permissao.Criar);
+                parametros.Add("sp_atualizar", permissao.Editar);
+                parametros.Add("sp_ler", permissao.Ler);
+                parametros.Add("sp_deletar", permissao.Excluir);
+
+
+               var inserido = await _contexto
+                    .Connection
+                    .ExecuteAsync("sp_insert_permissao",
+                    parametros,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return inserido;
+            }
+            catch (Exception ex)
+            {
                 throw;
             }
         }

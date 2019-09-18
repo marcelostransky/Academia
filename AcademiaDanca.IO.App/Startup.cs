@@ -77,10 +77,12 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<EditarFotoAlunoManipulador, EditarFotoAlunoManipulador>();
             services.AddTransient<AddResponsavelManipulador, AddResponsavelManipulador>();
             services.AddTransient<AddTurmaAlunoManipulador, AddTurmaAlunoManipulador>();
+           
             services.AddTransient<MatricularManipulador, MatricularManipulador>();
             services.AddTransient<RegistrarPagamentoMensalidadeManipulador, RegistrarPagamentoMensalidadeManipulador>();
             services.AddTransient<AddPaginaManipulador, AddPaginaManipulador>();
             services.AddTransient<AddPerfilManipulador, AddPerfilManipulador>();
+            services.AddTransient<AddPermissaoManipulador, AddPermissaoManipulador>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";
         }

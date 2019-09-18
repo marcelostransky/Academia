@@ -4,8 +4,8 @@
         tr.fadeOut(400, function () { tr.remove(); });
         return false;
     };
-    existeLinha = function (item) { return $("#" + item + " td:contains-ci('" + $("#Turmas").val() + "')").parent("tr").length };
-
+    existeLinha = function (item) { return $("#" + item + " td:contains-ci('" + $("#Turmas").val() + "')").parent("tr").length; };
+    recuperaLinha = function (item) { return $(item).closest('tr'); };
 
 
 

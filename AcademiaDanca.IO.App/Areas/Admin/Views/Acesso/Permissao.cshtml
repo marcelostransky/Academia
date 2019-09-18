@@ -1,8 +1,326 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Permissao";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAcesso.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div class="page-layout carded left-sidebar single-scroll">
 
-<h2>Permissao</h2>
+    <div class="top-bg bg-primary text-auto"></div>
 
+    <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+        <!-- HEADER -->
+        <div class="header p-6">
+            <span class="h4"> <img style="height:150px" src="~/images/permissions-reset-icon.png" /></span>
+        </div>
+        <!-- / HEADER -->
+
+        <div class="content">
+            <!-- DEMO CONTENT -->
+            <div class="demo-sidebar">
+                @Html.Partial("~/Areas/Admin/Views/Shared/_MenuAcesso.cshtml")
+
+            </div>
+            <!-- / DEMO CONTENT -->
+        </div>
+
+    </aside>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        <!-- HEADER -->
+        <div class="page-header py-6 light-fg">
+
+            <div class="d-flex flex-row align-items-center">
+
+
+                <span class="h4">Configuração de acesso</span>
+
+            </div>
+
+
+        </div>
+        <!-- / HEADER -->
+        <div class="page-content-card">
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar p-6">
+
+                Permissão de acesso
+
+            </div>
+            <!-- / CONTENT TOOLBAR -->
+
+
+            <div class="demo-content">
+                <center>
+                    <div class=" col-10  p-8">
+                        @*<form id="formAluno">
+                        *@
+                        <div class="form-row">
+
+                            <div class="form-group col-md-5">
+                                <label for="inputId" class="col-form-label">Perfis</label>
+                                @Html.DropDownList("Perfis", null, "", new { @class = "form-control   select" })
+                            </div>
+                            <div class="form-group col-md-5">
+                                <label for="inputId" class="col-form-label">Páginas</label>
+                                @Html.DropDownList("Paginas", null, "", new { @class = "form-control   select" })
+                            </div>
+                            <div class="form-group col-md-2">
+                                <button class="btn btn-light btn-fab btn-sm fuse-ripple-ready" onclick="ModalCadastrar()"><i class="icon-plus"></i></button>
+                            </div>
+                            <div class="form-row col">
+                                <div class="form-group col-md-12">
+                                    <table id="permissaoDataTable" class="table dataTable"></table>
+                                </div>
+                            </div>
+                        </div>
+                        @*<button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>*@
+                        @*
+                            </form>*@
+                    </div>
+
+                </center>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- / PAGE CONTENT WRAPPER -->
+</div>
+<div id="modalPermissao" style="height:600px" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLiveLabel">Permissão de Acesso</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="page-content-wrapper">
+
+                    <!-- HEADER -->
+                    <div class="page-header d-flex flex-column justify-content-center light-fg">
+                    </div>
+                    <!-- / HEADER -->
+
+                    <div class="page-content-card">
+                        <table class="table dataTable">
+                            <tr>
+                                <td>Criar</td>
+                                <td>Ler</td>
+                                <td>Editar</td>
+                                <td>Excluir</td>
+                            </tr>
+                            <tr>
+                                <td><label class="custom-control custom-checkbox"><input id="criar" type="checkbox" class="custom-control-input" /><span class="custom-control-indicator"></span></label></td>
+                                <td><label class="custom-control custom-checkbox"><input id="ler" type="checkbox" class="custom-control-input" /><span class="custom-control-indicator"></span></label></td>
+                                <td><label class="custom-control custom-checkbox"><input id="editar" type="checkbox" class="custom-control-input" /><span class="custom-control-indicator"></span></label></td>
+                                <td><label class="custom-control custom-checkbox"><input id="excluir" type="checkbox" class="custom-control-input" /><span class="custom-control-indicator"></span></label></td>
+
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <hr />
+                <button type="button" class="btn btn-success" onclick="Cadastrar()" data-dismiss="modal">Salvar</button> <button type="button" class="btn btn-danger" data-dismiss="modal">Fechar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            MontarDataTable();
+        });
+        function ObterValoresLinha(objLinha) {
+            var elemento = recuperaLinha(objLinha);
+            var mPerfil = $(elemento).find('td').eq('0').html().trim();
+            var mPagina = $(elemento).find('td').eq('.1').text().trim();
+            var mPerfilId = $(elemento).find('td').eq('0').find('input[type="hidden"]').val();
+            var mPaginaId = $(elemento).find('td').eq('1').find('input[type="hidden"]').val();
+            var mCriar = $(elemento).find('td').eq('2').find('input[type="checkbox"]:checked').length;
+            var mLer = $(elemento).find('td').eq('3').find('input[type="checkbox"]:checked').length;
+            var mEditar = $(elemento).find('td').eq('4').find('input[type="checkbox"]:checked').length;
+            var mExcluir = $(elemento).find('td').eq('5').find('input[type="checkbox"]:checked').length;
+            //$('#resultDescricao').val(modelo + ' [' + medida + '] [BRE' + bracoesq + '] [' + modulo + '] [BRD' + bracodir + '] [' + revestimento + ']');
+            //$('#mAluno').html(mAluno);
+            //$('#mCodigo').html(mCodigo);
+            //$('#mParcela').html(mParcela);
+            //$('#mVencimento').html(mVencimento);
+            //$('#mPagamento').html('');
+            //$('#mValorParcela').html(mValorParcela);
+            //$('#mDesconto').html(mDesconto);
+            //$('#mElemento').val(elemento.rowIndex);
+            //$('#mTotal').html(CalcularTotal(mValorParcela, 0, mDesconto));
+
+            //$('#revestimento option:contains(' + revestimento + ')').prop('selected', true);
+            //var botao = document.getElementById("modulo");
+            //botao.click();
+        }
+        /**/
+        /**/
+        function MontarDataTable() {
+
+            $('#permissaoDataTable').DataTable(
+                {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "bDestroy": true,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": `/Admin/Acesso/ObterPermissao?paginaId=${0}&perfilId=${0}`,
+                    "aoColumns": [
+                        {
+                            "sTitle": "Perfil Id",
+                            "mDataProp": "papelId",
+                            "visible": false
+                        },
+                        {
+                            "sTitle": "Perfil",
+                            "mDataProp": "desPapel"
+                        },
+                        {
+                            "sTitle": "Pagina Id",
+                            "mDataProp": "paginaId",
+                            "visible": false
+                        },
+                        {
+                            "sTitle": "Página",
+                            "mDataProp": "desPagina"
+                        },
+                        {
+                            "sTitle": "Criar",
+                            "mDataProp": "criar"
+
+                        },
+
+                        {
+                            "sTitle": "Ler",
+                            "mDataProp": "ler"
+
+                        },
+                        {
+                            "sTitle": "Editar",
+                            "mDataProp": "editar"
+
+                        },
+                        {
+                            "sTitle": "Excluir",
+                            "mDataProp": "deletar"
+
+                        },
+                        {
+                            "sTitle": "Ação",
+                            "mDataProp": "acao"
+                        }
+
+                    ],
+                    dom: 'rt<"dataTables_footer"ip>',
+
+                    language: {
+                        lengthMenu: "Exibe _MENU_ Registros por pagina",
+                        search: "Procurar",
+                        paginate: { "previous": "Retornar", "next": "Avancar" },
+                        zeroRecords: "Nenhum registro encontrado",
+                        info: "Exibindo pagina _PAGE_ de _PAGES_",
+                        infoEmpty: "Sem registros",
+                        infoFiltered: "(filtrado de _MAX_ regitros totais)",
+                        processing: "Aguarde Estamos Processando..."
+                    },
+
+                    "filter": true,            // habilita o filtro(search box)
+                    "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
+
+                    pageLength: 5,
+                    scrollY: 'auto',
+                    scrollX: false,
+                    responsive: true,
+                    autoWidth: false,
+                    scrollCollapse: true
+
+                }
+            );
+        }
+        function ModalCadastrar() {
+            var paginaId = $("#Paginas").val();
+            var perfilId = $("#Perfis").val();
+            if (paginaId.length <= 0 || perfilId.length <= 0) {
+                PNotify.info({
+                    title: "Infome a pagina e perfil para criar uma nova permissão"
+                });
+
+                return false;
+            }
+            $('#modalPermissao').modal("show");
+        }
+        function Cadastrar() {
+
+            var dataT = {
+
+                paginaId: $("#Paginas").val(),
+                perfilId: $("#Perfis").val(),
+                desPagina: '',
+                desPerfil:'',
+                criar: $('#criar').is(':checked'),
+                ler: $('#ler').is(':checked'),
+                editar: $('#editar').is(':checked'),
+                excluir: $('#excluir').is(':checked')
+
+            };
+            var callback = function (data) {
+                var permissao = JSON.parse(data);
+                if (permissao.success) {
+                    PNotify.success({
+                        title: permissao.message
+                    });
+                    MontarDataTable();
+
+                }
+                else {
+                    var msg = '';
+                    $.each(permissao.data, function (index, item) {
+                        msg = msg + item.property + ' - ' + item.message + '\n';
+                    });
+
+                    PNotify.info({
+                        title: msg
+                    });
+
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.POST("/Admin/Acesso/NovaPermissao", dataT, callback, callbackErro, $('#loader'));
+        }
+    </script>
+}

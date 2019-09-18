@@ -1,55 +1,82 @@
 ﻿@{
     ViewData["Title"] = "Perfil";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAcesso.cshtml";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<!-- HEADER -->
-<div class="page-header py-6 light-fg">
 
-    <div class="d-flex flex-row align-items-center">
+    <div class="page-layout carded left-sidebar single-scroll">
 
-        <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="demo-sidebar">
-            <i class="icon icon-menu"></i>
-        </button>
-        <span class="h4">Configuração de acesso</span>
+        <div class="top-bg bg-primary text-auto"></div>
 
+        <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+            <!-- HEADER -->
+            <div class="header p-6">
+                <span class="h4"> <img style="height:150px" src="~/images/permissions-reset-icon.png" /></span>
+            </div>
+            <!-- / HEADER -->
+
+            <div class="content">
+                <!-- DEMO CONTENT -->
+                <div class="demo-sidebar">
+                    @Html.Partial("~/Areas/Admin/Views/Shared/_MenuAcesso.cshtml")
+
+                </div>
+                <!-- / DEMO CONTENT -->
+            </div>
+
+        </aside>
+
+        <!-- PAGE CONTENT WRAPPER -->
+        <div class="page-content-wrapper">
+            <!-- HEADER -->
+            <div class="page-header py-6 light-fg">
+
+                <div class="d-flex flex-row align-items-center">
+
+                    <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="demo-sidebar">
+                        <i class="icon icon-menu"></i>
+                    </button>
+                    <span class="h4">Configuração de acesso</span>
+
+                </div>
+
+            </div>
+            <!-- / HEADER -->
+
+            <div class="page-content-card">
+                <!-- CONTENT TOOLBAR -->
+                <div class="toolbar col p-6">
+                    Páginas
+
+                </div>
+                <div class="demo-content">
+
+                    <div class="p-7 col-12">
+                        <center>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input id="inputPerfil" type="text" class="form-control" placeholder="Novo Perfil" />
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-light btn-fab btn-sm fuse-ripple-ready" onclick="Cadastrar()"><i class="icon-plus"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </center>
+                    </div>
+                    <center>
+                        <div class=" p-6 col-10">
+                            <table id="perfilDataTable" class="table dataTable"></table>
+                        </div>
+                    </center>
+                </div>
+            </div>
+
+        </div>
+        <!-- / PAGE CONTENT WRAPPER -->
     </div>
 
-</div>
-<!-- / HEADER -->
-
-<div class="page-content-card">
-    <!-- CONTENT TOOLBAR -->
-    <div class="toolbar p-6">
-        Perfil
-    </div>
-    <!-- / CONTENT TOOLBAR -->
-
-
-    <div class="demo-content">
-
-        <table>
-            <tr>
-
-                <td width="50%">
-
-              
-                    <table>
-                        <tr>  
-                            <td style="padding: 0px 50px 5px 15px"><input id="inputPerfil" type="text" class="form-control" placeholder="Novo Perfil" /></td>
-                            <td>
-                                <button class="btn btn-light btn-fab btn-sm fuse-ripple-ready" onclick="Cadastrar()"><i class="icon-plus"></i></button>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td><table id="perfilDataTable" class="table dataTable"></table></td>
-            </tr>
-        </table>
-
-
-
-    </div>
-</div>
 
 
 @section Scripts{

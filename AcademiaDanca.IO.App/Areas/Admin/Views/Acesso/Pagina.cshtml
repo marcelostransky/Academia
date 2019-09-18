@@ -19,45 +19,36 @@
 
 <div class="page-content-card">
     <!-- CONTENT TOOLBAR -->
-    <div class="toolbar p-6">
-        Paginas
+    <div class="toolbar col p-6">
+        Páginas
     </div>
-    <!-- / CONTENT TOOLBAR -->
-
-
     <div class="demo-content">
 
-        <table width="100%">
-            <tr>
-
-                <td width="50%">
-
-
-                    <table>
-                        <tr>
-                            <td style="padding: 0px 50px 5px 15px; width:60%"><input id="inputPagina" type="text" class="form-control" placeholder="Nova Página" /></td>
-
-
-                            <td>
-                                <button class="btn btn-light btn-fab btn-sm fuse-ripple-ready" onclick="Cadastrar()"><i class="icon-plus"></i></button>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-                <td style="padding: 0px 0px 0px 20px; " width="50%"><table id="paginaDataTable" class="table dataTable"></table></td>
-            </tr>
-        </table>
-
-
+        <div class="p-7 col-12">
+            <center>
+                <table>
+                    <tr>
+                        <td>
+                            <input id="inputPagina" type="text" class="form-control" placeholder="Nova Página" />
+                        </td>
+                        <td>
+                            <button class="btn btn-light btn-fab btn-sm fuse-ripple-ready" onclick="Cadastrar()"><i class="icon-plus"></i></button>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </div>
+        <center>
+            <div class=" p-6 col-10">
+                <table id="paginaDataTable" class="table "></table>
+            </div>
+        </center>
 
     </div>
 </div>
-
-
 @section Scripts{
 <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
 <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
-
 <script type="text/javascript">
     $(document).ready(function () {
         MontarDataTable();
@@ -144,7 +135,7 @@
                     PNotify.success({
                         title: pagina.message
                     });
-                   MontarDataTable();
+                    MontarDataTable();
 
                 }
                 else {
