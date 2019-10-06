@@ -16,10 +16,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
+    [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Ler")]
     public class TurmaController : Controller
     {
 
-
+        const string _paginaId = "TURMA";
         private readonly ITurmaRepositorio _repositorio;
         private readonly ISalaRepositorio _repositorioSala;
         private readonly IAgendaRepositorio _repositorioAgenda;
@@ -83,7 +84,7 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         [Route("/Turma/Calendario/Agendamento/Deletar")]
         [HttpDelete]
-        [PermissaoAcesso(1, "Nova", "Delete")]
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Deletar")]
         public async Task<IActionResult> DeletarAgendamento(int id)
         {
             try
@@ -100,7 +101,7 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         [Route("/Turma/Agendar/Novo")]
         [HttpPost]
-        [PermissaoAcesso(1, "Nova", "Post")]
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar")]
         public async Task<IActionResult> Novo(CriarAgendaTurmaComando comando)
         {
             try
@@ -120,7 +121,8 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
-        [PermissaoAcesso(1, "Editar", "Put")]
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Editar")]
+
         public async Task<IActionResult> Editar(int id)
         {
             var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null)).FirstOrDefault();
@@ -135,6 +137,8 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return await Task.Run(() => View());
         }
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar")]
+
         public async Task<IActionResult> Nova()
         {
             var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync());
@@ -144,7 +148,7 @@ namespace AcademiaDanca.IO.App.Controllers
             return View();
         }
         [HttpPost]
-        [PermissaoAcesso(1, "Nova", "Post")]
+        [PermissaoAcesso()]
         public async Task<IActionResult> Nova(CriarTurmaComando comando)
         {
             try

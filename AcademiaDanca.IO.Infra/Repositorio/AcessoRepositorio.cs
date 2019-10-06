@@ -88,6 +88,28 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             throw new NotImplementedException();
         }
 
+        public async Task<bool> DeletarPermissaoAsync(int perfilId, int paginaId)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_pagina_id", paginaId);
+                parametros.Add("sp_papel_id", perfilId);
+                var total = (await _contexto
+                      .Connection
+                      .ExecuteAsync("sp_delete_permissao",
+                      parametros,
+                      commandType: System.Data.CommandType.StoredProcedure));
+
+                return total > 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         public Task<int> EditarAsync(Pagina pagina)
         {
             throw new NotImplementedException();
@@ -129,10 +151,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
         }
 
-        public async Task<IEnumerable<PermissaoResultadoQuery>> ObterPermissaosAsync(
-            string paginaId, string perfilId)
+        public async Task<IEnumerable<PermissaoResultadoQuery>> ObterPermissaosAsync(string paginaId, string perfilId)
         {
-
             try
             {
                 var parametros = new DynamicParameters();
@@ -142,7 +162,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         .Connection
                         .QueryAsync<PermissaoResultadoQuery>(@"
                         SELECT 
-                        pg.id as PaginaId,
+                       
+                        pg.constante as PaginaId,
                         pg.des_pagina as DesPagina,
                         p.id as PapelId,
                         p.nome_papel as DesPapel,
@@ -154,11 +175,42 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         LEFT JOIN academia.pagina_papel as pp  on pg.id = pp.id_pagina
                         LEFT JOIN academia.papel as p on pp.id_papel = p.id
                         Where
-                        pg.id = ifnull(@sp_id_pagina, pg.id)
+                        pg.constante = ifnull(@sp_id_pagina, pg.constante)
                         And
-                        p.id = ifnull(@sp_id_perfil, p.id);", param: parametros,
+                        p.nome_papel = ifnull(@sp_id_perfil, p.nome_papel);", param: parametros,
 
                         commandType: System.Data.CommandType.Text);
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
+        public IQueryable<PermissaoResultadoQuery> ObterPermissaosAsync(string perfil)
+        {
+            try
+            {
+
+                return  _contexto
+                        .Connection
+                        .Query<PermissaoResultadoQuery>(@"
+                        SELECT 
+                       
+                        pg.constante as PaginaId,
+                        pg.des_pagina as DesPagina,
+                        p.id as PapelId,
+                        p.nome_papel as DesPapel,
+                        pp.Criar as Criar,
+	                    pp.deletar as Excluir,
+                        pp.atualizar as Editar,
+                        pp.ler as Ler
+                        FROM academia.pagina as pg
+                         JOIN academia.pagina_papel as pp  on pg.id = pp.id_pagina
+                         JOIN academia.papel as p on pp.id_papel = p.id
+                        Where     p.nome_papel = @perfil
+                      ;", param: new { perfil }, commandType: System.Data.CommandType.Text).AsQueryable();
             }
             catch (Exception ex)
             {
@@ -226,11 +278,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_deletar", permissao.Excluir);
 
 
-               var inserido = await _contexto
-                    .Connection
-                    .ExecuteAsync("sp_insert_permissao",
-                    parametros,
-                    commandType: System.Data.CommandType.StoredProcedure);
+                var inserido = await _contexto
+                     .Connection
+                     .ExecuteAsync("sp_insert_permissao",
+                     parametros,
+                     commandType: System.Data.CommandType.StoredProcedure);
 
                 return inserido;
             }

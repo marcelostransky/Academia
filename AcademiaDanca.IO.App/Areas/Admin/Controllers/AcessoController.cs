@@ -18,21 +18,25 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
+    
     public class AcessoController : Controller
     {
         private readonly IAcessoRepositorio _repositorio;
         public readonly AddPaginaManipulador _manipuladorPagina;
         public readonly AddPerfilManipulador _manipuladorPerfil;
         public readonly AddPermissaoManipulador _manipuladorPermissao;
+        public readonly DelPermissaoManipulador _manipuladorDelPermissao;
         public AcessoController(IAcessoRepositorio repositorio
             , AddPaginaManipulador manipulador
             , AddPerfilManipulador manipuladorPerfil
-            , AddPermissaoManipulador manipuladorPermissao)
+            , AddPermissaoManipulador manipuladorPermissao
+            , DelPermissaoManipulador manipuladorDelPermissao)
         {
             _repositorio = repositorio;
             _manipuladorPagina = manipulador;
             _manipuladorPerfil = manipuladorPerfil;
             _manipuladorPermissao = manipuladorPermissao;
+            _manipuladorDelPermissao = manipuladorDelPermissao;
 
         }
         public IActionResult Index()
@@ -116,6 +120,22 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                 return Json(ex.Message);
             }
         }
+        [Route("/Admin/Acesso/Permissao/Excluir/")]
+        [HttpPost]
+        public async Task<IActionResult> ExcluirPermissao(DelPermissaoComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorDelPermissao.ManipuladorAsync(comando);
+
+                return Json(resultado);
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
         [Route("/Admin/Acesso/Pagina/Novo/")]
         [HttpPost]
         //[PermissaoAcesso(1, "Nova", "Post")]
@@ -180,6 +200,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                 var model = (from r in lista
                              select new
                              {
+                                 PermissaoId = $"{r.PapelId }{r.PaginaId}",
                                  r.PaginaId,
                                  r.PapelId,
                                  desPapel = $" {r.DesPapel }<input type = \"hidden\" value = \"{r.PapelId }\" />",
@@ -206,7 +227,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
 
-            menu.AppendFormat("<a href =\"#\" onclick=ObterValoresLinha(this)  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-pencil-lock \"></i>    </a>", r.PaginaId);
+            menu.AppendFormat("<a href =\"#\" onclick=ObterValoresLinha(this)  class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Permissão\"> <i class=\"icon-pencil-lock \"></i>    </a><a href =\"#\" onclick=Excluir(this)  class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir Permissão\"> <i class=\"icon-delete-forever  \"></i>    </a>", r.PapelId, r.PaginaId);
 
             return menu.ToString();
         }

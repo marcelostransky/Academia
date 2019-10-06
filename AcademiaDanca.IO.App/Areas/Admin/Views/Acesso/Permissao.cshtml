@@ -136,7 +136,7 @@
     <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            MontarDataTable();
+            MontarDataTable(0, 0);
         });
         function ObterValoresLinha(objLinha) {
             var elemento = recuperaLinha(objLinha);
@@ -165,7 +165,19 @@
         }
         /**/
         /**/
-        function MontarDataTable() {
+        let dropPagina = document.getElementById("Paginas");
+        let dropPerfil = document.getElementById("Perfis");
+        dropPagina.onchange = function () {
+            let paginaId = dropPagina.options[dropPagina.selectedIndex].value !== '' ? dropPagina.options[dropPagina.selectedIndex].value : 0;
+            let perfilId = dropPerfil.options[dropPerfil.selectedIndex].value !== '' ? dropPerfil.options[dropPerfil.selectedIndex].value : 0;
+            MontarDataTable(perfilId, paginaId)
+        }
+        dropPerfil.onchange = function () {
+            let paginaId = dropPagina.options[dropPagina.selectedIndex].value !== '' ? dropPagina.options[dropPagina.selectedIndex].value : 0;
+            let perfilId = dropPerfil.options[dropPerfil.selectedIndex].value !== '' ? dropPerfil.options[dropPerfil.selectedIndex].value : 0;
+            MontarDataTable(perfilId, paginaId)
+        }
+        function MontarDataTable(perfilId, paginaId) {
 
             $('#permissaoDataTable').DataTable(
                 {
@@ -193,7 +205,7 @@
                     "bDestroy": true,
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": `/Admin/Acesso/ObterPermissao?paginaId=${0}&perfilId=${0}`,
+                    "sAjaxSource": `/Admin/Acesso/ObterPermissao?paginaId=${paginaId}&perfilId=${perfilId}`,
                     "aoColumns": [
                         {
                             "sTitle": "Perfil Id",
@@ -278,6 +290,44 @@
             }
             $('#modalPermissao').modal("show");
         }
+        function Excluir(linha) {
+            var perfilId = $(linha).closest('tr').find('td').eq('0').find("input").val();
+            var paginaId = $(linha).closest('tr').find('td').eq('1').find("input").val();
+
+            var dataT = {
+                paginaId: paginaId,
+                perfilId: perfilId
+            };
+            var callback = function (data) {
+
+                var permissao = JSON.parse(data);
+                if (permissao.success) {
+                    PNotify.success({
+                        title: permissao.message
+                    });
+                    removeLinhaRowIndex(linha, "permissaoDataTable");
+                }
+                else {
+                    var msg = '';
+                    $.each(permissao.data, function (index, item) {
+                        msg = msg + item.property + ' - ' + item.message + '\n';
+                    });
+
+                    PNotify.info({
+                        title: msg
+                    });
+
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.POST("/Admin/Acesso/Permissao/Excluir/", dataT, callback, callbackErro, $('#loader'));
+        }
         function Cadastrar() {
 
             var dataT = {
@@ -285,7 +335,7 @@
                 paginaId: $("#Paginas").val(),
                 perfilId: $("#Perfis").val(),
                 desPagina: '',
-                desPerfil:'',
+                desPerfil: '',
                 criar: $('#criar').is(':checked'),
                 ler: $('#ler').is(':checked'),
                 editar: $('#editar').is(':checked'),
@@ -293,12 +343,16 @@
 
             };
             var callback = function (data) {
+                var tabela = $("#permissaoDataTable").DataTable();
                 var permissao = JSON.parse(data);
                 if (permissao.success) {
                     PNotify.success({
                         title: permissao.message
                     });
-                    MontarDataTable();
+                    tabela.destroy();
+                    let paginaId = dropPagina.options[dropPagina.selectedIndex].value !== '' ? dropPagina.options[dropPagina.selectedIndex].value : 0;
+                    let perfilId = dropPerfil.options[dropPerfil.selectedIndex].value !== '' ? dropPerfil.options[dropPerfil.selectedIndex].value : 0;
+                    MontarDataTable(perfilId, paginaId);
 
                 }
                 else {

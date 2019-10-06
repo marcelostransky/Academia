@@ -148,135 +148,133 @@
         </div>
     </div>
 </div>
-@section Scripts{   
-<script>
+@section Scripts{
+    <script>
 
-    $(document).ready(function () {
-        var id = $("#formTurmaCalendario #hdIdTurma").val();
-        PopulaAgendamento(id);
-    });
-    $("#formTurmaCalendario").submit(function (event) {
+        $(document).ready(function () {
+            var id = $("#formTurmaCalendario #hdIdTurma").val();
+            PopulaAgendamento(id);
+        });
+        $("#formTurmaCalendario").submit(function (event) {
 
-        event.preventDefault();
+            event.preventDefault();
 
 
-        var dataT = {
+            var dataT = {
 
-            Id: 0,
-            Hora: $("#formTurmaCalendario #Hora").val(),
-            IdTurma: $("#formTurmaCalendario #hdIdTurma").val(),
-            IdDiaSemana: $("#formTurmaCalendario #Dias").val(),
-            IdSala: $("#formTurmaCalendario #Salas").val()
+                Id: 0,
+                Hora: $("#formTurmaCalendario #Hora").val(),
+                IdTurma: $("#formTurmaCalendario #hdIdTurma").val(),
+                IdDiaSemana: $("#formTurmaCalendario #Dias").val(),
+                IdSala: $("#formTurmaCalendario #Salas").val()
 
-        }
+            }
 
-        var callback = function (data) {
-            if (JSON.parse(data).success) {
-                PNotify.success({
-                    title: ':-)',
-                    text: 'Cadastro realizado com sucesso.'
-                });
+            var callback = function (data) {
+                if (JSON.parse(data).success) {
+                    PNotify.success({
+                        title: ':-)',
+                        text: 'Cadastro realizado com sucesso.'
+                    });
 
-                PopulaAgendamento($("#formTurmaCalendario #hdIdTurma").val());
-                document.getElementById("formTurmaCalendario").reset();
-                return false;
-            } else {
-                var msg = '';
-                $.each(JSON.parse(data).data, function (index, item) {
-                    msg = msg + item.property + ' > ' + item.message + '\n';
-                });
+                    PopulaAgendamento($("#formTurmaCalendario #hdIdTurma").val());
+                    document.getElementById("formTurmaCalendario").reset();
+                    return false;
+                } else {
+                    var msg = '';
+                    $.each(JSON.parse(data).data, function (index, item) {
+                        msg = msg + item.property + ' > ' + item.message + '\n';
+                    });
 
+                    PNotify.error({
+                        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+                        text: msg
+                    });
+
+
+                }
+            }
+            var callbackErro = function (data) {
                 PNotify.error({
-                    title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
-                    text: msg
+                    title: 'Ops! :-(',
+                    text: 'Ocorreu um erro ao processar sua solicitação'
                 });
-
 
             }
-        }
-        var callbackErro = function (data) {
-            PNotify.error({
-                title: 'Ops! :-(',
-                text: 'Ocorreu um erro ao processar sua solicitação'
-            });
 
-        }
+            academia.helper.rest.utils.POST("/Turma/Agendar/Novo", dataT, callback, callbackErro, $('#loader'));
 
-        academia.helper.rest.utils.POST("/Turma/Agendar/Novo", dataT, callback, callbackErro, $('#loader'));
-
-        return false;
+            return false;
 
 
-    });
-    function PopulaAgendamento(turmaId) {
-        var dataT = {
-            idTurma: turmaId
-        }
-
-        var callback = function (data) {
-            var tabela = $("#tbAgendamento tbody");
-            if (data.success) {
-                $("#tbAgendamento tbody").html('');
-                $.each(data.agenda, function (index, item) {
-                    ;
-                    var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + ' | ' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td><a href=\"#\" onclick=\"javascript:Deletar('" + item.idAgenda + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td></tr>"
-                    //var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + '|' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td>            <button onclick=\"Deletar('"+item.idAgenda+"')\"><i class=\"icon-delete-forever\"></i> </button></td></tr>"
-                    tabela.append(linha);
-                });
+        });
+        function PopulaAgendamento(turmaId) {
+            var dataT = {
+                idTurma: turmaId
             }
-        }
-        var callbackErro = function (data) {
-            PNotify.error({
-                title: 'Ops! :-(',
-                text: 'Ocorreu um erro ao processar sua solicitação'
-            });
 
-        }
-
-        academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
-
-    }
-
-    function Deletar(turmaId) {
-        var dataT = {
-            id: turmaId
-        }
-
-        var callback = function (data) {
-
-            if (data.success) {
-                removeLinha(turmaId);
-                PNotify.success({
-                    title: ':-)',
-                    text: 'Deletado com sucesso.'
-                });
-
-            } else {
-                var msg = '';
-                $.each(JSON.parse(data).data, function (index, item) {
-                    msg = msg + item.property + ' > ' + item.message + '\n';
-                });
-
+            var callback = function (data) {
+                var tabela = $("#tbAgendamento tbody");
+                if (data.success) {
+                    $("#tbAgendamento tbody").html('');
+                    $.each(data.agenda, function (index, item) {
+                        ;
+                        var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + ' | ' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td><a href=\"#\" onclick=\"javascript:Deletar('" + item.idAgenda + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td></tr>"
+                        //var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + '|' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td>            <button onclick=\"Deletar('"+item.idAgenda+"')\"><i class=\"icon-delete-forever\"></i> </button></td></tr>"
+                        tabela.append(linha);
+                    });
+                }
+            }
+            var callbackErro = function (data) {
                 PNotify.error({
-                    title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
-                    text: msg
+                    title: 'Ops! :-(',
+                    text: 'Ocorreu um erro ao processar sua solicitação'
                 });
 
+            }
+
+            academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
+
+        }
+
+        function Deletar(turmaId) {
+            var dataT = {
+                id: turmaId
+            }
+
+            var callback = function (data) {
+
+                if (data.success) {
+                    removeLinha(turmaId);
+                    PNotify.success({
+                        text: 'Deletado com sucesso.'
+                    });
+
+                } else {
+                    var msg = '';
+                    $.each(JSON.parse(data).data, function (index, item) {
+                        msg = msg + item.property + ' > ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+                        text: JSON.parse(data).message + '|' + msg
+                    });
+
+
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ops! :-(',
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
 
             }
-        }
-        var callbackErro = function (data) {
-            PNotify.error({
-                title: 'Ops! :-(',
-                text: 'Ocorreu um erro ao processar sua solicitação'
-            });
+
+            academia.helper.rest.utils.DELETE("/Turma/Calendario/Agendamento/Deletar", dataT, callback, callbackErro, $('#loader'));
 
         }
 
-        academia.helper.rest.utils.DELETE("/Turma/Calendario/Agendamento/Deletar", dataT, callback, callbackErro, $('#loader'));
-
-    }
-
-</script>
+    </script>
 }
 

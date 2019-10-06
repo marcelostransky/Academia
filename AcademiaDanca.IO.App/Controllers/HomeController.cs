@@ -13,6 +13,7 @@ using System.Net;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
+
     public class HomeController : Controller
     {
 
@@ -22,6 +23,11 @@ namespace AcademiaDanca.IO.App.Controllers
             _repositorio = repositorio;
         }
         public IActionResult Index()
+        {
+            return View();
+        }
+
+        public IActionResult NaoAutorizado()
         {
             return View();
         }

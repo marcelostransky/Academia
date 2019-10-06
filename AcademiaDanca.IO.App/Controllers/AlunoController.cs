@@ -26,9 +26,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-    [PermissaoAcesso(1, null, null)]
+
     public class AlunoController : Controller
     {
+        public readonly IAcessoRepositorio _repositorioAcesso;
         private readonly IAlunoRepositorio _repositorio;
         private readonly ITurmaRepositorio _repositorioTurma;
         private readonly AlunoManipulador _manipulador;
@@ -39,6 +40,7 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly DelTurmaAlunoManipulador _manipuladorDelTurmaAluno;
         private readonly MatricularManipulador _manipuladorMatricula;
         private readonly IHostingEnvironment _environment;
+        public const int _codPagina = 10;
 
         public AlunoController(
             IAlunoRepositorio repositorio,
@@ -50,7 +52,7 @@ namespace AcademiaDanca.IO.App.Controllers
             AddTurmaAlunoManipulador manipuladorAlunoTurma,
             DelTurmaAlunoManipulador manipuladorDelTurmaAluno,
             MatricularManipulador matricularManipulador,
-            IHostingEnvironment environment)
+            IHostingEnvironment environment, IAcessoRepositorio repositorioAcesso)
         {
             _repositorio = repositorio;
             _repositorioTurma = turmaRepositorio;
@@ -62,12 +64,14 @@ namespace AcademiaDanca.IO.App.Controllers
             _manipuladorAlunoTurma = manipuladorAlunoTurma;
             _manipuladorDelTurmaAluno = manipuladorDelTurmaAluno;
             _manipuladorMatricula = matricularManipulador;
+            _repositorioAcesso = repositorioAcesso;
         }
+
         public IActionResult Index()
         {
-
             return View();
         }
+
         public async Task<IActionResult> Detalhar(Guid id)
         {
             var aluno = await _repositorio.ObterAlunoCompletoAsync(id);

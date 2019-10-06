@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using AcademiaDanca.IO.App.Models;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Acesso;
+using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,26 +13,29 @@ namespace AcademiaDanca.IO.App.Filtros
     public class PermissaoAcesso : Attribute, IActionFilter
     {
         //private string _area;
-        private int _paginaId;
-        private string _acao;
-        private string _perfil;
-        private string _verbo;
-        public PermissaoAcesso(int pagina, string acao, string verbo)
-        {
-            _paginaId = pagina;
-            _acao = acao;
-            _verbo = verbo;
-        }
+        public string PaginaId { get; set; }
+        public string Acao { get; set; }
+        public string Perfil { get; set; }
+        public string Verbo { get; set; }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-            var perfil = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+           
         }
 
-        void IActionFilter.OnActionExecuting(ActionExecutingContext context)
+        public void OnActionExecuting(ActionExecutingContext context)
         {
-     
-            var teste = true;
+            Perfil = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            var model = new RegrasAcessoModel();
+            var regras = model.PermitirAcesso(Perfil, PaginaId, null, Verbo);
+            if (!regras)
+                context.Result = new RedirectResult($"/Home/NaoAutorizado/");
         }
+
+        //public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        //{
+           
+        //   await next();
+        //}
     }
 }

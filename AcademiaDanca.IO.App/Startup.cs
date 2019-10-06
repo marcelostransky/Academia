@@ -1,4 +1,5 @@
-﻿using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
+﻿using AcademiaDanca.IO.App.Filtros;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
@@ -43,11 +44,9 @@ namespace AcademiaDanca.IO.App
                        options.CookieName = "Academia";
 
                    });
-            services.AddMvc(
-
-
-                ).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<AcademiaContexto, AcademiaContexto>();
+
             services.AddTransient<ITipoTelefoneRepositorio, TipoTelefoneRepositorio>();
             services.AddTransient<IFinanceiroRepositorio, FinanceiroRepositorio>();
             services.AddTransient<ILoginRepositorio, LoginRepositorio>();
@@ -77,7 +76,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<EditarFotoAlunoManipulador, EditarFotoAlunoManipulador>();
             services.AddTransient<AddResponsavelManipulador, AddResponsavelManipulador>();
             services.AddTransient<AddTurmaAlunoManipulador, AddTurmaAlunoManipulador>();
-           
+            services.AddTransient<DelPermissaoManipulador, DelPermissaoManipulador>();
             services.AddTransient<MatricularManipulador, MatricularManipulador>();
             services.AddTransient<RegistrarPagamentoMensalidadeManipulador, RegistrarPagamentoMensalidadeManipulador>();
             services.AddTransient<AddPaginaManipulador, AddPaginaManipulador>();

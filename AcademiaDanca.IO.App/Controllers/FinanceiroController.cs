@@ -17,6 +17,7 @@ namespace AcademiaDanca.IO.App.Controllers
     [Authorize]
     public class FinanceiroController : Controller
     {
+        private readonly IAcessoRepositorio _repositorioAcesso;
         private readonly IFinanceiroRepositorio _repositorio;
         private readonly IAlunoRepositorio _repositorioAluno;
         private readonly RegistrarPagamentoMensalidadeManipulador _registrarManipulador;
@@ -28,12 +29,12 @@ namespace AcademiaDanca.IO.App.Controllers
             _repositorioAluno = repositorioAluno;
             _registrarManipulador = registrarManipulador;
         }
-        [PermissaoAcesso(10, "Index", "GET")]
+        [PermissaoAcesso()]
         public IActionResult Index()
         {
             return View();
         }
-        [PermissaoAcesso(10, "RegistrarPagamento", "POST")]
+        [PermissaoAcesso()]
         public async Task<IActionResult> RegistrarPagamento(RegistrarPagamentoMensalidadeComando comando)
         {
             var resultado = await _registrarManipulador.ManipuladorAsync(comando);
@@ -48,7 +49,7 @@ namespace AcademiaDanca.IO.App.Controllers
             }
 
         }
-        [PermissaoAcesso(10, "Alunos", "GET")]
+        //[PermissaoAcesso(10, "Alunos", "GET")]
         public async Task<IActionResult> Alunos(string nome)
         {
             try
@@ -64,7 +65,7 @@ namespace AcademiaDanca.IO.App.Controllers
 
 
         }
-        [PermissaoAcesso(10, "Table", "GET")]
+        //[PermissaoAcesso(10, "Table", "GET")]
         public async Task<IActionResult> MensalidadeAsync(Guid? id, string status, int? ano, jQueryDataTableRequestModel request)
         {
             try
@@ -101,12 +102,12 @@ namespace AcademiaDanca.IO.App.Controllers
                 throw;
             }
         }
-        [PermissaoAcesso(10, "Matricula", "GET")]
+        [PermissaoAcesso()]
         public IActionResult Matricular(Guid id)
         {
             return View();
         }
-        [PermissaoAcesso(10, "Mneu", "GET")]
+        [PermissaoAcesso()]
         private object ObterMenuAcaoDataTable(MensalidadesQueryResultado r)
         {
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;

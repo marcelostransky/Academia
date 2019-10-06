@@ -14,14 +14,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-  
+
     public class LoginController : Controller
     {
         private readonly ILoginRepositorio _repositorio;
-
-        public LoginController(ILoginRepositorio repositorio)
+        private readonly IAcessoRepositorio _repositorioAcesso;
+        public LoginController(ILoginRepositorio repositorio, IAcessoRepositorio repositorioAcesso)
         {
             _repositorio = repositorio;
+            _repositorioAcesso = repositorioAcesso;
         }
         [AllowAnonymous]
         public IActionResult Autenticar()

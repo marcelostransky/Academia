@@ -6,7 +6,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Acesso
 {
    public class PermissaoResultadoQuery
     {
-        public int PaginaId { get; set; }
+       
+        public string PaginaId { get; set; }
         public int PapelId { get; set; }
         public string DesPapel { get; set; }
         public string DesPagina { get; set; }

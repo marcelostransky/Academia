@@ -10,6 +10,7 @@
     <PackageReference Include="MySql.Data" Version="8.0.15" />
     <PackageReference Include="Slapper.AutoMapper" Version="1.0.0.9" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Caching" Version="4.6.0" />
   </ItemGroup>
 
   <ItemGroup>
