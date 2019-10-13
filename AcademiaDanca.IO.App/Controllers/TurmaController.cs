@@ -16,7 +16,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-    [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Ler")]
+    [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Ler")]
     public class TurmaController : Controller
     {
 
@@ -121,8 +121,9 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
-        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Editar")]
 
+        [HttpGet]
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Editar")]
         public async Task<IActionResult> Editar(int id)
         {
             var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null)).FirstOrDefault();
@@ -133,12 +134,15 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Turma = turma;
             return View();
         }
-        public async Task<IActionResult> Listar()
-        {
-            return await Task.Run(() => View());
-        }
-        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar")]
 
+        [HttpGet]
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Ler")]
+        public IActionResult Listar()
+        {
+            return View();
+        }
+
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar")]
         public async Task<IActionResult> Nova()
         {
             var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync());
@@ -148,7 +152,7 @@ namespace AcademiaDanca.IO.App.Controllers
             return View();
         }
         [HttpPost]
-        [PermissaoAcesso()]
+        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar", TipoRetorno = "Json")]
         public async Task<IActionResult> Nova(CriarTurmaComando comando)
         {
             try
@@ -214,15 +218,7 @@ namespace AcademiaDanca.IO.App.Controllers
             {
                 throw;
             }
-            //var draw = requestformdata["draw"];
-            //dynamic response = new
-            //{
-            //    Data = lista.ToList(),
-            //    Draw = "1",
-            //    RecordsFiltered = lista.Count(),
-            //    RecordsTotal = lista.Count()
-            //};
-
+            
         }
 
         private object ObterMenuAcaoDataTable(TurmaQueryResultado r)

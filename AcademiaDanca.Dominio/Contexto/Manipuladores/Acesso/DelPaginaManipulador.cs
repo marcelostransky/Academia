@@ -1,7 +1,6 @@
 ﻿using AcademiaDanca.IO.Compartilhado;
 using AcademiaDanca.IO.Compartilhado.Comando;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.AcessoComando.Entrada;
-using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using FluentValidator;
 using System;
@@ -11,21 +10,20 @@ using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso
 {
-    public class AddPaginaManipulador : Notifiable, IComandoManipulador<AddPaginaComando>
+    public class DelPaginaManipulador : Notifiable, IComandoManipulador<DelPaginaComando>
     {
         private readonly IAcessoRepositorio _repositorio;
-        public AddPaginaManipulador(IAcessoRepositorio repositorio)
+        public DelPaginaManipulador(IAcessoRepositorio repositorio)
         {
             _repositorio = repositorio;
         }
-        public async Task<IComandoResultado> ManipuladorAsync(AddPaginaComando comando)
+        public async Task<IComandoResultado> ManipuladorAsync(DelPaginaComando comando)
         {
-            //Criar Entidade
-            var pagina = new Pagina(comando.Id, comando.DesPagina, comando.Constante);
+            //Validar se pode excluir a pagina
+            if (await _repositorio.CheckPermissaoAsync(comando.PaginaId, 0))
+                AddNotification("Pagina", $"Pagina informada possui regras de permissao vinculada. " +
+                    $" Exclua as permissoes e tente novamente");
 
-            //Validar pagina/chave Unico
-            if (await _repositorio.CheckPaginaAsync(pagina.DesPagina, pagina.Constante))
-                AddNotification("Descricao", "Pagina já cadastrada no sistema");
 
             //Validar Comando
             comando.Valido();
@@ -35,11 +33,14 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso
                 return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);
             }
             //Persistir Dados
-            var total = await _repositorio.SalvarAsync(pagina);
-            // Retornar o resultado para tela
-            return new ComandoResultado(true, "Pagina cadastrado com sucesso", new
+            if (!await _repositorio.DeletarPaginaAsync(comando.PaginaId))
             {
-                Id = total,
+                throw new Exception("Sistema não conseguiu processar esta solicitação");
+            }
+            // Retornar o resultado para tela
+            return new ComandoResultado(true, "Página excluida com sucesso.", new
+            {
+                Id = 0,
                 Nome = "OK",
                 Status = true
             });

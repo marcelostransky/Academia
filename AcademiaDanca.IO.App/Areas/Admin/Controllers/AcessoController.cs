@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AcademiaDanca.IO.App.Filtros;
-using AcademiaDanca.IO.Dominio.Contexto.Comandos.Acesso.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.AcessoComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -18,7 +18,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    
+    //[PermissaoAcesso(PaginaId = "Acesso", Verbo = "Ler")]
     public class AcessoController : Controller
     {
         private readonly IAcessoRepositorio _repositorio;
@@ -64,7 +64,9 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                              select new
                              {
                                  r.Id,
-                                 r.DesPagina
+                                 r.DesPagina,
+                                 r.Constante
+
                              }).DataTableResponse(request);
                 return Ok(model);
 

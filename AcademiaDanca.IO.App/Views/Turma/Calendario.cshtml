@@ -173,7 +173,6 @@
             var callback = function (data) {
                 if (JSON.parse(data).success) {
                     PNotify.success({
-                        title: ':-)',
                         text: 'Cadastro realizado com sucesso.'
                     });
 
@@ -187,7 +186,6 @@
                     });
 
                     PNotify.error({
-                        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
                         text: msg
                     });
 
@@ -196,7 +194,6 @@
             }
             var callbackErro = function (data) {
                 PNotify.error({
-                    title: 'Ops! :-(',
                     text: 'Ocorreu um erro ao processar sua solicitação'
                 });
 

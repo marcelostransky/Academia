@@ -270,7 +270,7 @@ academia.helper.rest.utils = new function () {
             async: isAsync,
             dataType: "json",
             beforeSend: function (xhr) {
-                xhr.setRequestHeader("Authorization", "Basic " + utf8_to_b64(global.token));
+                //xhr.setRequestHeader("Authorization", "Basic " + utf8_to_b64(global.token));
                 Loading(true);
             },
             complete: function () {

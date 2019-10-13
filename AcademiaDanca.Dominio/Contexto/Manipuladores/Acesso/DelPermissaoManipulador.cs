@@ -1,6 +1,6 @@
 ﻿using AcademiaDanca.IO.Compartilhado;
 using AcademiaDanca.IO.Compartilhado.Comando;
-using AcademiaDanca.IO.Dominio.Contexto.Comandos.Acesso.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.AcessoComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using FluentValidator;
 using System;

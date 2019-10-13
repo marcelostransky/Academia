@@ -8,5 +8,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Acesso
     {
         public int Id { get; set; }
         public string DesPagina { get; set; }
+        public string Constante { get; set; }
     }
 }

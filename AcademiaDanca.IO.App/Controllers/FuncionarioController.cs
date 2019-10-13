@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.App.Helper;
 using AcademiaDanca.IO.App.Models;
 using AcademiaDanca.IO.Compartilhado.Comando;
@@ -21,8 +22,10 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
+    //[PermissaoAcesso(PaginaId = _paginaId, Verbo = "Ler")]
     public class FuncionarioController : Controller
     {
+        const string _paginaId = "FUNC";
         private readonly IPerfilRepositorio _repositorioPerfil;
         private readonly IHostingEnvironment _environment;
         private readonly IFuncionarioRepositorio _repositorio;

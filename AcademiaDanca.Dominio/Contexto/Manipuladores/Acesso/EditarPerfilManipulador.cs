@@ -11,38 +11,44 @@ using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso
 {
-    public class AddPerfilManipulador : Notifiable, IComandoManipulador<AddPerfilComando>
+    public class EditarPerfilManipulador : Notifiable, IComandoManipulador<EditarPerfilComando>
     {
         private readonly IAcessoRepositorio _repositorio;
-        public AddPerfilManipulador(IAcessoRepositorio repositorio)
+        public EditarPerfilManipulador(IAcessoRepositorio repositorio)
         {
             _repositorio = repositorio;
         }
-        public async Task<IComandoResultado> ManipuladorAsync(AddPerfilComando comando)
+        public async Task<IComandoResultado> ManipuladorAsync(EditarPerfilComando comando)
         {
             //Criar Entidade
             var perfil = new Perfil(comando.Id, comando.DesPerfil);
-
-            //Validar Turma/Aluno Unico
-            if (await _repositorio.CheckPerfilAsync(perfil.DesPerfil))
-                AddNotification("Descricao", "Perfil já cadastrada no sistema");
-
             //Validar Comando
             comando.Valido();
             AddNotifications(comando.Notifications);
+
+            if (comando.Notifications.Count > 0 && await _repositorio.CheckPerfilAsync(comando.DesPerfil))
+            {
+                AddNotification("Perfil", "A descrição informada já está em uso");
+            }
             if (Invalid)
             {
-                return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);
+                return new ComandoResultado(
+                  false,
+                  "Por favor, corrija os campos abaixo",
+                  Notifications);
             }
             //Persistir Dados
-            var id = await _repositorio.SalvarPerfilAsync(perfil);
+            var atualizado = await _repositorio.EditarPerfilAsync(perfil);
+
             // Retornar o resultado para tela
-            return new ComandoResultado(true, "Perfil cadastrado com sucesso", new
+            return new ComandoResultado(true, "Dados de acesso atualizado com sucesso", new
             {
-                Id = id,
-                Nome = "OK",
+                Id = atualizado,
+                Nome = "",
                 Status = true
             });
+
+
         }
     }
 }

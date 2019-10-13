@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.IO.App.Filtros;
+using AcademiaDanca.IO.App.Models;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
@@ -82,6 +83,10 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<AddPaginaManipulador, AddPaginaManipulador>();
             services.AddTransient<AddPerfilManipulador, AddPerfilManipulador>();
             services.AddTransient<AddPermissaoManipulador, AddPermissaoManipulador>();
+            services.AddTransient<EditarPerfilManipulador, EditarPerfilManipulador>();
+            services.AddTransient<DelPaginaManipulador, DelPaginaManipulador>();
+            services.AddTransient<EditarPaginaManipulador, EditarPaginaManipulador>();
+             services.AddScoped<RegrasAcessoModel>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";
         }

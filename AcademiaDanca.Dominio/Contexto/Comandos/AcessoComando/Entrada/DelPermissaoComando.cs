@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.Acesso.Entrada
+namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.AcessoComando.Entrada
 {
     public class DelPermissaoComando : Notifiable, IComando
     {

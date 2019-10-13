@@ -32,6 +32,9 @@
                             <input id="inputPagina" type="text" class="form-control" placeholder="Nova Página" />
                         </td>
                         <td>
+                            <input id="inputConstante" type="text" class="form-control" placeholder="Chave" />
+                        </td>
+                        <td>
                             <button class="btn btn-light btn-fab btn-sm fuse-ripple-ready" onclick="Cadastrar()"><i class="icon-plus"></i></button>
                         </td>
                     </tr>
@@ -81,12 +84,16 @@
                 "bDestroy": true,
                 "bProcessing": true,
                 "bServerSide": true,
-                "sAjaxSource": "/Admin/Acesso/ObterPaginas",
+                "sAjaxSource": "/Admin/Pagina/Listar",
                 "aoColumns": [
                     {
                         "sTitle": "Código",
                         "mDataProp": "id",
                         "sWidth": "15%"
+                    },
+                    {
+                        "sTitle": "Chave",
+                        "mDataProp": "constante"
                     },
                     {
                         "sTitle": "Página",
@@ -126,7 +133,8 @@
             var dataT = {
 
                 id: 0,
-                desPagina: $("#inputPagina").val()
+                desPagina: $("#inputPagina").val(),
+                constante: $("#inputConstante").val()
 
             };
             var callback = function (data) {
@@ -157,7 +165,7 @@
 
             };
 
-            academia.helper.rest.utils.POST("/Admin/Acesso/Pagina/Novo", dataT, callback, callbackErro, $('#loader'));
+            academia.helper.rest.utils.POST("/Admin/Pagina/Novo", dataT, callback, callbackErro, $('#loader'));
         }
         else {
 

@@ -29,6 +29,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
                 AddNotification("Matricula", $"Aluno informado ja possui matricula ativa para o ano de {comando.Ano} ");
             //Validar Comando
             comando.Valido();
+            AddNotifications(comando.Notifications);
             if (Invalid)
             {
                 return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);

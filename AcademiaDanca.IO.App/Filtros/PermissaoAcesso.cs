@@ -17,25 +17,30 @@ namespace AcademiaDanca.IO.App.Filtros
         public string Acao { get; set; }
         public string Perfil { get; set; }
         public string Verbo { get; set; }
+        public string TipoRetorno { get; set; }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
-           
+
         }
 
         public void OnActionExecuting(ActionExecutingContext context)
         {
-            Perfil = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
-            var model = new RegrasAcessoModel();
-            var regras = model.PermitirAcesso(Perfil, PaginaId, null, Verbo);
-            if (!regras)
-                context.Result = new RedirectResult($"/Home/NaoAutorizado/");
-        }
+            RegrasAcessoModel regrasAcessoModel = (RegrasAcessoModel)context.HttpContext.RequestServices.GetService(typeof(RegrasAcessoModel));
 
-        //public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
-        //{
-           
-        //   await next();
-        //}
+            Perfil = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            //var model = new RegrasAcessoModel();
+            var regras = regrasAcessoModel.PermitirAcesso(Perfil, PaginaId, null, Verbo, TipoRetorno);
+            if (!regras)
+            {
+                if (TipoRetorno == "Json")
+                {
+                    context.HttpContext.Response.StatusCode = 401;
+                    context.Result = new JsonResult("Acesso não autorizado");
+                }
+                else
+                    context.Result = new RedirectResult($"/Home/NaoAutorizado/");
+            }
+        }
     }
 }
