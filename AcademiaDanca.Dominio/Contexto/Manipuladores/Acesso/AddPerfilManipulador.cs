@@ -21,7 +21,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso
         public async Task<IComandoResultado> ManipuladorAsync(AddPerfilComando comando)
         {
             //Criar Entidade
-            var perfil = new Perfil(comando.Id, comando.DesPerfil);
+            var perfil = new Perfil(0, comando.DesPerfil);
 
             //Validar Turma/Aluno Unico
             if (await _repositorio.CheckPerfilAsync(perfil.DesPerfil))

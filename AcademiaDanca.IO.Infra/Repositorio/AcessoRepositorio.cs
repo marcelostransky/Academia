@@ -19,6 +19,28 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             _contexto = contexto;
         }
 
+        public async Task<bool> CheckFuncionarioPerfilAsync(int id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", id);
+               
+                var total = (await _contexto
+                      .Connection
+                      .QueryAsync<int>("SELECT count(1)  FROM academia.usuario_funcionario_papel where  id_papel =@sp_id ;",
+                      parametros,
+                      commandType: System.Data.CommandType.Text)).FirstOrDefault();
+
+                return total > 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<bool> CheckPaginaAsync(string desPagina, string chave)
         {
             try
@@ -67,12 +89,12 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
         }
 
-        public async Task<bool> CheckPermissaoAsync(int paginaId, int? perfilId)
+        public async Task<bool> CheckPermissaoAsync(int? paginaId, int? perfilId)
         {
             try
             {
                 var parametros = new DynamicParameters();
-                parametros.Add("sp_pagina_id", paginaId);
+                parametros.Add("sp_pagina_id", paginaId == 0 ? null : paginaId);
                 parametros.Add("sp_papel_id", perfilId == 0 ? null : perfilId);
                 var total = (await _contexto
                       .Connection
@@ -94,16 +116,16 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeletarPaginaAsync(int paginaId)
+        public async Task<bool> DeletarPaginaAsync(int perfilId)
         {
             try
             {
                 var parametros = new DynamicParameters();
-                parametros.Add("sp_pagina_id", paginaId);
+                parametros.Add("sp_perfil_id", perfilId);
 
                 var total = (await _contexto
                       .Connection
-                      .ExecuteAsync("sp_delete_pagina",
+                      .ExecuteAsync("sp_delete_perfil",
                       parametros,
                       commandType: System.Data.CommandType.StoredProcedure));
 
@@ -114,6 +136,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+        }
+
+        public Task<bool> DeletarPerfilAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<bool> DeletarPermissaoAsync(int perfilId, int paginaId)

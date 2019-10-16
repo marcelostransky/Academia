@@ -82,7 +82,7 @@
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLiveLabel">Lista de Alunos</h5>
+                <h5 class="modal-title" id="exampleModalLiveLabel">Editar Perfil</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -227,10 +227,7 @@
         function Cadastrar() {
             if ($("#inputPerfil").val().length > 0) {
                 var dataT = {
-
-                    id: 0,
-                    desPerfil: $("#inputPerfilModal").val()
-
+                    desPerfil: $("#inputPerfil").val()
                 };
                 var callback = function (data) {
                     var perfil = JSON.parse(data);
@@ -256,7 +253,7 @@
                 var callbackErro = function (data) {
                     var erro = JSON.parse(data.responseText);
                     PNotify.error({
-                        title: `Ocorreu um erro ao processar sua solicitação. <br /> Erro [${erro.msg}]`
+                        title: `Ocorreu um erro ao processar sua solicitação. <br> Erro [${erro.msg}]`
                     });
 
                 };
@@ -266,7 +263,7 @@
             else {
 
                 PNotify.info({
-                    title: 'Informe a descrição da página'
+                    title: 'Informe a descrição do perfil'
                 });
 
 
@@ -291,7 +288,7 @@
 
                 };
                 var callback = function (data) {
-                    var perfil = JSON.parse(data);
+                    var perfil = data;
                     if (perfil.success) {
                         PNotify.success({
                             title: perfil.message
@@ -330,6 +327,49 @@
 
             }
         }
+        function Excluir(linha) {
+            if ($(linha).closest('tr').find('td').eq('0').html().length > 0) {
+                var dataT = {
+                    id: $(linha).closest('tr').find('td').eq('0').html()
+                };
+                var callback = function (data) {
+                    var perfil = data;
+                    if (perfil.success) {
+                        PNotify.success({
+                            title: perfil.message
+                        });
+                        removeLinhaRowIndex(linha, perfilDataTable)
+                    }
+                    else {
+                        var msg = '';
+                        $.each(perfil.data, function (index, item) {
+                            msg = msg + item.property + ' - ' + item.message + '\n';
+                        });
 
+                        PNotify.info({
+                            title: msg
+                        });
+
+                    }
+                };
+                var callbackErro = function (data) {
+                    PNotify.error({
+                        title: 'Ocorreu um erro ao processar sua solicitação'
+                    });
+
+                };
+
+                academia.helper.rest.utils.DELETE("/Admin/Perfil/Excluir/", dataT, callback, callbackErro, $('#loader'));
+                return false;
+            }
+            else {
+
+                PNotify.info({
+                    title: 'Informe a descrição do perfil'
+                });
+
+
+            }
+        }
     </script>
 }

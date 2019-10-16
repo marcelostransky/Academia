@@ -10,21 +10,31 @@ using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Leanwork.CodePack.DataTables;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
+    [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Ler")]
+
     public class PerfilController : Controller
     {
         private readonly IAcessoRepositorio _repositorio;
         public readonly AddPerfilManipulador _manipuladorPerfil;
         public readonly EditarPerfilManipulador _manipuladorEditarPerfil;
-        public PerfilController(IAcessoRepositorio repositorio, AddPerfilManipulador manipuladorPerfil, EditarPerfilManipulador editarMaipulador)
+        public readonly DelPerfilManipulador _manipuladorDelPerfil;
+        public PerfilController(
+            IAcessoRepositorio repositorio, 
+            AddPerfilManipulador manipuladorPerfil, 
+            EditarPerfilManipulador editarMaipulador, 
+            DelPerfilManipulador manipuladorDelPerfil)
         {
             _repositorio = repositorio;
             _manipuladorPerfil = manipuladorPerfil;
             _manipuladorEditarPerfil = editarMaipulador;
+            _manipuladorDelPerfil = manipuladorDelPerfil;
         }
         public async Task<IActionResult> Index()
         {
@@ -61,7 +71,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
         }
         [Route("/Admin/Perfil/Novo/")]
         [HttpPost]
-        [PermissaoAcesso(PaginaId = "Perfil", Verbo = "Criar", TipoRetorno = "Json")]
+        [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Criar", TipoRetorno = "Json")]
         public async Task<IActionResult> Criar(AddPerfilComando comando)
         {
             try
@@ -78,6 +88,8 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
         }
         [Route("/Admin/Perfil/Editar/")]
         [HttpPut]
+        [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Editar", TipoRetorno = "Json")]
+
         //[PermissaoAcesso(PaginaId = "Perfil", Verbo = "Editar")]
         public async Task<IActionResult> Editar(EditarPerfilComando comando)
         {
@@ -93,7 +105,24 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                 return Json(ex.Message);
             }
         }
+         [Route("/Admin/Perfil/Excluir/")]
+         [HttpDelete]
+        [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Excluir", TipoRetorno = "Json")]
 
+        public async Task<IActionResult> Excluir(DelPerfilComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorDelPerfil.ManipuladorAsync(comando);
+
+                return Json(resultado);
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
         private object ObterMenuAcaoDataTable(PerfilResultadoQuery r)
         {
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;

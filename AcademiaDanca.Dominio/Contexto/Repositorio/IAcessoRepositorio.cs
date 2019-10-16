@@ -23,8 +23,10 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<bool> CheckPerfilAsync(string desPerfil);
         List<PermissaoResultadoQuery> ObterPermissaosAsync(string perfil);
         Task<int> SalvarPerfilAsync(Perfil perfil);
-        Task<bool> CheckPermissaoAsync(int paginaId, int? perfilId);
+        Task<bool> CheckPermissaoAsync(int? paginaId, int? perfilId);
         Task<bool> DeletarPaginaAsync(int id);
+        Task<bool> CheckFuncionarioPerfilAsync(int id);
+        Task<bool> DeletarPerfilAsync(int id);
         Task<int> SalvarPermissaoAsync(Permissao permissao);
         Task<int> EditaPaginaAsync(Pagina pagina);
     }
