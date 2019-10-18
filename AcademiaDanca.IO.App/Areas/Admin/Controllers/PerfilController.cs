@@ -17,7 +17,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Ler")]
+    [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Ler", TipoRetorno = "Html")]
 
     public class PerfilController : Controller
     {
@@ -26,9 +26,9 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
         public readonly EditarPerfilManipulador _manipuladorEditarPerfil;
         public readonly DelPerfilManipulador _manipuladorDelPerfil;
         public PerfilController(
-            IAcessoRepositorio repositorio, 
-            AddPerfilManipulador manipuladorPerfil, 
-            EditarPerfilManipulador editarMaipulador, 
+            IAcessoRepositorio repositorio,
+            AddPerfilManipulador manipuladorPerfil,
+            EditarPerfilManipulador editarMaipulador,
             DelPerfilManipulador manipuladorDelPerfil)
         {
             _repositorio = repositorio;
@@ -105,8 +105,8 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                 return Json(ex.Message);
             }
         }
-         [Route("/Admin/Perfil/Excluir/")]
-         [HttpDelete]
+        [Route("/Admin/Perfil/Excluir/")]
+        [HttpDelete]
         [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Excluir", TipoRetorno = "Json")]
 
         public async Task<IActionResult> Excluir(DelPerfilComando comando)

@@ -53,7 +53,7 @@ academia.helper.rest.utils = new function () {
                 if (typeof callbackError === "function") {
                     callbackError(data);
                 }
-                Loading(false);
+                Loading(false, Loader);
             }
         });
     };
@@ -84,24 +84,24 @@ academia.helper.rest.utils = new function () {
                         callback(data);
                     }
                 },
-                401: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Acesso não autorizado!", "");
+                //401: function (data) {
+                //    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Acesso não autorizado!", "");
 
-                },
-                500: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
+                //},
+                //500: function (data) {
+                //    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
 
-                },
-                501: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
+                //},
+                //501: function (data) {
+                //    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
 
-                }
+                //}
             },
             error: function (data) {
                 if (typeof callbackError === "function") {
                     callbackError(data);
                 }
-                Loading(false);
+                Loading(false, Loader);
             }
         });
 
@@ -152,7 +152,7 @@ academia.helper.rest.utils = new function () {
                 if (typeof callbackError === "function") {
                     callbackError(data);
                 }
-                Loading(false);
+                Loading(false, Loader);
             }
         });
 
@@ -271,36 +271,41 @@ academia.helper.rest.utils = new function () {
             dataType: "json",
             beforeSend: function (xhr) {
                 //xhr.setRequestHeader("Authorization", "Basic " + utf8_to_b64(global.token));
-                Loading(true);
+                Loading(true, Loader);
             },
             complete: function () {
 
-                Loading(false);
+                Loading(false, Loader);
             },
             statusCode: {
                 200: function (data) {
                     if (typeof callback === "function")
                         callback(data);
-                },
-                401: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Acesso não autorizado!", "");
-                },
-                500: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
-
-                },
-                501: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
-
                 }
-            }
+                //401: function (data) {
+                //    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Acesso não autorizado!", "");
+                //},
+                //500: function (data) {
+                //    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
 
+                //},
+                //501: function (data) {
+                //    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
+
+                //}
+            },
+            error: function (data) {
+                if (typeof callbackError === "function") {
+                    callbackError(data);
+                }
+                Loading(false, Loader);
+            }
             // TODO: (Comentado por LeanWork em 09/03) O tratamento de erro já está sendo realizado em statusCode acima.
             //error: function () {
             //    Modal();
             //    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Ocorreu um erro ao processar sua solicitação", "");                
             //}
-        })
+        });
     };
     this.PUTLIST = function (url, dataT, callback, callbackError) {
 
@@ -372,18 +377,6 @@ academia.helper.rest.utils = new function () {
                     if (callback !== null) {
                         callback(data);
                     }
-                },
-                401: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Acesso não autorizado!", "");
-
-                },
-                500: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
-
-                },
-                501: function (data) {
-                    academia.common.alerts.Message("Mensagem do Sistema", "Atenção!\n Servidor se comportou de maneira estranha e não conseguiu processar sua solicitação. \n Tente realizar esta operação novamente!", "");
-
                 }
             },
             error: function (data) {
@@ -405,12 +398,12 @@ academia.helper.common = new function () {
         return true;
     }
 }
-    
+
     /***
     * @name academia.Loading
     * @description Objeto que controla o componente de loading.
     **/
-    ; (function (window, $, academia) {
+    ;  (function (window, $, academia) {
         'use strict';
         var loaderDefault;
 
@@ -428,13 +421,13 @@ academia.helper.common = new function () {
 
             // Private
             function _show(loader) {
-                if (loader == 'undefined' || loader == null)
+                if (loader === 'undefined' || loader === null)
                     loader = loaderDefault;
                 loader.show();
             }
 
             function _hide(loader) {
-                if (loader == 'undefined' || loader == null)
+                if (loader === 'undefined' || loader === null)
                     loader = loaderDefault;
                 loader.hide();
             }

@@ -310,7 +310,7 @@
                 };
                 var callbackErro = function (data) {
                     PNotify.error({
-                        title: 'Ocorreu um erro ao processar sua solicitação'
+                        title: `Ocorreu um erro ao processar sua solicitação. Erro: [${data.responseText}]`
                     });
 
                 };
@@ -354,7 +354,7 @@
                 };
                 var callbackErro = function (data) {
                     PNotify.error({
-                        title: 'Ocorreu um erro ao processar sua solicitação'
+                         title: `Ocorreu um erro ao processar sua solicitação.\n  [${data.responseText}]`
                     });
 
                 };

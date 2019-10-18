@@ -13,7 +13,7 @@ using System.Net;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-
+   
     public class HomeController : Controller
     {
 
@@ -22,11 +22,17 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             _repositorio = repositorio;
         }
+        [PermissaoAcesso(PaginaId = "Dash", Verbo = "Ler", TipoRetorno = "Html")]
         public IActionResult Index()
         {
             return View();
         }
-
+        [AllowAnonymous]
+        public IActionResult Cards()
+        {
+            return View();
+        }
+        [AllowAnonymous]
         public IActionResult NaoAutorizado()
         {
             return View();

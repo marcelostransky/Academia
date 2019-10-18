@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-    //[PermissaoAcesso(PaginaId = _paginaId, Verbo = "Ler")]
+    [PermissaoAcesso(PaginaId = "FUNC", Verbo = "Ler", TipoRetorno = "Html")]
     public class FuncionarioController : Controller
     {
         const string _paginaId = "FUNC";
@@ -52,6 +52,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _editarFotoManipulador = editarFotoManipulador;
             _editarAcessoManipulador = editarAcessoFuncionario;
         }
+        [PermissaoAcesso(PaginaId = "FUNC", Verbo = "Criar", TipoRetorno = "Html")]
         public async Task<IActionResult> Novo()
         {
             var perfis = (await _repositorioPerfil.ObterTodosAsync());
@@ -59,7 +60,7 @@ namespace AcademiaDanca.IO.App.Controllers
             return View();
         }
         [HttpPost]
-        //[ValidateAntiForgeryToken]
+        [PermissaoAcesso(PaginaId = "FUNC", Verbo = "Criar", TipoRetorno = "json")]
         public async Task<IComandoResultado> Novo(CriarFuncionarioComando comando)
         {
             try
@@ -117,6 +118,7 @@ namespace AcademiaDanca.IO.App.Controllers
                 throw;
             }
         }
+        [PermissaoAcesso(PaginaId = "FUNC", Verbo = "Editar", TipoRetorno = "Html")]
         public async Task<IActionResult> Editar(int id)
         {
             var funcionario = await _repositorio.ObterPorAsync(id);
@@ -131,6 +133,7 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         [Route("/Funcionario/Editar/Base")]
         [HttpPost]
+        [PermissaoAcesso(PaginaId = "FUNC", Verbo = "Editar", TipoRetorno = "json")]
         public async Task<IComandoResultado> Editar(EditarBaseFuncionarioComando comando)
         {
             var resultado = await _editarManipulador.ManipuladorAsync(comando);

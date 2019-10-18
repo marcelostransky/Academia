@@ -4,16 +4,20 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.AcessoComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Leanwork.CodePack.DataTables;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize]
+    [PermissaoAcesso(PaginaId = "PAG", Verbo = "Ler", TipoRetorno = "Html")]
     public class PaginaController : Controller
     {
         private readonly IAcessoRepositorio _repositorio;
@@ -65,6 +69,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
             }
 
         }
+        [PermissaoAcesso(PaginaId = "PAG", Verbo = "Criar", TipoRetorno = "json")]
         public async Task<IActionResult> Criar(AddPaginaComando comando)
         {
             try
@@ -79,7 +84,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                 return Json(ex.Message);
             }
         }
-
+        [PermissaoAcesso(PaginaId = "PAG", Verbo = "Editar", TipoRetorno = "json")]
         public async Task<IActionResult> Editar(EditarPaginaComando comando)
         {
             try
@@ -94,7 +99,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                 return Json(ex.Message);
             }
         }
-
+        [PermissaoAcesso(PaginaId = "PAG", Verbo = "Excluir", TipoRetorno = "json")]
         public async Task<IActionResult> Excluir(DelPaginaComando comando)
         {
             try

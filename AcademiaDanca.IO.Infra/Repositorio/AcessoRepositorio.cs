@@ -25,7 +25,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 var parametros = new DynamicParameters();
                 parametros.Add("sp_id", id);
-               
+
                 var total = (await _contexto
                       .Connection
                       .QueryAsync<int>("SELECT count(1)  FROM academia.usuario_funcionario_papel where  id_papel =@sp_id ;",
@@ -116,7 +116,29 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             throw new NotImplementedException();
         }
 
-        public async Task<bool> DeletarPaginaAsync(int perfilId)
+        public async Task<bool> DeletarPaginaAsync(int paginaId)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_pagina_id", paginaId);
+
+                var total = (await _contexto
+                      .Connection
+                      .ExecuteAsync("sp_delete_pagina",
+                      parametros,
+                      commandType: System.Data.CommandType.StoredProcedure));
+
+                return total > 0;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> DeletarPerfilAsync(int perfilId)
         {
             try
             {
@@ -136,11 +158,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
-        }
-
-        public Task<bool> DeletarPerfilAsync(int id)
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<bool> DeletarPermissaoAsync(int perfilId, int paginaId)
@@ -188,6 +205,33 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
         }
 
+        public async Task<int> EditaPermissaoAsync(Permissao permissao)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_pagina_id", permissao.PaginaId);
+                parametros.Add("sp_papel_id", permissao.PerfilId);
+                parametros.Add("sp_criar", permissao.Criar);
+                parametros.Add("sp_atualizar", permissao.Editar);
+                parametros.Add("sp_ler", permissao.Ler);
+                parametros.Add("sp_deletar", permissao.Excluir);
+
+
+                var editado = await _contexto
+                     .Connection
+                     .ExecuteAsync("sp_edit_permissao",
+                     parametros,
+                     commandType: System.Data.CommandType.StoredProcedure);
+
+                return editado;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
         public Task<int> EditarAsync(Pagina pagina)
         {
             throw new NotImplementedException();
@@ -212,6 +256,26 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 throw;
             }
         }
+
+        public async Task<int> ObterIdPorConstante(string constante)
+        {
+            try
+            {
+                var PaginaId =  await _contexto
+                        .Connection
+                        .QueryAsync<int>(" SELECT id FROM academia.pagina where constante = @sp_constante;",
+                        param: new { sp_constante = constante},
+                        commandType: System.Data.CommandType.Text);
+                return PaginaId.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+           
+        }
+
         public async Task<IEnumerable<PaginaResultadoQuery>> ObterPaginasAsync()
         {
 
@@ -260,7 +324,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         .QueryAsync<PermissaoResultadoQuery>(@"
                         SELECT 
                        
-                        pg.constante as PaginaId,
+                        pg.id as PaginaId,
+                        pg.constante as Constante,
                         pg.des_pagina as DesPagina,
                         p.id as PapelId,
                         p.nome_papel as DesPapel,
@@ -295,7 +360,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         .Query<PermissaoResultadoQuery>(@"
                         SELECT 
                        
-                        pg.constante as PaginaId,
+                        pg.id as PaginaId,
+                        pg.constante as Constante,
                         pg.des_pagina as DesPagina,
                         p.id as PapelId,
                         p.nome_papel as DesPapel,

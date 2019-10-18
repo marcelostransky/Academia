@@ -1,7 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Permissao";
+﻿
+@{
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <div class="page-layout carded left-sidebar single-scroll">
 
     <div class="top-bg bg-primary text-auto"></div>
@@ -205,7 +207,7 @@
                     "bDestroy": true,
                     "bProcessing": true,
                     "bServerSide": true,
-                    "sAjaxSource": `/Admin/Acesso/ObterPermissao?paginaId=${paginaId}&perfilId=${perfilId}`,
+                    "sAjaxSource": `/Admin/Permissao/Listar?paginaId=${paginaId}&perfilId=${perfilId}`,
                     "aoColumns": [
                         {
                             "sTitle": "Perfil Id",
@@ -294,6 +296,7 @@
             var perfilId = $(linha).closest('tr').find('td').eq('0').find("input").val();
             var paginaId = $(linha).closest('tr').find('td').eq('1').find("input").val();
 
+
             var dataT = {
                 paginaId: paginaId,
                 perfilId: perfilId
@@ -305,7 +308,7 @@
                     PNotify.success({
                         title: permissao.message
                     });
-                    removeLinhaRowIndex(linha, "permissaoDataTable");
+
                 }
                 else {
                     var msg = '';
@@ -325,8 +328,7 @@
                 });
 
             };
-
-            academia.helper.rest.utils.POST("/Admin/Acesso/Permissao/Excluir/", dataT, callback, callbackErro, $('#loader'));
+            academia.helper.rest.utils.DELETE("/Admin/Permissao/Excluir/", dataT, callback, callbackErro, $('#loader'));
         }
         function Cadastrar() {
 
@@ -374,7 +376,54 @@
 
             };
 
-            academia.helper.rest.utils.POST("/Admin/Acesso/NovaPermissao", dataT, callback, callbackErro, $('#loader'));
+            academia.helper.rest.utils.POST("/Admin/Permissao/Criar", dataT, callback, callbackErro, $('#loader'));
         }
+        function Editar(linha) {
+            var perfilId = $(linha).closest('tr').find('td').eq('0').find("input").val();
+            var paginaId = $(linha).closest('tr').find('td').eq('1').find("input").val();
+            var criar = $(linha).closest('tr').find('td').eq('2').find("input:checkbox:checked").length;
+            var ler = $(linha).closest('tr').find('td').eq('3').find("input:checkbox:checked").length;
+            var editar = $(linha).closest('tr').find('td').eq('4').find("input:checkbox:checked").length;
+            var excluir = $(linha).closest('tr').find('td').eq('5').find("input:checkbox:checked").length;
+
+            var dataT = {
+                Constante: paginaId,
+                perfilId: perfilId,
+                criar: criar,
+                ler: ler,
+                editar: editar,
+                excluir: excluir
+            };
+            var callback = function (data) {
+
+                var permissao = data;
+                if (permissao.success) {
+                    PNotify.success({
+                        title: permissao.message
+                    });
+
+                }
+                else {
+                    var msg = '';
+                    $.each(permissao.data, function (index, item) {
+                        msg = msg + item.property + ' - ' + item.message + '\n';
+                    });
+
+                    PNotify.info({
+                        title: msg
+                    });
+
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+            academia.helper.rest.utils.PUT("/Admin/Permissao/Editar/", dataT, callback, callbackErro, $('#loader'));
+        }
+
     </script>
 }
+

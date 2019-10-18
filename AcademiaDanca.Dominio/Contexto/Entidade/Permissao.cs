@@ -28,5 +28,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             Ler = ler;
             Excluir = excluir;
         }
+
+      
     }
 }

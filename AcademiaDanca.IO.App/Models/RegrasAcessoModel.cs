@@ -72,7 +72,7 @@ namespace AcademiaDanca.IO.App.Models
         {
             var listaPermissao = (ObterListaPermissao(perfil)).ToList();
             var resultado = (from s in listaPermissao
-                             where s.PaginaId == pagina
+                             where s.Constante == pagina
                              select s).FirstOrDefault();
             return resultado;
         }

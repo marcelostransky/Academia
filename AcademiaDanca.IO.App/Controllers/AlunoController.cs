@@ -26,7 +26,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-
+    [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Ler", TipoRetorno = "Html")]
     public class AlunoController : Controller
     {
         public readonly IAcessoRepositorio _repositorioAcesso;

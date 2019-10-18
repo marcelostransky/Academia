@@ -37,7 +37,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso
                 return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);
             }
             //Persistir Dados
-            if (!await _repositorio.DeletarPaginaAsync(comando.Id))
+            if (!await _repositorio.DeletarPerfilAsync(comando.Id))
             {
                 throw new Exception("Sistema não conseguiu processar esta solicitação");
             }

@@ -87,6 +87,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<DelPaginaManipulador, DelPaginaManipulador>();
             services.AddTransient<EditarPaginaManipulador, EditarPaginaManipulador>();
             services.AddTransient<DelPerfilManipulador, DelPerfilManipulador>();
+            services.AddTransient<EditarPermissaoManipulador, EditarPermissaoManipulador>();
              services.AddScoped<RegrasAcessoModel>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";

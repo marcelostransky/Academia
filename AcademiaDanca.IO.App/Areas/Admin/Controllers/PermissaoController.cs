@@ -18,35 +18,25 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    //[PermissaoAcesso(PaginaId = "Acesso", Verbo = "Ler")]
-    public class AcessoController : Controller
+    [PermissaoAcesso(PaginaId = "PERM", Verbo = "Ler", TipoRetorno = "Html")]
+    public class PermissaoController : Controller
     {
         private readonly IAcessoRepositorio _repositorio;
         public readonly AddPermissaoManipulador _manipuladorPermissao;
         public readonly DelPermissaoManipulador _manipuladorDelPermissao;
-        public AcessoController(IAcessoRepositorio repositorio
+        public readonly EditarPermissaoManipulador _manipuladorEditarPermissao;
+        public PermissaoController(IAcessoRepositorio repositorio
        , AddPermissaoManipulador manipuladorPermissao
-            , DelPermissaoManipulador manipuladorDelPermissao)
+            , DelPermissaoManipulador manipuladorDelPermissao
+            , EditarPermissaoManipulador manipuladorEditarPermissao)
         {
             _repositorio = repositorio;
 
             _manipuladorPermissao = manipuladorPermissao;
             _manipuladorDelPermissao = manipuladorDelPermissao;
-
+            _manipuladorEditarPermissao = manipuladorEditarPermissao;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
-
-       
-
-
-        public async Task<IActionResult> DadosAcesso()
-        {
-            return await Task.Run(() => View());
-        }
-        public async Task<IActionResult> Permissao()
+        public async Task<IActionResult> Index()
         {
             var paginas = new SelectList(await _repositorio.ObterPaginasAsync(), "Constante", "DesPagina");
             var perfis = new SelectList(await _repositorio.ObterPerfisAsync(), "Id", "DesPerfil");
@@ -54,9 +44,27 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
             ViewBag.Perfis = perfis;
             return await Task.Run(() => View());
         }
+        [Route("/Admin/Permissao/Excluir/")]
+        [HttpDelete]
+        [PermissaoAcesso(PaginaId = "PERM", Verbo = "Excluir", TipoRetorno = "Json")]
+        public async Task<IActionResult> Excluir(DelPermissaoComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorDelPermissao.ManipuladorAsync(comando);
+
+                return Json(resultado);
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
         [HttpPost]
-        //[Route("/Admin/Acesso/Permissao")]
-        public async Task<IActionResult> NovaPermissao(AddPermissaoComando comando)
+        [Route("/Admin/Permissao/Criar")]
+        [PermissaoAcesso(PaginaId = "PERM", Verbo = "Criar", TipoRetorno = "Json")]
+        public async Task<IActionResult> Criar(AddPermissaoComando comando)
         {
             try
             {
@@ -69,7 +77,24 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
                 return Json(ex.Message);
             }
         }
-        public async Task<IActionResult> ObterPermissao(string paginaId, string perfilId, jQueryDataTableRequestModel request)
+        [HttpPut]
+        [Route("/Admin/Permissao/Editar")]
+        [PermissaoAcesso(PaginaId = "PERM", Verbo = "Criar", TipoRetorno = "Json")]
+        public async Task<IActionResult> Editar(EditarPermissaoComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorEditarPermissao.ManipuladorAsync(comando);
+                return Json(resultado);
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
+
+        public async Task<IActionResult> Listar(string paginaId, string perfilId, jQueryDataTableRequestModel request)
         {
             try
             {
