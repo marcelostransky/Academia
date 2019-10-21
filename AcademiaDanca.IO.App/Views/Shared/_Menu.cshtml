@@ -1,5 +1,22 @@
-﻿<ul class="nav flex-column custom-scrollbar" id="sidenav" data-children=".nav-item">
-    <li class="nav-item">
+﻿<script>
+
+    $(document).ready(function () {
+        PermissaoMenu();
+    })
+    function PermissaoMenu() {
+        $.get("/Home/Menu/", function (resultado) {
+            let constantes = resultado;
+            constantes.forEach(function (valor) {
+                $(`.${valor}`).remove();
+            });
+             $("#sidenav").show();
+        })
+
+       
+    }
+</script>
+<ul class="nav flex-column custom-scrollbar" style="display:none" id="sidenav" data-children=".nav-item">
+    <li class="nav-item DASH">
         <a class="nav-link ripple " href="/Home/" data-url="/Home/">
 
             <i class="icon s-6 icon-view-dashboard"></i>
@@ -7,7 +24,7 @@
             <span>DashBoard</span>
         </a>
     </li>
-    <li class="nav-item" role="tab" id="heading-dashboards">
+    <li class="nav-item FINA" role="tab" id="heading-dashboards">
         <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-dashboards" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
             <i class="icon s-6 icon-cash-usd"></i>
             <span>Financeiro</span>
@@ -30,8 +47,7 @@
             </li>
         </ul>
     </li>
-
-    <li class="nav-item" role="tab" id="Agenda">
+    <li class="nav-item AGEN" role="tab" id="Agenda">
 
         <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-agenda" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
 
@@ -50,7 +66,7 @@
 
         </ul>
     </li>
-    <li class="nav-item" role="tab" id="heading-turmas">
+    <li class="nav-item TURMA" role="tab" id="heading-turmas">
         <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-turmas" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
 
             <i class="icon s-6 icon-school"></i>
@@ -72,7 +88,7 @@
             </li>
         </ul>
     </li>
-    <li class="nav-item" role="tab" id="heading-dashboards">
+    <li class="nav-item ALUNO" role="tab" id="heading-dashboards">
         <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-aluno" href="#" aria-expanded="false" aria-controls="collapse-aluno">
             <i class="icon s-6 icon-account"></i>
             <span>Aluno</span>
@@ -90,7 +106,7 @@
             </li>
         </ul>
     </li>
-    <li class="nav-item" role="tab" id="heading-funcionario">
+    <li class="nav-item FUNC" role="tab" id="heading-funcionario">
 
         <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-ecommerce" href="#" aria-expanded="false" aria-controls="collapse-ecommerce">
 
@@ -118,7 +134,7 @@
 
         </ul>
     </li>
-    <li class="nav-item" role="tab" id="heading-authentication">
+    <li class="nav-item SEGU" role="tab" id="heading-authentication">
 
         <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-authentication" href="#" aria-expanded="false" aria-controls="collapse-authentication">
 
@@ -137,3 +153,4 @@
         </ul>
     </li>
 </ul>
+

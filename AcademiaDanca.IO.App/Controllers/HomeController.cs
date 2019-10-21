@@ -9,18 +9,22 @@ using Microsoft.AspNetCore.Authorization;
 using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-   
+
     public class HomeController : Controller
     {
-
+        private readonly IAcessoRepositorio _repositorioAcesso;
         private readonly IDashBoardRepositorio _repositorio;
-        public HomeController(IDashBoardRepositorio repositorio)
+        private readonly IConfiguration _config;
+        public HomeController(IDashBoardRepositorio repositorio, IConfiguration config, IAcessoRepositorio acessoRepositorio)
         {
             _repositorio = repositorio;
+            _repositorioAcesso = acessoRepositorio;
+            _config = config;
         }
         [PermissaoAcesso(PaginaId = "Dash", Verbo = "Ler", TipoRetorno = "Html")]
         public IActionResult Index()
@@ -56,6 +60,23 @@ namespace AcademiaDanca.IO.App.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public async Task<IActionResult> Menu()
+        {
+            try
+            {
+                var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+                var menuModel = new MenuModel(_repositorioAcesso, _config);
+                var resultado = (await menuModel.ObterConstanteMenuAsync(perfil)).ToArray();
+
+                return Json(resultado);
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+
         }
     }
 }

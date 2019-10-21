@@ -21,12 +21,12 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso
         public async Task<IComandoResultado> ManipuladorAsync(EditarPermissaoComando comando)
         {
             //Obter id pagina pela constante
-            comando.PaginaId = await _repositorio.ObterIdPorConstante(comando.Constante);
+            //comando.PaginaId = await _repositorio.ObterIdPorConstante(comando.Constante);
 
 
             //Validar Comando
             comando.Valido();
-
+                                                        
             //Criar Entidade
 
             var permissao = new Permissao(comando.PaginaId, comando.PerfilId, comando.Criar, comando.Editar, comando.Ler, comando.Excluir);

@@ -19,6 +19,14 @@ namespace AcademiaDanca.IO.Infra.Cache
                 MemoryCache.Default.Add(new CacheItem(chave, data), cachePolicy);
             }
         }
+        public void RemoverDoCache(string chave)
+        {
+            if (!string.IsNullOrEmpty(chave))
+            {
+
+                MemoryCache.Default.Remove(chave);
+            }
+        }
 
         public T ObterDoCache<T>(string chave)
         {

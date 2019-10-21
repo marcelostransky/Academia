@@ -5,6 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using AcademiaDanca.IO.App.Filtros;
+using AcademiaDanca.IO.App.Helper;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.AcessoComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Acesso;
@@ -13,6 +14,7 @@ using Leanwork.CodePack.DataTables;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Configuration;
 
 namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
@@ -25,16 +27,19 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
         public readonly AddPermissaoManipulador _manipuladorPermissao;
         public readonly DelPermissaoManipulador _manipuladorDelPermissao;
         public readonly EditarPermissaoManipulador _manipuladorEditarPermissao;
+        private readonly IConfiguration _config;
         public PermissaoController(IAcessoRepositorio repositorio
        , AddPermissaoManipulador manipuladorPermissao
             , DelPermissaoManipulador manipuladorDelPermissao
-            , EditarPermissaoManipulador manipuladorEditarPermissao)
+            , EditarPermissaoManipulador manipuladorEditarPermissao
+            , IConfiguration config)
         {
             _repositorio = repositorio;
 
             _manipuladorPermissao = manipuladorPermissao;
             _manipuladorDelPermissao = manipuladorDelPermissao;
             _manipuladorEditarPermissao = manipuladorEditarPermissao;
+            _config = config;
         }
         public async Task<IActionResult> Index()
         {
@@ -69,6 +74,10 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
             try
             {
                 var resultado = await _manipuladorPermissao.ManipuladorAsync(comando);
+                var perfil = comando.DesPerfil.Trim();
+                new Util(_config).RemoverMenuCache(perfil);
+                new Util(_config).RemoverPermissaoCache(perfil);
+
                 return Json(resultado);
             }
             catch (System.Exception ex)
@@ -79,12 +88,15 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
         }
         [HttpPut]
         [Route("/Admin/Permissao/Editar")]
-        [PermissaoAcesso(PaginaId = "PERM", Verbo = "Criar", TipoRetorno = "Json")]
+        [PermissaoAcesso(PaginaId = "PERM", Verbo = "Editar", TipoRetorno = "Json")]
         public async Task<IActionResult> Editar(EditarPermissaoComando comando)
         {
             try
             {
                 var resultado = await _manipuladorEditarPermissao.ManipuladorAsync(comando);
+                var perfil = comando.Constante.Trim();
+                new Util(_config).RemoverMenuCache(perfil);
+                new Util(_config).RemoverPermissaoCache(perfil);
                 return Json(resultado);
             }
             catch (System.Exception ex)

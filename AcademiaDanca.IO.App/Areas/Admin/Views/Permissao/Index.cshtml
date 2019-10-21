@@ -303,12 +303,12 @@
             };
             var callback = function (data) {
 
-                var permissao = JSON.parse(data);
+                var permissao = data;
                 if (permissao.success) {
                     PNotify.success({
                         title: permissao.message
                     });
-
+                   removeLinhaRowIndex(linha, "permissaoDataTable");
                 }
                 else {
                     var msg = '';
@@ -336,8 +336,8 @@
 
                 constante: $("#Paginas").val(),
                 perfilId: $("#Perfis").val(),
-                desPagina: '',
-                desPerfil: '',
+                desPagina: $("#Paginas option:selected").text(),
+                desPerfil: $("#Perfis option:selected").text(),
                 criar: $('#criar').is(':checked'),
                 ler: $('#ler').is(':checked'),
                 editar: $('#editar').is(':checked'),
@@ -381,13 +381,14 @@
         function Editar(linha) {
             var perfilId = $(linha).closest('tr').find('td').eq('0').find("input").val();
             var paginaId = $(linha).closest('tr').find('td').eq('1').find("input").val();
-            var criar = $(linha).closest('tr').find('td').eq('2').find("input:checkbox:checked").length;
-            var ler = $(linha).closest('tr').find('td').eq('3').find("input:checkbox:checked").length;
-            var editar = $(linha).closest('tr').find('td').eq('4').find("input:checkbox:checked").length;
-            var excluir = $(linha).closest('tr').find('td').eq('5').find("input:checkbox:checked").length;
-
+            var criar = $(linha).closest('tr').find('td').eq('2').find("input:checkbox:checked").length > 0 ? true : false;
+            var ler = $(linha).closest('tr').find('td').eq('3').find("input:checkbox:checked").length > 0 ? true : false;
+            var editar = $(linha).closest('tr').find('td').eq('4').find("input:checkbox:checked").length > 0 ? true : false;
+            var excluir = $(linha).closest('tr').find('td').eq('5').find("input:checkbox:checked").length > 0 ? true : false;
+            var constante = $(linha).closest('tr').find('td').eq('0').text();
             var dataT = {
-                Constante: paginaId,
+                Constante: constante,
+                paginaId: paginaId,
                 perfilId: perfilId,
                 criar: criar,
                 ler: ler,

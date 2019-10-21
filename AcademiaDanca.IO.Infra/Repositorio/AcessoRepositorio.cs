@@ -283,7 +283,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 return await _contexto
                         .Connection
-                        .QueryAsync<PaginaResultadoQuery>(" SELECT id as Id, des_pagina as DesPagina, constante as Constante FROM academia.pagina;",
+                        .QueryAsync<PaginaResultadoQuery>(" SELECT id as Id, des_pagina as DesPagina, constante as Constante FROM academia.pagina order by des_pagina;",
 
                         commandType: System.Data.CommandType.Text);
             }
@@ -339,7 +339,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         Where
                         pg.constante = ifnull(@sp_id_pagina, pg.constante)
                         And
-                        p.nome_papel = ifnull(@sp_id_perfil, p.nome_papel);", param: parametros,
+                        p.nome_papel = ifnull(@sp_id_perfil, p.nome_papel)
+                        Order by  p.nome_papel, pg.des_pagina;", param: parametros,
 
                         commandType: System.Data.CommandType.Text);
             }
@@ -359,7 +360,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         .Connection
                         .Query<PermissaoResultadoQuery>(@"
                         SELECT 
-                       
                         pg.id as PaginaId,
                         pg.constante as Constante,
                         pg.des_pagina as DesPagina,
@@ -373,6 +373,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                          JOIN academia.pagina_papel as pp  on pg.id = pp.id_pagina
                          JOIN academia.papel as p on pp.id_papel = p.id
                         Where     p.nome_papel = @perfil
+                        Order by  p.nome_papel, pg.des_pagina
                       ;", param: new { perfil }, commandType: System.Data.CommandType.Text).ToList();
             }
             catch (Exception ex)
@@ -381,6 +382,35 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 throw new Exception(ex.Message);
             }
         }
+        public async Task<IEnumerable<string>> ObterConstanteMenuAsync(string perfilId)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+        
+                parametros.Add("sp_id_perfil", perfilId);
+                var resultado = await _contexto
+                        .Connection
+                        .QueryAsync<string>(@"
+                                SELECT distinct constante FROM academia.pagina as p 
+                                where p.id not in(
+                                SELECT p.id FROM academia.usuario_funcionario_papel as ufp
+                                join academia.pagina_papel as pp on ufp.id_papel = pp.id_papel
+                                join academia.pagina as p on pp.id_pagina = p.id
+                                join academia.papel as pa on pp.id_papel = pa.id
+                                where pa.nome_papel = @sp_id_perfil)
+                            ;", param: parametros,
+
+                        commandType: System.Data.CommandType.Text);
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
+
 
         public async Task<int> SalvarAsync(Pagina pagina)
         {

@@ -17,98 +17,100 @@
 
                     <!-- WIDGET GROUP -->
                     <div class="widget-group row no-gutters">
+                        @if (@User.Claims.FirstOrDefault(x => x.Type == "Papel").Value != "Professor")
+                        {
+                            <!-- WIDGET 1 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
 
-                        <!-- WIDGET 1 -->
-                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+                                <div class="widget widget1 card">
 
-                            <div class="widget widget1 card">
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+                                        <div class="col">
+                                        </div>
+                                    </div>
 
-                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
-                                    <div class="col">
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+
+                                        <div id="totalAlunomatriculado" class="title text-secondary">0</div>
+
+                                        <div class="sub-title h6 text-muted">Alunos</div>
+
+                                    </div>
+
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+
+                                        <span class="text-muted h5">Total Alunos: <label id="totalAlunomatriculadoLabel">24</label></span>
+
+
+
                                     </div>
                                 </div>
-
-                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
-
-                                    <div id="totalAlunomatriculado" class="title text-secondary">0</div>
-
-                                    <div class="sub-title h6 text-muted">Alunos</div>
-
-                                </div>
-
-                                <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
-
-                                    <span class="text-muted h5">Total Alunos: <label id="totalAlunomatriculadoLabel">24</label></span>
-
-
-
-                                </div>
                             </div>
-                        </div>
-                        <!-- / WIDGET 1 -->
-                        <!-- WIDGET 2 -->
-                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+                            <!-- / WIDGET 1 -->
+                            <!-- WIDGET 2 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
 
-                            <div class="widget widget2 card">
+                                <div class="widget widget2 card">
 
-                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
 
-                                </div>
+                                    </div>
 
-                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
-                                    <div id="totalMensalidadeAtraso" class="title text-danger">0</div>
-                                    <div class="sub-title h6 text-muted">Mensalidades</div>
-                                </div>
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                        <div id="totalMensalidadeAtraso" class="title text-danger">0</div>
+                                        <div class="sub-title h6 text-muted">Mensalidades</div>
+                                    </div>
 
-                                <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
-                                    <span class="text-muted h5">Mensalidades em Atraso: <label id="totalMensalidadeAtrasoLabel"></label></span>
-                                 </div>
-                            </div>
-                        </div>
-                        <!-- / WIDGET 2 -->
-                        <!-- WIDGET 3 -->
-                        <div class="col-12 col-sm-6 col-xl-3 p-3">
-
-                            <div class="widget widget3 card">
-
-                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
-
-                                    <div class="col">
-                                        <span class="h6"></span>
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                                        <span class="text-muted h5">Mensalidades em Atraso: <label id="totalMensalidadeAtrasoLabel"></label></span>
                                     </div>
                                 </div>
+                            </div>
+                            <!-- / WIDGET 2 -->
+                            <!-- WIDGET 3 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
 
-                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
-                                    <div id="totalAgendamento" class="title text-warning">0</div>
-                                    <div class="sub-title h6 text-muted">Aulas</div>
-                                </div>
+                                <div class="widget widget3 card">
 
-                                <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
-                                    <span class="text-muted h5"> <label>Total Aulas</label></span>
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
 
+                                        <div class="col">
+                                            <span class="h6"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                        <div id="totalAgendamento" class="title text-warning">0</div>
+                                        <div class="sub-title h6 text-muted">Aulas</div>
+                                    </div>
+
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                                        <span class="text-muted h5"> <label>Total Aulas</label></span>
+
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- / WIDGET 3 -->
-                        <!-- WIDGET 4 -->
-                        <div class="col-12 col-sm-6 col-xl-3 p-3">
+                            <!-- / WIDGET 3 -->
+                            <!-- WIDGET 4 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
 
-                            <div class="widget widget4 card">
+                                <div class="widget widget4 card">
 
-                                <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
-                                </div>
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+                                    </div>
 
-                                <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
-                                    <div id="totalMensalidadeHoje" class="title text-info">5</div>
-                                    <div class="sub-title h6 text-muted">mensalidades</div>
-                                </div>
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                        <div id="totalMensalidadeHoje" class="title text-info">5</div>
+                                        <div class="sub-title h6 text-muted">mensalidades</div>
+                                    </div>
 
-                                <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
-                                    <span class="text-muted h5">Mensalidades vencendo hoje.</span>
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                                        <span class="text-muted h5">Mensalidades vencendo hoje.</span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- / WIDGET 4 -->
+                            <!-- / WIDGET 4 -->
+                        }
                         <!-- WIDGET 5 -->
                         <div class="col-12 p-3">
 

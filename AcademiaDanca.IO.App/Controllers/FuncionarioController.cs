@@ -189,14 +189,20 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         private object ObterMenuAcaoDataTable(FuncioanrioQueryPorNomeResultado r)
         {
-            //var papel = Util.RolesUser(2);
+            var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+                //HUserttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"/Funcionario/Editar/{0}\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Professor\"> <i class=\"icon-account-edit\"></i>    </a>", r.IdUsuario);
+            menu.AppendFormat("<a href =\"/Funcionario/Editar/{0}\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Professor\" style=\"font-size:8px\"> <i class=\"icon-account-edit\"></i>    </a>", r.IdUsuario);
             if (r.Perfil.Equals("Professor"))
             {
                 menu.AppendFormat("<a href =\"/AprovaBrasil/Avaliacao/Estatistica/{0}\" class=\"btn btn-icon fuse-ripple-ready \" title=\"Turmas\"> <i class=\"icon-school \"></i>    </a>", r.IdUsuario);
 
             }
+            if (perfil.Equals("Administrador"))
+            {
+                menu.AppendFormat("<a href =\"#\" onclick=\"ResetarSenha({0})\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Resetar Dados de Acesso\"> <i class=\" icon-key-variant\"></i>    </a>", r.IdUsuario);
+            }
+
             return menu.ToString();
         }
 

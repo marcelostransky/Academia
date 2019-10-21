@@ -15,7 +15,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.AcessoComando.Entrada
         public bool Ler { get; set; }
         public bool Editar { get; set; }
         public bool Excluir { get; set; }
-        public int PaginaId { get; internal set; }
+        public int PaginaId { get; set; }
 
         public bool Valido()
         {

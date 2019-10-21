@@ -95,10 +95,13 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
+        [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Criar", TipoRetorno = "Html")]
         public async Task<IActionResult> Novo()
         {
+            var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
-            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null);
+            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
@@ -125,6 +128,7 @@ namespace AcademiaDanca.IO.App.Controllers
             return View();
         }
         [HttpPost]
+        [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Ler", TipoRetorno = "json")]
         public async Task<IActionResult> Novo(CriarAlunoComando comando)
         {
             var resultado = await _manipulador.ManipuladorAsync(comando);

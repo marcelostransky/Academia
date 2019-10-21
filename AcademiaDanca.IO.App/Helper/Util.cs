@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AcademiaDanca.IO.Infra.Cache;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +12,31 @@ namespace AcademiaDanca.IO.App.Helper
     public class Util
     {
         private readonly IHostingEnvironment _environment;
+        private readonly CacheManager _cache;
+        private readonly IConfiguration _config;
         public Util(IHostingEnvironment environment)
         {
             _environment = environment;
+            _cache = new CacheManager();
+        }
+        public Util(IConfiguration config)
+        {
+            _cache = new CacheManager();
+            _config = config;
+        }
+        public void RemoverMenuCache(string perfil)
+        {
+            var chaveMenu = _config.GetValue<string>("ChaveMenu");
+            //var chavePermissao = _config.GetValue<string>("ChaveMenu");
+
+            _cache.RemoverDoCache($"{chaveMenu}.{perfil}");
+        }
+        public void RemoverPermissaoCache(string perfil)
+        {
+            //var chaveMenu = _config.GetValue<string>("ChaveMenu");
+            var chavePermissao = _config.GetValue<string>("ChavePermissao");
+
+            _cache.RemoverDoCache($"{chavePermissao}.{perfil}");
         }
         public string VerificarNomeArquivoCorreto(string filename)
         {
