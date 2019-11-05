@@ -7,7 +7,7 @@ using System.Text;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada
 {
-    public class CriarTurmaComando : Notifiable, IComando
+  public  class EditarTurmaComando:Notifiable,IComando
     {
 
         public int Id { get; set; }

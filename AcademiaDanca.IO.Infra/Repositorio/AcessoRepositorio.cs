@@ -485,5 +485,35 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 throw;
             }
         }
+
+        public async Task<IEnumerable<AcaoResultadoQuery>> ObterAcaoPerfilAsync(string perfilId)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+
+                parametros.Add("sp_id_perfil", perfilId);
+                var resultado = await _contexto
+                        .Connection
+                        .QueryAsync<AcaoResultadoQuery>(@"
+                                select distinct constante,
+                                case	when pp.criar = 0 then concat(constante , '-CRIAR')  end as criar,
+                                case	when pp.ler = 0 then concat(constante , '-LER') end as Ler,
+                                case	when pp.atualizar = 0 then concat(constante , '-EDITAR') end as Editar,
+                                case	when pp.deletar = 0 then concat(constante , '-DELETAR') end as Deletar
+                                FROM  academia.pagina p
+                                join academia.pagina_papel as pp on p.id = pp.id_pagina
+                                join academia.papel as pap on pp.id_papel = pap.id
+                                where   pap.nome_papel = @sp_id_perfil;", param: parametros,
+
+                        commandType: System.Data.CommandType.Text);
+                return resultado;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception(ex.Message);
+            }
+        }
     }
 }

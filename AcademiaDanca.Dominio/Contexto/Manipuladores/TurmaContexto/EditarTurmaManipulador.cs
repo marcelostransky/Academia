@@ -5,18 +5,22 @@ using AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using FluentValidator;
+using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
 {
-    public class CriarTurmaManipulador : Notifiable, IComandoManipulador<CriarTurmaComando>
+   public class EditarTurmaManipulador   :Notifiable,IComandoManipulador<EditarTurmaComando>
     {
         private readonly ITurmaRepositorio _repositorio;
-        public CriarTurmaManipulador(ITurmaRepositorio repositorio)
+        public EditarTurmaManipulador(ITurmaRepositorio repositorio)
         {
             _repositorio = repositorio;
         }
-        public async Task<IComandoResultado> ManipuladorAsync(CriarTurmaComando comando)
+
+        public async Task<IComandoResultado> ManipuladorAsync(EditarTurmaComando comando)
         {
 
             //Criar Entidades

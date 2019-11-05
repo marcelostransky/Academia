@@ -204,16 +204,14 @@ $(function () {
 
 
                 }
-            }
+            };
             var callbackErro = function (data) {
                 PNotify.error({
                     title: 'Ocorreu um erro ao processar sua solicitação'
                 });
 
-            }
-
+            };
             academia.helper.rest.utils.POST("/Aluno/Novo", dataT, callback, callbackErro, $('#loader'));
-
         }
     });
 });
@@ -492,7 +490,7 @@ $(function () {
 
             }
 
-            academia.helper.rest.utils.POST("/Aluno/Logradouro/Novo", dataT, callback, callbackErro, $('#loader'));
+            academia.helper.rest.utils.POST("/Logradouro/Novo", dataT, callback, callbackErro, $('#loader'));
 
         }
     });

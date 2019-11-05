@@ -1,5 +1,9 @@
 
 $(document).ready(function () {
+
+    MontarDataTableTurma();
+});
+function MontarDataTableTurma() {
     $('#turma-datatable').DataTable(
         {
             "sEmptyTable": "Nenhum registro encontrado",
@@ -26,8 +30,14 @@ $(document).ready(function () {
             "bDestroy": true,
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": "/Turma/ObterTurmas?IdTurma=0&IdTurmaTipo=0&IdProfessor=0",
+            "sAjaxSource": Url(),
             "aoColumns": [
+                {
+                    "sTitle": "Ano",
+                    "mDataProp": "ano",
+                    "bSortable": true
+
+                },
                 {
                     "sTitle": "Id",
                     "mDataProp": "idTurma",
@@ -36,7 +46,8 @@ $(document).ready(function () {
                 },
                 {
                     "sTitle": "Codigo",
-                    "mDataProp": "codTurma"
+                    "mDataProp": "codTurma",
+                    "bSortable": true
                 },
                 {
                     "sTitle": "Turma",
@@ -46,6 +57,14 @@ $(document).ready(function () {
                 {
                     "sTitle": "Tipo",
                     "mDataProp": "desTurmaTipo"
+                },
+                {
+                    "sTitle": "Valor",
+                    "mDataProp": "valor"
+                },
+                {
+                    "sTitle": "Status",
+                    "mDataProp": "status"
                 },
                 {
                     "sTitle": "Professor",
@@ -78,7 +97,7 @@ $(document).ready(function () {
 
             "filter": true,            // habilita o filtro(search box)
             "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
-          
+
             pageLength: 10,
             scrollY: 'auto',
             scrollX: false,
@@ -91,12 +110,21 @@ $(document).ready(function () {
 
                 // Bind an external input as a table wide search box
                 if (searchBox.length > 0) {
-                    searchBox.on('keyup', function (event) {
+                    searchBox.on('keypress', function (event) {
                         api.search(event.target.value).draw();
                     });
                 }
             }
         }
     );
+}
 
-});
+function Url() {
+
+    var ano = $("#inputFiltroAno").val() === '' ? 0 : $("#inputFiltroAno").val();
+    var turmaDesc = $("#inputSearch").val();
+    var status = $("#status").val() === '' ? null : $("#status").val() === '1' ? true : false;
+    var base = `/Turma/ListarTurmas?ano=${ano}&turmaDesc=${turmaDesc}&status=${status}`;
+    return base;
+
+}

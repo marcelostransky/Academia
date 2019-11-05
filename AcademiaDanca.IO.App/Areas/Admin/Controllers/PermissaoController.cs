@@ -75,9 +75,10 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
             {
                 var resultado = await _manipuladorPermissao.ManipuladorAsync(comando);
                 var perfil = comando.DesPerfil.Trim();
-                new Util(_config).RemoverMenuCache(perfil);
-                new Util(_config).RemoverPermissaoCache(perfil);
-
+                new Util(_config).RemoverItemCache(perfil, "ChaveMenu");
+                new Util(_config).RemoverItemCache(perfil, "ChavePermissao");
+                new Util(_config).RemoverItemCache(perfil, "ChaveAcao");
+               
                 return Json(resultado);
             }
             catch (System.Exception ex)
@@ -95,8 +96,9 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
             {
                 var resultado = await _manipuladorEditarPermissao.ManipuladorAsync(comando);
                 var perfil = comando.Constante.Trim();
-                new Util(_config).RemoverMenuCache(perfil);
-                new Util(_config).RemoverPermissaoCache(perfil);
+                new Util(_config).RemoverItemCache(perfil, "ChaveMenu");
+                new Util(_config).RemoverItemCache(perfil, "ChavePermissao");
+                new Util(_config).RemoverItemCache(perfil, "ChaveAcao");
                 return Json(resultado);
             }
             catch (System.Exception ex)

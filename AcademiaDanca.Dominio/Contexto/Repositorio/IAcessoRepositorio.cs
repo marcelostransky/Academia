@@ -32,5 +32,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<int> EditaPaginaAsync(Pagina pagina);
         Task<int> EditaPermissaoAsync(Permissao permissao);
         Task<IEnumerable<string>> ObterConstanteMenuAsync(string perfilId);
+        Task<IEnumerable<AcaoResultadoQuery>> ObterAcaoPerfilAsync(string perfilId);
     }
 }

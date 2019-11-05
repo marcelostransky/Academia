@@ -15,7 +15,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Turma
         public string NomeProfessor { get; set; }
         public string CodTurma { get; set; }
         public string Foto { get; set; }
-        public double Valor { get; set; }
+        public decimal Valor { get; set; }
+        public bool Status { get; set; }
 
     }
 }

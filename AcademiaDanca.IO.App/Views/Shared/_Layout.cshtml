@@ -205,7 +205,22 @@
     <script src="~/js/Helper/Helper.js"></script>
     <script src="~/js/Helper/Tabela.js"></script>
     <script src="~/js/Helper/FileDownload.js"></script>
-    
+    <script>
+        $(document).ready(function () {
+            AcaoesPermitida();
+        })
+        function AcaoesPermitida() {
+            $.get("/Permissao/Acoes/", function (resultado) {
+                let constantes = resultado;
+                constantes.forEach(function (valor) {
+                    $(`.${valor}`).remove();
+                });
+                
+            })
+
+
+        }
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

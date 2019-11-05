@@ -19,17 +19,11 @@ namespace AcademiaDanca.IO.App.Models
 
         public RegrasAcessoModel(IAcessoRepositorio acessoRepositorio)
         {
-            //AcademiaContexto contexto = new AcademiaContexto();
             _repositorio = acessoRepositorio;
-                //--new AcessoRepositorio(contexto);
-
-
         }
 
         public List<PermissaoResultadoQuery> ObterListaPermissao(string perfil)
         {
-
-
             var cache = new CacheManager();
             var chavePerfil = $"{chave}.{perfil}";
             var lista = cache.ObterDoCache<List<PermissaoResultadoQuery>>(chavePerfil);

@@ -24,17 +24,11 @@ namespace AcademiaDanca.IO.App.Helper
             _cache = new CacheManager();
             _config = config;
         }
-        public void RemoverMenuCache(string perfil)
-        {
-            var chaveMenu = _config.GetValue<string>("ChaveMenu");
-            //var chavePermissao = _config.GetValue<string>("ChaveMenu");
-
-            _cache.RemoverDoCache($"{chaveMenu}.{perfil}");
-        }
-        public void RemoverPermissaoCache(string perfil)
+       
+        public void RemoverItemCache(string perfil ,string chave)
         {
             //var chaveMenu = _config.GetValue<string>("ChaveMenu");
-            var chavePermissao = _config.GetValue<string>("ChavePermissao");
+            var chavePermissao = _config.GetValue<string>(chave);
 
             _cache.RemoverDoCache($"{chavePermissao}.{perfil}");
         }
@@ -50,5 +44,7 @@ namespace AcademiaDanca.IO.App.Helper
         {
             return _environment.WebRootPath + $"\\images\\avatars\\{diretorio}\\{nomeArquivo}";
         }
+
+      
     }
 }

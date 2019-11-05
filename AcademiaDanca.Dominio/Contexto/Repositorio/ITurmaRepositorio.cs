@@ -11,7 +11,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
     public interface ITurmaRepositorio
     {
         Task<int> SalvarAsync(Turma turma);
-        Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma, int? idProfessor, int? idTipoTurma, int? ano, int? idUsuario);
+        Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma, int? idProfessor, int? idTipoTurma, int? ano, bool? status, int? idUsuario);
         Task<IEnumerable<TurmaQueryResultado>> ObterTodosAsync();
         Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int ano);
         Task<TurmaQueryResultado> ObterPorAsync(int id);

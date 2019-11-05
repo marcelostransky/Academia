@@ -34,7 +34,6 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly ITurmaRepositorio _repositorioTurma;
         private readonly AlunoManipulador _manipulador;
         private readonly EditarFotoAlunoManipulador _manipuladorFoto;
-        private readonly AddEnderecoManipulador _manipuladorLogrador;
         private readonly AddTurmaAlunoManipulador _manipuladorAlunoTurma;
         private readonly AddResponsavelManipulador _manipuladorResponsavel;
         private readonly DelTurmaAlunoManipulador _manipuladorDelTurmaAluno;
@@ -47,7 +46,6 @@ namespace AcademiaDanca.IO.App.Controllers
             ITurmaRepositorio turmaRepositorio,
             AlunoManipulador manipulador,
             EditarFotoAlunoManipulador manipuladorFoto,
-            AddEnderecoManipulador manipuladorLogrador,
             AddResponsavelManipulador manipuladorResponsavel,
             AddTurmaAlunoManipulador manipuladorAlunoTurma,
             DelTurmaAlunoManipulador manipuladorDelTurmaAluno,
@@ -59,7 +57,6 @@ namespace AcademiaDanca.IO.App.Controllers
             _manipulador = manipulador;
             _manipuladorFoto = manipuladorFoto;
             _environment = environment;
-            _manipuladorLogrador = manipuladorLogrador;
             _manipuladorResponsavel = manipuladorResponsavel;
             _manipuladorAlunoTurma = manipuladorAlunoTurma;
             _manipuladorDelTurmaAluno = manipuladorDelTurmaAluno;
@@ -71,7 +68,6 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
-
         public async Task<IActionResult> Detalhar(Guid id)
         {
             var aluno = await _repositorio.ObterAlunoCompletoAsync(id);
@@ -101,7 +97,7 @@ namespace AcademiaDanca.IO.App.Controllers
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
-            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
+            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null,null, perfil.Equals("Professor") ? usuarioId : 0);
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
@@ -128,7 +124,7 @@ namespace AcademiaDanca.IO.App.Controllers
             return View();
         }
         [HttpPost]
-        [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Ler", TipoRetorno = "json")]
+        [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Criar", TipoRetorno = "json")]
         public async Task<IActionResult> Novo(CriarAlunoComando comando)
         {
             var resultado = await _manipulador.ManipuladorAsync(comando);
@@ -186,19 +182,7 @@ namespace AcademiaDanca.IO.App.Controllers
             }
 
         }
-        [Route("/Aluno/Logradouro/Novo")]
-        [HttpPost]
-        public async Task<IActionResult> Logradouro(AddEnderecoComando comando, int idAluno)
-        {
-            var resultado = await _manipuladorLogrador.ManipuladorAsync(comando);
-            if (resultado.Success)
-                return Json(resultado);
-            else
-            {
-                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
-                return Json(resultado);
-            }
-        }
+        
         [Route("/Aluno/Responsavel/Novo")]
         public async Task<IActionResult> Responsavel(AddFiliacaoComando comando)
         {

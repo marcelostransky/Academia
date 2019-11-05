@@ -8,6 +8,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
 {
     public class Matricula : Notifiable
     {
+        private readonly IList<Turma> _turmas;
         public int Id { get; private set; }
         public int IdAluno { get; private set; }
         public Aluno Aluno { get; private set; }
@@ -21,6 +22,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
         public int TotalParcelas { get; private set; }
         public int Ano { get; private set; }
         public DateTime DataIncialPagamento { get; private set; }
+        
         public Guid ChaveRegistro { get; private set; }
 
         public Matricula(
@@ -51,9 +53,13 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             TotalParcelas = totalParcelas;
             ValorDesconto = ObterValorComDesconto(valorDesconto);
             Ano = ano;
+            List<Turma> turmas = new List<Turma>(); 
         }
 
-
+        public void AddAluno(Turma turma)
+        {
+            _turmas.Add(turma);
+        }
         private decimal ObterValorComDesconto(decimal valorDesconto)
         {
             if (PercentualDesconto > 0)

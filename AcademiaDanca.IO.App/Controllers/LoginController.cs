@@ -30,6 +30,7 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Mensagem = "";
             return View();
         }
+       
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Autenticar(string login, string senha)

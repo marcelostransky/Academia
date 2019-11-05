@@ -6,8 +6,6 @@
 
 <div class="content custom-scrollbar ps">
     <div class="doc forms-doc page-layout simple full-width">
-
-
         <!-- HEADER -->
         <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
             <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
@@ -18,49 +16,46 @@
                     <div class="h4">Nova Turma</div>
                 </div>
             </div>
-
         </div>
-
         <div class="page-content">
-
             <div class="tab-pane fade show active resetForm" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
-
                 <div class="card p-6">
                     <div class="row">
                         <div class="col-12">
                             <div class="example">
-
-
                                 <div class="source-preview-wrapper">
                                     <div class="preview">
                                         <div class="preview-elements">
                                             <form id="formTurma">
-
                                                 <div class="form-row">
-                                                    <div class="form-group col-md-12">
+                                                    <div class="form-group col-md-4">
+                                                        <input type="text" class="form-control" id="inputCodigo" name="inputCodigo" placeholder="Código">
+                                                        <label for="inputCodigo" class="col-form-label">Codigo</label>
+
+                                                    </div>
+                                                    <div class="form-group col-md-4">
                                                         <input type="text" class="form-control" id="inputNome" name="inputNome" placeholder="Nome">
                                                         <label for="inputNome" class="col-form-label">Nome</label>
                                                     </div>
-                                                    <div class="form-group col-md-12">
+                                                    <div class="form-group col-md-4">
                                                         <label for="TipoTurma" class="col-form-label">Tipo de turma</label>
                                                         @Html.DropDownList("TipoTurma", null, "", new { @class = "form-control   select" })
 
 
                                                     </div>
-                                                    <div class="form-group col-md-12">
-                                                        <input type="text" class="form-control" id="inputCodigo" name="inputCodigo" placeholder="CPF">
-                                                        <label for="inputCodigo" class="col-form-label">Codigo</label>
-
-                                                    </div>
-                                                    <div class="form-group col-md-12">
+                                                    <div class="form-group col-md-6">
                                                         <label for="Professor" class="col-form-label">Professor</label>
                                                         @Html.DropDownList("Professores", null, "", new { @class = "form-control   select" })
 
+                                                    </div>
+                                                    <div class="form-group col-md-6">
+                                                        <input type="number" class="form-control" id="inputAno" maxlength="4" name="D" placeholder="2019">
+                                                        <label for="inputAno" class="col-form-label">Ano</label>
 
                                                     </div>
-                                                    <div class="form-group col-md-12">
-                                                        <input type="number" class="form-control" id="inputAno" name="inputAno" placeholder="Ano Turma">
-                                                        <label for="inputAno" class="col-form-label">Ano</label>
+                                                    <div class="form-group col-md-6">
+                                                        <input type="text" class="form-control" id="inputValor" name="inputValor" value="0">
+                                                        <label for="inputValor" class="col-form-label">Valor</label>
 
                                                     </div>
 
@@ -68,7 +63,6 @@
 
                                                 <button type="submit" class="btn btn-primary fuse-ripple-ready">Cadastrar</button>
                                             </form>
-
                                         </div>
                                     </div>
                                 </div>
@@ -77,24 +71,32 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
-
     @section Scripts{
         <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
         <script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
         <script src="~/js/Helper/Helper.js"></script>
         <script src="~/js/Helper/CookieHelper.js"></script>
+        <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+
+        <script src="~/Modulo/Mask/maskmoney.js"></script>
         <script>
+            $(document).ready(function () {
+                $("#inputAno").mask("9999");
+                $("#inputValor").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+
+            })
+
+
             $(function () {
-               
-               
+
+
                 var jvalidate = $("#formTurma").validate({
                     ignore: [],
                     rules: {
 
-                       
+
                         inputNome: {
                             required: true,
                             minlength: 6,
@@ -105,14 +107,14 @@
                             required: true,
                             minlength: 2,
 
-                           
+
 
                         },
-                       
+
                         Professores: {
                             required: true
                         },
-                           inputAno: {
+                        inputAno: {
                             required: true
                         }
 
@@ -120,7 +122,7 @@
                     },
                     messages: {
 
-                       
+
                         inputNome: {
                             required: "Informe o nome da turma.",
                             minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
@@ -130,7 +132,7 @@
                         inputCodigo: {
                             required: "Informe o código da turma",
                             minlength: $.validator.format("O nome precisa ter pelo menos {0} characters"),
-                          
+
                         },
                         TipoTurma: {
                             required: "Informe o tipo da turma."
@@ -141,7 +143,9 @@
 
                         },
                         inputAno: {
-                            required: "Informe o ano."
+                            required: "Informe o ano.",
+                            minlength: $.validator.format("Ano precisa ter pelo menos {0} characters"),
+                            maxlength: $.validator.format("Ano não pode ser superior há {0} characters")
 
                         }
 
@@ -154,14 +158,13 @@
                             DesTurma: $("#formTurma #inputNome").val(),
                             IdProfessor: $("#formTurma #Professores").val(),
                             TipoTurmaId: $("#formTurma #TipoTurma").val(),
-                            Ano: $("#formTurma #inputAno").val()
-                           
-
+                            Ano: $("#formTurma #inputAno").val(),
+                            Valor: $("#formTurma #inputValor").val().replace('R$', '').replace('.', ',')
                         }
                         var callback = function (data) {
                             if (JSON.parse(data).success) {
                                 PNotify.success({
-                                    title: ':-)',
+
                                     text: 'Cadastro realizado com sucesso.'
                                 });
                                 document.getElementById("formTurma").reset();
@@ -173,21 +176,16 @@
                                 });
 
                                 PNotify.error({
-                                    title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
                                     text: msg
                                 });
-
-
                             }
                         }
                         var callbackErro = function (data) {
                             PNotify.error({
-                                title: 'Ops! :-(',
-                                text: 'Ocorreu um erro ao processar sua solicitação'
+                                text: `Ocorreu um erro ao processar sua solicitação. Erro [${data.responseText}]`
                             });
 
                         }
-
                         academia.helper.rest.utils.POST("/Turma/Nova/", dataT, callback, callbackErro, $('#loader'));
 
                     }
@@ -195,7 +193,6 @@
             });
         </script>
     }
-
 </div>
 
 

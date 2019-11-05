@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-    [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Ler")]
+    [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Ler", TipoRetorno = "Html")]
     public class TurmaController : Controller
     {
 
@@ -30,6 +30,8 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly ITurmaTipoRepositorio _repositorioTipoTurma;
         private readonly IFuncionarioRepositorio _repositorioFuncionario;
         private readonly DeletarAgendaTurmaManipulador _manipuladorAgendaDeletar;
+        private readonly EditarTurmaManipulador _manipuladorTurmaEditar;
+        private readonly IAcessoRepositorio _acessoRepositorio;
 
 
         public TurmaController(ITurmaRepositorio repositorio,
@@ -39,7 +41,9 @@ namespace AcademiaDanca.IO.App.Controllers
             ISalaRepositorio repositorioSala,
             IAgendaRepositorio repositorioAgenda,
             AgendarTurmaManipulador manipuladorAgenda,
-            DeletarAgendaTurmaManipulador manipuladorAgendaDeletar
+            DeletarAgendaTurmaManipulador manipuladorAgendaDeletar,
+            IAcessoRepositorio acessoReepositorio,
+            EditarTurmaManipulador manipuladorTurmaEditar
             )
         {
             _repositorio = repositorio;
@@ -50,6 +54,8 @@ namespace AcademiaDanca.IO.App.Controllers
             _repositorioAgenda = repositorioAgenda;
             _manipuladorAgenda = manipuladorAgenda;
             _manipuladorAgendaDeletar = manipuladorAgendaDeletar;
+            _manipuladorTurmaEditar = manipuladorTurmaEditar;
+            _acessoRepositorio = acessoReepositorio;
         }
         public IActionResult Index()
         {
@@ -60,8 +66,8 @@ namespace AcademiaDanca.IO.App.Controllers
         {
 
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
-            int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "Sid").Value);
-            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
+            int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
+            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
             var salas = new SelectList(await _repositorioSala.ObterTodosAsync(), "Id", "DesSala");
             var diasSemana = new SelectList(await _repositorioAgenda.ObterTodosDiaSemanaAsync(), "Id", "DiaSemana");
             ViewBag.Turma = turma;
@@ -88,7 +94,7 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         [Route("/Turma/Calendario/Agendamento/Deletar")]
         [HttpDelete]
-        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Deletar")]
+        [PermissaoAcesso(PaginaId = "TURAGE", Verbo = "Excluir", TipoRetorno = "json")]
         public async Task<IActionResult> DeletarAgendamento(int id)
         {
             try
@@ -105,7 +111,7 @@ namespace AcademiaDanca.IO.App.Controllers
         }
         [Route("/Turma/Agendar/Novo")]
         [HttpPost]
-        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar")]
+        [PermissaoAcesso(PaginaId = "TURAGE", Verbo = "Criar", TipoRetorno = "json")]
         public async Task<IActionResult> Novo(CriarAgendaTurmaComando comando)
         {
             try
@@ -127,12 +133,12 @@ namespace AcademiaDanca.IO.App.Controllers
         }
 
         [HttpGet]
-        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Editar")]
+        [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Editar", TipoRetorno = "Html")]
         public async Task<IActionResult> Editar(int id)
         {
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
-            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
+            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
             var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync());
             var professores = (await _repositorioFuncionario.ObterFuncionarioProfessorPorNomeAsync(string.Empty, null));
             ViewBag.TipoTurma = new SelectList(tipoTurma, "Id", "DesTurmaTipo", turma.IdTipoTurma);
@@ -140,7 +146,22 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Turma = turma;
             return View();
         }
+        [HttpPut]
+        [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Editar", TipoRetorno = "json")]
+        public async Task<IActionResult> Editar(EditarTurmaComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorTurmaEditar.ManipuladorAsync(comando);
 
+                return Json(resultado);
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
         [HttpGet]
         [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Ler")]
         public IActionResult Listar()
@@ -148,17 +169,17 @@ namespace AcademiaDanca.IO.App.Controllers
             return View();
         }
 
-        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar")]
+        [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Criar", TipoRetorno = "Html")]
         public async Task<IActionResult> Nova()
         {
-            var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync());
-            var professores = (await _repositorioFuncionario.ObterFuncionarioProfessorPorNomeAsync(string.Empty, null));
+            var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync()).OrderBy(x => x.DesTurmaTipo);
+            var professores = (await _repositorioFuncionario.ObterFuncionarioProfessorPorNomeAsync(string.Empty, null)).OrderBy(x => x.NomeFuncionario);
             ViewBag.TipoTurma = new SelectList(tipoTurma, "Id", "DesTurmaTipo");
             ViewBag.Professores = new SelectList(professores, "IdUsuario", "NomeFuncionario");
             return View();
         }
         [HttpPost]
-        [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Criar", TipoRetorno = "Json")]
+        [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Criar", TipoRetorno = "Json")]
         public async Task<IActionResult> Nova(CriarTurmaComando comando)
         {
             try
@@ -190,30 +211,32 @@ namespace AcademiaDanca.IO.App.Controllers
 
 
         }
-        public async Task<IActionResult> ObterTurmas(FiltroTurmaModel modelFiltro, jQueryDataTableRequestModel request)
+        public async Task<IActionResult> ListarTurmas(FiltroTurmaModel modelFiltro, jQueryDataTableRequestModel request)
         {
             try
             {
                 var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
                 int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
 
-                var lista = (await _repositorio.ObterTodosPorAsync(modelFiltro.IdTurma, modelFiltro.IdProfessor, modelFiltro.IdTurmaTipo, null, perfil.Equals("Professor") ? usuarioId : 0)).AsQueryable();
+                var lista = (await _repositorio.ObterTodosPorAsync(modelFiltro.IdTurma, modelFiltro.IdProfessor, modelFiltro.IdTurmaTipo, modelFiltro.Ano, modelFiltro.Status, perfil.Equals("Professor") ? usuarioId : 0)).AsQueryable();
 
-                if (request.sSearch != null && request.sSearch.Length > 0)
+                if (modelFiltro.TurmaDesc != null && modelFiltro.TurmaDesc.Length > 0)
                 {
-                    lista = lista.Where(x => x.DesTurma.ToUpper().Contains(request.sSearch.ToUpper()));
+                    lista = lista.Where(x => x.DesTurma.ToUpper().Contains(modelFiltro.TurmaDesc.ToUpper()));
                 }
 
                 var model = (from r in lista
                              select new
                              {
+                                 r.Ano,
                                  r.IdTurma,
                                  Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Funcionario/{r.Foto}\">",
                                  r.NomeProfessor,
                                  r.DesTurma,
                                  r.CodTurma,
                                  r.DesTurmaTipo,
-                                 r.Valor,
+                                 valor = $"R$ {r.Valor }",
+                                 status = r.Status ? "<span class=\"badge badge-success\">Ativo</ span> " : "<span class=\"badge badge-danger\">Inativo</ span> ",
                                  acao = ObterMenuAcaoDataTable(r)
 
 
@@ -229,14 +252,18 @@ namespace AcademiaDanca.IO.App.Controllers
             }
 
         }
-
         private object ObterMenuAcaoDataTable(TurmaQueryResultado r)
         {
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            var regras = new RegrasAcessoModel(_acessoRepositorio);
+            var regrasAcessos = regras.ObterListaPermissao(perfil);
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Calendário\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.IdTurma);
+            if (regrasAcessos.FirstOrDefault(x => x.Constante == "TURAGE").Ler)
+                menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Calendário\"> <i class=\"icon-calendar-clock\"></i>    </a>", r.IdTurma);
+
             menu.AppendFormat("<a href =\"#\" onclick=ModalAluno({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.IdTurma);
-            menu.AppendFormat("<a href =\"/Turma/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.IdTurma);
+            if (regrasAcessos.FirstOrDefault(x => x.Constante == "TURMA").Editar)
+                menu.AppendFormat("<a href =\"/Turma/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.IdTurma);
             return menu.ToString();
         }
     }

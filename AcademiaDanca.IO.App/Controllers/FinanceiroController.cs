@@ -105,8 +105,8 @@ namespace AcademiaDanca.IO.App.Controllers
                 throw;
             }
         }
-        [PermissaoAcesso(PaginaId = "MENS", Verbo = "Ler", TipoRetorno = "Html")]
 
+        [PermissaoAcesso(PaginaId = "MENS", Verbo = "Ler", TipoRetorno = "Html")]
         public IActionResult Matricular(Guid id)
         {
             return View();

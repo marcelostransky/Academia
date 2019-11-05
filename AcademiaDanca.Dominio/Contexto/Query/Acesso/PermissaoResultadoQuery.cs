@@ -16,5 +16,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Acesso
         public bool Editar { get; set; }
         public bool Excluir { get; set; }
         public bool Ler { get; set; }
+        public bool Detalhar { get; set; }
     }
 }
