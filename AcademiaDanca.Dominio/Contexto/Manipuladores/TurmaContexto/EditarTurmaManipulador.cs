@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
 {
-   public class EditarTurmaManipulador   :Notifiable,IComandoManipulador<EditarTurmaComando>
+    public class EditarTurmaManipulador : Notifiable, IComandoManipulador<EditarTurmaComando>
     {
         private readonly ITurmaRepositorio _repositorio;
         public EditarTurmaManipulador(ITurmaRepositorio repositorio)
@@ -24,13 +24,15 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
         {
 
             //Criar Entidades
-            var tipoTurma = new TurmaTipo(comando.TipoTurmaId);
+            var tipoTurma = new TurmaTipo(comando.IdTipoTurma);
             var funcionario = new Funcionario(comando.IdProfessor);
-            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Ano, comando.Valor);
+            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Ano, comando.Valor, comando.Status);
 
-            //verificar turma existente
-            if (await _repositorio.CheckTurmaAsync(turma))
+            if ( (comando.Valor == comando.ValorAtual && comando.Status == comando.StatusAtual && comando.IdProfessor == comando.IdProfessorAtual) && await _repositorio.CheckTurmaAsync(turma))
+            {
                 AddNotification("Turma", "A turma informada já está em uso");
+            }
+
 
             //Validar Comando
             comando.Valido();
@@ -46,9 +48,9 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
             }
             //Persistir os dados
 
-            await _repositorio.SalvarAsync(turma);
+            await _repositorio.EditarAsync(turma);
             // Retornar o resultado para tela
-            return new ComandoResultado(true, "Turma cadastrada com sucesso", new
+            return new ComandoResultado(true, "Turma atualizada com sucesso", new
             {
                 Id = 0,
                 Nome = "",

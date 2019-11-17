@@ -55,7 +55,7 @@
                         <input id="inputSearch" type="text" class="form-control" placeholder="Pesquisar" aria-label="Search" />
 
                     </div>
-                   
+
 
                 </div>
                 <div class="col search-wrapper px-2">
@@ -217,6 +217,46 @@
             };
 
             academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
+
+        }
+
+    </script>
+    <script>
+        function Deletar(linha) {
+            var dataT = {
+                id: $(linha).closest('tr').find('td').eq('1').html()
+            }
+
+            var callback = function (data) {
+
+                if (data.success) {
+                    removeLinhaRowIndex(linha, "turma-datatable");
+                    PNotify.success({
+                        text: 'Deletado com sucesso.'
+                    });
+                   
+
+                } else {
+                    var msg = '';
+                    $.each(data.data, function (index, item) {
+                        msg = msg + item.property + ' => ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+                        text: data.message + '|' + msg
+                    });
+
+
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: `Ocorreu um erro ao processar sua solicitação. Erro [${data.responseText}]`
+                });
+
+            }
+
+            academia.helper.rest.utils.DELETE("/Turma/Deletar", dataT, callback, callbackErro, $('#loader'));
 
         }
     </script>

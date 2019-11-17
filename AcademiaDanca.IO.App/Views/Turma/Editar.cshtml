@@ -37,48 +37,70 @@
                                                     <div class="form-row">
                                                         <div class="form-group col-md-4">
                                                             <label for="inputCodigo" class="col-form-label">Codigo</label>
-
+                                                            <input type="hidden" id="CodTurmaAtual" name="CodTurmaAtual" value="@ViewBag.Turma.CodTurma">
                                                             <input type="text" class="form-control" id="inputCodigo" name="inputCodigo" placeholder="Código" value="@ViewBag.Turma.CodTurma">
-                                                            <input type="hidden" id="hdCodigo" name="hdCodigo" value="">
+                                                            <input type="hidden" id="id" name="id" value="@ViewBag.Turma.IdTurma">
 
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="inputNome" class="col-form-label">Nome</label>
 
                                                             <input type="text" class="form-control" id="inputNome" name="inputNome" placeholder="Nome" value="@ViewBag.Turma.DesTurma">
-                                                            <input type="hidden" id="hdNome" name="hdNome" value="@ViewBag.Turma.DesTurma">
+                                                            <input type="hidden" id="DesTurmaAtual" name="DesTurmaAtual" value="@ViewBag.Turma.DesTurma">
                                                             <input type="hidden" id="hdId" name="hdId" value="@ViewBag.Turma.IdTurma">
                                                         </div>
                                                         <div class="form-group col-md-4">
                                                             <label for="TipoTurma" class="col-form-label">Tipo de turma</label>
 
                                                             @Html.DropDownList("TipoTurma", null, "", new { @class = "form-control   select" })
-
+                                                            <input type="hidden" id="IdTipoTurmaAtual" name="IdTipoTurmaAtual" value="@ViewBag.Turma.IdTipoTurma">
 
                                                         </div>
 
                                                         <div class="form-group col-md-6">
                                                             <label for="Professor" class="col-form-label">Professor</label>
                                                             @Html.DropDownList("Professores", null, "", new { @class = "form-control   select" })
+                                                            <input type="hidden" id="IdProfessorAtual" name="IdProfessorAtual" value="@ViewBag.Turma.IdProfessor">
+
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <input type="number" class="form-control" id="inputAno" name="inputAno" placeholder="Ano Turma" value="@ViewBag.Turma.Ano">
                                                             <label for="inputAno" class="col-form-label">Ano</label>
+                                                            <input type="hidden" id="AnoAtual" name="AnoAtual" value="@ViewBag.Turma.Ano">
 
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <input type="text" class="form-control" id="inputValor" name="inputValor" placeholder="Valor" value="@ViewBag.Turma.Valor">
                                                             <label for="inputValor" class="col-form-label">Valor</label>
+                                                            <input type="hidden" id="ValorAtual" name="ValorAtual" value="@ViewBag.Turma.Valor">
 
                                                         </div>
                                                         <div class="form-group col-md-6">
                                                             <label for="inputAno" class="col-form-label">Status</label>
 
                                                             <select id="status" class="form-control">
-                                                                <option value="0">Inativo</option>
-                                                                <option value="1">Ativo</option>
-                                                                <option value="" selected>Status</option>
+                                                                @if (@ViewBag.Turma.Status)
+                                                                {
+                                                                    <option value="0">Inativo</option>
+                                                                    <option value="1" selected>Ativo</option>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <option value="0" selected>Inativo</option>
+                                                                    <option value="1">Ativo</option>
+                                                                }
                                                             </select>
+                                                            @if (@ViewBag.Turma.Status)
+                                                            {
+                                                                <input type="hidden" id="StatusAtual" name="StatusAtual" value="1">
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type="hidden" id="StatusAtual" name="StatusAtual" value="0">
+
+                                                            }
+
                                                         </div>
 
                                                     </div>
@@ -110,11 +132,42 @@
         <script>
             $(document).ready(function () {
                 $("#inputAno").mask("9999");
-                $("#inputValor").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+                $("#inputValor").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "" });
 
             })
         </script>
         <script>
+            function convert(valor) {
+
+                var k, temp;
+                // Loop to make substring
+                for (var i = 0; i < valor.length; i++) {
+
+                    // Getting Unicode value
+                    k = currency.charCodeAt(i);
+
+                    // Checking whether the character
+                    // is of numeric type or not
+                    if (k > 47 && k < 58) {
+
+                        // Making substring
+                        temp = valor.substring(i);
+                        break;
+                    }
+                }
+
+                // If currency is in format like
+                // 458, 656.75 then we used replace
+                // method to replace every ', ' with ''
+                temp = temp.replace(/, /, '');
+
+                // Converting string to float
+                // or double and return
+                return parseFloat(temp);
+
+            }
+
+
             $(function () {
                 var jvalidate = $("#formTurma").validate({
                     ignore: [],
@@ -167,17 +220,26 @@
                     submitHandler: function (form) {
                         var dataT = {
 
-                            Id: 0,
+                            Id: $("#formTurma #id").val(),
                             CodTurma: $("#formTurma #inputCodigo").val(),
                             DesTurma: $("#formTurma #inputNome").val(),
                             IdProfessor: $("#formTurma #Professores").val(),
-                            TipoTurmaId: $("#formTurma #TipoTurma").val(),
-                            Ano: $("#formTurma #inputAno").val()
+                            IdTipoTurma: $("#formTurma #TipoTurma").val(),
+                            Ano: $("#formTurma #inputAno").val(),
 
+                            CodTurmaAtual: $("#formTurma #CodTurmaAtual ").val(),
+                            DesTurmaAtual: $("#formTurma #DesTurmaAtual").val(),
+                            IdTipoTurmaAtual: $("#formTurma #IdTipoTurmaAtual").val(),
+                            AnoAtual: $("#formTurma #AnoAtual").val(),
+                            StatusAtual: $("#formTurma #StatusAtual").val() == '1' ? true : false,
+                            IdProfessorAtual: $("#formTurma #IdProfessorAtual").val(),
+                            Valor: $("#formTurma #inputValor").val().replace('R$', '').replace('.', ','),
+                            ValorAtual: $("#formTurma #ValorAtual").val().replace('R$', '').replace('.', ','),
 
+                            Status: $("#formTurma #status").val() == '1' ? true : false
                         }
                         var callback = function (data) {
-                            if (JSON.parse(data).success) {
+                            if (data.success) {
                                 PNotify.success({
 
                                     text: 'Turma atualizada com sucesso.'
@@ -185,16 +247,12 @@
                                 return false;
                             } else {
                                 var msg = '';
-                                $.each(JSON.parse(data).data, function (index, item) {
-                                    msg = msg + item.property + ' > ' + item.message + '\n';
+                                $.each(data.data, function (index, item) {
+                                    msg = msg + item.property + ' => ' + item.message + '\n';
                                 });
-
                                 PNotify.error({
-
                                     text: msg
                                 });
-
-
                             }
                         }
                         var callbackErro = function (data) {
@@ -204,11 +262,13 @@
 
                         }
 
-                        academia.helper.rest.utils.POST("/Turma/Nova/", dataT, callback, callbackErro, $('#loader'));
+                        academia.helper.rest.utils.PUT("/Turma/Editar/", dataT, callback, callbackErro, $('#loader'));
 
                     }
                 });
             });
+
+
         </script>
     }
 

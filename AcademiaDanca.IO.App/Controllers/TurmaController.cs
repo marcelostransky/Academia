@@ -31,6 +31,7 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly IFuncionarioRepositorio _repositorioFuncionario;
         private readonly DeletarAgendaTurmaManipulador _manipuladorAgendaDeletar;
         private readonly EditarTurmaManipulador _manipuladorTurmaEditar;
+        private readonly DeletarTurmaManipulador _manipuladorTurmaDeletar;
         private readonly IAcessoRepositorio _acessoRepositorio;
 
 
@@ -42,6 +43,7 @@ namespace AcademiaDanca.IO.App.Controllers
             IAgendaRepositorio repositorioAgenda,
             AgendarTurmaManipulador manipuladorAgenda,
             DeletarAgendaTurmaManipulador manipuladorAgendaDeletar,
+            DeletarTurmaManipulador manipuladorTurmaDeletar,
             IAcessoRepositorio acessoReepositorio,
             EditarTurmaManipulador manipuladorTurmaEditar
             )
@@ -55,6 +57,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _manipuladorAgenda = manipuladorAgenda;
             _manipuladorAgendaDeletar = manipuladorAgendaDeletar;
             _manipuladorTurmaEditar = manipuladorTurmaEditar;
+            _manipuladorTurmaDeletar = manipuladorTurmaDeletar;
             _acessoRepositorio = acessoReepositorio;
         }
         public IActionResult Index()
@@ -153,7 +156,6 @@ namespace AcademiaDanca.IO.App.Controllers
             try
             {
                 var resultado = await _manipuladorTurmaEditar.ManipuladorAsync(comando);
-
                 return Json(resultado);
             }
             catch (System.Exception ex)
@@ -161,6 +163,24 @@ namespace AcademiaDanca.IO.App.Controllers
                 Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
                 return Json(ex.Message);
             }
+        }
+        [Route("/Turma/Deletar/")]
+        [HttpDelete]
+        [PermissaoAcesso(PaginaId = "TURMA", Verbo = "Excluir", TipoRetorno = "Json")]
+        public async Task<IActionResult> Deletar(DeletarTurmaComando comando)
+        {
+            try
+            {
+                var resultado = await _manipuladorTurmaDeletar.ManipuladorAsync(comando);
+
+                return Json(resultado);
+            }
+            catch (System.Exception ex)
+            {                                                                   
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+
         }
         [HttpGet]
         [PermissaoAcesso(PaginaId = _paginaId, Verbo = "Ler")]
@@ -264,6 +284,9 @@ namespace AcademiaDanca.IO.App.Controllers
             menu.AppendFormat("<a href =\"#\" onclick=ModalAluno({0})  class=\"btn btn-icon fuse-ripple-ready\" title=\"Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.IdTurma);
             if (regrasAcessos.FirstOrDefault(x => x.Constante == "TURMA").Editar)
                 menu.AppendFormat("<a href =\"/Turma/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar\"> <i class=\"icon-border-color \"></i>    </a>", r.IdTurma);
+            if (regrasAcessos.FirstOrDefault(x => x.Constante == "TURMA").Excluir)
+                menu.Append("<a href =\"#\" onclick=Deletar(this)  class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i>    </a>");
+
             return menu.ToString();
         }
     }

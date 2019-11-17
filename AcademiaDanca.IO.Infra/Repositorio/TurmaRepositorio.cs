@@ -20,15 +20,145 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             _contexto = contexto;
         }
+
+        public async Task<bool> CheckAgendamentoTurmaAsync(int id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", id);
+                var existe = await _contexto
+            .Connection
+            .QueryAsync<int>(@"SELECT Count(1) FROM academia.turma_aluno where
+                                id_turma = @sp_id ;",
+                             parametros,
+                             commandType: CommandType.Text);
+
+                return existe.FirstOrDefault() > 0 ? true : false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public async Task<bool> CheckAlunoTurmaAsync(int id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", id);
+                var existe = await _contexto
+            .Connection
+            .QueryAsync<int>(@"SELECT Count(1) FROM academia.turma_aluno where
+                                id_turma = @sp_id ;",
+                             parametros,
+                             commandType: CommandType.Text);
+
+                return existe.FirstOrDefault() > 0 ? true : false;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public async Task<TurmaQuantitativoQueryResultado> CheckQuantitativoTurmaAsync(int id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", id);
+                var quantitativos = await _contexto
+            .Connection
+            .QueryAsync<TurmaQuantitativoQueryResultado>(@"sp_valida_delete_turma;",
+                             parametros,
+                             commandType: CommandType.StoredProcedure);
+
+                return quantitativos.FirstOrDefault();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<bool> CheckTurmaAsync(Turma turma)
         {
-            var existe = await _contexto
+            try
+            {
+
+                var existe = await _contexto
              .Connection
-             .QueryAsync<int>("SELECT count(1) as total FROM academia.turma where id_turma_tipo = @idTurmaTipo and des_turma =@nome and cod_turma =@codTurma and ano =@ano ;",
+             .QueryAsync<int>(@"SELECT count(1) as total FROM academia.turma 
+                                where id_turma_tipo = @idTurmaTipo and 
+                                des_turma =@nome and 
+                                cod_turma =@codTurma and 
+                                ano =@ano ;",
                               new { idTurmaTipo = turma.TurmaTipo.Id, nome = turma.DesTurma, codTurma = turma.CodTurma, ano = turma.Ano },
                               commandType: CommandType.Text);
 
-            return existe.FirstOrDefault() <= 0 ? false : true;
+                return existe.FirstOrDefault() <= 0 ? false : true;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+        }
+
+        public async Task<int> DeletarAsync(int id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", id);
+                var retorno = await _contexto
+                    .Connection
+                    .ExecuteAsync(@"sp_delete_turma",
+                    parametros,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+
+        public async Task<int> EditarAsync(Turma turma)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+
+                parametros.Add("sp_id", turma.Id);
+                parametros.Add("sp_cod_turma", turma.CodTurma);
+                parametros.Add("sp_des_turma", turma.DesTurma);
+                parametros.Add("sp_id_tipo_turma", turma.TurmaTipo.Id);
+                parametros.Add("sp_id_professor", turma.Professor.Id);
+                parametros.Add("sp_ano", turma.Ano);
+                parametros.Add("sp_valor", turma.Valor);
+                parametros.Add("sp_status", turma.Status);
+                var retorno = await _contexto
+                    .Connection
+                    .ExecuteAsync(@"sp_edit_turma",
+                    parametros,
+                    commandType: System.Data.CommandType.StoredProcedure);
+
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<IEnumerable<AlunoPorNomeQuery>> ObterAlunosPorAsync(int idTurma)
@@ -57,13 +187,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             throw new NotImplementedException();
         }
-
         public Task<IEnumerable<TurmaQueryResultado>> ObterTodosAsync()
         {
             throw new NotImplementedException();
         }
-
-        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0, int? ano = 0,bool? status = null, int? idUsuario = 0)
+        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0, int? ano = 0, bool? status = null, int? idUsuario = 0)
         {
             var parametros = new DynamicParameters();
             parametros.Add("sp_id_turma", idTurma == 0 ? null : idTurma);
@@ -78,12 +206,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             return lista;
 
         }
-
         public Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int ano)
         {
             throw new NotImplementedException();
         }
-
         public async Task<int> SalvarAsync(Turma turma)
         {
             try
@@ -106,7 +232,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
             catch (Exception ex)
             {
-
                 throw;
             }
 
