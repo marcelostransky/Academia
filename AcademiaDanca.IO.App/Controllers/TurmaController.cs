@@ -60,9 +60,9 @@ namespace AcademiaDanca.IO.App.Controllers
             _manipuladorTurmaDeletar = manipuladorTurmaDeletar;
             _acessoRepositorio = acessoReepositorio;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return await Task.Run(() => View());
         }
 
         public async Task<IActionResult> Calendario(int id)
@@ -70,7 +70,7 @@ namespace AcademiaDanca.IO.App.Controllers
 
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
-            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
+            var turma = (await _repositorio.ObterTodosPorAsync(id,  null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
             var salas = new SelectList(await _repositorioSala.ObterTodosAsync(), "Id", "DesSala");
             var diasSemana = new SelectList(await _repositorioAgenda.ObterTodosDiaSemanaAsync(), "Id", "DiaSemana");
             ViewBag.Turma = turma;
@@ -85,8 +85,7 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             try
             {
-                var lista = await _repositorioAgenda.ObterPorAsync(null, idTurma,
-                    null, null, null, null, null);
+                var lista = await _repositorioAgenda.ObterPorAsync(null, idTurma,null, null, null, null, null);
                 return Json(new { success = true, agenda = lista });
             }
             catch (System.Exception ex)
@@ -120,7 +119,6 @@ namespace AcademiaDanca.IO.App.Controllers
             try
             {
                 var resultado = await _manipuladorAgenda.ManipuladorAsync(comando);
-
                 return Json(resultado);
             }
             catch (System.Exception ex)
@@ -141,7 +139,7 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
-            var turma = (await _repositorio.ObterTodosPorAsync(id, null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
+            var turma = (await _repositorio.ObterTodosPorAsync(id,  null, null, null, perfil.Equals("Professor") ? usuarioId : 0)).FirstOrDefault();
             var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync());
             var professores = (await _repositorioFuncionario.ObterFuncionarioProfessorPorNomeAsync(string.Empty, null));
             ViewBag.TipoTurma = new SelectList(tipoTurma, "Id", "DesTurmaTipo", turma.IdTipoTurma);
@@ -172,11 +170,10 @@ namespace AcademiaDanca.IO.App.Controllers
             try
             {
                 var resultado = await _manipuladorTurmaDeletar.ManipuladorAsync(comando);
-
                 return Json(resultado);
             }
             catch (System.Exception ex)
-            {                                                                   
+            {
                 Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
                 return Json(ex.Message);
             }
@@ -194,6 +191,12 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             var tipoTurma = (await _repositorioTipoTurma.ObterTodosAsync()).OrderBy(x => x.DesTurmaTipo);
             var professores = (await _repositorioFuncionario.ObterFuncionarioProfessorPorNomeAsync(string.Empty, null)).OrderBy(x => x.NomeFuncionario);
+            //var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            //int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
+            var salas = new SelectList(await _repositorioSala.ObterTodosAsync(), "Id", "DesSala");
+            var diasSemana = await _repositorioAgenda.ObterTodosDiaSemanaAsync();
+            ViewBag.Dias = diasSemana;
+            ViewBag.Salas = salas;
             ViewBag.TipoTurma = new SelectList(tipoTurma, "Id", "DesTurmaTipo");
             ViewBag.Professores = new SelectList(professores, "IdUsuario", "NomeFuncionario");
             return View();
@@ -205,7 +208,6 @@ namespace AcademiaDanca.IO.App.Controllers
             try
             {
                 var resultado = await _manipulador.ManipuladorAsync(comando);
-
                 return Json(resultado);
             }
             catch (System.Exception ex)
@@ -213,8 +215,6 @@ namespace AcademiaDanca.IO.App.Controllers
                 Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
                 return Json(ex.Message);
             }
-
-
         }
         public async Task<IActionResult> Alunos(int idTurma)
         {
@@ -228,8 +228,6 @@ namespace AcademiaDanca.IO.App.Controllers
                 Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
                 return Json(ex.Message);
             }
-
-
         }
         public async Task<IActionResult> ListarTurmas(FiltroTurmaModel modelFiltro, jQueryDataTableRequestModel request)
         {
@@ -238,7 +236,7 @@ namespace AcademiaDanca.IO.App.Controllers
                 var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
                 int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
 
-                var lista = (await _repositorio.ObterTodosPorAsync(modelFiltro.IdTurma, modelFiltro.IdProfessor, modelFiltro.IdTurmaTipo, modelFiltro.Ano, modelFiltro.Status, perfil.Equals("Professor") ? usuarioId : 0)).AsQueryable();
+                var lista = (await _repositorio.ObterTodosPorAsync(modelFiltro.IdTurma, modelFiltro.IdProfessor, modelFiltro.IdTurmaTipo,  modelFiltro.Status, perfil.Equals("Professor") ? usuarioId : 0)).AsQueryable();
 
                 if (modelFiltro.TurmaDesc != null && modelFiltro.TurmaDesc.Length > 0)
                 {
@@ -248,14 +246,14 @@ namespace AcademiaDanca.IO.App.Controllers
                 var model = (from r in lista
                              select new
                              {
-                                 r.Ano,
+                         
                                  r.IdTurma,
                                  Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Funcionario/{r.Foto}\">",
                                  r.NomeProfessor,
                                  r.DesTurma,
                                  r.CodTurma,
                                  r.DesTurmaTipo,
-                                 valor = $"R$ {r.Valor }",
+                       
                                  status = r.Status ? "<span class=\"badge badge-success\">Ativo</ span> " : "<span class=\"badge badge-danger\">Inativo</ span> ",
                                  acao = ObterMenuAcaoDataTable(r)
 

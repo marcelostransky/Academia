@@ -24,7 +24,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             var lista = await _contexto
                 .Connection
-                .QueryAsync<int>("SELECT Count(1) FROM academia.tipo_telefone where  des_tipo_telefone = @nome;",new {nome = desTipoTelefone}, commandType: CommandType.Text);
+                .QueryAsync<int>("SELECT Count(1) FROM academia.tipo_telefone where  des_tipo_telefone = @nome;", new { nome = desTipoTelefone }, commandType: CommandType.Text);
 
             return lista.FirstOrDefault() > 0 ? true : false;
         }
@@ -33,7 +33,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             var lista = await _contexto
                .Connection
-               .QueryAsync<TipoTelefoneQueryResult>("sp_sel_tipo_telefone",new { sp_id = id }, commandType: CommandType.StoredProcedure);
+               .QueryAsync<TipoTelefoneQueryResult>("sp_sel_tipo_telefone", new { sp_id = id }, commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista.FirstOrDefault();
         }
 
@@ -42,6 +43,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                 .Connection
                 .QueryAsync<TipoTelefoneQueryResult>("SELECT id as Id, des_tipo_telefone as DesTipoTelefone FROM academia.tipo_telefone;", commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista;
         }
 
@@ -56,7 +58,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 .ExecuteAsync("sp_insert_tipo_telefone",
                 parametros,
                 commandType: System.Data.CommandType.StoredProcedure);
-
+            _contexto.Dispose();
             return parametros.Get<int>("sp_id");
         }
     }

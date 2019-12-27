@@ -58,6 +58,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally { _contexto.Dispose(); }
             
         }
     }

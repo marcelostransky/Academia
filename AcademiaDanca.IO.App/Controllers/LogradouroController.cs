@@ -4,7 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.AlunoComando.Entrada;
-using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using Microsoft.AspNetCore.Mvc;
 

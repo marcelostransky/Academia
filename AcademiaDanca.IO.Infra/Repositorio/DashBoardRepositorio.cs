@@ -32,6 +32,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                 .Connection
                 .QueryAsync<QuantitativoAlunoAgendaMensalidadeQueryResultado>("sp_sel_dash_board",  commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista;
         }
     }

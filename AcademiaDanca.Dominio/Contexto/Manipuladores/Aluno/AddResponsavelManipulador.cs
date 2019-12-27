@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
+namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno
 {
     public class AddResponsavelManipulador : Notifiable, IComandoManipulador<AddFiliacaoComando>
     {

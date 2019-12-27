@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-layout carded left-sidebar single-scroll">
+
+    <div class="top-bg bg-primary text-auto"></div>
+
+    <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+        <!-- HEADER -->
+        <div class="header p-6">
+            <span class="h4"> <img style="height:150px" src="~/images/ballet.png" /></span>
+        </div>
+        <!-- / HEADER -->
+
+        <div class="content">
+            <!-- DEMO CONTENT -->
+            <div class="demo-sidebar">
+                <ul class="nav flex-column">
+
+                    <li class="subheader">Menu</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Pagina">Aluno</a>
+                    </li>
+                    <md-divider></md-divider>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Perfil">Endereço</a>
+                    </li>
+                    <md-divider></md-divider>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Admin/Permissao">Familia</a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- / DEMO CONTENT -->
+        </div>
+
+    </aside>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        <!-- HEADER -->
+        <div class="page-header py-6 light-fg">
+
+            <div class="d-flex flex-row align-items-center">
+
+                <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="demo-sidebar">
+                    <i class="icon icon-menu"></i>
+                </button>
+                <span class="h4">Editar Aluno</span>
+
+            </div>
+
+        </div>
+        <!-- / HEADER -->
+
+        <div class="page-content-card">
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar col p-6">
+
+            </div>
+            <div class="demo-content">
+
+
+
+                <div class=" p-6 col-10">
+                    <form id="formAluno">
+                        <div class="form-row">
+                            <div class="form-group col-md-12">
+                                <label for="inputId" class="col-form-label">Id</label>
+                                <input type="text" disabled class="form-control" id="inputId" name="inputId" placeholder="" value="@ViewBag.Id">
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputNome" class="col-form-label">Nome</label>
+                                <input type="text" class="form-control" id="inputNome" name="inputNome">
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputAddress" class="col-form-label">Email</label>
+                                <input type="email" class="form-control" id="inputAddress" name="inputAddress">
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputCpf" class="col-form-label">CPF</label>
+                                <input type="text" class="form-control" id="inputCpf" name="inputCpf">
+
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputData" class="col-form-label">Data Nascimento</label>
+                                <input type="text" len="" class="form-control" id="inputData" name="inputData" placeholder="">
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputTelefone" class="col-form-label">Telefone</label>
+                                <input type="text" class="form-control" id="inputTelefone" name="inputTelefone">
+
+
+                            </div>
+                            <div class="form-group col-md-6">
+                                <label for="inputCelular" class="col-form-label">Celular</label>
+                                <input type="text" len="" class="form-control" id="inputCelular" name="inputCelular">
+
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
+                    </form>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- / PAGE CONTENT WRAPPER -->
+</div>
+

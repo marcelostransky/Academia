@@ -15,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-    [PermissaoAcesso(PaginaId = "MENS", Verbo = "Ler", TipoRetorno = "Html")]
+    //[PermissaoAcesso(PaginaId = "MENS", Verbo = "Ler", TipoRetorno = "Html")]
 
     public class FinanceiroController : Controller
     {
@@ -36,8 +36,8 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
-        [PermissaoAcesso(PaginaId = "MENS", Verbo = "Criar", TipoRetorno = "json")]
 
+        [PermissaoAcesso(PaginaId = "MENS", Verbo = "Criar", TipoRetorno = "json")]
         public async Task<IActionResult> RegistrarPagamento(RegistrarPagamentoMensalidadeComando comando)
         {
             var resultado = await _registrarManipulador.ManipuladorAsync(comando);
@@ -92,7 +92,7 @@ namespace AcademiaDanca.IO.App.Controllers
                                  total = r.Valor - r.Desconto,
                                  dataVencimento = r.DataVencimento.ToShortDateString(),
                                  r.Desconto,
-                                 Pago = r.Pago ? $"<span class=\"badge badge-success\"> Pago - {r.DataVencimento.ToShortDateString()} </ span > " : " <span class=\"badge badge-danger\"> Pendente</ span >",
+                                 Pago = r.Pago ? $"<span class=\"badge badge-success\"> Pago - {Convert.ToDateTime(r.DataPagamento).ToShortDateString()} </ span > " : " <span class=\"badge badge-danger\"> Pendente</ span >",
                                  acao = ObterMenuAcaoDataTable(r)
                              })
                                 .DataTableResponse(request);

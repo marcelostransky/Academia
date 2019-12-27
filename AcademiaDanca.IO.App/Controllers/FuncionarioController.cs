@@ -22,7 +22,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-    [PermissaoAcesso(PaginaId = "FUNC", Verbo = "Ler", TipoRetorno = "Html")]
+    //[PermissaoAcesso(PaginaId = "FUNC", Verbo = "Ler", TipoRetorno = "Html")]
     public class FuncionarioController : Controller
     {
         const string _paginaId = "FUNC";

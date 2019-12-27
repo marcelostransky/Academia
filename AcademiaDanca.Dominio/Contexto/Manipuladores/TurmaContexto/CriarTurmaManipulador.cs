@@ -5,6 +5,7 @@ using AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using FluentValidator;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
@@ -12,9 +13,11 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
     public class CriarTurmaManipulador : Notifiable, IComandoManipulador<CriarTurmaComando>
     {
         private readonly ITurmaRepositorio _repositorio;
-        public CriarTurmaManipulador(ITurmaRepositorio repositorio)
+        private readonly IAgendaRepositorio _repositorioAgenda;
+        public CriarTurmaManipulador(ITurmaRepositorio repositorio, IAgendaRepositorio repositorioAgenda)
         {
             _repositorio = repositorio;
+            _repositorioAgenda = repositorioAgenda;
         }
         public async Task<IComandoResultado> ManipuladorAsync(CriarTurmaComando comando)
         {
@@ -22,7 +25,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
             //Criar Entidades
             var tipoTurma = new TurmaTipo(comando.TipoTurmaId);
             var funcionario = new Funcionario(comando.IdProfessor);
-            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Ano, comando.Valor, true);
+            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, true);
 
             //verificar turma existente
             if (await _repositorio.CheckTurmaAsync(turma))
@@ -42,7 +45,18 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
             }
             //Persistir os dados
 
-            await _repositorio.SalvarAsync(turma);
+            var turmaId = await _repositorio.SalvarAsync(turma);
+
+            //Persistir os dados de agendamento
+
+            var listaDia = await _repositorioAgenda.ObterTodosDiaSemanaAsync();
+
+            foreach (var item in comando.Agendamentos)
+            {
+                var agenda = new Agenda(0, item.Hora, new Turma(turmaId),
+                    new DiaSemana(listaDia.FirstOrDefault(x => x.DiaSemana == item.Dia).Id), new Sala(item.Sala));
+                await _repositorioAgenda.SalvarAsync(agenda);
+            }
             // Retornar o resultado para tela
             return new ComandoResultado(true, "Turma cadastrada com sucesso", new
             {

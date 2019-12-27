@@ -1,0 +1,390 @@
+﻿@{
+    ViewData["Title"] = "Novo Aluno";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content custom-scrollbar ps">
+    <div id="e-commerce-product" class="page-layout simple tabbed">
+        <!-- HEADER -->
+        <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
+            <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                <div class="logo-icon mr-3 mt-1">
+                    <i class="icon-account-location s-6"></i>
+                </div>
+                <div class="logo-text">
+                    <div class="h4">  Novo Aluno</div>
+                </div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="page-content">
+
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                <li class="nav-item">
+                    <a class="nav-link btn active" id="basic-info-tab" data-toggle="tab" href="#basic-info-tab-pane" role="tab" aria-controls="basic-info-tab-pane" aria-expanded="true">Básico</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn " id="foto-info-tab" data-toggle="tab" href="#foto-tab-pane" role="tab" aria-controls="foto-tab-pane">Foto</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link btn" id="logradouro-tab" data-toggle="tab" href="#logradouro-tab-pane" role="tab" aria-controls="logradouro-tab-pane">Logradouro</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link btn" id="filiacao-tab" data-toggle="tab" href="#filiacao-tab-pane" role="tab" aria-controls="filiacao-tab-pane">Filiação</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link btn" id="turma-tab" data-toggle="tab" href="#turma-tab-pane" role="tab" aria-controls="turma-tab-pane">Turma</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn" id="matricula-tab" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <input type="hidden" id="hiddenIdAluno" value="" />
+                <input type="hidden" id="hiddenHashAluno" value="@ViewBag.Id" />
+                <div class="tab-pane fade show active" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
+                    <div class="card p-6">
+                        <form id="formAluno">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label for="inputId" class="col-form-label">Id</label>
+                                    <input type="text" disabled class="form-control" id="inputId" name="inputId" placeholder="" value="@ViewBag.Id">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputNome" class="col-form-label">Nome</label>
+                                    <input type="text" class="form-control" id="inputNome" name="inputNome">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputTelefone" class="col-form-label">Telefone</label>
+                                    <input type="text" class="form-control" id="inputTelefone" name="inputTelefone">
+
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputCelular" class="col-form-label">Celular</label>
+                                    <input type="text" len="" class="form-control" id="inputCelular" name="inputCelular">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputAddress" class="col-form-label">Email</label>
+                                    <input type="email" class="form-control" id="inputAddress" name="inputAddress">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputCpf" class="col-form-label">CPF</label>
+                                    <input type="text" class="form-control" id="inputCpf" name="inputCpf">
+
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputData" class="col-form-label">Data Nascimento</label>
+                                    <input type="text" len="" class="form-control" id="inputData" name="inputData" placeholder="">
+
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                        </form>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="foto-tab-pane" role="tabpanel" aria-labelledby="foto-info-tab">
+                    <div class="card p-6">
+                        <form id="formAlunoFoto" style="display:none" class="invisible form" method="post">
+                            <div class="col-xl-11">
+
+                                <div class="form-row">
+                                    <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/Aluno/profile.jpg"></div>
+
+                                    <div class="form-group col-md-5">
+                                        <input type="file" class="form-control" id="file" name="file">
+
+                                    </div>
+                                    <div class="col-sm-2" style="margin-top:30px">
+                                        <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </form>
+                        <div class="base invisible col-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="logradouro-tab-pane" role="tabpanel" aria-labelledby="logradouro-tab-pane">
+                    <div class="card p-6">
+
+                        <form id="formLogradouro" style="display:none" class="invisible form formReset">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputCep" class="col-form-label">Cep</label>
+                                    <input type="text" onfocusout="BuscaCep(this)" class="form-control" id="inputCep" name="inputCep" placeholder="">
+
+                                </div>
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <label class="col-form-label">Rua</label>
+                                    <input type="text" class="form-control" id="inputRua" name="inputRua" placeholder="">
+
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="inputNumero" class="col-form-label">Nº</label>
+                                    <input type="text" class="form-control" id="inputNumero" name="inputNumero" placeholder="">
+
+                                </div>
+
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-10">
+                                    <label for="inputComplemento" class="col-form-label">Complemento</label>
+                                    <input type="text" class="form-control" id="inputComplemento" name="inputComplemento" placeholder="">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputBairro" class="col-form-label">Bairro</label>
+                                    <input type="text" class="form-control" id="inputBairro" name="inputBairro" placeholder="">
+
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label for="inputUF" class="col-form-label">Estado</label>
+                                    @Html.DropDownList("Estados", null, "", new { @class = "form-control   select" })
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputCidade" class="col-form-label">Cidade</label>
+                                    <input type="text" class="form-control" id="inputCidade" name="inputCidade" placeholder="">
+
+                                </div>
+
+                            </div>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                        </form>
+                        <div class="base invisible col-md-12" style="display:none">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="filiacao-tab-pane" role="tabpanel" aria-labelledby="filiacao-tab-pane">
+                    <div class="card p-6">
+                        <form id="formResponsavel" style="display:none" class="invisible form formReset">
+
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputResponsavel" class="col-form-label">Responsavel</label>
+                                    <input type="text" class="form-control" id="inputResponsavel" name="inputResponsavel">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputDocumentoResponsavel" class="col-form-label">Cpf</label>
+                                    <input type="text" class="form-control" id="inputDocumentoResponsavel" name="inputDocumentoResponsavel">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputEmailResponsavel" class="col-form-label">Email</label>
+                                    <input type="text" class="form-control" id="inputEmailResponsavel" name="inputEmailResponsavel">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputTelefoneResponsavel" class="col-form-label">Telefone</label>
+                                    <input type="text" class="form-control telefone" id="inputTelefoneResponsavel" name="inputTelefoneResponsavel">
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="inputUF" class="col-form-label">Tipo Filiação</label>
+                                    @Html.DropDownList("TipoFiliacao", null, "Selecione um tipo", new { @class = "form-control   select" })
+
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                        </form>
+                        <div class="base invisible col-md-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="turma-tab-pane" role="tabpanel" aria-labelledby="turma-tab-pane">
+                    <div class="card p-6">
+                        <form id="formTurma" style="display:none" class="invisible form formReset">
+
+                            <div class="form-row">
+                                <div class="form-group col-md-5">
+                                    <label for="inputUF" class="col-form-label">Turma</label>
+                                    @Html.DropDownList("Turmas", null, "Selecione uma Turma", new { @class = "form-control   select" })
+
+                                </div>
+                                <div class="form-group" col-md-5>
+                                    <button type="submit" class="btn btn-primary fuse-ripple-ready">Adicionar</button>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="base invisible col-md-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                       
+                                        <p class="card-text">Informe os dados básico do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                    <hr />
+                    <div id="dadosTurmas" class="card invisible">
+                        <table id="tb_turma" class="table dataTable ">
+                            <thead>
+                                <tr>
+                                    <td>Id</td>
+                                    <td>Código</td>
+                                    <td>Curso</td>
+                                    <td>Professor</td>
+                                    <td>Valor</td>
+                                    <td>Ação</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="matricula-tab-pane" role="tabpanel" aria-labelledby="matricula-tab-pane">
+                    <div class="card p-6">
+                        <form id="formMatricula" style="display:none" class="invisible form formReset">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
+                                    <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula" value="0">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
+                                    <input type="text" class="form-control" id="inputDescontoMatricula" name="inputDescontoMatricula" value="0">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputValorParcela" class="col-form-label">Valor Parcelas</label>
+                                    <input type="text" class="form-control" id="inputValorParcela" name="inputValorParcela">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputNome" class="col-form-label">Desconto Parcelas</label>
+                                    <input type="text" class="form-control" id="inputDescontoParcela" name="inputDescontoParcela" value="0">
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputTotalParcelas" class="col-form-label">Total Parcelas</label>
+                                    <select class="form-control" id="inputTotalParcelas" name="inputTotalParcelas">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                        <option>6</option>
+                                        <option>7</option>
+                                        <option>8</option>
+                                        <option>9</option>
+                                        <option>10</option>
+                                        <option>11</option>
+                                        <option>12</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputDiaVencimento" class="col-form-label">Dia Vencimento</label>
+                                    <select class="form-control" id="inputDiaVencimento" name="inputDiaVencimento">
+                                        <option>1</option>
+                                        <option>5</option>
+                                        <option>10</option>
+                                        <option>15</option>
+                                        <option>20</option>
+                                        <option>25</option>
+
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputMesVencimento" class="col-form-label">Mes Início de Pagamento</label>
+                                    @Html.DropDownList("Mes", null, "Selecione um mês", new { @class = "form-control   select" })
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputVigencia" class="col-form-label">Ano/Vigencia</label>
+                                    <input type="text" class="form-control" id="inputVigencia" name="inputVigencia">
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                        </form>
+                        <div class="base invisible col-12">
+                            <center style="margin-top: 5%">
+                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
+
+                                    <div class="card-body">
+                                        <h4 class="card-title">Ops! :-(</h4>
+                                        <p class="card-text">Informe os dados base do aluno.</p>
+                                    </div>
+                                </div>
+                            </center>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+<script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
+<script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
+<script src="~/js/Helper/Helper.js"></script>
+<script type="text/javascript" src="/js/apps/e-commerce/product/product.js"></script>
+<script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+<script src="~/Modulo/Mask/maskmoney.js"></script>
+<script src="~/js/Helper/Tabela.js"></script>
+<script src="~/js/apps/Aluno/Pagina/NovoAluno.js"></script>
+}

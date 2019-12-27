@@ -32,12 +32,7 @@ function MontarDataTableTurma() {
             "bServerSide": true,
             "sAjaxSource": Url(),
             "aoColumns": [
-                {
-                    "sTitle": "Ano",
-                    "mDataProp": "ano",
-                    "bSortable": true
-
-                },
+                
                 {
                     "sTitle": "Id",
                     "mDataProp": "idTurma",
@@ -58,10 +53,7 @@ function MontarDataTableTurma() {
                     "sTitle": "Tipo",
                     "mDataProp": "desTurmaTipo"
                 },
-                {
-                    "sTitle": "Valor",
-                    "mDataProp": "valor"
-                },
+
                 {
                     "sTitle": "Status",
                     "mDataProp": "status"

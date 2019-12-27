@@ -31,7 +31,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                       .QueryAsync<int>("SELECT count(1)  FROM academia.usuario_funcionario_papel where  id_papel =@sp_id ;",
                       parametros,
                       commandType: System.Data.CommandType.Text)).FirstOrDefault();
-
+                _contexto.Dispose();
                 return total > 0;
             }
             catch (Exception ex)
@@ -53,13 +53,17 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                       .QueryAsync<int>("SELECT count(1)  FROM academia.pagina where  des_pagina = @sp_descricao and constante = @sp_constante ;",
                       parametros,
                       commandType: System.Data.CommandType.Text)).FirstOrDefault();
-
+                _contexto.Dispose();
                 return total > 0;
             }
             catch (Exception ex)
             {
 
                 throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
             }
         }
 
@@ -87,6 +91,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
 
         public async Task<bool> CheckPermissaoAsync(int? paginaId, int? perfilId)
@@ -108,6 +116,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
 
                 throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
             }
         }
 
@@ -136,6 +148,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
 
         public async Task<bool> DeletarPerfilAsync(int perfilId)
@@ -157,6 +173,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
 
                 throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
             }
         }
 
@@ -180,6 +200,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
 
         public async Task<int> EditaPaginaAsync(Pagina pagina)
@@ -202,6 +226,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
 
                 throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
             }
         }
 
@@ -230,6 +258,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
 
         public Task<int> EditarAsync(Pagina pagina)
@@ -255,6 +287,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
 
         public async Task<int> ObterIdPorConstante(string constante)
@@ -272,6 +308,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
 
                 throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
             }
            
         }
@@ -292,6 +332,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
         public async Task<IEnumerable<PerfilResultadoQuery>> ObterPerfisAsync()
         {
@@ -310,6 +355,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 var msg = ex.Message;
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
 
         public async Task<IEnumerable<PermissaoResultadoQuery>> ObterPermissaosAsync(string paginaId, string perfilId)
@@ -349,6 +399,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw new Exception(ex.Message);
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
 
         public List<PermissaoResultadoQuery> ObterPermissaosAsync(string perfil)
@@ -381,6 +436,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw new Exception(ex.Message);
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
         public async Task<IEnumerable<string>> ObterConstanteMenuAsync(string perfilId)
         {
@@ -409,6 +469,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw new Exception(ex.Message);
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
 
 
@@ -434,6 +499,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
 
         public async Task<int> SalvarPerfilAsync(Perfil perfil)
@@ -457,6 +527,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
 
         public async Task<int> SalvarPermissaoAsync(Permissao permissao)
@@ -484,6 +559,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
 
         public async Task<IEnumerable<AcaoResultadoQuery>> ObterAcaoPerfilAsync(string perfilId)
@@ -514,6 +594,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw new Exception(ex.Message);
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
     }
 }

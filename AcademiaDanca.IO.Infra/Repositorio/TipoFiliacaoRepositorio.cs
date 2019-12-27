@@ -25,7 +25,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
               .Connection
               .QueryAsync<int>("SELECT Count(1) FROM academia.tipo_filiacao where  des_tipo_filiacao = @nome;", new { nome = desTipoFiliacao }, commandType: CommandType.Text);
-
+            _contexto.Dispose();
             return lista.FirstOrDefault() > 0 ? true : false;
         }
 
@@ -34,6 +34,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
               .Connection
               .QueryAsync<TipoFiliacaoQueryResultado>("sp_sel_tipo_filiacao", new { sp_id = id }, commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista.FirstOrDefault();
         }
 
@@ -42,6 +43,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                .Connection
                .QueryAsync<TipoFiliacaoQueryResultado>("SELECT id as Id, des_tipo_filiacao as DesTipoFiliacao FROM academia.tipo_filiacao;", commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista;
         }
 
@@ -56,7 +58,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 .ExecuteAsync("sp_insert_tipo_Filiacao",
                 parametros,
                 commandType: System.Data.CommandType.StoredProcedure);
-
+            _contexto.Dispose();
             return parametros.Get<int>("sp_id");
         }
     }

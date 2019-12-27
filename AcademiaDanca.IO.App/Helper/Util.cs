@@ -39,7 +39,7 @@ namespace AcademiaDanca.IO.App.Helper
 
             return filename;
         }
-
+       
         public string ObterCaminhoArquivo(string nomeArquivo, string diretorio)
         {
             return _environment.WebRootPath + $"\\images\\avatars\\{diretorio}\\{nomeArquivo}";

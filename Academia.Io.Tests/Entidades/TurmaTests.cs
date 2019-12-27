@@ -27,7 +27,7 @@ namespace Academia.Io.Tests.Entidades
             _turmaTipo = new TurmaTipo(0, "Dança");
             _professor = new Funcionario(0, nome, email, cpf, dataNascimento);
            
-            _turma = new Turma(0, "Turma A","", _professor, _turmaTipo, _ano, 156.96, true);
+            _turma = new Turma(0, "Turma A","", _professor, _turmaTipo, true);
             _turma.AddNotifications(nome);
             _turma.AddNotifications(email);
             _turma.AddNotifications(cpf);

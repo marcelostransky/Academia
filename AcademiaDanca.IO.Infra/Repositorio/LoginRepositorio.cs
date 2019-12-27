@@ -26,6 +26,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 .QueryAsync<AutenticarFuncionarioQueryResultado>("sp_sel_usuario_autenticado", 
                                                         new { sp_login = credencial.Login, sp_senha = credencial.Senha }, 
                                                         commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return usuarioAutenticado.FirstOrDefault();
         }
 
@@ -34,6 +35,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                 .Connection
                 .QueryAsync<int>("SELECT Count(1) FROM academia.usuario where  login  = @nome;", new { nome = login }, commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista.FirstOrDefault() > 0 ? true : false;
         }
 

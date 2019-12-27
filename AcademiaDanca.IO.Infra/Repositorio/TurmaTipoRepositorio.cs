@@ -29,6 +29,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                 .Connection
                 .QueryAsync<TurmaTipoQueryResultado>("SELECT id As Id, des_turma_tipo as DesTurmaTipo FROM academia.turma_tipo  where status = 1;", commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista;
         }
 

@@ -24,7 +24,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
               .Connection
               .QueryAsync<int>("SELECT count(1) FROM academia.funcionario where cpf = @cpf;", new { cpf = cpf }, commandType: CommandType.Text);
-
+            _contexto.Dispose();
             return lista.FirstOrDefault() > 0 ? true : false;
         }
 
@@ -33,7 +33,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
              .Connection
              .QueryAsync<int>("SELECT count(1) FROM academia.funcionario where email = @email;", new { email }, commandType: CommandType.Text);
-
+            _contexto.Dispose();
             return lista.FirstOrDefault() > 0 ? true : false;
         }
 
@@ -54,7 +54,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                     .ExecuteAsync("sp_edit_funcionario",
                     parametros,
                     commandType: System.Data.CommandType.StoredProcedure);
-
+                _contexto.Dispose();
                 return editado;
             }
             catch (Exception ex)
@@ -76,7 +76,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                   .ExecuteAsync("sp_edit_foto_funcionario",
                   parametros,
                   commandType: System.Data.CommandType.StoredProcedure);
-
+            _contexto.Dispose();
             return editado;
         }
 
@@ -103,7 +103,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw ex;
             }
-           
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
         public async Task<FuncioanrioQueryPorNomeResultado> ObterPorAsync(int id)
         {
@@ -113,6 +117,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
            .Connection
            .QueryAsync<FuncioanrioQueryPorNomeResultado>("sp_sel_funcionario", parametros, commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista.FirstOrDefault();
         }
 
@@ -121,6 +126,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
              .Connection
              .QueryAsync<FuncioanrioQueryPorNomeResultado>("sp_sel_funcionario", new { sp_nome = nome, sp_id = 0 }, commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista;
         }
         public async Task<IEnumerable<FuncioanrioQueryPorNomeResultado>> ObterFuncionarioProfessorPorNomeAsync(string nome, int? id)
@@ -128,6 +134,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
              .Connection
              .QueryAsync<FuncioanrioQueryPorNomeResultado>("sp_sel_professor", new { sp_nome = nome, sp_id = id }, commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista;
         }
         public Task<IEnumerable<FuncioanrioQueryPorNomeResultado>> ObterTodosAsync()
@@ -158,7 +165,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 .ExecuteAsync("sp_insert_funcionario",
                 parametros,
                 commandType: System.Data.CommandType.StoredProcedure);
-
+            _contexto.Dispose();
             return parametros.Get<int>("sp_status");
         }
 
@@ -172,7 +179,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                                 Join academia.papel as P On UFP.id_papel = P.id
                                 Join academia.turma_professor as PO on F.id = PO.id_funcionario
                                 Where  ufp.id_papel = 4 and F.id = @FuncionarioId;", new { FuncionarioId = id }, commandType: CommandType.Text);
-
+            _contexto.Dispose();
             return permitido.FirstOrDefault() > 0;
         }
     }

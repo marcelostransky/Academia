@@ -34,15 +34,33 @@
                 <div class="col search-wrapper px-2">
 
                     <div class="input-group">
-                        <span class="input-group-btn">
-                            <button id="pesquisarAlunoBtn" onclick="MontarDataTable()"  type="button" class="btn btn-icon">
-                                <i class="icon icon-magnify"></i>
-                            </button>
-                        </span>
-                        <input id="inputPequisarAluno"  type="text" class="form-control" placeholder="Pesquisar" aria-label="Search" />
+                        <select id="status" class="form-control">
+                            <option value="0">Inativo</option>
+                            <option value="1">Ativo</option>
+                            <option value="" selected>Status</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="col search-wrapper px-2">
+
+                    <div class="input-group-btn">
+                        <input id="inputPequisarAluno" type="text" class="form-control" placeholder="Pesquisar" aria-label="Search" />
+
+
                     </div>
 
                 </div>
+                <div class="col search-wrapper px-2">
+                    <span class="input-group-btn">
+                        <button id="pesquisarAlunoBtn" onclick="MontarDataTable()" type="button" class="btn btn-icon">
+                            <i class="icon icon-magnify"></i>
+                        </button>
+                    </span>
+
+                </div>
+
                 <!-- / SEARCH -->
 
                 <div class="col-auto">
@@ -73,6 +91,7 @@
     <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
     <script src="~/js/apps/Aluno/DataTable/aluno.js"></script>
+    <script></script>
 
 }
 

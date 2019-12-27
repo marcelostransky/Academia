@@ -25,11 +25,18 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
              .Connection
              .QueryAsync<int>("SELECT Count(1) FROM academia.agenda where hora =@hora and id_sala =@idSala and id_dia_semana = @idDia;", new { hora = agenda.Hora, idSala = agenda.Sala.Id, idDia = agenda.DiaSemana.Id }, commandType: CommandType.Text);
-
+            _contexto.Dispose();
             return lista.FirstOrDefault() > 0 ? true : false;
 
         }
-
+        public async Task<int> ObterIdDiaSemana(string dia)
+        {
+            var id = await _contexto
+            .Connection
+            .QueryAsync<int>(" SELECT id FROM academia.dia_semana where des_dia_semana = @dia;", new { dia }, commandType: CommandType.Text);
+            _contexto.Dispose();
+            return id.FirstOrDefault();
+        }
         public Task<int> EditarAsync(Agenda agenda)
         {
             throw new NotImplementedException();
@@ -44,7 +51,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             throw new NotImplementedException();
         }
-        public async Task<IEnumerable<AgendaQueryResultado>> ObterPorAsync(int? id, int? idTurma, int? idSala, int? idDia,int? idProfessor,int? idTurmaTipo,string hora)
+        public async Task<IEnumerable<AgendaQueryResultado>> ObterPorAsync(int? id, int? idTurma, int? idSala, int? idDia, int? idProfessor, int? idTurmaTipo, string hora)
         {
             var parametros = new DynamicParameters();
             parametros.Add("sp_id", id);
@@ -57,6 +64,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                 .Connection
                 .QueryAsync<AgendaQueryResultado>("sp_sel_agenda", parametros, commandType: CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista;
         }
         public Task<IEnumerable<AgendaQueryResultado>> ObterTodosAsync()
@@ -69,6 +77,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
           .Connection
           .QueryAsync<DiaQueryResultado>("SELECT id as Id,des_dia_semana as DiaSemana,sgl_dia_semana as DiaSemanaSigla FROM academia.dia_semana;", commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista;
         }
 
@@ -86,33 +95,33 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 .ExecuteAsync("sp_insert_agenda",
                 parametros,
                 commandType: System.Data.CommandType.StoredProcedure);
-
+            _contexto.Dispose();
             return parametros.Get<int>("sp_id");
         }
 
         public async Task<int> DeletarAsync(int id)
         {
             var parametros = new DynamicParameters();
-          
+
             parametros.Add("sp_id", id);
-           
+
 
             var deletado = await _contexto
                 .Connection
                 .ExecuteAsync("delete from academia.agenda where id = @sp_id",
                 parametros,
                 commandType: System.Data.CommandType.Text);
-
+            _contexto.Dispose();
             return deletado;
         }
 
         public async Task<IEnumerable<AgendaQueryResultado>> ObterCalendarioPorDiaSemanaAsync(string diaSemana)
         {
             var parametros = new DynamicParameters();
-           
+
             parametros.Add("sp_dia_semana", diaSemana);
-            
-           
+
+
             var lista = await _contexto
                 .Connection
                 .QueryAsync<AgendaQueryResultado>(@"SELECT 
@@ -160,6 +169,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
 
 ", parametros, commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista;
         }
     }

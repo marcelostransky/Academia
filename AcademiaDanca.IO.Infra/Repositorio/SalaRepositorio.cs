@@ -33,6 +33,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                .Connection
                .QueryAsync<SalaQueyResultado>("SELECT id as Id, des_sala as DesSala FROM academia.sala  where status = 1;", commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista;
         }
 

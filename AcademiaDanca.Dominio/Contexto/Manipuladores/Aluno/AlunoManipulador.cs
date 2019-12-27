@@ -6,7 +6,7 @@ using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using FluentValidator;
 using System.Threading.Tasks;
 
-namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
+namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno
 {
     public class AlunoManipulador : Notifiable, IComandoManipulador<CriarAlunoComando>
     {
@@ -18,10 +18,21 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
         public async Task<IComandoResultado> ManipuladorAsync(CriarAlunoComando comando)
         {
 
-            //Valiadar vo
             var email = new Vo.Email(comando.Email);
+            ////Ckeck Email
+            //if (!string.IsNullOrEmpty(comando.Email) && (await _repositorio.CheckEmailAsync(comando.Email)))
+            //    AddNotification("Email", "Email informado já está em uso no sistema");
+            //else
+            //    AddNotifications(new Vo.Email(comando.Email).Notifications);
+
+            ////Check Cpf
+            //if (!string.IsNullOrEmpty(comando.Cpf) && (await _repositorio.CheckCpfAsync(comando.Cpf)))
+            //    AddNotification("CPF", "Cpf informado não é válido");
+            //else
+            //    AddNotifications(new Vo.Email(comando.Email).Notifications);
+
             //Criar Entidade
-            var aluno = new Aluno(comando.Id, comando.Nome, comando.DataNascimento, null, email, comando.UifId, comando.Telefone, comando.Celular, comando.Foto);
+            var aluno = new AcademiaDanca.Dominio.Contexto.Entidade.Aluno(comando.Id, comando.Nome, comando.DataNascimento, null, email, comando.UifId, comando.Telefone, comando.Celular, comando.Foto, null);
 
             //Validar Comando
             comando.Valido();

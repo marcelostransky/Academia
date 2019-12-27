@@ -53,22 +53,39 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
 
         }
         public async Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno)
         {
-            var parametros = new DynamicParameters();
-            parametros.Add("sp_id_aluno", turmaAluno.IdAluno);
-            parametros.Add("sp_id_turma", turmaAluno.IdTurma);
-            var existe = (await _contexto
-                  .Connection
-                  .QueryAsync<int>("SELECT Count(1) FROM academia.turma_aluno where id_aluno = @sp_id_aluno and id_turma = @sp_id_turma;",
-                  parametros,
-                  commandType: System.Data.CommandType.Text)).FirstOrDefault();
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_aluno", turmaAluno.IdAluno);
+                parametros.Add("sp_id_turma", turmaAluno.IdTurma);
+                var existe = (await _contexto
+                      .Connection
+                      .QueryAsync<int>("SELECT Count(1) FROM academia.turma_aluno where id_aluno = @sp_id_aluno and id_turma = @sp_id_turma;",
+                      parametros,
+                      commandType: System.Data.CommandType.Text)).FirstOrDefault();
 
-            return existe > 0;
+                return existe > 0;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
-
         public async Task<int> DeletarTurmaAluno(TurmaAluno turmaAluno)
         {
             try
@@ -90,8 +107,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
-
         public async Task<int> EditarFotoAsync(Aluno aluno)
         {
             var parametros = new DynamicParameters();
@@ -103,7 +123,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                   .ExecuteAsync("sp_edit_foto_aluno",
                   parametros,
                   commandType: System.Data.CommandType.StoredProcedure);
-
+            _contexto.Dispose();
             return editado;
         }
 
@@ -122,18 +142,70 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             throw new NotImplementedException();
         }
 
-        public Task<Aluno> ObterPorAsync(int id)
+        public async Task<AlunoSimplificadoQuery> ObterPorAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = @"SELECT aluno.id as AlunoId,
+                        aluno.nome as AlunoNome,
+                        aluno.email as AlunoEmail,
+                        aluno.cpf as AlunoCpf,
+                        aluno.data_nascimento as AlunodataNascimento,
+                        aluno.uif_id as AlunoGuid,
+                        aluno.telefone as AlunoTelefone,
+                        aluno.celular as AlunoCelular
+                        FROM academia.aluno where aluno.id = @id;";
+                var parametros = new DynamicParameters();
+                parametros.Add("id", id);
+                return (await _contexto.Connection.QueryAsync<AlunoSimplificadoQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
-        public Task<Aluno> ObterPorAsync(Guid uifId)
+        public async Task<AlunoSimplificadoQuery> ObterPorAsync(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var query = @"SELECT aluno.id as AlunoId,
+                        aluno.nome as AlunoNome,
+                        aluno.email as AlunoEmail,
+                        aluno.cpf as AlunoCpf,
+                        aluno.data_nascimento as AlunodataNascimento,
+                        aluno.uif_id as AlunoGuid,
+                        aluno.telefone as AlunoTelefone,
+                        aluno.celular as AlunoCelular
+                        FROM academia.aluno where aluno.uif_id = @id;";
+                var parametros = new DynamicParameters();
+                parametros.Add("id", id);
+                return (await _contexto.Connection.QueryAsync<AlunoSimplificadoQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
+
 
         public async Task<IEnumerable<AddResponsavelQuery>> ObterTipoFiliacaoAsync()
         {
             var query = @"SELECT id as Id, des_tipo_filiacao as Nome FROM academia.tipo_filiacao;";
+            _contexto.Dispose();
             return await _contexto.Connection.QueryAsync<AddResponsavelQuery>(query, commandType: CommandType.Text);
         }
 
@@ -144,6 +216,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
         public async Task<TotalTurmasQuery> ObterTotalTurmaAsync(Guid id)
         {
+
             var query = @"SELECT count(ta.id_turma) as Total, 
                          CAST(sum(t.valor) as decimal(7,2)) Valor FROM academia.turma as t
                          join academia.turma_aluno as ta on t.id = ta.id_turma
@@ -151,7 +224,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                          where a.uif_id = @id";
             var parametros = new DynamicParameters();
             parametros.Add("id", id);
-
+            _contexto.Dispose();
             return (await _contexto.Connection.QueryAsync<TotalTurmasQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
         }
 
@@ -216,6 +289,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw ex;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
 
         public async Task<AlunoQuery> ObterAlunoCompletoAsync(Guid id)
@@ -248,8 +325,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                           t.id as AlunoTurmas_TurmaId,
                           t.des_turma as AlunoTurmas_TurmaDescricao,
                           t.cod_turma as AlunoTurmas_TurmaCodigo,
-                          t.ano as AlunoTurmas_TurmaAno,
-                          t.valor as AlunoTurmas_TurmaValor,
                           ma.id as AlunoMatricula_MatriculaId,
                           ma.valor_contrato as AlunoMatricula_MatriculaValorContrato,
                           ma.percentual_desconto as AlunoMatricula_MatriculaPercentualDesconto,
@@ -300,6 +375,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw ex;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
         public async Task<int> SalvarAsync(Aluno aluno)
         {
@@ -318,7 +397,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 .ExecuteAsync("sp_insert_aluno",
                 parametros,
                 commandType: System.Data.CommandType.StoredProcedure);
-
+            _contexto.Dispose();
             return parametros.Get<int>("sp_id");
         }
 
@@ -346,6 +425,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
 
         }
 
@@ -370,6 +453,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
 
         }
         public async Task<int> SalvarTurmaAsync(TurmaAluno turmaAluno)
@@ -391,12 +478,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
             catch (Exception ex)
             {
-
                 throw;
             }
-
+            finally { _contexto.Dispose(); }
         }
-
         public async Task<IEnumerable<AlunoPorNomeQuery>> ObterTodosPorAsync(string nome)
         {
             var parametros = new DynamicParameters();
@@ -404,6 +489,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
             var lista = await _contexto.Connection.QueryAsync<AlunoPorNomeQuery>
                 ("sp_sel_aluno_por_nome", param: parametros, commandType: System.Data.CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista;
 
         }
@@ -426,8 +512,27 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                                       where T.id = @sp_id_turma;",
                   parametros,
                   commandType: System.Data.CommandType.Text);
-
+            _contexto.Dispose();
             return listaAluno;
+        }
+
+        public async Task<int> Editar(Aluno aluno)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_id", aluno.Id);
+            parametros.Add("sp_nome", aluno.Nome);
+            parametros.Add("sp_email", aluno.Email != null ? aluno.Email.Endereco : null);
+            parametros.Add("sp_cpf", aluno.Cpf != null ? aluno.Cpf.Numero : null);
+            parametros.Add("sp_data_nascimento", aluno.DataNascimento);
+            parametros.Add("sp_telefone", aluno.Telefone);
+            parametros.Add("sp_celular", aluno.Celular);
+            var editado = await _contexto
+                 .Connection
+                 .ExecuteAsync("sp_edit_aluno",
+                 parametros,
+                 commandType: System.Data.CommandType.StoredProcedure);
+            _contexto.Dispose();
+            return editado;
         }
     }
 }

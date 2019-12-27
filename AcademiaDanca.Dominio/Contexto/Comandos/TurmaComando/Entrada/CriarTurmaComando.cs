@@ -15,18 +15,15 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada
         public string DesTurma { get; set; }
         public int IdProfessor { get; set; }
         public int TipoTurmaId { get; set; }
-        public int Ano { get; set; }
-        public double Valor { get; set; }
-
+       
+        public List<CriarAgendaTurmaInicialComando> Agendamentos { get; set; }
         public bool Valido()
         {
             AddNotifications(new ValidationContract()
                .HasMinLen(DesTurma, 3, "Descricao", "Descricao deve conter pelo menos 3 caracteres")
                .HasMaxLen(DesTurma, 300, "login", "Descricao deve conter no máximo 300 caracteres")
                .IsTrue(Id == 0, "Id", "Id informado não é válido")
-               .IsTrue(Ano > 0, "Ano", "Ano informado não é válido")
-               .IsTrue(Valor > 0, "Valor", "Valor informado não é válido")
-               .IsNotNull(Valor, "Valor", "Informe o valor do Curso/Turma")
+              
            );
             return Valid;
         }

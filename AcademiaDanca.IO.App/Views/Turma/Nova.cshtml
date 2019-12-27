@@ -28,16 +28,16 @@
                                         <div class="preview-elements">
                                             <form id="formTurma">
                                                 <div class="form-row">
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-6">
                                                         <input type="text" class="form-control" id="inputCodigo" name="inputCodigo" placeholder="Código">
                                                         <label for="inputCodigo" class="col-form-label">Codigo</label>
 
                                                     </div>
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-6">
                                                         <input type="text" class="form-control" id="inputNome" name="inputNome" placeholder="Nome">
                                                         <label for="inputNome" class="col-form-label">Nome</label>
                                                     </div>
-                                                    <div class="form-group col-md-4">
+                                                    <div class="form-group col-md-6">
                                                         <label for="TipoTurma" class="col-form-label">Tipo de turma</label>
                                                         @Html.DropDownList("TipoTurma", null, "", new { @class = "form-control   select" })
 
@@ -48,15 +48,80 @@
                                                         @Html.DropDownList("Professores", null, "", new { @class = "form-control   select" })
 
                                                     </div>
-                                                    <div class="form-group col-md-6">
-                                                        <input type="number" class="form-control" id="inputAno" maxlength="4" name="D" placeholder="2019">
-                                                        <label for="inputAno" class="col-form-label">Ano</label>
 
-                                                    </div>
-                                                    <div class="form-group col-md-6">
-                                                        <input type="text" class="form-control" id="inputValor" name="inputValor" value="0">
-                                                        <label for="inputValor" class="col-form-label">Valor</label>
+                                                    <div class="form-group col-md-12">
+                                                        <table class="table" id="dtAgendamento">
+                                                            <thead>
+                                                                <tr><th>Check</th><th>Dia</th><th>Hora</th><th>Sala</th></tr>
 
+                                                            </thead>
+                                                            <tbody>
+                                                                @if (ViewBag.Dias.Count > 0)
+                                                                {
+                                                                    foreach (var item in ViewBag.Dias)
+                                                                    {
+                                                                        <tr>
+                                                                            <td><input type="checkbox" value="@item.Id" /></td>
+                                                                            <td>@item.DiaSemana</td>
+                                                                            <td>
+                                                                                <select class="form-control   select" id="Hora" name="Hora">
+                                                                                    <option value="07:15">07:15</option>
+                                                                                    <option value="07:30">07:30</option>
+                                                                                    <option value="08:00">08:00</option>
+                                                                                    <option value="08:15">08:15</option>
+                                                                                    <option value="08:30">08:30</option>
+                                                                                    <option value="09:00">09:00</option>
+                                                                                    <option value="09:15">09:15</option>
+                                                                                    <option value="09:30">09:30</option>
+                                                                                    <option value="10:00">10:00</option>
+                                                                                    <option value="10:15">10:15</option>
+                                                                                    <option value="10:30">10:30</option>
+                                                                                    <option value="11:00">11:00</option>
+                                                                                    <option value="11:15">11:15</option>
+                                                                                    <option value="11:30">11:30</option>
+                                                                                    <option value="12:00">12:00</option>
+                                                                                    <option value="12:15">12:15</option>
+                                                                                    <option value="12:30">12:30</option>
+                                                                                    <option value="13:00">13:00</option>
+                                                                                    <option value="13:15">13:15</option>
+                                                                                    <option value="13:30">13:30</option>
+                                                                                    <option value="14:00">14:00</option>
+                                                                                    <option value="14:15">14:15</option>
+                                                                                    <option value="14:30">14:30</option>
+                                                                                    <option value="15:00">15:00</option>
+                                                                                    <option value="15:15">15:15</option>
+                                                                                    <option value="15:30">15:30</option>
+                                                                                    <option value="16:00">16:00</option>
+                                                                                    <option value="16:15">16:15</option>
+                                                                                    <option value="16:30">16:30</option>
+                                                                                    <option value="17:00">17:00</option>
+                                                                                    <option value="17:15">17:15</option>
+                                                                                    <option value="17:30">17:30</option>
+                                                                                    <option value="18:00">18:00</option>
+                                                                                    <option value="18:15">18:15</option>
+                                                                                    <option value="18:30">18:30</option>
+                                                                                    <option value="19:00">19:00</option>
+                                                                                    <option value="19:15">19:15</option>
+                                                                                    <option value="19:30">19:30</option>
+                                                                                    <option value="20:00">20:00</option>
+                                                                                    <option value="20:15">20:15</option>
+                                                                                    <option value="20:30">20:30</option>
+                                                                                    <option value="21:00">21:00</option>
+                                                                                    <option value="21:15">21:15</option>
+                                                                                    <option value="21:30">21:30</option>
+                                                                                    <option value="22:00">22:00</option>
+
+                                                                                </select>
+                                                                            </td>
+                                                                            <td>
+                                                                                @Html.DropDownList("Salas", null, "", new { @class = "form-control   select" })
+                                                                            </td>
+                                                                        </tr>
+                                                                    }
+
+                                                                }
+                                                            </tbody>
+                                                        </table>
                                                     </div>
 
                                                 </div>
@@ -82,6 +147,23 @@
 
         <script src="~/Modulo/Mask/maskmoney.js"></script>
         <script>
+            function GetLinhas(tabela) {
+                var pedidos = [];
+                $(`#${tabela} tbody`).each(function () {
+                    // Recuperar todas as colunas da linha percorida
+                    var colunas = $(this).children();
+
+                    // Criar objeto para armazenar os dados (com JSON essa tarefa fica mais simples)
+                    var pedido = {
+                        'produto': $(colunas[0]).text(), // valor da coluna Produto
+                        'quantidade': $(colunas[1]).text() // Valor da coluna Quantidade
+                    };
+
+                    // Adicionar o objeto pedido no array
+                    pedidos.push(pedido);
+                });
+                return $('#' + tabela + ' tbody tr');
+            }
             $(document).ready(function () {
                 $("#inputAno").mask("9999");
                 $("#inputValor").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
@@ -151,6 +233,30 @@
 
                     },
                     submitHandler: function (form) {
+                        let linhas = GetLinhas('dtAgendamento');
+                        var agendamentos = [];
+                        for (var i = 0; i < linhas.length; i++) {
+                            if ($(linhas[i]).find('td').eq('0').find("input:checkbox:checked").length > 0) {
+                                //console.info($(linhas[i]).closest('tr').find('td').eq('1').text());
+                                var dropHora = $(linhas[i]).find('td').eq('2').find("select")
+                                var dropSala = $(linhas[i]).find('td').eq('3').find("select")
+                                if (dropSala.val() === '') {
+                                    PNotify.error({
+
+                                        text: 'Informe a sala para o agendamento selecionado'
+                                    });
+                                   
+                                    return false;
+                                }
+                                var agenda = {
+                                    dia: $(linhas[i]).find('td').eq('1').text(),
+                                    hora: dropHora.val(),
+                                    sala: dropSala.val()
+                                }
+                                agendamentos.push(agenda);
+                            }
+                        }
+
                         var dataT = {
 
                             Id: 0,
@@ -158,8 +264,8 @@
                             DesTurma: $("#formTurma #inputNome").val(),
                             IdProfessor: $("#formTurma #Professores").val(),
                             TipoTurmaId: $("#formTurma #TipoTurma").val(),
-                            Ano: $("#formTurma #inputAno").val(),
-                            Valor: $("#formTurma #inputValor").val().replace('R$', '').replace('.', ',')
+                            Agendamentos: agendamentos
+
                         }
                         var callback = function (data) {
                             if (JSON.parse(data).success) {

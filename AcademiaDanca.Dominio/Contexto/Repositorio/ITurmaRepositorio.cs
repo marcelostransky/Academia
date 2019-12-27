@@ -1,5 +1,6 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Agenda;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Turma;
 using System;
@@ -13,7 +14,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
     {
         Task<int> SalvarAsync(Turma turma);
         Task<int> EditarAsync(Turma turma);
-        Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma, int? idProfessor, int? idTipoTurma, int? ano, bool? status, int? idUsuario);
+        Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma, int? idProfessor, int? idTipoTurma,  bool? status, int? idUsuario);
         Task<IEnumerable<TurmaQueryResultado>> ObterTodosAsync();
         Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int ano);
         Task<TurmaQueryResultado> ObterPorAsync(int id);
@@ -23,5 +24,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<IEnumerable<AlunoPorNomeQuery>> ObterAlunosPorAsync(int idTurma);
         Task<TurmaQuantitativoQueryResultado> CheckQuantitativoTurmaAsync(int id);
         Task<int> DeletarAsync(int id);
+        Task<IEnumerable<DiaQueryResultado>> ObterDiaSemana();
     }
 }

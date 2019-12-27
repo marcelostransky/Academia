@@ -26,11 +26,11 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
             //Criar Entidades
             var tipoTurma = new TurmaTipo(comando.IdTipoTurma);
             var funcionario = new Funcionario(comando.IdProfessor);
-            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Ano, comando.Valor, comando.Status);
+            var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Status);
 
             if ( (comando.Valor == comando.ValorAtual && comando.Status == comando.StatusAtual && comando.IdProfessor == comando.IdProfessorAtual) && await _repositorio.CheckTurmaAsync(turma))
             {
-                AddNotification("Turma", "A turma informada já está em uso");
+                AddNotification("Turma", "Não foi detectado alteração no dados apresentado. Operação não realizada");
             }
 
 

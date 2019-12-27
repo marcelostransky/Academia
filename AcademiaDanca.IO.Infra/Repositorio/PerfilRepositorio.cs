@@ -33,6 +33,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var lista = await _contexto
                .Connection
                .QueryAsync<PerfilQueryResultado>("SELECT id, nome_papel as DescPerfil FROM academia.papel;", commandType: CommandType.Text);
+            _contexto.Dispose();
             return lista;
         }
 

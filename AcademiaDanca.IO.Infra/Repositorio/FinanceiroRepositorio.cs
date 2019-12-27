@@ -29,7 +29,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                   .QueryAsync<int>("SELECT count(1) FROM academia.matricula where id_aluno = @sp_id_aluno and ano = @sp_ano",
                   parametros,
                   commandType: System.Data.CommandType.Text)).FirstOrDefault();
-
+            _contexto.Dispose();
             return existe > 0;
         }
         public async Task<int> MatricularAsync(Matricula matricula)
@@ -178,6 +178,21 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw ex;
             }
+        }
+
+        public async Task<int> RegistrarItemMatricula(int idTurma, int idMatricula, decimal valor)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_id_turma", idTurma);
+            parametros.Add("sp_id_matricula", idMatricula);
+            parametros.Add("sp_valor_turma", valor);
+            var registrado = (await _contexto
+                  .Connection
+                  .ExecuteAsync("sp_insert_item_matricula",
+                  parametros,
+                  commandType: System.Data.CommandType.StoredProcedure));
+
+            return registrado;
         }
     }
 }

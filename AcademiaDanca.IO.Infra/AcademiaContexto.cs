@@ -14,6 +14,7 @@ namespace AcademiaDanca.IO.Infra
 
         public AcademiaContexto()
         {
+          
             Connection = new MySqlConnection(Settings.ConnectionString);
             Connection.Open();
         }

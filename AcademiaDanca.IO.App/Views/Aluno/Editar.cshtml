@@ -1,8 +1,616 @@
 ﻿
 @{
-    ViewData["Title"] = "Editar";
+    ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Editar</h2>
+<div class="page-layout carded left-sidebar single-scroll">
 
+    <div class="top-bg bg-primary text-auto"></div>
+
+    <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+        <!-- HEADER -->
+        <div class="header p-6">
+            <span class="h4"> <img style="height:150px" src="~/images/ballet.png" /></span>
+        </div>
+        <!-- / HEADER -->
+
+        <div class="content">
+            <!-- DEMO CONTENT -->
+            <div class="demo-sidebar">
+                <ul class="nav flex-column">
+
+                    <li class="subheader">Menu</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="Menu('Aluno')">Aluno</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="Menu('Foto')">Foto</a>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="Menu('Endereco')">Endereço</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" onclick="Menu('Familia')">Familia</a>
+                    </li>
+
+                </ul>
+
+            </div>
+            <!-- / DEMO CONTENT -->
+        </div>
+
+    </aside>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        <!-- HEADER -->
+        <div class="page-header py-6 light-fg">
+
+            <div class="d-flex flex-row align-items-center">
+
+                <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="demo-sidebar">
+                    <i class="icon icon-menu"></i>
+                </button>
+                <span class="h4">Editar Aluno</span>
+
+            </div>
+
+        </div>
+        <!-- / HEADER -->
+
+        <div class="page-content-card">
+            @if (@ViewBag.Aluno != null)
+            {
+
+                <div class="toolbar col p-6">
+                    <div id="menuSelecionado" class="text-success" style="float:right">Aluno</div>
+                    <div class="col-md-6">Código: @ViewBag.Aluno.AlunoGuid</div>
+                </div>
+                <div class="demo-content">
+
+
+
+                    <div id="formAluno" style="display:none" class=" p-6 col-10">
+                        <form id="formAluno">
+                            <div class="form-row">
+                                <div class="form-group col-md-2">
+                                    <label for="inputId" class="col-form-label">Id</label>
+                                    <input type="text" disabled class="form-control" id="inputId" name="inputId" placeholder="" value="@ViewBag.Aluno.AlunoId">
+                                    <input type="hidden" id="hiddenHashAluno" value=" @ViewBag.Aluno.AlunoGuid" />
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="inputNome" class="col-form-label">Nome</label>
+                                    <input type="text" class="form-control" id="inputNome" name="inputNome" value="@ViewBag.Aluno.AlunoNome">
+
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <label for="inputAddress" class="col-form-label">Email</label>
+                                    <input type="email" class="form-control" id="inputAddress" name="inputAddress" value="@ViewBag.Aluno.AlunoEmail">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputCpf" class="col-form-label">CPF</label>
+                                    <input type="text" class="form-control" id="inputCpf" name="inputCpf" value="@ViewBag.Aluno.AlunoCpf">
+
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputData" class="col-form-label">Data Nascimento</label>
+                                    <input type="text" len="" class="form-control" id="inputData" name="inputData" placeholder="" value="@ViewBag.Aluno.AlunodataNascimento">
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputTelefone" class="col-form-label">Telefone</label>
+                                    <input type="text" class="form-control" id="inputTelefone" name="inputTelefone" value="@ViewBag.Aluno.AlunoTelefone">
+
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="inputCelular" class="col-form-label">Celular</label>
+                                    <input type="text" len="" class="form-control" id="inputCelular" name="inputCelular" value="@ViewBag.Aluno.AlunoCelular">
+
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
+                        </form>
+                    </div>
+                    <div id="divFormAlunoFoto" style="display:none" class=" p-6 col-10">
+
+                        <div class="col-sm-1"><img class="profile-image avatar huge mr-6" src="/images/avatars/Aluno/@ViewBag.Aluno.AlunoFoto"></div>
+                        <form id="formAlunoFoto" method="post">
+                            <div class="col-xl-11">
+                                <input type="hidden" id="hiddenIdFuncFt" value="@ViewBag.Aluno.AlunoId" />
+                                <div class="form-row">
+                                    <div class="form-group col-md-12">
+                                        <input type="file" class="form-control" id="file" name="file">
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div id="formEndereco" style="display:none" class="p-6 col-10">
+                        <form id="formLogradouro">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="inputCep" class="col-form-label">Cep</label>
+                                    <input type="text" onfocusout="BuscaCep(this)" class="form-control" id="inputCep" name="inputCep" placeholder="" value="@ViewBag.Aluno.AlunoLogradouro.LogradouroCep">
+
+                                </div>
+
+
+                                <div class="form-group col-md-6">
+                                    <label class="col-form-label">Rua</label>
+                                    <input type="text" class="form-control" id="inputRua" name="inputRua" placeholder="" value="@ViewBag.Aluno.AlunoLogradouro.LogradouroRua">
+
+                                </div>
+                                <div class="form-group col-sm-2">
+                                    <label for="inputNumero" class="col-form-label">Nº</label>
+                                    <input type="text" class="form-control" id="inputNumero" name="inputNumero" placeholder="" value="@ViewBag.Aluno.AlunoLogradouro.LogradouroNumero">
+
+                                </div>
+
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="inputComplemento" class="col-form-label">Complemento</label>
+                                    <input type="text" class="form-control" id="inputComplemento" name="inputComplemento" placeholder="" value="@ViewBag.Aluno.AlunoLogradouro.LogradouroComplemento">
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="inputBairro" class="col-form-label">Bairro</label>
+                                    <input type="text" class="form-control" id="inputBairro" name="inputBairro" placeholder="" value="@ViewBag.Aluno.AlunoLogradouro.LogradouroBairro">
+
+                                </div>
+
+
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-2">
+                                    <label for="inputUF" class="col-form-label">Estado</label>
+                                    @Html.DropDownList("Estados", null, "", new { @class = "form-control   select" })
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputCidade" class="col-form-label">Cidade</label>
+                                    <input type="text" class="form-control" id="inputCidade" name="inputCidade" placeholder="" value="@ViewBag.Aluno.AlunoLogradouro.LogradouroCidade">
+
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
+                        </form>
+                    </div>
+                    <div id="formFamilia" style="display:none" class=" p-6 col-10">
+                        <form id="formResponsavel" style="display:none">
+
+                            <div class="form-row">
+                                                            
+                                <div class="form-group col-md-4">
+                                    <label for="inputResponsavel" class="col-form-label">Responsavel</label>
+                                    <input type="text" class="form-control" id="inputResponsavel" name="inputResponsavel">
+
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="inputEmailResponsavel" class="col-form-label">Email</label>
+                                    <input type="text" class="form-control" id="inputEmailResponsavel" name="inputEmailResponsavel">
+
+                                </div>
+
+                                <div class="form-group col-md-4">
+                                    <label for="inputDocumentoResponsavel" class="col-form-label">Cpf</label>
+                                    <input type="text" class="form-control" id="inputDocumentoResponsavel" name="inputDocumentoResponsavel">
+
+                                </div>
+                            </div>
+                            <div class="form-row">
+
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputTelefoneResponsavel" class="col-form-label">Telefone</label>
+                                    <input type="text" class="form-control telefone" id="inputTelefoneResponsavel" name="inputTelefoneResponsavel">
+                                </div>
+
+                                <div class="form-group col-md-6">
+                                    <label for="inputUF" class="col-form-label">Tipo Filiação</label>
+                                    @Html.DropDownList("TipoFiliacao", null, "Selecione um tipo", new { @class = "form-control   select" })
+
+                                </div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                        </form>
+                        @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoFiliacoes != null)
+                        {
+                            <center><button id="btnAdicionar" type="button" onclick="AdicionarFamilia()" class="btn btn-primary fuse-ripple-ready">Adicionar</button>   </center>
+                            <div id="tableFamilia">
+                                @foreach (var item in @ViewBag.Aluno.AlunoFiliacoes)
+                                {
+                                    <div id="divFamilia" class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+
+                                        <img class="avatar mx-4" alt="Pais" src="~/images/avatars/pais.jpeg">
+                                        <div class="col text-truncate font-weight-bold">@item.FiliacaoNome</div>
+                                        <div class="col email text-truncate px-6 d-none d-xl-flex mx-4">
+                                            @item.FiliacaoEmail
+                                        </div>
+
+                                        <div class="col company text-truncate px-1 d-none d-sm-flex mx-4">
+                                            @item.FiliacaoTelefone
+                                        </div>
+                                        <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                            <a href="#" class="btn btn-icon fuse-ripple-ready" title="Excluir Família"> <i class="icon-delete-forever"></i>    </a>
+                                        </div>
+                                    </div>
+
+                                }
+                            </div>
+                        }
+
+                    </div>
+
+                </div>
+
+            }
+        </div>
+
+
+    </div>
+    <!-- / PAGE CONTENT WRAPPER -->
+</div>
+@section Scripts{
+    <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
+    <script src="~/js/Helper/Helper.js"></script>
+    <script type="text/javascript" src="/js/apps/e-commerce/product/product.js"></script>
+    <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+    <script src="~/Modulo/Mask/maskmoney.js"></script>
+    <script src="~/js/Helper/Tabela.js"></script>
+    <script>
+        function AdicionarFamilia() {
+            $("#btnAdicionar").hide();
+            $("#tableFamilia").hide(400);
+            $("#formResponsavel").show(600);
+        }
+        function Menu(regra) {
+            switch (regra) {
+                case 'Aluno': {
+                    $("#formEndereco").hide(400);
+                    $("#divFormAlunoFoto").hide(400);
+                    $("#formFamilia").hide(400);
+                    $("#formAluno").show(600);
+                    $("#menuSelecionado").html('Aluno');
+                    break;
+                }
+                case 'Foto': {
+                    $("#formAluno").hide(400);
+                    $("#formFamilia").hide(400);
+                    $("#formEndereco").hide(400);
+                    $("#menuSelecionado").html('Foto');
+                    $("#divFormAlunoFoto").show(600);
+
+                    break;
+                }
+                case 'Endereco': {
+                    $("#formAluno").hide(400);
+                    $("#formFamilia").hide(400);
+                    $("#divFormAlunoFoto").hide(400);
+                    $("#formEndereco").show(600);
+                    $("#menuSelecionado").html('Endereço');
+                    break;
+                }
+                default: {
+                    $("#formAluno").hide(400);
+                    $("#formEndereco").hide(400);
+                    $("#divFormAlunoFoto").hide(400);
+                    $("#formFamilia").show(600);
+                    $("#menuSelecionado").html('Família');
+                    break;
+                }
+            }
+        }
+        $(function () {
+            $("#formResponsavel").validate({
+                ignore: [],
+                rules: {
+
+                    inputResponsavel: {
+                        required: true,
+                        minlength: 3,
+                        maxlength: 300
+
+                    },
+                    inputEmailResponsavel: {
+                        required: true,
+                        email: true
+                    },
+                    TipoFiliacao: {
+                        required: true
+                    }
+                },
+                messages: {
+
+
+                    inputRua: {
+                        required: "Informe o nome do responsavel.",
+                        minlength: $.validator.format("O nome do responsavel precisa ter pelo menos {0} characters"),
+                        maxlength: $.validator.format("O logradouro não pode serr superior há {0} characters")
+
+                    },
+                    inputEmailResponsavel: {
+                        required: "Informe o email do responsavel.",
+                        email: "Email informado não é valido"
+                    },
+                    TipoFiliacao: {
+                        required: "Informe o tipo de responsavel."
+                    }
+
+                },
+                submitHandler: function (form) {
+                    $("#formResponsavel").hide(400);
+                    $("#btnAdicionar").show(600);
+                    $("#tableFamilia").show(600);
+                    const responsavel = $("#inputResponsavel").val();
+                    const email = $("#inputEmailResponsavel").val();
+                    const documento = $("#inputDocumentoResponsavel").val();
+                    const telefone = $("#inputTelefoneResponsavel").val();
+
+                    var html = `<div id="divFamilia" class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+
+                                                                    <img class="avatar mx-4" alt="Pais" src="https://localhost:44315/images/avatars/pais.jpeg">
+                                                                    <div class="col text-truncate font-weight-bold">${responsavel}</div>
+                                                                    <div class="col email text-truncate px-6 d-none d-xl-flex mx-4">
+                                                                       ${email}
+                                                                    </div>
+
+                                                                    <div class="col company text-truncate px-1 d-none d-sm-flex mx-4">
+                                                                      ${telefone}
+                                                                    </div>
+                                                                    <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                                                        <a href="#" class="btn btn-icon fuse-ripple-ready" title="Excluir Família"> <i class="icon-delete-forever"></i>    </a>
+                                                                    </div>
+                                                                </div> `;
+                    $("#tableFamilia").append(html);
+                    return false;
+                    //var dataT = {
+
+                    //    idAluno: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
+                    //    Nome: $("#formResponsavel #inputResponsavel").val(),
+                    //    Telefone: $("#formResponsavel #inputTelefoneResponsavel").val(),
+                    //    Email: $("#formResponsavel #inputEmailResponsavel").val(),
+                    //    Docmento: $("#formResponsavel #inputDocumentoResponsavel").val(),
+                    //    TipoFiliacao: $("#formResponsavel #TipoFiliacao").val()
+
+                    //};
+                    //var callback = function (data) {
+                    //    if (JSON.parse(data).success) {
+                    //        PNotify.success({
+                    //            title: 'Cadastro realizado com sucesso.'
+                    //        });
+                    //        document.getElementById("formResponsavel").reset();
+                    //        return false;
+                    //    } else {
+                    //        var msg = '';
+                    //        $.each(JSON.parse(data).data, function (index, item) {
+                    //            msg = msg + item.property + ' - ' + item.message + '\n';
+                    //        });
+
+                    //        PNotify.error({
+                    //            title: msg
+                    //        });
+                    //    }
+                    //};
+                    //var callbackErro = function (data) {
+                    //    PNotify.error({
+
+                    //        title: 'Ocorreu um erro ao processar sua solicitação. [' + data + ']'
+                    //    });
+
+                    //};
+                    //academia.helper.rest.utils.POST("/Aluno/Responsavel/Novo", dataT, callback, callbackErro, $('#loader'));
+                }
+            });
+        });
+        $("#formAlunoFoto").submit(function (event) {
+
+            event.preventDefault();
+            var input = document.getElementById("file");
+            var files = input.files;
+            var formData = new FormData();
+            formData.append('Id', $("#formAlunoFoto #hiddenIdFuncFt").val());
+            formData.append('Foto', '');
+            for (var i = 0; i != files.length; i++) {
+                formData.append("file", files[i]);
+            }
+            var callback = function (data) {
+                if (data.success) {
+                    PNotify.success({
+                        text: 'Atualizado com sucesso.'
+                    });
+                    document.getElementById("formAlunoFoto").reset();
+                    return false;
+                } else {
+                    var msg = '';
+                    $.each(data.data, function (index, item) {
+                        msg = msg + item.property + ' > ' + item.message + '\n';
+                    });
+                    PNotify.error({
+                        title: 'Ops! ' + data.message + ' :-( ',
+                        text: msg
+                    });
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            }
+            academia.helper.rest.utils.POSTFORM("/Aluno/Editar/EditarFoto", formData, callback, callbackErro, $('#loader'));
+            return false;
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Funcionario/Editar/Foto",
+            //    data: formData,
+
+
+            //    beforeSend: function () {
+            //        Loading(true, $('#loader'));
+            //        // xhr.setRequestHeader("Authorization", "Basic " + utf8_to_b64(global.token));
+            //    },
+            //    success: function (data) {
+            //        //if (JSON.parse(data).success) {
+            //        //    PNotify.success({
+            //        //        title: ':-)',
+            //        //        text: 'Atualizado com sucesso.'
+            //        //    });
+            //        //    document.getElementById("formFuncionario").reset();
+
+            //        //} else {
+            //        //    var msg = '';
+            //        //    $.each(JSON.parse(data).data, function (index, item) {
+            //        //        msg = msg + item.property + ' > ' + item.message + '\n';
+            //        //    });
+
+            //        //    PNotify.error({
+            //        //        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+            //        //        text: msg
+            //        //    });
+
+
+            //        //};
+
+            //        Loading(false);
+            //        event.preventDefault();
+            //        return false;
+
+            //    },
+            //    complete: function () {
+
+            //        Loading(false, Loader);
+            //        return false;
+            //    },
+            //    error: function (data) {
+            //        PNotify.error({
+            //            title: 'Ops! :-(',
+            //            text: 'Ocorreu um erro ao processar sua solicitação'
+            //        });
+            //        Loading(false);
+            //    }
+
+
+            //});
+            //event.preventDefault();
+            //return false;
+
+        });
+        $("#formAluno").submit(function (event) {
+
+            event.preventDefault();
+            var dataT = {
+
+                Id: $("#formAluno #inputId").val(),
+                UifId: $("#formAluno #hiddenHashAluno").val(),
+                Nome: $("#formAluno #inputNome").val(),
+                DataNascimento: $("#formAluno #inputData").val(),
+                Telefone: $("#formAluno #inputTelefone").val(),
+                Email: $("#formAluno #inputAddress").val(),
+                Celular: $("#formAluno #inputCelular").val(),
+                Cpf: $("#formAluno #inputCpf").val()
+            };
+            var callback = function (data) {
+                if (data.success) {
+                    PNotify.success({
+                        text: 'Atualizado com sucesso.'
+                    });
+                    return false;
+                } else {
+                    var msg = '';
+                    $.each(data.data, function (index, item) {
+                        msg = msg + item.message + '\n';
+                    });
+                    PNotify.error({
+                    
+                        text: msg
+                    });
+                }
+            }
+            var callbackErro = function (data) {
+                 var msg = '';
+                    $.each(data.responseJSON.data, function (index, item) {
+                        msg = msg + item.message + '\n';
+                    });
+                    PNotify.error({
+                    
+                        text: msg
+                    });
+            }
+            academia.helper.rest.utils.PUT("/Aluno/Editar/", dataT, callback, callbackErro, $('#loader'));
+            return false;
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Funcionario/Editar/Foto",
+            //    data: formData,
+
+
+            //    beforeSend: function () {
+            //        Loading(true, $('#loader'));
+            //        // xhr.setRequestHeader("Authorization", "Basic " + utf8_to_b64(global.token));
+            //    },
+            //    success: function (data) {
+            //        //if (JSON.parse(data).success) {
+            //        //    PNotify.success({
+            //        //        title: ':-)',
+            //        //        text: 'Atualizado com sucesso.'
+            //        //    });
+            //        //    document.getElementById("formFuncionario").reset();
+
+            //        //} else {
+            //        //    var msg = '';
+            //        //    $.each(JSON.parse(data).data, function (index, item) {
+            //        //        msg = msg + item.property + ' > ' + item.message + '\n';
+            //        //    });
+
+            //        //    PNotify.error({
+            //        //        title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+            //        //        text: msg
+            //        //    });
+
+
+            //        //};
+
+            //        Loading(false);
+            //        event.preventDefault();
+            //        return false;
+
+            //    },
+            //    complete: function () {
+
+            //        Loading(false, Loader);
+            //        return false;
+            //    },
+            //    error: function (data) {
+            //        PNotify.error({
+            //            title: 'Ops! :-(',
+            //            text: 'Ocorreu um erro ao processar sua solicitação'
+            //        });
+            //        Loading(false);
+            //    }
+
+
+            //});
+            //event.preventDefault();
+            //return false;
+
+        });
+    </script>
+}

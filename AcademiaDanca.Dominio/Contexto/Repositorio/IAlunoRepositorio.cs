@@ -18,11 +18,13 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<IEnumerable<Aluno>> ObterTodosAsync();
         Task<IEnumerable<Filiacao>> ObterFiliacaoAsync();
         Task<IEnumerable<AddResponsavelQuery>> ObterTipoFiliacaoAsync();
-        Task<Aluno> ObterPorAsync(int id);
+        Task<AlunoSimplificadoQuery> ObterPorAsync(int id);
+        Task<AlunoSimplificadoQuery> ObterPorAsync(Guid id);
         Task<Filiacao> ObterFiliacaoPorAsync(int id);
         Task<bool> CheckCpfAsync(string cpf);
         Task<bool> CheckEmailAsync(string email);
         Task<int> EditarFotoAsync(Aluno aluno);
+        Task<int> Editar(Aluno aluno);
        
         Task<bool> CheckTurmaAlunoAsync(TurmaAluno turmaAluno);
         Task<int> CheckFiliacaoAsync(Filiacao filiacao);

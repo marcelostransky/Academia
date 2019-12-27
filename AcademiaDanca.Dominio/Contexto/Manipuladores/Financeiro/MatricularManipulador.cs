@@ -23,7 +23,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
             var matricula = new Matricula(comando.Id, comando.IdAluno, comando.TotalParcelas,
                 comando.DataContrato, comando.PercentualDesconto, comando.ValorDesconto, comando.ValorMatricula,
                Convert.ToDecimal(comando.ValorContrato), comando.DiaVencimento, comando.DataIncialPagamento, ChaveRegistro.Gerar(), comando.Ano);
-
+            
             //check Matricula Existe
             if (await _repositorio.CheckMatriculaExisteAsync(matricula))
                 AddNotification("Matricula", $"Aluno informado ja possui matricula ativa para o ano de {comando.Ano} ");
@@ -36,8 +36,17 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
             }
             //Persistir Dados
             var id = await _repositorio.MatricularAsync(matricula);
+
+            //Persistir Item
+            foreach (var item in comando.Turmas)
+            {
+                await _repositorio.RegistrarItemMatricula(item.IdTurma, id, item.Valor);
+            }
+
+            
             //Persistir Mensalidades
             await _repositorio.GerarMensalidade(new Mensalidade(0, matricula.IdAluno, id, matricula.TotalParcelas, Convert.ToDecimal(matricula.ValorContrato), matricula.ValorDesconto, matricula.DataIncialPagamento));
+            
             // Retornar o resultado para tela
             return new ComandoResultado(true, "Matricula realizada com sucesso", new
             {

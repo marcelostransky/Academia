@@ -14,6 +14,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada
         public int IdTurma { get; set; }
         public int IdDiaSemana { get; set; }
         public int IdSala { get; set; }
+        
+
         public bool Valido()
         {
             AddNotifications(new ValidationContract()

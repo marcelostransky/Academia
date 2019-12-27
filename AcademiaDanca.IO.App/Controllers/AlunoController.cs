@@ -13,7 +13,7 @@ using AcademiaDanca.IO.Compartilhado.Comando;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.Aluno.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.AlunoComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
-using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -26,7 +26,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
-    [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Ler", TipoRetorno = "Html")]
+    //[PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Ler", TipoRetorno = "Html")]
     public class AlunoController : Controller
     {
         public readonly IAcessoRepositorio _repositorioAcesso;
@@ -34,6 +34,7 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly ITurmaRepositorio _repositorioTurma;
         private readonly AlunoManipulador _manipulador;
         private readonly EditarFotoAlunoManipulador _manipuladorFoto;
+        private readonly EditarAlunoManipulador _manipuladorEditAluno;
         private readonly AddTurmaAlunoManipulador _manipuladorAlunoTurma;
         private readonly AddResponsavelManipulador _manipuladorResponsavel;
         private readonly DelTurmaAlunoManipulador _manipuladorDelTurmaAluno;
@@ -45,6 +46,7 @@ namespace AcademiaDanca.IO.App.Controllers
             IAlunoRepositorio repositorio,
             ITurmaRepositorio turmaRepositorio,
             AlunoManipulador manipulador,
+            EditarAlunoManipulador manipuladorEditAluno,
             EditarFotoAlunoManipulador manipuladorFoto,
             AddResponsavelManipulador manipuladorResponsavel,
             AddTurmaAlunoManipulador manipuladorAlunoTurma,
@@ -62,6 +64,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _manipuladorDelTurmaAluno = manipuladorDelTurmaAluno;
             _manipuladorMatricula = matricularManipulador;
             _repositorioAcesso = repositorioAcesso;
+            _manipuladorEditAluno = manipuladorEditAluno;
         }
 
         public IActionResult Index()
@@ -82,10 +85,60 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Aluno = aluno;
             return View();
         }
-
-        public IActionResult Editar()
+        [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Editar", TipoRetorno = "Html")]
+        public async Task<IActionResult> Editar(Guid id)
         {
+            var Aluno = await _repositorio.ObterAlunoCompletoAsync(id);
+            var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
+            ViewBag.Estados = new SelectList(selectListItems, "Value", "Text", Aluno.AlunoLogradouro.LogradouroEstado);
+            ViewBag.TipoFiliacao = new SelectList(await _repositorio.ObterTipoFiliacaoAsync(), "Id", "Nome");
+            ViewBag.Aluno = Aluno;
             return View();
+        }
+        [Route("/Aluno/Editar/")]
+        [HttpPut]
+        [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Editar", TipoRetorno = "Json")]
+        public async Task<IActionResult> Editar(EditarAlunoComando comando)
+        {
+            var resultado = await _manipuladorEditAluno.ManipuladorAsync(comando);
+            if (resultado.Success)
+                return Json(resultado);
+            else
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(resultado);
+            }
+
+        }
+        [Route("/Aluno/Editar/EditarFoto")]
+        [PermissaoAcesso(PaginaId = "ALUNO", Verbo = "Editar", TipoRetorno = "Json")]
+        [HttpPost]
+        public async Task<IActionResult> EditarFoto([FromForm]FotoModel funcFoto)
+        {
+            try
+            {
+                var util = new Util(_environment);
+                string nomeArquivo = ContentDispositionHeaderValue.Parse(funcFoto.file.ContentDisposition).FileName.Trim('"');
+                nomeArquivo = util.VerificarNomeArquivoCorreto(nomeArquivo);
+                var extensao = nomeArquivo.Split('.')[1];
+                using (FileStream output = System.IO.File.Create(util.ObterCaminhoArquivo($"{funcFoto.Id}.{extensao}", "Aluno")))
+                {
+                    var file = new FileInfo(output.Name);
+                    await funcFoto.file.CopyToAsync(output);
+                }
+                EditarFotoAlunoComando comando = new EditarFotoAlunoComando();
+                comando.Id = funcFoto.Id;
+                comando.Foto = $"{funcFoto.Id}.{extensao}";
+                var resultado = await _manipuladorFoto.ManipuladorAsync(comando);
+                return Json(resultado);
+            }
+            catch (Exception ex)
+            {
+
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+
         }
         public IActionResult Consultar()
         {
@@ -97,7 +150,7 @@ namespace AcademiaDanca.IO.App.Controllers
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
-            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null,null, perfil.Equals("Professor") ? usuarioId : 0);
+            var turmas = await _repositorioTurma.ObterTodosPorAsync( null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
@@ -182,7 +235,7 @@ namespace AcademiaDanca.IO.App.Controllers
             }
 
         }
-        
+
         [Route("/Aluno/Responsavel/Novo")]
         public async Task<IActionResult> Responsavel(AddFiliacaoComando comando)
         {
@@ -272,9 +325,11 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             //var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"/Financeiro/Matricula/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
-            menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-cash-usd\"></i>    </a>", r.UifId);
+            //menu.AppendFormat("<a href =\"/Financeiro/Matricula/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+            //menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-cash-usd\"></i>    </a>", r.UifId);
             menu.AppendFormat("<a href =\"/Aluno/Detalhar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Detalhar Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Aluno\"> <i class=\"icon-border-color\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Aluno/Excluir/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir Aluno\"> <i class=\"icon-delete-forever\"></i>    </a>", r.UifId);
             return menu.ToString();
         }
     }

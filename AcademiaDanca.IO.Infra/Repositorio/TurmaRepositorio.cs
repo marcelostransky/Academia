@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Agenda;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Turma;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -41,6 +42,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
 
         public async Task<bool> CheckAlunoTurmaAsync(int id)
@@ -63,6 +68,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally { _contexto.Dispose(); }
 
         }
 
@@ -85,6 +91,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally { _contexto.Dispose(); }
         }
 
         public async Task<bool> CheckTurmaAsync(Turma turma)
@@ -97,9 +104,9 @@ namespace AcademiaDanca.IO.Infra.Repositorio
              .QueryAsync<int>(@"SELECT count(1) as total FROM academia.turma 
                                 where id_turma_tipo = @idTurmaTipo and 
                                 des_turma =@nome and 
-                                cod_turma =@codTurma and 
-                                ano =@ano ;",
-                              new { idTurmaTipo = turma.TurmaTipo.Id, nome = turma.DesTurma, codTurma = turma.CodTurma, ano = turma.Ano },
+                                cod_turma =@codTurma  
+                                ;",
+                              new { idTurmaTipo = turma.TurmaTipo.Id, nome = turma.DesTurma, codTurma = turma.CodTurma },
                               commandType: CommandType.Text);
 
                 return existe.FirstOrDefault() <= 0 ? false : true;
@@ -109,6 +116,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 throw;
             }
+            finally { _contexto.Dispose(); }
 
         }
 
@@ -130,6 +138,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw;
             }
+            finally { _contexto.Dispose(); }
         }
 
 
@@ -144,8 +153,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_des_turma", turma.DesTurma);
                 parametros.Add("sp_id_tipo_turma", turma.TurmaTipo.Id);
                 parametros.Add("sp_id_professor", turma.Professor.Id);
-                parametros.Add("sp_ano", turma.Ano);
-                parametros.Add("sp_valor", turma.Valor);
+               
                 parametros.Add("sp_status", turma.Status);
                 var retorno = await _contexto
                     .Connection
@@ -159,6 +167,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 throw;
             }
+            finally { _contexto.Dispose(); }
         }
 
         public async Task<IEnumerable<AlunoPorNomeQuery>> ObterAlunosPorAsync(int idTurma)
@@ -179,9 +188,24 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                                       where T.id = @sp_id_turma;",
                   parametros,
                   commandType: System.Data.CommandType.Text);
-
+            _contexto.Dispose();
             return listaAluno;
         }
+
+        public async Task<IEnumerable<DiaQueryResultado>> ObterDiaSemana()
+        {
+         
+            var listaDia = await _contexto
+                  .Connection
+                  .QueryAsync<DiaQueryResultado>(@"
+                                      SELECT id as Id,des_dia_semana as DiaSemana,sgl_dia_semana as DiaSemanaSigla FROM academia.dia_semana ;",
+                  
+                  commandType: System.Data.CommandType.Text);
+            _contexto.Dispose();
+            return listaDia;
+        }
+
+       
 
         public Task<TurmaQueryResultado> ObterPorAsync(int id)
         {
@@ -191,18 +215,19 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             throw new NotImplementedException();
         }
-        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0, int? ano = 0, bool? status = null, int? idUsuario = 0)
+        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0,  bool? status = null, int? idUsuario = 0)
         {
             var parametros = new DynamicParameters();
             parametros.Add("sp_id_turma", idTurma == 0 ? null : idTurma);
             parametros.Add("sp_id_turma_tipo", idTipoTurma == 0 ? null : idTipoTurma);
             parametros.Add("sp_id_professor", idProfessor == 0 ? null : idProfessor);
-            parametros.Add("sp_ano", ano == 0 ? null : ano);
-            parametros.Add("sp_status", ano == 0 ? null : ano);
+            
+
             parametros.Add("sp_id_usuario", idUsuario == 0 ? null : idUsuario);
             parametros.Add("sp_status", status);
             var lista = await _contexto.Connection.QueryAsync<TurmaQueryResultado>
                 ("sp_sel_turma", param: parametros, commandType: System.Data.CommandType.StoredProcedure);
+            _contexto.Dispose();
             return lista;
 
         }
@@ -215,25 +240,25 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             try
             {
                 var parametros = new DynamicParameters();
-                parametros.Add("sp_status", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                parametros.Add("sp_id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 parametros.Add("sp_cod_turma", turma.CodTurma);
                 parametros.Add("sp_des_turma", turma.DesTurma);
                 parametros.Add("sp_id_tipo_turma", turma.TurmaTipo.Id);
                 parametros.Add("sp_id_professor", turma.Professor.Id);
-                parametros.Add("sp_ano", turma.Ano);
-                parametros.Add("sp_valor", turma.Valor);
+                
                 await _contexto
                     .Connection
                     .ExecuteAsync("sp_insert_turma",
                     parametros,
                     commandType: System.Data.CommandType.StoredProcedure);
 
-                return parametros.Get<int>("sp_status");
+                return parametros.Get<int>("sp_id");
             }
             catch (Exception ex)
             {
                 throw;
             }
+            finally { _contexto.Dispose(); }
 
         }
     }

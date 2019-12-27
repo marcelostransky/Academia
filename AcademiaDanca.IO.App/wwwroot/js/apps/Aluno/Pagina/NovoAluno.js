@@ -2,6 +2,7 @@
 $(document).ready(function () {
     ValidaDadosBase();
 });
+var turmas = [];
 function ValidaDadosBase() {
     if ($("#hiddenIdAluno").val().length > 0) {
         $(".base").removeClass('visible');
@@ -224,6 +225,7 @@ function AdicionarLinhaTabelaTurma(turma) {
         var tabela = $("#tb_turma tbody");
         var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[0] + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[3] + "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + turma.val() + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
         tabela.append(linha);
+        SetarArrayTurmas(turma.val(), dados[3]);
     }
     else {
         PNotify.error({
@@ -664,12 +666,13 @@ $(function () {
                 TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
                 DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
                 DataContrato: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
-                Ano: $("#formMatricula #inputVigencia").val()
+                Ano: $("#formMatricula #inputVigencia").val(),
+                Turmas: turmas
             };
             var callback = function (data) {
                 if (JSON.parse(data).success) {
                     PNotify.success({
-                        title: 'Matriculado com sucesso.',
+                        title: 'Matriculado com sucesso.'
                     });
                     document.getElementById("formResponsavel").reset();
                     return false;
@@ -694,7 +697,27 @@ $(function () {
             };
 
             academia.helper.rest.utils.POST("/Aluno/Matricular/", dataT, callback, callbackErro, $('#loader'));
-
+            return false;
         }
     });
 });
+function SetarArrayTurmas(idTurma, valor) {
+    // Percorrer todas as linhas do corpo da tabela (
+    //// você também pode fazer um for ao invés de usar o método each() do JQuery)
+    //$('#tb_turma tbody tr').each(function () {
+    //    // Recuperar todas as colunas da linha percorida
+    //    var colunas = $(this).children();
+
+        // Criar objeto para armazenar os dados (com JSON essa tarefa fica mais simples)
+        var ItemMatricula = {
+            'IdMatricula': 0, // valor da coluna Produto
+            'IdTurma': idTurma, // Valor da coluna Quantidade
+            'Valor': valor // Valor da coluna Quantidade
+        };
+
+        // Adicionar o objeto pedido no array
+        turmas.push(ItemMatricula);
+    //});
+
+}
+    

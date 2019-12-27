@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
+namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno
 {
     public class EditarFotoAlunoManipulador : Notifiable, IComandoManipulador<EditarFotoAlunoComando>
     {
@@ -25,7 +25,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
             AddNotifications(comando.Notifications);
 
             //Criar a entidade
-            var aluno = new Aluno(comando.Id, comando.Foto);
+            var aluno = new AcademiaDanca.Dominio.Contexto.Entidade.Aluno(comando.Id, comando.Foto);
 
             AddNotifications(aluno.Notifications);
             if (Invalid)
@@ -38,9 +38,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto
             //Persistir os dados
 
             await _repositorio.EditarFotoAsync(aluno);
-
-     
-
 
             // Retornar o resultado para tela
             return new ComandoResultado(true, "Funcionario cadastrado com sucesso", new

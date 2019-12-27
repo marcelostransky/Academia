@@ -21,17 +21,22 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada
         public int Ano { get; set; }
         public DateTime DataIncialPagamento { get; set; }
         public Guid ChaveRegistro { get; set; }
+        public List<MatriculaItemComando> Turmas { get; set; }
 
+        public MatricularComando()
+        {
+            Turmas = new List<MatriculaItemComando>();
+        }
         public bool Valido()
         {
             AddNotifications(new ValidationContract()
-               .IsTrue(DiaVencimento <= 0, "Dia Vencimento", "Informe o dia de vencimento")
-               .IsTrue(ValorContrato <= 0, "Valor Contrato", "Informe o valor do contrato")
-               .IsTrue(Ano <= 0, "Ano", "Informe o Ano")
-               .IsTrue(TotalParcelas <= 0, "TotalParcelas", "Informe o total de parcelas")
-               .IsTrue((Id > 0), "Id", "Id informado não é valido")
-               .IsNullOrEmpty(DataIncialPagamento.ToShortDateString(),"Data Inicio Pagamento","Informe a data inicial de pagamento" )
-               .IsNullOrEmpty(ChaveRegistro.ToString(),"Chave Registros","Informe a chave de registros")
+               .IsTrue(DiaVencimento > 0, "Dia Vencimento", "Informe o dia de vencimento")
+               .IsTrue(ValorContrato > 0, "Valor Contrato", "Informe o valor do contrato")
+               .IsTrue(Ano > 0, "Ano", "Informe o Ano")
+               .IsTrue(TotalParcelas > 0, "TotalParcelas", "Informe o total de parcelas")
+               .IsTrue((Id <= 0), "Id", "Id informado não é valido")
+               .IsNotNullOrEmpty(DataIncialPagamento.ToShortDateString(), "Data Inicio Pagamento", "Informe a data inicial de pagamento")
+               .IsNotNullOrEmpty(ChaveRegistro.ToString(), "Chave Registros", "Informe a chave de registros")
                );
             return Valid;
         }

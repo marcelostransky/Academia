@@ -55,8 +55,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             Ano = ano;
             List<Turma> turmas = new List<Turma>(); 
         }
-
-        public void AddAluno(Turma turma)
+        public void AddTurma(Turma turma)
         {
             _turmas.Add(turma);
         }

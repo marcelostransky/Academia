@@ -31,12 +31,7 @@
                 </div>
                 <!-- / APP TITLE -->
                 <!-- SEARCH -->
-                <div class="col search-wrapper px-2">
-                    <input id="inputFiltroAno" type="number" maxlength="4" min="4" class="form-control" placeholder="Ano" />
-                    <span class="input-group-btn">
-
-                    </span>
-                </div>
+               
                 <div class="col search-wrapper px-2">
 
                     <div class="input-group">
@@ -148,7 +143,7 @@
                 <div class="modal-footer">
 
                     <a href="" id="novaAgenda">
-                        <button type="button" class="btn btn-success">Novo Agendamento</button>
+                        <button type="button" class="btn btn-success">Cadastrar/Edidar Agendamento</button>
                     </a>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
                 </div>
@@ -224,7 +219,7 @@
     <script>
         function Deletar(linha) {
             var dataT = {
-                id: $(linha).closest('tr').find('td').eq('1').html()
+                id: $(linha).closest('tr').find('td').eq('0').html()
             }
 
             var callback = function (data) {

@@ -10,7 +10,6 @@ namespace AcademiaDanca.IO.App.Models
         public int IdTurma { get; set; }
         public int IdTurmaTipo { get; set; }
         public int IdProfessor { get; set; }
-        public int Ano { get; set; }
         public bool? Status { get; set; }
         public string TurmaDesc { get; set; }
     }

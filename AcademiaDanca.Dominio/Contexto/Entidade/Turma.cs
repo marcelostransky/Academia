@@ -18,19 +18,17 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
         public IReadOnlyCollection<Aluno> Alunos => _alunos.ToArray();
         public IReadOnlyCollection<Agenda> Agendamentos => _agendas.ToArray();
         public TurmaTipo TurmaTipo { get; private set; }
-        public int Ano { get; private set; }
-        public double Valor { get; private set; }
+
         public bool Status { get; private set; }
         public Turma(int id, string codTurma, string desTurma, Funcionario professor,
-            TurmaTipo turmaTipo, int ano, double valor, bool status)
+            TurmaTipo turmaTipo, bool status)
         {
             Id = id;
             DesTurma = desTurma;
             Professor = professor;
             TurmaTipo = turmaTipo;
             CodTurma = codTurma;
-            Ano = ano;
-            Valor = valor;
+
             Status = status;
             _alunos = new List<Aluno>();
             _agendas = new List<Agenda>();

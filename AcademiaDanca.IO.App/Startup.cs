@@ -2,7 +2,7 @@
 using AcademiaDanca.IO.App.Models;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
-using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.AlunoContexto;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -47,7 +47,6 @@ namespace AcademiaDanca.IO.App
                    });
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddScoped<AcademiaContexto, AcademiaContexto>();
-
             services.AddTransient<ITipoTelefoneRepositorio, TipoTelefoneRepositorio>();
             services.AddTransient<IFinanceiroRepositorio, FinanceiroRepositorio>();
             services.AddTransient<ILoginRepositorio, LoginRepositorio>();
@@ -90,6 +89,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<EditarPermissaoManipulador, EditarPermissaoManipulador>();
             services.AddTransient<EditarTurmaManipulador, EditarTurmaManipulador>();
             services.AddTransient<DeletarTurmaManipulador, DeletarTurmaManipulador>();
+            services.AddTransient<EditarAlunoManipulador, EditarAlunoManipulador>();
             services.AddScoped<RegrasAcessoModel>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";

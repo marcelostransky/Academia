@@ -17,7 +17,7 @@ namespace AcademiaDanca.IO.App.Areas.Admin.Controllers
 {
     [Area("Admin")]
     [Authorize]
-    [PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Ler", TipoRetorno = "Html")]
+    //[PermissaoAcesso(PaginaId = "PERFIL", Verbo = "Ler", TipoRetorno = "Html")]
 
     public class PerfilController : Controller
     {
