@@ -8,16 +8,18 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
     {
         public int Id { get; private set; }
         public string DesTurmaTipo { get; private set; }
+        public decimal ValorHora { get; private set; }
 
         public TurmaTipo(int id)
         {
             Id = id;
           
         }
-        public TurmaTipo(int id, string desTurmaTipo)
+        public TurmaTipo(int id, string desTurmaTipo, decimal valorHora)
         {
             Id = id;
             DesTurmaTipo = desTurmaTipo;
+            ValorHora = valorHora;
         }
     }
 }

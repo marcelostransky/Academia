@@ -117,18 +117,25 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             try
             {
+
                 var util = new Util(_environment);
-                string nomeArquivo = ContentDispositionHeaderValue.Parse(funcFoto.file.ContentDisposition).FileName.Trim('"');
-                nomeArquivo = util.VerificarNomeArquivoCorreto(nomeArquivo);
-                var extensao = nomeArquivo.Split('.')[1];
-                using (FileStream output = System.IO.File.Create(util.ObterCaminhoArquivo($"{funcFoto.Id}.{extensao}", "Aluno")))
-                {
-                    var file = new FileInfo(output.Name);
-                    await funcFoto.file.CopyToAsync(output);
-                }
                 EditarFotoAlunoComando comando = new EditarFotoAlunoComando();
-                comando.Id = funcFoto.Id;
-                comando.Foto = $"{funcFoto.Id}.{extensao}";
+                if (funcFoto.file.Length > 0)
+                {
+                    string nomeArquivo = ContentDispositionHeaderValue.Parse(funcFoto.file.ContentDisposition).FileName.Trim('"');
+
+                    nomeArquivo = util.VerificarNomeArquivoCorreto(nomeArquivo);
+                    var extensao = nomeArquivo.Split('.')[1];
+                    using (FileStream output = System.IO.File.Create(util.ObterCaminhoArquivo($"{funcFoto.Id}.{extensao}", "Aluno")))
+                    {
+                        var file = new FileInfo(output.Name);
+                        await funcFoto.file.CopyToAsync(output);
+                    }
+
+                    comando.Id = funcFoto.Id;
+                    comando.Foto = $"{funcFoto.Id}.{extensao}";
+                }
+
                 var resultado = await _manipuladorFoto.ManipuladorAsync(comando);
                 return Json(resultado);
             }
@@ -150,7 +157,7 @@ namespace AcademiaDanca.IO.App.Controllers
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
             var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
-            var turmas = await _repositorioTurma.ObterTodosPorAsync( null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
+            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
             ViewBag.Id = Guid.NewGuid();
             var selectListItems = (await new EstadoModel().ObterListaUF()).Select(x => new SelectListItem() { Text = x, Value = x });
             ViewBag.Estados = new SelectList(selectListItems, "Value", "Text");
@@ -163,7 +170,7 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Turmas = new SelectList(turmas.Select(x => new SelectListItem
             {
                 Value = x.IdTurma.ToString(),
-                Text = $"{ x.CodTurma} | { x.DesTurma} | {x.NomeProfessor} | {Math.Round(x.Valor, 2)} | {x.Ano}"
+                Text = $"{x.IdTurma}|{ x.CodTurma} | { x.DesTurma} | {x.NomeProfessor} | {Math.Round(x.Valor, 2)} | {x.Ano}"
             }), "Value", "Text");
             return View();
         }
@@ -252,18 +259,30 @@ namespace AcademiaDanca.IO.App.Controllers
         [HttpPost]
         public async Task<IComandoResultado> Editar([FromForm]FotoModel funcFoto)
         {
-            var util = new Util(_environment);
-            string nomeArquivo = ContentDispositionHeaderValue.Parse(funcFoto.file.ContentDisposition).FileName.Trim('"');
-            nomeArquivo = util.VerificarNomeArquivoCorreto(nomeArquivo);
-            var extensao = nomeArquivo.Split('.')[1];
-            using (FileStream output = System.IO.File.Create(util.ObterCaminhoArquivo($"{funcFoto.Id}.{extensao}", "Aluno")))
-            {
-                var file = new FileInfo(output.Name);
-                await funcFoto.file.CopyToAsync(output);
-            }
             EditarFotoAlunoComando comando = new EditarFotoAlunoComando();
-            comando.Id = funcFoto.Id;
-            comando.Foto = $"{funcFoto.Id}.{extensao}";
+            var util = new Util(_environment);
+            if (!string.IsNullOrWhiteSpace(funcFoto.base64image))
+            {
+                byte[] arquivoB64 = Convert.FromBase64String(funcFoto.base64image.Replace("data:image/jpeg;base64,",""));
+                var diretorio = util.ObterCaminhoArquivo($"{funcFoto.Id}.jpg", "Aluno");
+                System.IO.File.WriteAllBytes($"{diretorio}", arquivoB64);
+                comando.Id = funcFoto.Id;
+                comando.Foto = $"{funcFoto.Id}.jpg";
+
+            }
+            else if (funcFoto.file.Length > 0)
+            {
+                string nomeArquivo = ContentDispositionHeaderValue.Parse(funcFoto.file.ContentDisposition).FileName.Trim('"');
+                nomeArquivo = util.VerificarNomeArquivoCorreto(nomeArquivo);
+                var extensao = nomeArquivo.Split('.')[1];
+                using (FileStream output = System.IO.File.Create(util.ObterCaminhoArquivo($"{funcFoto.Id}.{extensao}", "Aluno")))
+                {
+                    var file = new FileInfo(output.Name);
+                    await funcFoto.file.CopyToAsync(output);
+                }
+                comando.Id = funcFoto.Id;
+                comando.Foto = $"{funcFoto.Id}.{extensao}";
+            }
             var resultado = await _manipuladorFoto.ManipuladorAsync(comando);
             return resultado;
         }

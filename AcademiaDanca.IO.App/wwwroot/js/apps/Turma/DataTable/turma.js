@@ -53,7 +53,22 @@ function MontarDataTableTurma() {
                     "sTitle": "Tipo",
                     "mDataProp": "desTurmaTipo"
                 },
-
+                {
+                    "sTitle": "Agendamento",
+                    "mDataProp": "totalAgendamento"
+                }, 
+                {
+                    "sTitle": "Total Aula/Mes",
+                    "mDataProp": "totalAulas"
+                },
+                {
+                    "sTitle": "Valor Aula",
+                    "mDataProp": "valorHora"
+                },
+                {
+                    "sTitle": "Valor/Mes",
+                    "mDataProp": "valor"
+                },
                 {
                     "sTitle": "Status",
                     "mDataProp": "status"
@@ -62,10 +77,10 @@ function MontarDataTableTurma() {
                     "sTitle": "Professor",
                     "mDataProp": "nomeProfessor"
                 },
-                {
-                    "sTitle": "Foto",
-                    "mDataProp": "foto"
-                },
+                //{
+                //    "sTitle": "Foto",
+                //    "mDataProp": "foto"
+                //},
                 {
                     "sTitle": "Acao",
                     "mDataProp": "acao",

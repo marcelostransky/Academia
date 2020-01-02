@@ -24,7 +24,7 @@ namespace Academia.Io.Tests.Entidades
             var email = new Email("marcelo@gmail.com");
             var cpf = new Cpf("99081598600");
             var dataNascimento = DateTime.Now;
-            _turmaTipo = new TurmaTipo(0, "Dança");
+            _turmaTipo = new TurmaTipo(0, "Dança", 0);
             _professor = new Funcionario(0, nome, email, cpf, dataNascimento);
            
             _turma = new Turma(0, "Turma A","", _professor, _turmaTipo, true);

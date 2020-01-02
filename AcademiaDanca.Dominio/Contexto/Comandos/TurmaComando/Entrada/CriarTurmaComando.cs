@@ -23,9 +23,19 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.TurmaComando.Entrada
                .HasMinLen(DesTurma, 3, "Descricao", "Descricao deve conter pelo menos 3 caracteres")
                .HasMaxLen(DesTurma, 300, "login", "Descricao deve conter no máximo 300 caracteres")
                .IsTrue(Id == 0, "Id", "Id informado não é válido")
-              
-           );
+               .IsTrue(AgendamentoCompleto(), "Agendamento", "Agendamento sem sala informada")
+
+           ); ;
             return Valid;
+        }
+
+        private bool AgendamentoCompleto()
+        {
+            foreach (var item in Agendamentos)
+            {
+
+            }
+                return true;
         }
     }
 }

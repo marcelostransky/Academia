@@ -218,9 +218,13 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
 
             var query = @"SELECT count(ta.id_turma) as Total, 
-                         CAST(sum(t.valor) as decimal(7,2)) Valor FROM academia.turma as t
+                        sum(TRUNCATE((vw.total_hora * TT.valor_hora) * 4,2)) as Valor 
+                        
+                        FROM academia.turma as t
                          join academia.turma_aluno as ta on t.id = ta.id_turma
                          join academia.aluno as a on ta.id_aluno = a.id
+                         Join academia.view_turma_total_agendamento as vw ON t.id = vw.id
+                         Join  academia.view_tipo_turma as TT On T.id_turma_tipo = TT.id
                          where a.uif_id = @id";
             var parametros = new DynamicParameters();
             parametros.Add("id", id);

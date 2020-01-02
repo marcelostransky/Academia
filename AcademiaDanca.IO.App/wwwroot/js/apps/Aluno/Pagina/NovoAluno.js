@@ -4,15 +4,15 @@ $(document).ready(function () {
 });
 var turmas = [];
 function ValidaDadosBase() {
-    if ($("#hiddenIdAluno").val().length > 0) {
+    if ($("#hiddenIdAluno").val().length !== 0) {
         $(".base").removeClass('visible');
-        $(".base").addClass("invisible")
+        $(".base").addClass("invisible");
         $(".form").removeClass('invisible');
         $(".base").hide();
         $(".form").show();
         $("#formAluno :input").prop("disabled", true);
         $(".form").addClass("visible");
-        $(".formReset").trigger("reset");
+        //$(".formReset").trigger("reset");
 
     }
     else {
@@ -40,7 +40,6 @@ function ObeterValorCursoSelecionado(alunoId) {
     };
     var callbackErro = function (data) {
         PNotify.error({
-            title: 'Ops',
             text: 'Não localizado'
         });
 
@@ -99,11 +98,20 @@ jQuery("#inputCelular")
         }
     });
 //Mascaras de campos Fim
+
+function HabilitarTab(atual, prox) {
+    $(`#${atual}`).removeClass('active');
+    $(`#${prox}`).addClass('active');
+    $(`#${atual}-pane`).removeClass('show');
+    $(`#${prox}-pane`).addClass('show');
+    $(`#${atual}-pane`).removeClass('active');
+    $(`#${prox}-pane`).addClass('active');
+}
 function BuscaCep(cep) {
     if (cep.value !== '') {
         var dataT = {
             cep: cep.value
-        }
+        };
         var callback = function (data) {
             if (data.success) {
                 document.getElementById('inputRua').value = data.cep.result.rua;
@@ -114,14 +122,14 @@ function BuscaCep(cep) {
                 document.getElementById('inputCidade').value = data.cep.result.cidade;
                 return false;
             }
-        }
+        };
         var callbackErro = function (data) {
             PNotify.error({
                 title: 'Ops! :-(',
                 text: 'CEP não localizado'
             });
 
-        }
+        };
 
         academia.helper.rest.utils.GET("/Aluno/ObterLogradouroPor", dataT, callback, callbackErro, $('#loader'));
 
@@ -150,9 +158,6 @@ $(function () {
                 //dateFormat: true
 
             }
-
-
-
         },
         messages: {
 
@@ -170,7 +175,8 @@ $(function () {
 
         },
         submitHandler: function (form) {
-
+            const tabAtual = 'basic-tab';
+            const tabProx = 'foto-tab';
             var dataT = {
 
                 Id: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
@@ -186,12 +192,14 @@ $(function () {
             var callback = function (data) {
                 if (JSON.parse(data).success) {
                     PNotify.success({
-                        title: ':-)',
                         text: 'Cadastro realizado com sucesso.'
                     });
                     document.getElementById('hiddenIdAluno').value = JSON.parse(data).data.id;
                     document.getElementById("formAluno").reset();
                     ValidaDadosBase();
+                    //$("#basic-tab-pane").removeClass('show');
+                    //$("#foto-tab-pane").addClass('show');
+                    HabilitarTab(tabAtual, tabProx);
                     return false;
                 } else {
                     var msg = '';
@@ -223,9 +231,9 @@ function AdicionarLinhaTabelaTurma(turma) {
         $("#dadosTurmas").addClass("visible");
         var dados = turma.text().split("|");
         var tabela = $("#tb_turma tbody");
-        var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[0] + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[3] + "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + turma.val() + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
+        var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[4] + "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + turma.val() + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
         tabela.append(linha);
-        SetarArrayTurmas(turma.val(), dados[3]);
+        SetarArrayTurmas(turma.val(), dados[4]);
     }
     else {
         PNotify.error({
@@ -279,8 +287,8 @@ $.extend($.expr[":"], {
         return (elem.textContent || elem.innerText || $(elem).text() || "").toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
     }
 });
-$("#formTurma").submit(function (event) {
-    event.preventDefault();
+function Turma() {
+
     if (existeLinha("tb_turma") <= 0) {
         var dataT = {
             IdAluno: $("#hiddenIdAluno").val(),
@@ -292,7 +300,7 @@ $("#formTurma").submit(function (event) {
                 PNotify.success({
                     text: 'Atualizado com sucesso.'
                 });
-                document.getElementById("formTurma").reset();
+                //document.getElementById("formTurma").reset();
                 ObeterValorCursoSelecionado($("#hiddenHashAluno").val());
                 return false;
             } else {
@@ -324,32 +332,40 @@ $("#formTurma").submit(function (event) {
 
 
     return false;
-});
+};
 $("#formAlunoFoto").submit(function (event) {
 
     event.preventDefault();
+    const tabAtual = 'foto-tab';
+    const tabProx = 'logradouro-tab';
     var input = document.getElementById("file");
     var files = input.files;
+
     var formData = new FormData();
     formData.append('Id', $("#hiddenIdAluno").val());
     formData.append('Foto', '');
+    if (document.getElementById("results").innerHTML !== '') {
+        var file = document.getElementById("base64image").src;
+        formData.append("base64image", file);
+    }
+
     for (var i = 0; i !== files.length; i++) {
         formData.append("file", files[i]);
     }
-    var dataT = {
-
-        Id: $("#hiddenIdAluno").val(),
-        Foto: "",
-        file: files[0]
-
-    };
-
     var callback = function (data) {
         if (data.success) {
             PNotify.success({
                 title: 'Atualizado com sucesso.'
             });
+            if (document.getElementById("results").innerHTML !== '') {
+                document.getElementById("results").innerHTML = '';
+                desligar_camera();
+            }
+
             document.getElementById("formAlunoFoto").reset();
+            HabilitarTab(tabAtual, tabProx);
+
+
             return false;
         } else {
             var msg = '';
@@ -361,24 +377,21 @@ $("#formAlunoFoto").submit(function (event) {
                 title: 'Ops! ' + data.message + ' :-( ',
                 text: msg
             });
-
-
         }
     };
     var callbackErro = function (data) {
         PNotify.error({
-            title: 'Ops! :-(',
             text: 'Ocorreu um erro ao processar sua solicitação'
         });
 
     };
-
     academia.helper.rest.utils.POSTFORM("/Aluno/Editar/Foto", formData, callback, callbackErro, $('#loader'));
 
     return false;
 
 });
 $(function () {
+
     $("#formLogradouro").validate({
         ignore: [],
         rules: {
@@ -451,7 +464,8 @@ $(function () {
 
         },
         submitHandler: function (form) {
-
+            const tabAtual = 'logradouro-tab';
+            const tabProx = 'filiacao-tab';
             var dataT = {
 
                 idAluno: $("#hiddenIdAluno").val().length <= 0 ? 0 : $("#hiddenIdAluno").val(),
@@ -462,13 +476,13 @@ $(function () {
                 Cidade: $("#formLogradouro #inputCidade").val(),
                 Uf: $("#formLogradouro #Estados").val(),
                 Cep: $("#formLogradouro #inputCep").val()
-            }
+            };
             var callback = function (data) {
                 if (JSON.parse(data).success) {
                     PNotify.success({
-                        title: ':-)',
                         text: 'Cadastro realizado com sucesso.'
                     });
+                    HabilitarTab(tabAtual, tabProx);
                     return false;
                 } else {
                     var msg = '';
@@ -483,14 +497,14 @@ $(function () {
 
 
                 }
-            }
+            };
             var callbackErro = function (data) {
                 PNotify.error({
                     title: 'Ops! :-(',
                     text: 'Ocorreu um erro ao processar sua solicitação'
                 });
 
-            }
+            };
 
             academia.helper.rest.utils.POST("/Logradouro/Novo", dataT, callback, callbackErro, $('#loader'));
 
@@ -661,7 +675,7 @@ $(function () {
                 IdAluno: $("#hiddenIdAluno").val(),
                 PercentualDesconto: $("#formMatricula #inputDescontoParcela").val().replace('%', ''),
                 ValorMatricula: $("#formMatricula #inputValorMatricula").val().replace('R$', '').replace('.', ','),
-                ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', '').replace('.',','),
+                ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', '').replace('.', ','),
                 DiaVencimento: $("#formMatricula #inputDiaVencimento").val(),
                 TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
                 DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
@@ -708,16 +722,16 @@ function SetarArrayTurmas(idTurma, valor) {
     //    // Recuperar todas as colunas da linha percorida
     //    var colunas = $(this).children();
 
-        // Criar objeto para armazenar os dados (com JSON essa tarefa fica mais simples)
-        var ItemMatricula = {
-            'IdMatricula': 0, // valor da coluna Produto
-            'IdTurma': idTurma, // Valor da coluna Quantidade
-            'Valor': valor // Valor da coluna Quantidade
-        };
+    // Criar objeto para armazenar os dados (com JSON essa tarefa fica mais simples)
+    var ItemMatricula = {
+        'IdMatricula': 0, // valor da coluna Produto
+        'IdTurma': idTurma, // Valor da coluna Quantidade
+        'Valor': valor // Valor da coluna Quantidade
+    };
 
-        // Adicionar o objeto pedido no array
-        turmas.push(ItemMatricula);
+    // Adicionar o objeto pedido no array
+    turmas.push(ItemMatricula);
     //});
 
 }
-    
+

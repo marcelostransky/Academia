@@ -253,7 +253,10 @@ namespace AcademiaDanca.IO.App.Controllers
                                  r.DesTurma,
                                  r.CodTurma,
                                  r.DesTurmaTipo,
-                       
+                                 r.Valor,
+                                 r.ValorHora,
+                                 r.TotalAgendamento,
+                                 r.TotalAulas,
                                  status = r.Status ? "<span class=\"badge badge-success\">Ativo</ span> " : "<span class=\"badge badge-danger\">Inativo</ span> ",
                                  acao = ObterMenuAcaoDataTable(r)
 

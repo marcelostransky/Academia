@@ -19,7 +19,10 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Turma
         public string CodTurma { get; set; }
         public string CodTurmaAtual { get; set; }
         public string Foto { get; set; }
+        public int TotalAgendamento { get; set; }
         public decimal Valor { get; set; }
+        public decimal ValorHora { get; set; }
+        public decimal TotalAulas { get; set; }
         public bool Status { get; set; }
 
     }

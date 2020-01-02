@@ -11,5 +11,6 @@ namespace AcademiaDanca.IO.App.Models
         public int Id { get; set; }
         public string Foto { get; set; }
         public IFormFile file { get; set; }
+        public string base64image { get; set; }
     }
 }

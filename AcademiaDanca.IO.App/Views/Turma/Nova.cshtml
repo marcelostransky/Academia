@@ -61,7 +61,7 @@
                                                                     foreach (var item in ViewBag.Dias)
                                                                     {
                                                                         <tr>
-                                                                            <td><input type="checkbox" value="@item.Id" /></td>
+                                                                            <td><input type="checkbox" value="@item.Id" onclick="MudaCorLinha(this)" /></td>
                                                                             <td>@item.DiaSemana</td>
                                                                             <td>
                                                                                 <select class="form-control   select" id="Hora" name="Hora">
@@ -114,7 +114,7 @@
                                                                                 </select>
                                                                             </td>
                                                                             <td>
-                                                                                @Html.DropDownList("Salas", null, "", new { @class = "form-control   select" })
+                                                                                @Html.DropDownList("Salas", null, "Selecione uma sala", new { @class = "form-control   select" })
                                                                             </td>
                                                                         </tr>
                                                                     }
@@ -138,6 +138,17 @@
             </div>
         </div>
     </div>
+    @section Css{
+        <style>
+            .checked {
+                background-color: #039BE5
+            }
+
+            .checkedRed {
+                background-color: #FF4500
+            }
+        </style>
+    }
     @section Scripts{
         <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
         <script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
@@ -147,6 +158,9 @@
 
         <script src="~/Modulo/Mask/maskmoney.js"></script>
         <script>
+            function MudaCorLinha(linha) {
+                linha.checked ? $(linha).closest('tr').find('td').addClass('checked') : $(linha).closest('tr').find('td').removeClass('checked');
+            }
             function GetLinhas(tabela) {
                 var pedidos = [];
                 $(`#${tabela} tbody`).each(function () {
@@ -245,7 +259,8 @@
 
                                         text: 'Informe a sala para o agendamento selecionado'
                                     });
-                                   
+                                    $(linhas[i]).find('td').addClass('checkedRed');
+
                                     return false;
                                 }
                                 var agenda = {
@@ -274,6 +289,9 @@
                                     text: 'Cadastro realizado com sucesso.'
                                 });
                                 document.getElementById("formTurma").reset();
+                                $("#dtAgendamento").find('td').removeClass('checked');
+                                $("#dtAgendamento").find('td').removeClass('checkedRed');
+
                                 return false;
                             } else {
                                 var msg = '';

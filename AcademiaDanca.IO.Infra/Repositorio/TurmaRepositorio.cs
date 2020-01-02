@@ -153,7 +153,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_des_turma", turma.DesTurma);
                 parametros.Add("sp_id_tipo_turma", turma.TurmaTipo.Id);
                 parametros.Add("sp_id_professor", turma.Professor.Id);
-               
+
                 parametros.Add("sp_status", turma.Status);
                 var retorno = await _contexto
                     .Connection
@@ -194,18 +194,18 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
         public async Task<IEnumerable<DiaQueryResultado>> ObterDiaSemana()
         {
-         
+
             var listaDia = await _contexto
                   .Connection
                   .QueryAsync<DiaQueryResultado>(@"
                                       SELECT id as Id,des_dia_semana as DiaSemana,sgl_dia_semana as DiaSemanaSigla FROM academia.dia_semana ;",
-                  
+
                   commandType: System.Data.CommandType.Text);
             _contexto.Dispose();
             return listaDia;
         }
 
-       
+
 
         public Task<TurmaQueryResultado> ObterPorAsync(int id)
         {
@@ -215,14 +215,12 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             throw new NotImplementedException();
         }
-        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0,  bool? status = null, int? idUsuario = 0)
+        public async Task<IEnumerable<TurmaQueryResultado>> ObterTodosPorAsync(int? idTurma = 0, int? idProfessor = 0, int? idTipoTurma = 0, bool? status = null, int? idUsuario = 0)
         {
             var parametros = new DynamicParameters();
             parametros.Add("sp_id_turma", idTurma == 0 ? null : idTurma);
             parametros.Add("sp_id_turma_tipo", idTipoTurma == 0 ? null : idTipoTurma);
             parametros.Add("sp_id_professor", idProfessor == 0 ? null : idProfessor);
-            
-
             parametros.Add("sp_id_usuario", idUsuario == 0 ? null : idUsuario);
             parametros.Add("sp_status", status);
             var lista = await _contexto.Connection.QueryAsync<TurmaQueryResultado>
@@ -245,7 +243,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_des_turma", turma.DesTurma);
                 parametros.Add("sp_id_tipo_turma", turma.TurmaTipo.Id);
                 parametros.Add("sp_id_professor", turma.Professor.Id);
-                
+
                 await _contexto
                     .Connection
                     .ExecuteAsync("sp_insert_turma",

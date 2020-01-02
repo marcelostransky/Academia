@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "Novo";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content custom-scrollbar ps">
+    <div id="e-commerce-product" class="page-layout simple tabbed">
+        <!-- HEADER -->
+        <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
+            <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                <div class="logo-icon mr-3 mt-1">
+                    <i class="icon-account-location s-6"></i>
+                </div>
+                <div class="logo-text">
+                    <div class="h4">  Novo Aluno</div>
+                </div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CONTENT -->
+        <div class="page-content">
+            <div class="card p-6">
+                <form id="formAluno">
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            <label for="inputNome" class="col-form-label">Nome</label>
+                            <input type="text" class="form-control" id="inputNome" name="inputNome">
+                            <input type="hidden" disabled class="form-control" id="inputId" name="inputId" placeholder="" value="@ViewBag.Id">
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputAddress" class="col-form-label">Email</label>
+                            <input type="email" class="form-control" id="inputAddress" name="inputAddress">
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputData" class="col-form-label">Data Nascimento</label>
+                            <input type="text" len="" class="form-control" id="inputData" name="inputData" placeholder="">
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputCpf" class="col-form-label">CPF</label>
+                            <input type="text" class="form-control" id="inputCpf" name="inputCpf">
+
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputTelefone" class="col-form-label">Telefone</label>
+                            <input type="text" class="form-control" id="inputTelefone" name="inputTelefone">
+
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label for="inputCelular" class="col-form-label">Celular</label>
+                            <input type="text" len="" class="form-control" id="inputCelular" name="inputCelular">
+
+                        </div>
+                        <div class="form-group col-md-12">
+                            Responsavel
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            TURMAS
+                        </div>
+
+
+                    </div>
+                    <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
