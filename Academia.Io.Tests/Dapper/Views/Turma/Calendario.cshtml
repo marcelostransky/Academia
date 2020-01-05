@@ -1,0 +1,276 @@
+﻿@{
+    ViewData["Title"] = "Calendario";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content custom-scrollbar ps">
+    <div class="doc forms-doc page-layout simple full-width">
+
+
+        <!-- HEADER -->
+        <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
+            <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                <div class="logo-icon mr-3 mt-1">
+                    <i class="icon-calendar-clock s-6"></i>
+                </div>
+                <div class="logo-text">
+                    <div class="h4">Agendar Turma @ViewBag.Turma.IdTurma | @ViewBag.Turma.CodTurma - @ViewBag.Turma.DesTurma</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="page-content">
+            <div id="accordion" role="tablist">
+                <div class="card">
+                    <div class="card-header" role="tab" id="headingOne">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne" class="collapsed btn btn-primary">
+                                Novo Agendamento
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapseOne" class="collapse" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion" style="">
+                        <div class="card-block">
+                            <div class="tab-pane fade show active resetForm" id="basic-info-tab-pane" role="tabpanel" aria-labelledby="basic-info-tab">
+                                <div class="card p-6">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="container">
+                                                <form id="formTurmaCalendario">
+                                                    <div class="form-row">
+
+                                                        <input type="hidden" id="hdIdTurma" value="@ViewBag.Turma.IdTurma" />
+                                                        <div class="form-group col-md-3">
+                                                            <label for="TipoTurma" class="col-form-label">Sala</label>
+                                                            @Html.DropDownList("Salas", null, "", new { @class = "form-control   select" })
+                                                        </div>
+                                                        <div class="form-group col-md-3">
+                                                            <label for="TipoTurma" class="col-form-label">Dia</label>
+                                                            @Html.DropDownList("Dias", null, "", new { @class = "form-control   select" })
+
+                                                        </div>
+
+                                                        <div class="form-group col-md-3">
+                                                            <label for="TipoTurma" class="col-form-label">Hora</label>
+                                                            <select class="form-control   select" id="Hora" name="Hora">
+                                                                <option value="07:15">07:15</option>
+                                                                <option value="07:30">07:30</option>
+                                                                <option value="08:00">08:00</option>
+                                                                <option value="08:15">08:15</option>
+                                                                <option value="08:30">08:30</option>
+                                                                <option value="09:00">09:00</option>
+                                                                <option value="09:15">09:15</option>
+                                                                <option value="09:30">09:30</option>
+                                                                <option value="10:00">10:00</option>
+                                                                <option value="10:15">10:15</option>
+                                                                <option value="10:30">10:30</option>
+                                                                <option value="11:00">11:00</option>
+                                                                <option value="11:15">11:15</option>
+                                                                <option value="11:30">11:30</option>
+                                                                <option value="12:00">12:00</option>
+                                                                <option value="12:15">12:15</option>
+                                                                <option value="12:30">12:30</option>
+                                                                <option value="13:00">13:00</option>
+                                                                <option value="13:15">13:15</option>
+                                                                <option value="13:30">13:30</option>
+                                                                <option value="14:00">14:00</option>
+                                                                <option value="14:15">14:15</option>
+                                                                <option value="14:30">14:30</option>
+                                                                <option value="15:00">15:00</option>
+                                                                <option value="15:15">15:15</option>
+                                                                <option value="15:30">15:30</option>
+                                                                <option value="16:00">16:00</option>
+                                                                <option value="16:15">16:15</option>
+                                                                <option value="16:30">16:30</option>
+                                                                <option value="17:00">17:00</option>
+                                                                <option value="17:15">17:15</option>
+                                                                <option value="17:30">17:30</option>
+                                                                <option value="18:00">18:00</option>
+                                                                <option value="18:15">18:15</option>
+                                                                <option value="18:30">18:30</option>
+                                                                <option value="19:00">19:00</option>
+                                                                <option value="19:15">19:15</option>
+                                                                <option value="19:30">19:30</option>
+                                                                <option value="20:00">20:00</option>
+                                                                <option value="20:15">20:15</option>
+                                                                <option value="20:30">20:30</option>
+                                                                <option value="21:00">21:00</option>
+                                                                <option value="21:15">21:15</option>
+                                                                <option value="21:30">21:30</option>
+                                                                <option value="22:00">22:00</option>
+
+                                                            </select>
+
+
+                                                        </div>
+
+                                                        <div class="form-group col-md-3">
+                                                            <button type="submit" class="btn btn-sm btn-primary fuse-ripple-ready">Cadastrar</button>
+                                                        </div>
+                                                    </div>
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="preview-elements">
+                <div class="card">
+                    <div class="card-body">
+                        <div>
+                            <table class="table dataTable " id="tbAgendamento">
+                                <thead>
+                                    <tr>
+                                        <td>Codigo Agenda</td>
+                                        <td>Turma</td>
+                                        <td>Tipo</td>
+                                        <td>Sala</td>
+                                        <td>Dia</td>
+                                        <td>Hora</td>
+                                        <td>Professor</td>
+                                        <td>Ação</td>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+
+        $(document).ready(function () {
+            var id = $("#formTurmaCalendario #hdIdTurma").val();
+            PopulaAgendamento(id);
+        });
+        $("#formTurmaCalendario").submit(function (event) {
+
+            event.preventDefault();
+
+
+            var dataT = {
+
+                Id: 0,
+                Hora: $("#formTurmaCalendario #Hora").val(),
+                IdTurma: $("#formTurmaCalendario #hdIdTurma").val(),
+                IdDiaSemana: $("#formTurmaCalendario #Dias").val(),
+                IdSala: $("#formTurmaCalendario #Salas").val()
+
+            }
+
+            var callback = function (data) {
+                if (JSON.parse(data).success) {
+                    PNotify.success({
+                        text: 'Cadastro realizado com sucesso.'
+                    });
+
+                    PopulaAgendamento($("#formTurmaCalendario #hdIdTurma").val());
+                    document.getElementById("formTurmaCalendario").reset();
+                    return false;
+                } else {
+                    var msg = '';
+                    $.each(JSON.parse(data).data, function (index, item) {
+                        msg = msg + item.property + ' > ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+                        text: msg
+                    });
+
+
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            }
+
+            academia.helper.rest.utils.POST("/Turma/Agendar/Novo", dataT, callback, callbackErro, $('#loader'));
+
+            return false;
+
+
+        });
+        function PopulaAgendamento(turmaId) {
+            var dataT = {
+                idTurma: turmaId
+            }
+
+            var callback = function (data) {
+                var tabela = $("#tbAgendamento tbody");
+                if (data.success) {
+                    $("#tbAgendamento tbody").html('');
+                    $.each(data.agenda, function (index, item) {
+                        ;
+                        var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + ' | ' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td><a href=\"#\" onclick=\"javascript:Deletar('" + item.idAgenda + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td></tr>"
+                        //var linha = "<tr id=\"" + item.idAgenda + "\"><td>" + item.idAgenda + "</td><td>" + item.codTurma + '|' + item.desTurma + "</td><td>" + item.tipoTurma + "</td><td>" + item.desSala + "</td><td>" + item.siglaDia + "</td><td>" + item.hora + "</td><td>" + item.professor + "</td><td>            <button onclick=\"Deletar('"+item.idAgenda+"')\"><i class=\"icon-delete-forever\"></i> </button></td></tr>"
+                        tabela.append(linha);
+                    });
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            }
+
+            academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
+
+        }
+
+        function Deletar(turmaId) {
+            var dataT = {
+                id: turmaId
+            }
+
+            var callback = function (data) {
+
+                if (data.success) {
+                    removeLinha(turmaId);
+                    PNotify.success({
+                        text: 'Deletado com sucesso.'
+                    });
+
+                } else {
+                    var msg = '';
+                    $.each(JSON.parse(data).data, function (index, item) {
+                        msg = msg + item.property + ' > ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+                        text: JSON.parse(data).message + '|' + msg
+                    });
+
+
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ops! :-(',
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            }
+
+            academia.helper.rest.utils.DELETE("/Turma/Calendario/Agendamento/Deletar", dataT, callback, callbackErro, $('#loader'));
+
+        }
+
+    </script>
+}
+

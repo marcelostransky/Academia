@@ -14,9 +14,17 @@ namespace AcademiaDanca.IO.Compartilhado
             Message = message;
             Data = data;
         }
-
+        public ComandoResultado(bool success, string message, List<object> datas)
+        {
+            Success = success;
+            Message = message;
+            Data = datas;
+        }
         public bool Success { get; set; }
         public string Message { get; set; }
         public object Data { get; set; }
+        public List<object> Datas { get; set; }
+
+       
     }
 }

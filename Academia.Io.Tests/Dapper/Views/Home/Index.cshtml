@@ -1,0 +1,438 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+
+<div id="project-dashboard" class="page-layout simple right-sidebar">
+
+    <div class="page-content-wrapper custom-scrollbar">
+
+        <!-- CONTENT -->
+        <div class="page-content">
+
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active p-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
+
+                    <!-- WIDGET GROUP -->
+                    <div class="widget-group row no-gutters">
+                        @if (@User.Claims.FirstOrDefault(x => x.Type == "Papel").Value != "Professor")
+                        {
+                            <!-- WIDGET 1 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                <div class="widget widget1 card">
+
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+                                        <div class="col">
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+
+                                        <div id="totalAlunomatriculado" class="title text-secondary">0</div>
+
+                                        <div class="sub-title h6 text-muted">Alunos</div>
+
+                                    </div>
+
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+
+                                        <span class="text-muted h5">Total Alunos: <label id="totalAlunomatriculadoLabel">24</label></span>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / WIDGET 1 -->
+                            <!-- WIDGET 2 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                <div class="widget widget2 card">
+
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                                    </div>
+
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                        <div id="totalMensalidadeAtraso" class="title text-danger">0</div>
+                                        <div class="sub-title h6 text-muted">Mensalidades</div>
+                                    </div>
+
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                                        <span class="text-muted h5">Mensalidades em Atraso: <label id="totalMensalidadeAtrasoLabel"></label></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / WIDGET 2 -->
+                            <!-- WIDGET 3 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                <div class="widget widget3 card">
+
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+
+                                        <div class="col">
+                                            <span class="h6"></span>
+                                        </div>
+                                    </div>
+
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                        <div id="totalAgendamento" class="title text-warning">0</div>
+                                        <div class="sub-title h6 text-muted">Aulas</div>
+                                    </div>
+
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                                        <span class="text-muted h5"> <label>Total Aulas</label></span>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / WIDGET 3 -->
+                            <!-- WIDGET 4 -->
+                            <div class="col-12 col-sm-6 col-xl-3 p-3">
+
+                                <div class="widget widget4 card">
+
+                                    <div class="widget-header pl-4 pr-2 row no-gutters align-items-center justify-content-between">
+                                    </div>
+
+                                    <div class="widget-content pt-2 pb-8 d-flex flex-column align-items-center justify-content-center">
+                                        <div id="totalMensalidadeHoje" class="title text-info">5</div>
+                                        <div class="sub-title h6 text-muted">mensalidades</div>
+                                    </div>
+
+                                    <div class="widget-footer p-4 bg-light row no-gutters align-items-center">
+                                        <span class="text-muted h5">Mensalidades vencendo hoje.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- / WIDGET 4 -->
+                        }
+                        <!-- WIDGET 5 -->
+                        <div class="col-12 p-3">
+
+                            <div class="widget widget5 card">
+
+                                <div class="widget-header px-4 row no-gutters align-items-center justify-content-between">
+
+                                    <div class="col">
+                                        <span class="h6">Agenda de Hoje</span>
+                                    </div>
+
+                                </div>
+
+                                <div class="widget-content p-4">
+
+                                    <div class="row">
+                                        <table id="agenda-datatable" class="table dataTable "></table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / WIDGET 5 -->
+
+                    </div>
+                    <!-- / WIDGET GROUP -->
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- / CONTENT -->
+
+    </div>
+
+
+</div>
+
+<script type="text/javascript" src="/js/apps/dashboard/project.js"></script>
+@section Css{
+    <style>
+        .doc > .page-header {
+            height: 6.5rem;
+        }
+        /*.btn-fab {
+            line-height: 5.6rem;
+            width: 20.6rem;
+            min-width: 10.6rem;
+            height: 10.6rem;
+            min-height: 20.6rem;
+        }*/
+    </style>
+}
+@section Scripts{
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="~/js/Helper/HelpData.js"></script>
+    <script src="~/js/apps/Agenda/DataTable/Agenda.js"></script>
+    <script>
+
+        function ObterQuantitativoAlunoMesalidadeAgenda() {
+            var lista = '[{ "id": 1, "dia": "Domingo" },{ "id": 2, "dia": "Segunda-Feira" },{ "id": 3, "dia": "Terça-Feira" },{ "id": 4, "dia": "Quarta-Feira"}, { "id": 5, "dia": "Quinta-Feira" }, { "id": 6, "dia": "Sexta-Feira" },{ "id": 7, "dia": "Sábado" }]';
+
+            var callback = function (data) {
+                var quantitativo = JSON.parse(data);
+                if (quantitativo.success) {
+                    var hoje = new Date();
+                    var dia = '';
+                    $(jQuery.parseJSON(lista)).each(function () {
+                        if (this.id === hoje.getDay() + 1) {
+                            dia = this.dia
+                        }
+                    });
+                    $("#totalAlunomatriculado").html(quantitativo.resultado[0].totalAlunoMatriculado);
+                    $("#totalAlunomatriculadoLabel").html(quantitativo.resultado[0].totalAlunoMatriculado);
+                    $("#totalMensalidadeAtraso").html(quantitativo.resultado[0].totalMensalidadeAtraso);
+                    $("#totalMensalidadeAtrasoLabel").html(quantitativo.resultado[0].totalMensalidadeAtraso);
+                    $("#totalAgendamento").html(quantitativo.resultado[0].totalAgendamentoDia);
+                    $("#totalAgendamentoLabel").html(`${dia}: ${hoje.getDate()}/${hoje.getMonth() + 1}/${hoje.getFullYear()}`);
+                    $("#totalMensalidadeHoje").html(quantitativo.resultado[0].totalMensalidadeHoje);
+
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.POST("/Home/ObterQuantitativoAlunoMensalidadeAgendamentoAsync/", '', callback, callbackErro, $('#loader'));
+
+        }
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            ObterQuantitativoAlunoMesalidadeAgenda();
+        })
+
+
+        function LimparFiltroAluno() {
+            $("#alunoId").val('');
+            $("#lialuno").removeClass("visible");
+            $("#lialuno").addClass("invisible");
+            $("#alunoNome").html('');
+            $("#abrirSelectAluno").show();
+            $("#fecharSelectAluno").hide();
+            MontarDataTable(null);
+        };
+        function pegar_valor_linha_tabela(elemento) {
+            var mAluno = $(elemento).closest('tr').find('td').eq('0').html().trim();
+            var mCodigo = $(elemento).closest('tr').find('td').eq('1').text().trim();
+            var mParcela = $(elemento).closest('tr').find('td').eq('2').text().trim();
+            var mVencimento = $(elemento).closest('tr').find('td').eq('3').text().trim();
+            var mValorParcela = $(elemento).closest('tr').find('td').eq('4').text().trim();
+            var mDesconto = $(elemento).closest('tr').find('td').eq('5').text().trim();
+            //$('#resultDescricao').val(modelo + ' [' + medida + '] [BRE' + bracoesq + '] [' + modulo + '] [BRD' + bracodir + '] [' + revestimento + ']');
+            $('#mAluno').html(mAluno);
+            $('#mCodigo').html(mCodigo);
+            $('#mParcela').html(mParcela);
+            $('#mVencimento').html(mVencimento);
+            $('#mPagamento').html('');
+            $('#mValorParcela').html(mValorParcela);
+            $('#mDesconto').html(mDesconto);
+            $('#mElemento').val(elemento.rowIndex);
+            $('#mTotal').html(CalcularTotal(mValorParcela, 0, mDesconto));
+
+            //$('#revestimento option:contains(' + revestimento + ')').prop('selected', true);
+            //var botao = document.getElementById("modulo");
+            //botao.click();
+        }
+        function CalcularTotal(valor, juros, desconto) {
+            var calculo = (parseFloat(valor) + parseFloat(juros)) - parseFloat(desconto);
+            return calculo;
+        }
+        function ModalAluno() {
+            $('#modalFinanceiroAluno').modal("show");
+
+        }
+        function ModalPagamento(linha) {
+            //alert(linha);
+            pegar_valor_linha_tabela(linha.parentElement.parentElement);
+            $('#modalPagamentoMensaliade').modal("show");
+
+        }
+        function SetarValorAluno(id, nome) {
+            $("#alunoId").val(id);
+            $("#lialuno").removeClass("invisible");
+            $("#lialuno").addClass("visible");
+            $("#alunoNome").html(nome);
+            $('#modalFinanceiroAluno').modal("hide");
+            MontarDataTable(null);
+            $("#financeiroAlunos").removeClass("visible");
+            $("#financeiroAlunos").addClass("invisible");
+            $("#abrirSelectAluno").hide();
+            $("#fecharSelectAluno").show();
+
+        }
+
+        function BuscarAlunoPorNome() {
+            //$('#modalFinanceiroAluno').modal("show");
+            if ($("#alunoNomeDigitado").val().length < 3) {
+                PNotify.error({
+                    text: 'Informe pelo menos 3 caracteres do nome. ',
+
+                });
+                //alert("Informe pelo menos 3 caracteres do nome. ");
+                return;
+            }
+            var dataT = {
+                nome: $("#alunoNomeDigitado").val()
+            };
+            var callback = function (data) {
+                if (data.success) {
+                    var linhas = '';
+                    $.each(data.alunos, function (index, item) {
+                        var func =
+                            linhas = linhas + `"
+<tr><td><img class=\"avatar mr-4\" alt=\" ${item.nome} \" src=\"/images/avatars/Aluno/${item.foto}\"></td>
+<td>${item.nome}</td>
+<td>${item.dataToShortDate}</td>
+<td>${item.telefone}</td><td>${item.celular}</td>
+<td><button type=\"button\" class=\"btn btn-sm btn-secondary fuse-ripple-ready\" onclick="SetarValorAluno('${item.uifId}','${item.nome}')">Selecionar</button></td></tr>"`;
+
+                    });
+                    $("#financeiroAlunos tbody").html(linhas);
+                    $("#alunoNomeDigitado").val('');
+                    $("#financeiroAlunos").removeClass("invisible");
+                    $("#financeiroAlunos").addClass("visible");
+                    //$("#turmaAlunos tbody").add(linhas);
+
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.GET("/Financeiro/Alunos/", dataT, callback, callbackErro, $('#divLoad'));
+        }
+        function MontarDataTable(status) {
+            var id = $("#alunoId").val();
+            var ano = $("#inputAno").val();
+            $('#financeiroMensalidades').DataTable(
+                {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "bDestroy": true,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": `/Financeiro/MensalidadeAsync?id=${id}&status=${status}&ano=${ano}`,
+                    "aoColumns": [
+                        {
+                            "sTitle": "Aluno",
+                            "mDataProp": "alunoNome",
+                            "bSortable": true
+
+                        },
+                        {
+                            "sTitle": "Código",
+                            "mDataProp": "mensalidadeId"
+
+                        },
+                        {
+                            "sTitle": "Parcela",
+                            "mDataProp": "parcela"
+
+                        },
+
+                        {
+                            "sTitle": "Data Vencimento",
+                            "mDataProp": "dataVencimento"
+                        },
+                        {
+                            "sTitle": "Valor",
+                            "mDataProp": "valor",
+
+                        },
+                        {
+                            "sTitle": "Desconto",
+                            "mDataProp": "desconto"
+                        },
+                        {
+                            "sTitle": "Total",
+                            "mDataProp": "total",
+
+                        },
+                        {
+                            "sTitle": "Status",
+                            "mDataProp": "pago"
+                        },
+                        {
+                            "sTitle": "Acao",
+                            "mDataProp": "acao",
+                            "className": 'dt-body-center details-control pointer',
+                            "bSortable": false
+
+                        }
+
+                    ],
+                    dom: 'rt<"dataTables_footer"ip>',
+
+                    language: {
+                        lengthMenu: "Exibe _MENU_ Registros por pagina",
+                        search: "Procurar",
+                        paginate: { "previous": "Retornar", "next": "Avancar" },
+                        zeroRecords: "Nenhum registro encontrado",
+                        info: "Exibindo pagina _PAGE_ de _PAGES_",
+                        infoEmpty: "Sem registros",
+                        infoFiltered: "(filtrado de _MAX_ regitros totais)",
+                        processing: "Aguarde Estamos Processando..."
+                    },
+
+                    "filter": true,            // habilita o filtro(search box)
+                    "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
+
+                    pageLength: 10,
+                    scrollY: 'auto',
+                    scrollX: false,
+                    responsive: true,
+                    autoWidth: false,
+                    scrollCollapse: true,
+                    initComplete: function () {
+                        var api = this.api(),
+                            searchBox = $('#products-search-input');
+
+                        // Bind an external input as a table wide search box
+                        if (searchBox.length > 0) {
+                            searchBox.on('keyup', function (event) {
+                                api.search(event.target.value).draw();
+                            });
+                        }
+                    }
+                }
+            );
+        }
+    </script>
+
+
+
+
+
+}

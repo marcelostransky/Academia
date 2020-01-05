@@ -1,0 +1,297 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic" rel="stylesheet">
+
+    <!-- STYLESHEETS -->
+    <style type="text/css">
+
+        [fuse-cloak],
+        .fuse-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <!-- Icons.css -->
+    <link type="text/css" rel="stylesheet" href="/icons/fuse-icon-font/style.css">
+    <!-- Animate.css -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/animate.css/animate.min.css">
+    <!-- PNotify -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/pnotify/dist/PNotifyBrightTheme.css">
+    <!-- Nvd3 - D3 Charts -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/nvd3/build/nv.d3.min.css" />
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/perfect-scrollbar/css/perfect-scrollbar.css" />
+    <!-- Fuse Html -->
+    <link type="text/css" rel="stylesheet" href="/fuse-html/fuse-html.min.css" />
+    <!-- Main CSS -->
+    <link type="text/css" rel="stylesheet" href="/css/main.css">
+    <!-- / STYLESHEETS -->
+    <!-- JAVASCRIPT -->
+    <!-- jQuery -->
+    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- Mobile Detect -->
+    <script type="text/javascript" src="/node_modules/mobile-detect/mobile-detect.min.js"></script>
+    <!-- Perfect Scrollbar -->
+    <script type="text/javascript" src="/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+    <!-- Popper.js -->
+    <script type="text/javascript" src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Nvd3 - D3 Charts -->
+    <script type="text/javascript" src="/node_modules/d3/d3.min.js"></script>
+    <script type="text/javascript" src="/node_modules/nvd3/build/nv.d3.min.js"></script>
+    <!-- Data tables -->
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <!-- PNotify -->
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotify.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyStyleMaterial.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyButtons.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyCallbacks.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyMobile.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyHistory.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyDesktop.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyConfirm.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyReference.js"></script>
+    <!-- Fuse Html -->
+    <script type="text/javascript" src="/fuse-html/fuse-html.min.js"></script>
+    <!-- Main JS -->
+    <script type="text/javascript" src="/js/main.js"></script>
+    <!-- / JAVASCRIPT -->
+</head>
+
+<body class="layout layout-vertical layout-left-navigation layout-above-toolbar layout-above-footer">
+    <main>
+
+        <div id="wrapper">
+           
+            <div class="content-wrapper">
+                <div class="content custom-scrollbar">
+
+                    <div id="login-v2" class="row no-gutters">
+
+                        <div class="intro col-12 col-md light-fg">
+
+                            <div class="d-flex flex-column align-items-center align-items-md-start text-center text-md-left py-16 py-md-32 px-12">
+
+                                <div class="logo bg-secondary mb-8">
+                                    <span>A</span>
+                                </div>
+
+                                <div class="title">
+                                    Bem vindo!
+                                </div>
+
+                                <div class="description pt-2">
+                                  Plataforma Gestão Academia de Dança
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-wrapper col-12 col-md-auto d-flex justify-content-center p-4 p-md-0">
+
+                            <div class="form-content md-elevation-8 h-100 bg-white text-auto py-16 py-md-32 px-12">
+
+                                <div class="title h5">Informe seus dados</div>
+
+                                <div class="description mt-2">Para acessar a plataforma </div>
+
+                                <form name="loginForm"  method="post" action="/Login/Autenticar/" novalidate class="mt-8">
+
+                                    <div class="form-group mb-4">
+                                        <label for="loginFormInputEmail">Login</label>
+                                        <input type="email" class="form-control" id="Login" name="Login" aria-describedby="emailHelp" placeholder=" " />
+
+                                    </div>
+
+                                    <div class="form-group mb-4">   
+                                     <label for="loginFormInputPassword">Senha</label>
+                                        <input type="password" class="form-control" id="Senha" name="Senha" placeholder="Password" />
+                                       
+                                    </div>
+
+                                    <div class="remember-forgot-password row no-gutters align-items-center justify-content-between pt-4">
+
+                                        
+
+                                        <a href="#" class="forgot-password text-secondary mb-4">Esqueci minha senha?</a>
+
+                                    </div>
+
+                                    <button type="submit"  class="submit-button btn btn-block btn-secondary my-4 mx-auto" aria-label="LOG IN">
+                                        Acessar
+                                    </button>
+
+                                </form>
+
+                                <div class="separator">
+                                   @* <span class="error">@ViewBag.Mensagem</span>*@
+                                </div>
+
+                              
+                             
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="quick-panel-sidebar custom-scrollbar" fuse-cloak data-fuse-bar="quick-panel-sidebar" data-fuse-bar-position="right">
+                <div class="list-group" class="date">
+
+                    <div class="list-group-item subheader">TODAY</div>
+
+                    <div class="list-group-item two-line">
+
+                        <div class="text-muted">
+
+                            <div class="h1"> Friday</div>
+
+                            <div class="h2 row no-gutters align-items-start">
+                                <span> 5</span>
+                                <span class="h6">th</span>
+                                <span> May</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="list-group">
+
+                    <div class="list-group-item subheader">Events</div>
+
+                    <div class="list-group-item two-line">
+
+                        <div class="list-item-content">
+                            <h3>Group Meeting</h3>
+                            <p>In 32 Minutes, Room 1B</p>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item two-line">
+
+                        <div class="list-item-content">
+                            <h3>Public Beta Release</h3>
+                            <p>11:00 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item two-line">
+
+                        <div class="list-item-content">
+                            <h3>Dinner with David</h3>
+                            <p>17:30 PM</p>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item two-line">
+
+                        <div class="list-item-content">
+                            <h3>Q&amp;A Session</h3>
+                            <p>20:30 PM</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="list-group">
+
+                    <div class="list-group-item subheader">Notes</div>
+
+                    <div class="list-group-item two-line">
+
+                        <div class="list-item-content">
+                            <h3>Best songs to listen while working</h3>
+                            <p>Last edit: May 8th, 2015</p>
+                        </div>
+                    </div>
+
+                    <div class="list-group-item two-line">
+
+                        <div class="list-item-content">
+                            <h3>Useful subreddits</h3>
+                            <p>Last edit: January 12th, 2015</p>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="list-group">
+
+                    <div class="list-group-item subheader">Quick Settings</div>
+
+                    <div class="list-group-item">
+
+                        <div class="list-item-content">
+                            <h3>Notifications</h3>
+                        </div>
+
+                        <div class="secondary-container">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" />
+                                <span class="custom-control-indicator"></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="list-group-item">
+
+                        <div class="list-item-content">
+                            <h3>Cloud Sync</h3>
+                        </div>
+
+                        <div class="secondary-container">
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" />
+                                <span class="custom-control-indicator"></span>
+                            </label>
+                        </div>
+
+                    </div>
+
+                    <div class="list-group-item">
+
+                        <div class="list-item-content">
+                            <h3>Retro Thrusters</h3>
+                        </div>
+
+                        <div class="secondary-container">
+
+                            <label class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" />
+                                <span class="custom-control-indicator"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</body>
+
+</html>
+

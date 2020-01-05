@@ -1,0 +1,120 @@
+﻿
+@{
+    ViewData["Title"] = "Listar Alunos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="content custom-scrollbar">
+
+        <div id="e-commerce-products" class="page-layout carded full-width">
+
+            <div class="top-bg bg-primary"></div>
+
+            <!-- CONTENT -->
+            <div class="page-content-wrapper">
+
+                <!-- HEADER -->
+                <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+
+                    <!-- APP TITLE -->
+                    <div class="col-12 col-sm">
+
+                        <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                            <div class="logo-icon mr-3 mt-1">
+                                <i class="icon-cube-outline s-6"></i>
+                            </div>
+                            <div class="logo-text">
+                                <div class="h4">Products</div>
+                                <div class="">Total Products: 20</div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- / APP TITLE -->
+                    <!-- SEARCH -->
+                    <div class="col search-wrapper px-2">
+                        <span class="input-group-btn">
+                            <button id="pesquisarTurmaBtn" onclick="MontarDataTableTurma()" type="button" class="btn btn-icon">
+                                <i class="icon icon-magnify"></i>
+                            </button>
+                        </span>
+
+                    </div>
+
+                    <!-- / SEARCH -->
+
+                    @*<div class="col-auto">
+                        <a href="apps-e-commerce-product.html" class="btn btn-light">ADD NEW PRODUCT</a>
+                    </div>*@
+
+                </div>
+                <!-- / HEADER -->
+
+                <div class="page-content-card">
+
+                    <table id="aluno-datatable" class="table dataTable">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">ID</span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">Foto</span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">Nome</span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">Cpf</span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">Data Nascimento</span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">Perfil</span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">Status</span>
+                                    </div>
+                                </th>
+
+                                <th>
+                                    <div class="table-header">
+                                        <span class="column-title">Actions</span>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- / CONTENT -->
+        </div>
+
+        <script type="text/javascript" src="/js/apps/e-commerce/products/products.js"></script>
+
+    </div>
+

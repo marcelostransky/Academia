@@ -1,0 +1,259 @@
+﻿@{
+    ViewData["Title"] = "Listar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content custom-scrollbar">
+
+    <div id="e-commerce-products" class="page-layout carded full-width">
+
+        <div class="top-bg bg-primary"></div>
+
+        <!-- CONTENT -->
+        <div class="page-content-wrapper">
+
+            <!-- HEADER -->
+            <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+
+                <!-- APP TITLE -->
+                <div class="col-12 col-sm">
+
+                    <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                        <div class="logo-icon mr-3 mt-1">
+                            <i class="icon-school s-6"></i>
+                        </div>
+                        <div class="logo-text">
+                            <div class="h4">Turmas</div>
+                            @*<div class="">Total: 20</div>*@
+                        </div>
+                    </div>
+
+                </div>
+                <!-- / APP TITLE -->
+                <!-- SEARCH -->
+               
+                <div class="col search-wrapper px-2">
+
+                    <div class="input-group">
+                        <select id="status" class="form-control">
+                            <option value="0">Inativo</option>
+                            <option value="1">Ativo</option>
+                            <option value="" selected>Status</option>
+                        </select>
+                    </div>
+
+
+                </div>
+                <div class="col search-wrapper px-2">
+
+                    <div class="input-group">
+                        <input id="inputSearch" type="text" class="form-control" placeholder="Pesquisar" aria-label="Search" />
+
+                    </div>
+
+
+                </div>
+                <div class="col search-wrapper px-2">
+                    <span class="input-group-btn">
+                        <button id="pesquisarTurmaBtn" onclick="MontarDataTableTurma()" type="button" class="btn btn-icon">
+                            <i class="icon icon-magnify"></i>
+                        </button>
+                    </span>
+
+                </div>
+                <!-- / SEARCH -->
+
+                <div class="col-auto TURMA-CRIAR">
+                    <a href="/Turma/Nova" class="btn btn-light">Novo Turma</a>
+                </div>
+
+            </div>
+            <!-- / HEADER -->
+
+            <div class="page-content-card">
+
+                <table id="turma-datatable" class="table dataTable "></table>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+
+
+    <div id="exampleModalLive" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">Lista de Alunos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="max-height:300px; overflow:auto">
+                    <table id="turmaAlunos" class="table table-responsive">
+                        <thead>
+                            <tr>
+                                <td>Foto</td>
+                                <td style="width:30%">Nome</td>
+                                <td>Data Nascimento</td>
+
+                                <td>Telefone</td>
+                                <td>Celular</td>
+                                <td>Detalhe</td>
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="modalAgenda" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modalAgendaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalAgendaLabel">Agendamento</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <table id="turmaCalendario" class="table table-responsive dataTable table-secondary">
+                        <thead>
+                            <tr>
+                                <td>Turma</td>
+                                <td>Tipo</td>
+                                <td>Sala</td>
+
+                                <td>Dia</td>
+                                <td>Hora</td>
+                                <td>Professor</td>
+
+
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+
+                    <a href="" id="novaAgenda">
+                        <button type="button" class="btn btn-success">Cadastrar/Edidar Agendamento</button>
+                    </a>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*@section CSS          {*@
+@*<link href="~/Modulo/datatables/jquery.dataTables.min.css" rel="stylesheet" />}*@
+@section Scripts{
+    @*
+        <script src="~/Modulo/datatables/jquery.dataTables.min.js"></script>*@
+    <!-- Data tables -->
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="~/js/apps/Turma/DataTable/turma.js"></script>
+    <script>
+        function ModalAluno(id) {
+            var dataT = {
+                idTurma: id
+            };
+            var callback = function (data) {
+                if (data.success) {
+                    var linhas = '';
+                    $.each(data.alunos, function (index, item) {
+                        linhas = linhas + " <tr><td>  <img class=\"avatar mr-4\" alt=\"" + item.nome + "\" src=\"/images/avatars/Aluno/" + item.foto + "\"></td><td>" + item.nome + "</td><td>" + item.dataToShortDate + "</td><td>" + item.telefone + "</td><td>" + item.celular + "</td><td><a href=\"/Aluno/Detalhar/" + item.uifId + "\"  target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\"> <i class=\"icon-account-search s-6\"></i></a></td></tr>";
+
+                    });
+                    $("#turmaAlunos tbody").html(linhas);
+                    //$("#turmaAlunos tbody").add(linhas);
+                    $('#exampleModalLive').modal("show");
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.GET("/Turma/Alunos/", dataT, callback, callbackErro, $('#loader'));
+
+        }
+        function ModalCalendario(idTurma) {
+            $("#novaAgenda").attr("href", "/Turma/Calendario/" + idTurma);
+            var dataT = {
+                idTurma: idTurma
+            };
+            var callback = function (data) {
+                if (data.success) {
+                    var linhas = '';
+                    $.each(data.agenda, function (index, item) {
+                        linhas = linhas + " <tr><td>" + item.desTurma + " </td><td>" + item.tipoTurma + " </td><td>" + item.desSala + " </td><td>" + item.siglaDia + " </td><td>" + item.hora + " </td><td>" + item.professor + " </td>\"> <i class=\"icon-account-search s-6\"></i></a></td></tr>";
+
+                    });
+                    $("#turmaCalendario tbody").html(linhas);
+                    //$("#turmaAlunos tbody").add(linhas);
+                    $('#modalAgenda').modal("show");
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
+
+        }
+
+    </script>
+    <script>
+        function Deletar(linha) {
+            var dataT = {
+                id: $(linha).closest('tr').find('td').eq('0').html()
+            }
+
+            var callback = function (data) {
+
+                if (data.success) {
+                    removeLinhaRowIndex(linha, "turma-datatable");
+                    PNotify.success({
+                        text: 'Deletado com sucesso.'
+                    });
+                   
+
+                } else {
+                    var msg = '';
+                    $.each(data.data, function (index, item) {
+                        msg = msg + item.property + ' => ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+                        text: data.message + '|' + msg
+                    });
+
+
+                }
+            }
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: `Ocorreu um erro ao processar sua solicitação. Erro [${data.responseText}]`
+                });
+
+            }
+
+            academia.helper.rest.utils.DELETE("/Turma/Deletar", dataT, callback, callbackErro, $('#loader'));
+
+        }
+    </script>
+}
+

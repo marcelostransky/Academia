@@ -1,4 +1,5 @@
-﻿using AcademiaDanca.IO.Dominio.Contexto.Entidade;
+﻿using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Dapper;
@@ -180,19 +181,163 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
         }
 
-        public async Task<int> RegistrarItemMatricula(int idTurma, int idMatricula, decimal valor)
+        public async Task<int> RegistrarItemMatricula(MatriculaItem item)
         {
-            var parametros = new DynamicParameters();
-            parametros.Add("sp_id_turma", idTurma);
-            parametros.Add("sp_id_matricula", idMatricula);
-            parametros.Add("sp_valor_turma", valor);
-            var registrado = (await _contexto
-                  .Connection
-                  .ExecuteAsync("sp_insert_item_matricula",
-                  parametros,
-                  commandType: System.Data.CommandType.StoredProcedure));
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_turma", item.IdTurma);
+                parametros.Add("sp_id_matricula", item.IdMatricula);
+                parametros.Add("sp_valor_turma", item.Valor);
+                parametros.Add("sp_desconto", item.Desconto ? 1 : 0);
+                parametros.Add("sp_valor_desconto", item.ValorDesconto);
+                parametros.Add("sp_valor_calculado", item.ValorCalculado);
+                var registrado = (await _contexto
+                      .Connection
+                      .ExecuteAsync("sp_insert_item_matricula",
+                      parametros,
+                      commandType: System.Data.CommandType.StoredProcedure));
 
-            return registrado;
+                return registrado;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
+        }
+
+        public async Task<IEnumerable<ItemMatriculaQueryResultado>> ObterItensMatriculaPor(int id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_matricula", id);
+
+                var listaRetorno = (await _contexto
+                      .Connection
+                      .QueryAsync<ItemMatriculaQueryResultado>(@"SELECT 
+                      MT.id_matricula as IdMatricula,
+                      MT.id_turma as IdTurma,
+                      T.cod_turma as CodTurma,
+                      MT.valor as Valor,
+                      MT.desconto as Desconto,
+                      MT.valor_desconto as ValorDesconto,
+                      MT.valor_calculado as ValorValculado FROM academia.matricula_turma as MT
+                      Join academia.turma as T ON MT.id_turma = T.id
+                      Where MT.id_matricula = @sp_id_matricula",
+                      parametros,
+                      commandType: System.Data.CommandType.Text));
+
+                return listaRetorno;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
+
+        public async Task<bool> CheckMatriculaItemTempExisteAsync(MatriculaItemComando comando)
+        {
+            var query = @"SELECT count(1) FROM academia.matricula_turma_temp 
+                          where id_matricula = @sp_id_matricula and id_turma = @sp_id_turma ;";
+             try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_matricula", comando.IdMatriculaGuid);
+                parametros.Add("sp_id_turma", comando.IdTurma);
+
+                var liberado = (await _contexto
+                      .Connection
+                      .QueryAsync<int>(query,
+                      parametros,
+                      commandType: System.Data.CommandType.Text)).FirstOrDefault() > 0 ? true : false;
+
+                return liberado;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
+        public async Task<int> RegistrarItemMatriculaTemp(MatriculaItemTemp item)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_turma", item.IdTurma);
+                parametros.Add("sp_id_matricula", item.IdMatricula);
+                parametros.Add("sp_valor_turma", item.Valor);
+                parametros.Add("sp_desconto", item.Desconto ? 1 : 0);
+                parametros.Add("sp_valor_desconto", item.ValorDesconto);
+                parametros.Add("sp_valor_calculado", item.ValorCalculado);
+                var registrado = (await _contexto
+                      .Connection
+                      .ExecuteAsync("sp_insert_item_matricula_temp",
+                      parametros,
+                      commandType: System.Data.CommandType.StoredProcedure));
+
+                return registrado;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
+        }
+        public async Task<IEnumerable<ItemMatriculaQueryResultado>> ObterMatriculaItensTempPor(Guid id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_matricula", id.ToString());
+
+                var listaRetorno = (await _contexto
+                      .Connection
+                      .QueryAsync<ItemMatriculaQueryResultado>(@"SELECT 
+                      MT.id_matricula as IdMatriculaGuid,
+                      MT.id_turma as IdTurma,
+                      T.cod_turma as CodTurma,
+                      MT.valor as Valor,
+                      case when MT.desconto = 0 then false else true end as Desconto,
+                      MT.valor_desconto as ValorDesconto,
+                      MT.valor_calculado as ValorCalculado FROM academia.matricula_turma_temp as MT
+                      Join academia.turma as T ON MT.id_turma = T.id
+                      Where MT.id_matricula = @sp_id_matricula",
+                      parametros,
+                      commandType: System.Data.CommandType.Text));
+
+                return listaRetorno;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
         }
     }
 }

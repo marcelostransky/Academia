@@ -1,0 +1,341 @@
+﻿@{
+    ViewData["Title"] = "Detalhar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Css{
+    <style>
+        .page-layout.simple .page-sidebar {
+            width: 320px;
+            min-width: 220px;
+            max-width: 320px;
+            z-index: 2;
+            -webkit-box-shadow: none;
+            box-shadow: none;
+            background: transparent;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    </style>
+}
+
+
+<div id="contacts" class="page-layout simple left-sidebar-floating">
+
+    <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-4 p-sm-6">
+
+        <div class="col">
+
+            <div class="row no-gutters align-items-center flex-nowrap">
+
+                <button type="button" class="sidebar-toggle-button btn btn-icon d-inline-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="contacts-sidebar">
+                    <i class="icon icon-menu"></i>
+                </button>
+                <!-- APP TITLE -->
+                <div class="logo row no-gutters align-items-center flex-nowrap">
+                    <span class="logo-icon mr-4">
+                        <i class="icon-account-box s-6"></i>
+                    </span>
+                    <span class="logo-text h4">Aluno</span>
+                </div>
+            </div>
+            <!-- / APP TITLE -->
+        </div>
+    </div>
+    <!-- / HEADER -->
+
+    <div class="page-content-wrapper">
+
+        <aside class="page-sidebar p-6" data-fuse-bar="contacts-sidebar" data-fuse-bar-media-step="md">
+            <div class="page-sidebar-card">
+                <!-- SIDENAV HEADER -->
+                <div class="header p-4">
+                    @if (@ViewBag.Aluno != null)
+                    {
+                        <!-- USER -->
+                        <div class="row no-gutters align-items-center">
+                            <img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/@ViewBag.Aluno.AlunoFoto">
+                            <span class="font-weight-bold">@ViewBag.Aluno.AlunoNome</span>
+                        </div>
+                        <!-- / USER -->
+                    }
+                </div>
+                <!-- / SIDENAV HEADER -->
+
+                <div class="divider"></div>
+
+                <!-- SIDENAV CONTENT -->
+                <div class="content">
+                    @if (@ViewBag.Aluno != null)
+                    {
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Email</td><td>@ViewBag.Aluno.AlunoEmail</td></tr>
+                                <tr><td>Telefone</td><td>@ViewBag.Aluno.AlunoTelefone</td></tr>
+                                <tr><td>Celular</td><td>@ViewBag.Aluno.AlunoCelular</td></tr>
+
+                            </tbody>
+                        </table>
+                    }
+                    <div class="divider"></div>
+                    @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoLogradouro != null)
+                    {
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Cep</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroCep</td></tr>
+                                <tr><td>Logradouro</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroRua</td></tr>
+                                <tr><td>Complemento</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroComplemento</td></tr>
+                                <tr><td>N°</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroNumero</td></tr>
+                                <tr><td>Bairro</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroBairro</td></tr>
+                                <tr><td>Cidade</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroCidade</td></tr>
+                                <tr><td>Estado</td><td>@ViewBag.Aluno.AlunoLogradouro.LogradouroEstado</td></tr>
+                            </tbody>
+                        </table>
+                    }
+                </div>
+                <!-- / SIDENAV CONTENT -->
+            </div>
+        </aside>
+
+        <!-- CONTENT -->
+        <div class="page-content p-4 p-sm-6">
+            <!-- CONTACT LIST -->
+            <div class="contacts-list card">
+
+                <!-- CONTACT LIST HEADER -->
+                <dvi class="contacts-list-header p-4">
+
+                    <div class="row no-gutters align-items-center justify-content-between">
+
+                        <div class="list-title text-muted">
+                            Responsavel
+                        </div>
+
+                    </div>
+
+                </dvi>
+                <!-- / CONTACT LIST HEADER -->
+                <!-- CONTACT ITEM -->
+                @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoFiliacoes != null)
+                {
+                    @foreach (var item in @ViewBag.Aluno.AlunoFiliacoes)
+                    {
+                        <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+
+                            <img class="avatar mx-4" alt="Pais" src="~/images/avatars/pais.jpeg">
+                            <div class="col text-truncate font-weight-bold">@item.FiliacaoNome</div>
+                            <div class="col email text-truncate px-1 d-none d-xl-flex">
+                                @item.FiliacaoEmail
+                            </div>
+                            <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                                @item.FiliacaoDocumento
+                            </div>
+
+                            <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                @item.FiliacaoTelefone
+                            </div>
+
+                        </div>
+
+                    }
+                }
+
+            </div>
+            <!-- / CONTACT LIST -->
+            <div class="contacts-list card" style="top:10px">
+
+                <!-- CONTACT LIST HEADER -->
+                <dvi class="contacts-list-header p-4">
+
+                    <div class="row no-gutters align-items-center justify-content-between">
+
+                        <div class="list-title text-muted">
+                            Turmas(
+                            @if (@ViewBag.Aluno != null && ViewBag.Aluno.AlunoTurmas != null)
+                            {
+                                @ViewBag.Aluno.AlunoTurmas.Count;
+                            }
+                            )
+                        </div>
+
+
+                    </div>
+
+                </dvi>
+                <!-- / CONTACT LIST HEADER -->
+                <!-- CONTACT ITEM -->
+                @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoTurmas != null)
+                {
+                    @foreach (var item in @ViewBag.Aluno.AlunoTurmas)
+                    {
+                        <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+                            <img class="avatar mx-4" alt="Abbott" src="~/images/avatars/turmadanca.jpeg">
+
+                            <div class="col text-truncate font-weight-bold">@item.TurmaCodigo</div>
+
+                            <div class="col email text-truncate px-1 d-none d-xl-flex">
+                                @item.TurmaDescricao
+                            </div>
+
+                            <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                                @item.TurmaAno
+                            </div>
+
+                            <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                                @item.TurmaValor
+                            </div>
+
+                            <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                Saois
+                            </div>
+
+
+                        </div>
+
+                    }
+                }<!-- CONTACT ITEM -->
+
+            </div>
+            <!-- / Mensalidade LIST -->
+            <div class="contacts-list card" style="top:20px">
+
+                <!-- CONTACT LIST HEADER -->
+                <dvi class="contacts-list-header p-4">
+
+                    <div class="row no-gutters align-items-center justify-content-between">
+
+                        <div class="list-title text-muted">
+                            Mensalidades (
+                            @if (@ViewBag.Aluno != null && ViewBag.Aluno.AlunoMensalidades != null)
+                            {
+                                @ViewBag.Aluno.AlunoMensalidades.Count;
+                            }
+                            )
+                        </div>
+                    </div>
+                </dvi>
+                <!-- / CONTACT LIST HEADER -->
+                <!-- Mensalidade ITEM -->
+                <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+
+                    <div class="col text-truncate font-weight-bold">Parcela</div>
+
+                    <div class="col text-truncate font-weight-bold">
+                        Data de Vencimento
+                    </div>
+
+                    <div class="col text-truncate font-weight-bold">
+                        Valor Mensalidade
+                    </div>
+
+                    <div class="col text-truncate font-weight-bold">
+                        desconto
+                    </div>
+                    <div class="col text-truncate font-weight-bold">
+                        Total a Pagar
+                    </div>
+                    <div class="col text-truncate font-weight-bold">
+                        Situação
+                    </div>
+
+
+                </div>
+
+                @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoMensalidades != null)
+                {
+
+                    @foreach (var item in @ViewBag.Aluno.AlunoMensalidadesOrdenado)
+                    {
+                        <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
+                            <img class="avatar mx-4" alt="Mensalidade" src="~/images/avatars/pagamento.png">
+
+                            <div class="col text-truncate font-weight-bold">@item.MensalidadeParcela</div>
+
+                            <div class="col email text-truncate px-1 d-none d-xl-flex">
+                                @item.MensalidadeDataVencimento.ToShortDateString()
+                            </div>
+
+                            <div class="col phone text-truncate px-1 d-none d-xl-flex">
+                                @item.MensalidadeValor
+                            </div>
+
+                            <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                                @item.MensalidadeDesconto
+                            </div>
+                            <div class="col job-title text-truncate px-1 d-none d-sm-flex">
+                                @(@item.MensalidadeValor - @item.MensalidadeDesconto)
+                            </div>
+                            <div class="col company text-truncate px-1 d-none d-sm-flex">
+                                @if (@item.MensalidadePago)
+                                {
+                                    <span class="badge badge-success">
+                                        Pago - @item.MensalidadeDataPagamento.ToShortDateString()
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-danger">
+                                        Pendente
+                                    </span>
+                                }
+                            </div>
+
+
+                        </div>
+
+                    }
+                }<!-- CONTACT ITEM -->
+
+            </div>
+        </div>
+        <!-- / CONTENT -->
+        <aside class="page-sidebar p-6" data-fuse-bar="contacts-sidebar" data-fuse-bar-media-step="md">
+            <div class="page-sidebar-card">
+                <!-- SIDENAV HEADER -->
+                <div class="header p-4">
+
+                    <!-- USER -->
+                    <div class="row no-gutters align-items-center">
+                        @*<img class="avatar mr-4" alt="John Doe" src="/images/avatars/Aluno/12.jpg">*@
+                        <span class="font-weight-bold">Matricula</span>
+                    </div>
+                    <!-- / USER -->
+
+                </div>
+                <!-- / SIDENAV HEADER -->
+
+                <div class="divider"></div>
+
+                <!-- SIDENAV CONTENT -->
+                <div class="content">
+                    @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoMatricula != null)
+                    {
+                        <table class="table table-responsive">
+                            <tbody>
+                                <tr><td>Valor Contrato</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaValorContrato</td></tr>
+                                <tr><td>Desconto %</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaPercentualDesconto</td></tr>
+                                <tr><td>Valor Desconto</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaValorDesconto</td></tr>
+                                <tr><td>Dia Vencimento</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaDiaVencimento</td></tr>
+                                <tr><td>Data Inicial Pagamento Vencimento</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaDataInicialPagamento</td></tr>
+                                <tr><td>Valor Matricula</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaValorMatricula</td></tr>
+                                <tr><td>Total Parcelas</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaTotalParcelas</td></tr>
+                                <tr><td>Ano Vigencia</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaAno</td></tr>
+                                <tr><td>Status</td><td>@ViewBag.Aluno.AlunoMatricula.MatriculaStatus</td></tr>
+
+                            </tbody>
+                        </table>
+                    }
+
+                </div>
+                <!-- / SIDENAV CONTENT -->
+            </div>
+        </aside>
+    </div>
+
+</div>
+
+@section Scripts{
+    <script src="~/js/Helper/Helper.js"></script>
+    <script type="text/javascript" src="/js/apps/e-commerce/product/product.js"></script>
+    <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+}

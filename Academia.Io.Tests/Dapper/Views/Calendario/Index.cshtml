@@ -1,0 +1,77 @@
+﻿@{
+    ViewData["Title"] = "Calendário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content custom-scrollbar">
+
+    <div id="e-commerce-products" class="page-layout carded full-width">
+
+        <div class="top-bg bg-primary"></div>
+
+        <!-- CONTENT -->
+        <div class="page-content-wrapper">
+
+            <!-- HEADER -->
+            <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+
+                <!-- APP TITLE -->
+                <div class="col-12 col-sm">
+
+                    <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                        <div class="logo-icon mr-3 mt-1">
+                            <i class="icon-school s-6"></i>
+                        </div>
+                        <div class="logo-text">
+                            <div class="h4">Calendário</div>
+                            @*<div class="">Total: 20</div>*@
+                        </div>
+                    </div>
+
+                </div>
+                <!-- / APP TITLE -->
+                <div class="col-sm-2  px-1">
+
+                    <div class="input-group">
+
+                        <input id="inputData" type="text" class="form-control" placeholder="Data: 00/00/0000" />
+                        <span class="input-group-btn">
+                            <button id="inputBtnData" type="button" aria-label="Search" onclick="MontarAgendaDataTable()" class="btn btn-icon">
+                                <i class="icon-calendar-clock"></i>
+                            </button>
+                        </span>
+                    </div>
+
+                </div>
+
+                <!-- / SEARCH -->
+
+
+
+            </div>
+            <!-- / HEADER -->
+
+            <div class="page-content-card">
+
+                <table id="agenda-datatable" class="table dataTable "></table>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+</div>
+@*@section CSS          {*@
+@*<link href="~/Modulo/datatables/jquery.dataTables.min.css" rel="stylesheet" />}*@
+@section Scripts{
+    @*
+<script src="~/Modulo/datatables/jquery.dataTables.min.js"></script>*@
+<!-- Data tables -->
+<script src="~/js/Helper/HelpData.js"></script>
+<script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+<script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+<script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+<script src="~/js/apps/Agenda/DataTable/Agenda.js"></script>
+
+<script>
+    $("#inputData").mask("00/00/0000");
+</script>
+}

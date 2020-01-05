@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewData["Title"] = "Listar Funcionário";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="content custom-scrollbar">
+
+    <div id="e-commerce-products" class="page-layout carded full-width">
+
+        <div class="top-bg bg-primary"></div>
+
+        <!-- CONTENT -->
+        <div class="page-content-wrapper">
+
+            <!-- HEADER -->
+            <div class="page-header light-fg row no-gutters align-items-center justify-content-between">
+
+                <!-- APP TITLE -->
+                <div class="col-12 col-sm">
+
+                    <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                        <div class="logo-icon mr-3 mt-1">
+                            <i class="icon-account-location s-6"></i>
+                        </div>
+                        <div class="logo-text">
+                            <div class="h4">Funcionarios</div>
+                            @*<div class="">Total: 20</div>*@
+                        </div>
+                    </div>
+
+                </div>
+                <!-- / APP TITLE -->
+                <!-- SEARCH -->
+                <div class="col search-wrapper px-2">
+
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-icon" >
+                                <i class="icon icon-magnify"></i>
+                            </button>
+                        </span>
+                        <input id="products-search-input" type="text" class="form-control" placeholder="Pesquisar" aria-label="Search" />
+                    </div>
+
+                </div>
+                <!-- / SEARCH -->
+
+                <div class="col-auto">
+                    <a href="/Funcionario/Novo" class="btn btn-light">Novo Funcionário</a>
+                </div>
+
+            </div>
+            <!-- / HEADER -->
+
+            <div class="page-content-card">
+
+                <table id="funcionario-datatable" class="table dataTable "></table>
+            </div>
+        </div>
+        <!-- / CONTENT -->
+    </div>
+
+
+
+</div>
+@*@section CSS          {*@
+@*<link href="~/Modulo/datatables/jquery.dataTables.min.css" rel="stylesheet" />}*@
+@section Scripts{
+    @*<script src="~/Modulo/datatables/jquery.dataTables.min.js"></script>*@
+    <!-- Data tables -->
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script src="~/js/apps/Funcionario/DataTable/funcionario.js"></script>
+}

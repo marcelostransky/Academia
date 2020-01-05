@@ -1,0 +1,226 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@ViewData["Title"] - AcademiaDanca.IO.App</title>
+    <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700italic,700,900,900italic" rel="stylesheet">
+
+    <!-- STYLESHEETS -->
+    <style type="text/css">
+
+        [fuse-cloak],
+        .fuse-cloak {
+            display: none !important;
+        }
+    </style>
+
+    <!-- Icons.css -->
+    <link type="text/css" rel="stylesheet" href="/icons/fuse-icon-font/style.css">
+    <!-- Animate.css -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/animate.css/animate.min.css">
+    <!-- Popper.js -->
+    <script type="text/javascript" src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
+
+    <!-- PNotify -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/pnotify/dist/PNotifyBrightTheme.css">
+    <!-- Nvd3 - D3 Charts -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/nvd3/build/nv.d3.min.css" />
+    <!-- Perfect Scrollbar -->
+    <link type="text/css" rel="stylesheet" href="/node_modules/perfect-scrollbar/css/perfect-scrollbar.css" />
+    <!-- Fuse Html -->
+    <link type="text/css" rel="stylesheet" href="/fuse-html/fuse-html.min.css" />
+    <!-- Main CSS -->
+    <link type="text/css" rel="stylesheet" href="/css/main.css">
+    <link href="/css/AjaxLoader.css" rel="stylesheet" />
+    @RenderSection("CSS", false)
+    <!-- / STYLESHEETS -->
+    <!-- JAVASCRIPT -->
+    <!-- jQuery -->
+    <script type="text/javascript" src="/node_modules/jquery/dist/jquery.min.js"></script>
+    <!-- Mobile Detect -->
+    <script type="text/javascript" src="/node_modules/mobile-detect/mobile-detect.min.js"></script>
+    <!-- Bootstrap -->
+    <script type="text/javascript" src="/node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- Perfect Scrollbar -->
+    <script type="text/javascript" src="/node_modules/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
+    <!-- Popper.js -->
+    <script type="text/javascript" src="/node_modules/popper.js/dist/umd/popper.min.js"></script>
+
+    <!-- Nvd3 - D3 Charts -->
+    @*
+        <script type="text/javascript" src="/node_modules/d3/d3.min.js"></script>*@
+    @*
+        <script type="text/javascript" src="/node_modules/nvd3/build/nv.d3.min.js"></script>*@
+    <!-- Data tables -->
+    @*
+        <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>*@
+    @*
+        <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>*@
+    <!-- PNotify -->
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotify.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyStyleMaterial.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyButtons.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyCallbacks.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyMobile.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyHistory.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyDesktop.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyConfirm.js"></script>
+    <script type="text/javascript" src="/node_modules/pnotify/dist/iife/PNotifyReference.js"></script>
+    <!-- Fuse Html -->
+    <script type="text/javascript" src="/fuse-html/fuse-html.min.js"></script>
+    <!-- Main JS -->
+    <script type="text/javascript" src="~/js/main.js"></script>
+    <!-- / JAVASCRIPT -->
+</head>
+
+<body class="layout layout-vertical layout-left-navigation layout-above-toolbar layout-above-footer">
+    <main>
+        <nav id="toolbar" class="bg-white">
+
+            <div class="row no-gutters align-items-center flex-nowrap">
+
+                <div class="col">
+
+                    <div class="row no-gutters align-items-center flex-nowrap">
+
+                        <button type="button" class="toggle-aside-button btn btn-icon d-block d-lg-none" data-fuse-bar-toggle="aside">
+                            <i class="icon icon-menu"></i>
+                        </button>
+
+                        <div class="toolbar-separator d-block d-lg-none"></div>
+
+                        <div class="shortcuts-wrapper row no-gutters align-items-center px-0 px-sm-2">
+
+                            <div class="shortcuts row no-gutters align-items-center d-none d-md-flex">
+
+                                <a href="apps-chat.html" class="shortcut-button btn btn-icon mx-1">
+                                    <i class="icon icon-hangouts"></i>
+                                </a>
+
+                                <a href="apps-contacts.html" class="shortcut-button btn btn-icon mx-1">
+                                    <i class="icon icon-account-box"></i>
+                                </a>
+
+                                <a href="apps-mail.html" class="shortcut-button btn btn-icon mx-1">
+                                    <i class="icon icon-email"></i>
+                                </a>
+
+                            </div>
+
+                            <div class="add-shortcut-menu-button dropdown px-1 px-sm-3">
+
+                                <div class="dropdown-toggle btn btn-icon" role="button" id="dropdownShortcutMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="icon icon-star text-amber-600"></i>
+                                </div>
+
+                                <div class="dropdown-menu" aria-labelledby="dropdownShortcutMenu">
+
+                                    <a class="dropdown-item" href="#">
+                                        <div class="row no-gutters align-items-center justify-content-between flex-nowrap">
+                                            <div class="row no-gutters align-items-center flex-nowrap">
+                                                <i class="icon icon-calendar-today"></i>
+                                                <span class="px-3">Calendar</span>
+                                            </div>
+                                            <i class="icon icon-pin s-5 ml-2"></i>
+                                        </div>
+                                    </a>
+
+                                    <a class="dropdown-item" href="#">
+                                        <div class="row no-gutters align-items-center justify-content-between flex-nowrap">
+                                            <div class="row no-gutters align-items-center flex-nowrap">
+                                                <i class="icon icon-folder"></i>
+                                                <span class="px-3">File Manager</span>
+                                            </div>
+                                            <i class="icon icon-pin s-5 ml-2"></i>
+                                        </div>
+                                    </a>
+
+                                    <a class="dropdown-item" href="#">
+                                        <div class="row no-gutters align-items-center justify-content-between flex-nowrap">
+                                            <div class="row no-gutters align-items-center flex-nowrap">
+                                                <i class="icon icon-checkbox-marked"></i>
+                                                <span class="px-3">To-Do</span>
+                                            </div>
+                                            <i class="icon icon-pin s-5 ml-2"></i>
+                                        </div>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="toolbar-separator"></div>
+
+                    </div>
+                </div>
+
+                <div class="col-auto">
+
+                    <div class="row no-gutters align-items-center justify-content-end">
+
+                        @*Barra Ferramentas*@
+                        <partial name="_BarraFerramenta.cshtml" />
+
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="wrapper">
+            <aside id="aside" class="aside aside-left" data-fuse-bar="aside" data-fuse-bar-media-step="md" data-fuse-bar-position="left">
+                <div class="aside-content bg-primary-700 text-auto">
+
+                    <div class="aside-toolbar">
+
+                        <div class="logo">
+                            <span class="logo-icon">A</span>
+                            <span class="logo-text">Academia</span>
+                        </div>
+
+                        <button id="toggle-fold-aside-button" type="button" class="btn btn-icon d-none d-lg-block" data-fuse-aside-toggle-fold>
+                            <i class="icon icon-backburger"></i>
+                        </button>
+
+                    </div>
+
+                    @*//Menu*@
+                    <partial name="_Menu.cshtml" />
+                </div>
+            </aside>
+            <div class="content-wrapper">
+                <div class="content custom-scrollbar">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <nav id="footer" class="bg-dark text-auto row no-gutters align-items-center px-6">
+        </nav>
+    </main>
+    @Html.Partial("_PartialLoader")
+    <script src="~/js/Helper/Helper.js"></script>
+    <script src="~/js/Helper/Tabela.js"></script>
+    <script src="~/js/Helper/FileDownload.js"></script>
+    <script>
+        $(document).ready(function () {
+            AcaoesPermitida();
+        })
+        function AcaoesPermitida() {
+            $.get("/Permissao/Acoes/", function (resultado) {
+                let constantes = resultado;
+                constantes.forEach(function (valor) {
+                    $(`.${valor}`).remove();
+                });
+                
+            })
+
+
+        }
+    </script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

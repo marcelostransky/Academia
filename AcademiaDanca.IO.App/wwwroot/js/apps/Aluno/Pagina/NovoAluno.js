@@ -107,6 +107,49 @@ function HabilitarTab(atual, prox) {
     $(`#${atual}-pane`).removeClass('active');
     $(`#${prox}-pane`).addClass('active');
 }
+function BindItemMatricula(id) {
+    var dataT = {
+
+        id: id
+    };
+    var callback = function (data) {
+        if (data.success) {
+            PNotify.success({
+                title: 'Atualizado com sucesso.'
+            });
+            if (document.getElementById("results").innerHTML !== '') {
+                document.getElementById("results").innerHTML = '';
+                desligar_camera();
+            }
+
+            document.getElementById("formAlunoFoto").reset();
+            HabilitarTab(tabAtual, tabProx);
+
+
+            return false;
+        } else {
+            var msg = '';
+            $.each(data.data, function (index, item) {
+                msg = msg + item.property + ' > ' + item.message + '\n';
+            });
+
+            PNotify.error({
+                title: 'Ops! ' + data.message + ' :-( ',
+                text: msg
+            });
+        }
+    };
+    var callbackErro = function (data) {
+        PNotify.error({
+            text: 'Ocorreu um erro ao processar sua solicitação'
+        });
+
+    };
+    academia.helper.rest.utils.GET("/Financeiro/Matricula/Item", dataT, callback, callbackErro, $('#loader'));
+
+    return false;
+
+}
 function BuscaCep(cep) {
     if (cep.value !== '') {
         var dataT = {
@@ -225,23 +268,75 @@ $(function () {
     });
 });
 function AdicionarLinhaTabelaTurma(turma) {
-    if (turma.val().length > 0) {
-        $("#dadosTurmas").show();
-        $("#dadosTurmas").removeClass('invisible');
-        $("#dadosTurmas").addClass("visible");
-        var dados = turma.text().split("|");
-        var tabela = $("#tb_turma tbody");
-        var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[4] + "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + turma.val() + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
-        tabela.append(linha);
-        SetarArrayTurmas(turma.val(), dados[4]);
-    }
-    else {
+    var dados = turma.text().split("|");
+    var dataT = {
+
+        IdMatriculaGuid: $("#hiddenHashAluno").val(),
+        IdTurma: turma.val(),
+        Valor: dados[4]
+    };
+    var callback = function (data) {
+        const resultado = JSON.parse(data);
+        if (resultado.success) {
+            $("#tb_turma tbody").html('');
+            $.each(resultado.data.itens, function (index, item) {
+                var tabela = $("#tb_turma tbody");
+                var linha = "<tr id=\"" + item.idTurma + "\"><td>" + item.idTurma +
+                    "</td><td>" + item.idTurma +
+                    "</td><td>" + item.valor +
+                    "</td><td>" + item.valorDesconto +
+                    "%</td><td>" + item.valorCalculado +
+                    "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + item.idTurma + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
+                tabela.append(linha);
+            });
+            $("#tb_turma tfoot").html('');
+            if (parseFloat(resultado.data.totalDesconto) > 0) {
+                $("#tb_turma tfoot").html('');
+                document.getElementById("inputValorParcela").value = resultado.data.totalDesconto;
+                var tabela = $("#tb_turma");
+                var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + resultado.data.totalDesconto + "</td><td></td ></tr > </tfoot>";
+                tabela.append(linha);
+                return false;
+            }
+            return false;
+        } else {
+            var msg = '';
+            $.each(JSON.parse(data).data, function (index, item) {
+                msg = msg + item.property + ' - ' + item.message + '\n';
+            });
+
+            PNotify.error({
+                
+                text: msg
+            });
+        }
+    };
+    var callbackErro = function (data) {
         PNotify.error({
-            title: 'Ops! Informe uma turma. :-( ',
-            text: ''
+            text: 'Ocorreu um erro ao processar sua solicitação'
         });
 
-    }
+    };
+    academia.helper.rest.utils.POST("/Matricula/Item/Add", dataT, callback, callbackErro, $('#loader'));
+
+    return false;
+    //if (turma.val().length > 0) {
+    //    $("#dadosTurmas").show();
+    //    $("#dadosTurmas").removeClass('invisible');
+    //    $("#dadosTurmas").addClass("visible");
+    //    var dados = turma.text().split("|");
+    //    var tabela = $("#tb_turma tbody");
+    //    var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[4] + "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + turma.val() + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
+    //    tabela.append(linha);
+    //    SetarArrayTurmas(turma.val(), dados[4]);
+    //}
+    //else {
+    //    PNotify.error({
+    //        title: 'Ops! Informe uma turma. :-( ',
+    //        text: ''
+    //    });
+
+    //}
 
 }
 function DeletarTurmaAluno(turmaId, alunoId) {
@@ -279,7 +374,7 @@ function DeletarTurmaAluno(turmaId, alunoId) {
 
     };
 
-    academia.helper.rest.utils.DELETE("/Aluno/Turma/Deletar", dataT, callback, callbackErro, $('#loader'));
+    academia.helper.rest.utils.DELETE("/Matricula/Item/Del", dataT, callback, callbackErro, $('#loader'));
 
 }
 $.extend($.expr[":"], {
@@ -288,51 +383,54 @@ $.extend($.expr[":"], {
     }
 });
 function Turma() {
+    $("#dadosTurmas").show();
+    $("#dadosTurmas").removeClass('invisible');
+    $("#dadosTurmas").addClass("visible");
+    AdicionarLinhaTabelaTurma($('#Turmas option:selected'));
+    //if (existeLinha("tb_turma") <= 0) {
+    //    var dataT = {
+    //        IdAluno: $("#hiddenIdAluno").val(),
+    //        IdTurma: $("#Turmas").val()
+    //    };
+    //    var callback = function (data) {
+    //        if (JSON.parse(data).success) {
+    //            AdicionarLinhaTabelaTurma($('#Turmas option:selected'));
+    //            PNotify.success({
+    //                text: 'Atualizado com sucesso.'
+    //            });
+    //            //document.getElementById("formTurma").reset();
+    //            ObeterValorCursoSelecionado($("#hiddenHashAluno").val());
+    //            return false;
+    //        } else {
+    //            var msg = '';
+    //            $.each(JSON.parse(data).data, function (index, item) {
+    //                msg = msg + item.property + ' > ' + item.message + '\n';
+    //            });
 
-    if (existeLinha("tb_turma") <= 0) {
-        var dataT = {
-            IdAluno: $("#hiddenIdAluno").val(),
-            IdTurma: $("#Turmas").val()
-        };
-        var callback = function (data) {
-            if (JSON.parse(data).success) {
-                AdicionarLinhaTabelaTurma($('#Turmas option:selected'));
-                PNotify.success({
-                    text: 'Atualizado com sucesso.'
-                });
-                //document.getElementById("formTurma").reset();
-                ObeterValorCursoSelecionado($("#hiddenHashAluno").val());
-                return false;
-            } else {
-                var msg = '';
-                $.each(JSON.parse(data).data, function (index, item) {
-                    msg = msg + item.property + ' > ' + item.message + '\n';
-                });
+    //            PNotify.error({
+    //                title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
+    //                text: msg
+    //            });
+    //        }
+    //    };
+    //    var callbackErro = function (data) {
+    //        PNotify.error({
+    //            text: 'Ocorreu um erro ao processar sua solicitação'
+    //        });
 
-                PNotify.error({
-                    title: 'Ops! ' + JSON.parse(data).message + ' :-( ',
-                    text: msg
-                });
-            }
-        };
-        var callbackErro = function (data) {
-            PNotify.error({
-                text: 'Ocorreu um erro ao processar sua solicitação'
-            });
+    //    };
+    //    academia.helper.rest.utils.POST("/Aluno/Turma/Novo", dataT, callback, callbackErro, $('#loader'));
+    //}
+    //else {
+    //    PNotify.info({
 
-        };
-        academia.helper.rest.utils.POST("/Aluno/Turma/Novo", dataT, callback, callbackErro, $('#loader'));
-    }
-    else {
-        PNotify.info({
-
-            text: 'A turma informada já esta vinculada para este aluno.'
-        });
-    }
+    //        text: 'A turma informada já esta vinculada para este aluno.'
+    //    });
+    //}
 
 
-    return false;
-};
+    //return false;
+}
 $("#formAlunoFoto").submit(function (event) {
 
     event.preventDefault();

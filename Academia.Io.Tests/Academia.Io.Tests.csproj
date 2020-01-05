@@ -15,13 +15,206 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
-    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
-    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
+    <None Remove="Dapper\Views\Aluno\Consultar.cshtml" />
+    <None Remove="Dapper\Views\Aluno\Detalhar.cshtml" />
+    <None Remove="Dapper\Views\Aluno\Editar.cshtml" />
+    <None Remove="Dapper\Views\Aluno\Index.cshtml" />
+    <None Remove="Dapper\Views\Aluno\Listar.cshtml" />
+    <None Remove="Dapper\Views\Aluno\Novo.cshtml" />
+    <None Remove="Dapper\Views\Aluno\Novo_novo.cshtml" />
+    <None Remove="Dapper\Views\Calendario\Index.cshtml" />
+    <None Remove="Dapper\Views\Camera\Capture.cshtml" />
+    <None Remove="Dapper\Views\Default\Index.cshtml" />
+    <None Remove="Dapper\Views\Default\teste.cshtml" />
+    <None Remove="Dapper\Views\Financeiro\Index.cshtml" />
+    <None Remove="Dapper\Views\Financeiro\Matricular.cshtml" />
+    <None Remove="Dapper\Views\Financeiro\Mensalidade.cshtml" />
+    <None Remove="Dapper\Views\Funcionario\Editar.cshtml" />
+    <None Remove="Dapper\Views\Funcionario\Listar.cshtml" />
+    <None Remove="Dapper\Views\Funcionario\Novo.cshtml" />
+    <None Remove="Dapper\Views\Home\About.cshtml" />
+    <None Remove="Dapper\Views\Home\Cards.cshtml" />
+    <None Remove="Dapper\Views\Home\Index.cshtml" />
+    <None Remove="Dapper\Views\Home\NaoAutorizado.cshtml" />
+    <None Remove="Dapper\Views\Login\Autenticar.cshtml" />
+    <None Remove="Dapper\Views\Relatorio\Index.cshtml" />
+    <None Remove="Dapper\Views\Shared\Error.cshtml" />
+    <None Remove="Dapper\Views\Shared\_BarraFerramenta.cshtml" />
+    <None Remove="Dapper\Views\Shared\_CookieConsentPartial.cshtml" />
+    <None Remove="Dapper\Views\Shared\_DataTempo.cshtml" />
+    <None Remove="Dapper\Views\Shared\_Layout.cshtml" />
+    <None Remove="Dapper\Views\Shared\_Menu.cshtml" />
+    <None Remove="Dapper\Views\Shared\_PartialLoader.cshtml" />
+    <None Remove="Dapper\Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <None Remove="Dapper\Views\Turma\Aluno.cshtml" />
+    <None Remove="Dapper\Views\Turma\Calendario.cshtml" />
+    <None Remove="Dapper\Views\Turma\Editar.cshtml" />
+    <None Remove="Dapper\Views\Turma\Listar.cshtml" />
+    <None Remove="Dapper\Views\Turma\Nova.cshtml" />
+    <None Remove="Dapper\Views\_ViewImports.cshtml" />
+    <None Remove="Dapper\Views\_ViewStart.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Dapper\" />
+    <Content Include="Dapper\Views\Aluno\Consultar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Aluno\Detalhar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Aluno\Editar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Aluno\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Aluno\Listar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Aluno\Novo.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Aluno\Novo_novo.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Calendario\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Camera\Capture.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Default\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Default\teste.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Financeiro\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Financeiro\Matricular.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Financeiro\Mensalidade.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Funcionario\Editar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Funcionario\Listar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Funcionario\Novo.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Home\About.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Home\Cards.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Home\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Home\NaoAutorizado.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Login\Autenticar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Relatorio\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\Error.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\_BarraFerramenta.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\_CookieConsentPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\_DataTempo.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\_Layout.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\_Menu.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\_PartialLoader.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Shared\_ValidationScriptsPartial.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Turma\Aluno.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Turma\Calendario.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Turma\Editar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Turma\Listar.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\Turma\Nova.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\_ViewImports.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Dapper\Views\_ViewStart.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="morelinq" Version="3.3.2" />
+    <PackageReference Include="MSTest.TestAdapter" Version="1.3.2" />
+    <PackageReference Include="MSTest.TestFramework" Version="1.3.2" />
   </ItemGroup>
 
   <ItemGroup>

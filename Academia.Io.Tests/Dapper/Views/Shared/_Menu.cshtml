@@ -1,0 +1,161 @@
+﻿<script>
+
+    $(document).ready(function () {
+        PermissaoMenu();
+    })
+    function PermissaoMenu() {
+        $.get("/Home/Menu/", function (resultado) {
+            let constantes = resultado;
+            constantes.forEach(function (valor) {
+                $(`.${valor}`).remove();
+            });
+             $("#sidenav").show();
+        })
+
+       
+    }
+</script>
+<ul class="nav flex-column custom-scrollbar" style="display:none" id="sidenav" data-children=".nav-item">
+    <li class="nav-item DASH">
+        <a class="nav-link ripple " href="/Home/" data-url="/Home/">
+
+            <i class="icon s-6 icon-view-dashboard"></i>
+
+            <span>DashBoard</span>
+        </a>
+    </li>
+    <li class="nav-item FINA" role="tab" id="heading-dashboards">
+        <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-dashboards" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
+            <i class="icon s-6 icon-cash-usd"></i>
+            <span>Financeiro</span>
+        </a>
+        <ul id="collapse-dashboards" class='collapse' role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
+            <li class="nav-item">
+                <a class="nav-link ripple" href="/Aluno/Novo" data-url="apps-dashboards-server.html">
+                    <span>Novo Matrícula</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ripple" href="/Financeiro/" data-url="apps-dashboards-server.html">
+                    <span>Mensalidade</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ripple " href="/Relatorio/" data-url="/Relatorio/">
+                    <span>Relatório</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item AGEN" role="tab" id="Agenda">
+
+        <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-agenda" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
+
+            <i class="icon s-6 icon-calendar-today"></i>
+
+            <span>Agenda</span>
+        </a>
+        <ul id="collapse-agenda" class='collapse' role="tabpanel" aria-labelledby="agenda" data-children=".nav-item">
+
+            <li class="nav-item">
+                <a class="nav-link ripple" href="/Calendario/" data-url="apps-dashboards-server.html">
+
+                    <span>Calendário</span>
+                </a>
+            </li>
+
+        </ul>
+    </li>
+    <li class="nav-item TURMA" role="tab" id="heading-turmas">
+        <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-turmas" href="#" aria-expanded="false" aria-controls="collapse-dashboards">
+
+            <i class="icon s-6 icon-school"></i>
+
+            <span>Turmas</span>
+        </a>
+        <ul id="collapse-turmas" class='collapse' role="tabpanel" aria-labelledby="heading-turmas" data-children=".nav-item">
+
+            <li class="nav-item TURMA-CRIAR">
+                <a class="nav-link ripple" href="/Turma/Nova" data-url="apps-dashboards-server.html">
+
+                    <span>Nova</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ripple" href="/Turma/Listar" data-url="/Turma/Listar">
+                    <span>Listar</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item ALUNO" role="tab" id="heading-dashboards">
+        <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-aluno" href="#" aria-expanded="false" aria-controls="collapse-aluno">
+            <i class="icon s-6 icon-account"></i>
+            <span>Aluno</span>
+        </a>
+        <ul id="collapse-aluno" class='collapse' role="tabpanel" aria-labelledby="heading-dashboards" data-children=".nav-item">
+            <li class="nav-item">
+                <a class="nav-link ripple" href="/Aluno/Novo" data-url="apps-dashboards-server.html">
+                    <span>Novo</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ripple" href="/Aluno/Consultar" data-url="apps-dashboards-server.html">
+                    <span>Listar</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+    <li class="nav-item FUNC" role="tab" id="heading-funcionario">
+
+        <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-ecommerce" href="#" aria-expanded="false" aria-controls="collapse-ecommerce">
+
+            <i class="icon s-6 icon-account-box"></i>
+
+            <span>Funcionario</span>
+        </a>
+        <ul id="collapse-ecommerce" class='collapse ' role="tabpanel" aria-labelledby="heading-ecommerce" data-children=".nav-item">
+
+            <li class="nav-item">
+                <a class="nav-link ripple " href="/Funcionario/Novo" data-url="/Funcionario/Novo">
+
+                    <span>Novo</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link ripple " href="/Funcionario/Listar" data-url="/Funcionario/Listar">
+
+                    <span>Listar</span>
+                </a>
+            </li>
+
+
+
+        </ul>
+    </li>
+    <li class="nav-item SEGU" role="tab" id="heading-authentication">
+
+        <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-authentication" href="#" aria-expanded="false" aria-controls="collapse-authentication">
+
+            <i class="icon s-6 icon-lock"></i>
+
+            <span>Configuração</span>
+        </a>
+        <ul id="collapse-authentication" class='collapse ' role="tabpanel" aria-labelledby="heading-authentication" data-children=".nav-item">
+            <li class="nav-item">
+                <a class="nav-link ripple " href="/Admin/Pagina" data-url="home">
+
+                    <span>Valor Hora</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link ripple " href="/Admin/Pagina" data-url="home">
+
+                    <span>Acesso</span>
+                </a>
+            </li>
+        </ul>
+    </li>
+</ul>
+

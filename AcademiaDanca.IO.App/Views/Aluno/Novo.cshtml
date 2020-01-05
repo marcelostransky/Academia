@@ -276,7 +276,7 @@
                     <div class="card p-6">
                         <form id="formMatricula" style="display:none" class="invisible form formReset">
                             <div class="form-row">
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group col-md-12">
                                         <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
                                         <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula" value="0">
@@ -341,7 +341,7 @@
                                         </table>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-6">
 
                                     <div class="form-group col-md-12">
                                         <label for="inputUF" class="col-form-label">Turma</label>
@@ -356,15 +356,16 @@
                                     </div>
 
 
-                                    <div id="dadosTurmas" class="card">
-                                        <table id="tb_turma" class="table dataTable ">
+                                    <div id="dadosTurmas" class="card invisible">
+                                        <table id="tb_turma" class="table dataTable">
                                             <thead>
                                                 <tr>
                                                     <td>Id</td>
                                                     <td>Código</td>
-                                                    <td>Curso</td>
                                                     <td>Valor</td>
-                                                    <td></td>
+                                                   
+                                                    <td>Desconto</td>
+                                                    <td>Total</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -374,7 +375,7 @@
                                     </div>
 
                                 </div>
-                                <div class="col-md-4">
+                                <div class="col-md-3">
                                     <div class="form-group col-md-12">
                                         <label for="inputValorParcela" class="col-form-label">Valor</label>
                                         <input type="text" class="form-control" id="inputValorParcela" name="inputValorParcela">

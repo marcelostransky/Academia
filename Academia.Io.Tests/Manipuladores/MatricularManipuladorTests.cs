@@ -32,7 +32,7 @@ namespace Academia.Io.Tests.Manipuladores
 
 
             };
-            var manipulador = new MatricularManipulador(new FakeFinanceiroRepositorio());
+            var manipulador = new MatricularManipulador(new FakeFinanceiroRepositorio(), new FakeConfiguracaoRepositorio());
             var result = await manipulador.ManipuladorAsync(comando);
             Assert.AreNotEqual(null, result);
             Assert.AreEqual(true, manipulador.Valid);
