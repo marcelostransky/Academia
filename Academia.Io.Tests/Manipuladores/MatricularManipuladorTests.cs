@@ -1,6 +1,7 @@
 ﻿using Academia.Io.Tests.Fakes;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
-using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricula;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Academia.Io.Tests.Manipuladores
 
 
             };
-            var manipulador = new MatricularManipulador(new FakeFinanceiroRepositorio(), new FakeConfiguracaoRepositorio());
+            var manipulador = new MatricularManipulador(new FakeFinanceiroRepositorio(), new FakeAlunoRepositorio(), new FakeConfiguracaoRepositorio());
             var result = await manipulador.ManipuladorAsync(comando);
             Assert.AreNotEqual(null, result);
             Assert.AreEqual(true, manipulador.Valid);

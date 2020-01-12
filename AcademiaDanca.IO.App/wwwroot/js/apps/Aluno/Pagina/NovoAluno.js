@@ -107,47 +107,26 @@ function HabilitarTab(atual, prox) {
     $(`#${atual}-pane`).removeClass('active');
     $(`#${prox}-pane`).addClass('active');
 }
-function BindItemMatricula(id) {
-    var dataT = {
-
-        id: id
-    };
-    var callback = function (data) {
-        if (data.success) {
-            PNotify.success({
-                title: 'Atualizado com sucesso.'
-            });
-            if (document.getElementById("results").innerHTML !== '') {
-                document.getElementById("results").innerHTML = '';
-                desligar_camera();
-            }
-
-            document.getElementById("formAlunoFoto").reset();
-            HabilitarTab(tabAtual, tabProx);
-
-
-            return false;
-        } else {
-            var msg = '';
-            $.each(data.data, function (index, item) {
-                msg = msg + item.property + ' > ' + item.message + '\n';
-            });
-
-            PNotify.error({
-                title: 'Ops! ' + data.message + ' :-( ',
-                text: msg
-            });
-        }
-    };
-    var callbackErro = function (data) {
-        PNotify.error({
-            text: 'Ocorreu um erro ao processar sua solicitação'
-        });
-
-    };
-    academia.helper.rest.utils.GET("/Financeiro/Matricula/Item", dataT, callback, callbackErro, $('#loader'));
-
-    return false;
+function BindItemMatricula(data) {
+    $("#tb_turma tbody").html('');
+    $.each(data.itens, function (index, item) {
+        var tabela = $("#tb_turma tbody");
+        var linha = "<tr id=\"" + item.idTurma + "\"><td>" + item.idTurma +
+            "</td><td>" + item.idTurma +
+            "</td><td>" + item.valor +
+            "</td><td>" + item.valorDesconto +
+            "%</td><td>" + item.valorCalculado +
+            "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + item.idTurma + "','" + document.getElementById('hiddenHashAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
+        tabela.append(linha);
+    });
+    $("#tb_turma tfoot").html('');
+    if (parseFloat(data.totalDesconto) > 0) {
+        $("#tb_turma tfoot").html('');
+        document.getElementById("inputValorParcela").value = data.totalDesconto;
+        var tabela = $("#tb_turma");
+        var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + data.totalDesconto + "</td><td></td ></tr > </tfoot>";
+        tabela.append(linha);
+    }
 
 }
 function BuscaCep(cep) {
@@ -278,26 +257,27 @@ function AdicionarLinhaTabelaTurma(turma) {
     var callback = function (data) {
         const resultado = JSON.parse(data);
         if (resultado.success) {
-            $("#tb_turma tbody").html('');
-            $.each(resultado.data.itens, function (index, item) {
-                var tabela = $("#tb_turma tbody");
-                var linha = "<tr id=\"" + item.idTurma + "\"><td>" + item.idTurma +
-                    "</td><td>" + item.idTurma +
-                    "</td><td>" + item.valor +
-                    "</td><td>" + item.valorDesconto +
-                    "%</td><td>" + item.valorCalculado +
-                    "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + item.idTurma + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
-                tabela.append(linha);
-            });
-            $("#tb_turma tfoot").html('');
-            if (parseFloat(resultado.data.totalDesconto) > 0) {
-                $("#tb_turma tfoot").html('');
-                document.getElementById("inputValorParcela").value = resultado.data.totalDesconto;
-                var tabela = $("#tb_turma");
-                var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + resultado.data.totalDesconto + "</td><td></td ></tr > </tfoot>";
-                tabela.append(linha);
-                return false;
-            }
+            //$("#tb_turma tbody").html('');
+            //$.each(resultado.data.itens, function (index, item) {
+            //    var tabela = $("#tb_turma tbody");
+            //    var linha = "<tr id=\"" + item.idTurma + "\"><td>" + item.idTurma +
+            //        "</td><td>" + item.idTurma +
+            //        "</td><td>" + item.valor +
+            //        "</td><td>" + item.valorDesconto +
+            //        "%</td><td>" + item.valorCalculado +
+            //        "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + item.idTurma + "','" + document.getElementById('hiddenHashAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
+            //    tabela.append(linha);
+            //});
+            //$("#tb_turma tfoot").html('');
+            //if (parseFloat(resultado.data.totalDesconto) > 0) {
+            //    $("#tb_turma tfoot").html('');
+            //    document.getElementById("inputValorParcela").value = resultado.data.totalDesconto;
+            //    var tabela = $("#tb_turma");
+            //    var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + resultado.data.totalDesconto + "</td><td></td ></tr > </tfoot>";
+            //    tabela.append(linha);
+            //    return false;
+            //}
+            BindItemMatricula(resultado.data);
             return false;
         } else {
             var msg = '';
@@ -306,7 +286,7 @@ function AdicionarLinhaTabelaTurma(turma) {
             });
 
             PNotify.error({
-                
+
                 text: msg
             });
         }
@@ -315,44 +295,25 @@ function AdicionarLinhaTabelaTurma(turma) {
         PNotify.error({
             text: 'Ocorreu um erro ao processar sua solicitação'
         });
-
     };
     academia.helper.rest.utils.POST("/Matricula/Item/Add", dataT, callback, callbackErro, $('#loader'));
-
     return false;
-    //if (turma.val().length > 0) {
-    //    $("#dadosTurmas").show();
-    //    $("#dadosTurmas").removeClass('invisible');
-    //    $("#dadosTurmas").addClass("visible");
-    //    var dados = turma.text().split("|");
-    //    var tabela = $("#tb_turma tbody");
-    //    var linha = "<tr id=\"" + turma.val() + "\"><td>" + turma.val() + "</td><td>" + dados[1] + "</td><td>" + dados[2] + "</td><td>" + dados[4] + "</td><td><a href=\"#\" onclick=\"javascript:DeletarTurmaAluno('" + turma.val() + "','" + document.getElementById('hiddenIdAluno').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
-    //    tabela.append(linha);
-    //    SetarArrayTurmas(turma.val(), dados[4]);
-    //}
-    //else {
-    //    PNotify.error({
-    //        title: 'Ops! Informe uma turma. :-( ',
-    //        text: ''
-    //    });
-
-    //}
-
 }
-function DeletarTurmaAluno(turmaId, alunoId) {
+function DeletarTurmaAluno(turmaId, matriculaId) {
     var dataT = {
         IdTurma: turmaId,
-        IdAluno: alunoId
+        IdMatricula: matriculaId
     };
 
     var callback = function (data) {
 
         if (data.success) {
-            removeLinha(turmaId);
-            ObeterValorCursoSelecionado($("#hiddenHashAluno").val());
+ 
+           
             PNotify.success({
                 text: 'Deletado com sucesso.'
             });
+            BindItemMatricula(data.data);
 
         } else {
             var msg = '';
@@ -779,7 +740,7 @@ $(function () {
                 DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
                 DataContrato: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
                 Ano: $("#formMatricula #inputVigencia").val(),
-                Turmas: turmas
+                IdMatriculaGuid: $("#hiddenHashAluno").val()
             };
             var callback = function (data) {
                 if (JSON.parse(data).success) {

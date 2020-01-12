@@ -11,6 +11,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
         public int TurmaAno { get; set; }
         public string TurmaDescricao { get; set; }
         public decimal TurmaValor { get; set; }
-
+        public string TurmaProfessor { get; set; }
+        public string TurmaTipo { get; set; }
+                      
     }
 }

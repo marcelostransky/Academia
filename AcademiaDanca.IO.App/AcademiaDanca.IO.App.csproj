@@ -175,15 +175,15 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.1.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.10" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="17.4.0.41" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Areas\Admin\Models\" />
     <Folder Include="wwwroot\CameraPhotos\" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\Data\ALUNO.xlsx" />
     <None Include="wwwroot\node_modules\animate.css\LICENSE" />
     <None Include="wwwroot\node_modules\bootstrap\dist\css\bootstrap-grid.css.map" />
     <None Include="wwwroot\node_modules\bootstrap\dist\css\bootstrap-grid.min.css.map" />

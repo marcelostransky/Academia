@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -11,12 +12,27 @@ namespace Academia.Io.Tests.Fakes
 {
     public class FakeFinanceiroRepositorio : IFinanceiroRepositorio
     {
+        public Task AtualizaItemMatriculaTemp(MatriculaItemTemp matriculaItemTemp)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> CheckMatriculaExisteAsync(Matricula matricula)
         {
             return false;
         }
 
         public Task<bool> CheckMatriculaItemTempExisteAsync(MatriculaItemComando comando)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeletarItemMatriculaTemp(string idMatriculaGuid)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<int> DeletarItemMatriculaTemp(string idMatriculaGuid, int idTurma)
         {
             throw new NotImplementedException();
         }

@@ -5,12 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada
+namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula
 {
     public class MatricularComando : Notifiable, IComando
     {
         public int Id { get; set; }
         public int IdAluno { get; set; }
+        public string IdMatriculaGuid { get; set; }
         public DateTime DataContrato { get; set; }
         public decimal PercentualDesconto { get; set; }
         public decimal ValorDesconto { get; set; }
@@ -37,6 +38,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada
                .IsTrue((Id <= 0), "Id", "Id informado não é valido")
                .IsNotNullOrEmpty(DataIncialPagamento.ToShortDateString(), "Data Inicio Pagamento", "Informe a data inicial de pagamento")
                .IsNotNullOrEmpty(ChaveRegistro.ToString(), "Chave Registros", "Informe a chave de registros")
+               .IsNotNullOrEmpty(IdMatriculaGuid, "Cod-Matricula", "Chave matricula não localizado")
                );
             return Valid;
         }

@@ -3,7 +3,9 @@ using AcademiaDanca.IO.App.Models;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.DadosExternos;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using AcademiaDanca.IO.Infra;
@@ -92,6 +94,9 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<EditarTurmaManipulador, EditarTurmaManipulador>();
             services.AddTransient<DeletarTurmaManipulador, DeletarTurmaManipulador>();
             services.AddTransient<EditarAlunoManipulador, EditarAlunoManipulador>();
+            services.AddTransient<DelMatriculaItemManipulador, DelMatriculaItemManipulador>();
+            services.AddTransient<DadosExternosManipulador, DadosExternosManipulador>();
+            
             services.AddScoped<RegrasAcessoModel>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";

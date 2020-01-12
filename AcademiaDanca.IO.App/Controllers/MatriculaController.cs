@@ -5,7 +5,9 @@ using System.Net;
 using System.Threading.Tasks;
 using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,14 +23,17 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly IFinanceiroRepositorio _repositorio;
         private readonly IAlunoRepositorio _repositorioAluno;
         private readonly ItemMatriculaManipulador _registrarItemMatriculaManipulador;
+        private readonly DelMatriculaItemManipulador _DelItemMatriculaManipulador;
 
         public MatriculaController(IFinanceiroRepositorio repositorio, ItemMatriculaManipulador itemMatriculaManipulador
            ,IAlunoRepositorio repositorioAluno
+            , DelMatriculaItemManipulador  delItemMatriculaManipulador
            )
         {
             _repositorio = repositorio;
             _repositorioAluno = repositorioAluno;
             _registrarItemMatriculaManipulador = itemMatriculaManipulador;
+            _DelItemMatriculaManipulador = delItemMatriculaManipulador;
 
         }
 
@@ -75,10 +80,10 @@ namespace AcademiaDanca.IO.App.Controllers
             }
         }
         [Route("/Matricula/Item/Del")]
-        [HttpPost]
-        public async Task<IActionResult> DelItemAsync(MatriculaItemComando comando)
+        [HttpDelete]
+        public async Task<IActionResult> DelItemAsync(DelMatriculaItemComando comando)
         {
-            var resultado = await _registrarItemMatriculaManipulador.ManipuladorAsync(comando);
+            var resultado = await _DelItemMatriculaManipulador.ManipuladorAsync(comando);
             try
             {
                 return Json(resultado);

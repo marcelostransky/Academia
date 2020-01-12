@@ -8,5 +8,6 @@ namespace AcademiaDanca.IO.Compartilhado.Comando
     public interface IComandoManipulador<T> where T : IComando
     {
         Task<IComandoResultado> ManipuladorAsync(T comando);
+       
     }
 }

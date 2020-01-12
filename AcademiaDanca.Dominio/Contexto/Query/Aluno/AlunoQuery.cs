@@ -23,7 +23,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
 
         public List<AlunoTurmaQuery> AlunoTurmas { get; set; }
         public List<AlunoFiliacaoQuery> AlunoFiliacoes { get; set; }
-
         //public AlunoQuery()
         //{
         //    AlunoFiliacao = new List<AlunoFiliacaoQuery>();

@@ -1,4 +1,5 @@
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using MoreLinq;
 using System.Collections.Generic;

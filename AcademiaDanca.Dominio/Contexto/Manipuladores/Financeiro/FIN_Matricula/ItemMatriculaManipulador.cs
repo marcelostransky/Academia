@@ -1,6 +1,7 @@
 ﻿using AcademiaDanca.IO.Compartilhado;
 using AcademiaDanca.IO.Compartilhado.Comando;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -11,7 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro
+namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricula
 {
     public class ItemMatriculaManipulador : Notifiable, IComandoManipulador<MatriculaItemComando>
     {

@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
@@ -251,7 +252,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
         {
             var query = @"SELECT count(1) FROM academia.matricula_turma_temp 
                           where id_matricula = @sp_id_matricula and id_turma = @sp_id_turma ;";
-             try
+            try
             {
                 var parametros = new DynamicParameters();
                 parametros.Add("sp_id_matricula", comando.IdMatriculaGuid);
@@ -330,6 +331,75 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 return listaRetorno;
             }
             catch (Exception ex)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
+
+        public async Task<int> DeletarItemMatriculaTemp(string idMatriculaGuid, int idTurma = 0)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_turma", idTurma);
+                parametros.Add("sp_id_matricula", idMatriculaGuid);
+                var query = $"Delete From academia.matricula_turma_temp Where id_matricula =@sp_id_matricula ";
+                if (idTurma > 0)
+                {
+                    query += " and id_turma = @sp_id_turma";
+                }
+                var deletado = (await _contexto
+                      .Connection
+                      .ExecuteAsync(query,
+                      parametros,
+                      commandType: System.Data.CommandType.Text));
+
+                return deletado;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
+
+        public async Task AtualizaItemMatriculaTemp(MatriculaItemTemp temp)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_turma", temp.IdTurma);
+                parametros.Add("sp_id_matricula", temp.IdMatricula);
+                parametros.Add("sp_valor", temp.Valor);
+                parametros.Add("sp_desconto", temp.Desconto ? 1 : 0);
+                parametros.Add("sp_valor_desconto", temp.ValorDesconto);
+                parametros.Add("sp_valor_calculado", temp.ValorCalculado);
+
+                var query = @"UPDATE `academia`.`matricula_turma_temp`
+                                SET
+                               
+                                `valor` = @sp_valor,
+                                `desconto` = @sp_desconto,
+                                `valor_desconto` = @sp_valor_desconto,
+                                `valor_calculado` = @sp_valor_calculado
+                                WHERE `id_matricula` = @sp_id_matricula
+                                AND `id_turma` =@sp_id_turma;";
+                 await _contexto
+                      .Connection
+                      .ExecuteAsync(query,
+                      parametros,
+                      commandType: System.Data.CommandType.Text);
+            }
+            catch (Exception)
             {
 
                 throw;

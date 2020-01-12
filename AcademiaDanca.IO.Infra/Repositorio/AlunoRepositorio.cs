@@ -1,5 +1,6 @@
 ﻿using AcademiaDanca.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
+using AcademiaDanca.IO.Dominio.Contexto.Query;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Aluno;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Dapper;
@@ -262,15 +263,14 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         t.id as TurmaId,
                         t.des_turma as TurmaDescricao,
                         t.cod_turma as TurmaCodigo,
-                        t.ano as TurmaAno,
-                        t.valor as TurmaValor
-                        FROM academia.logradouro as l
-                        left join academia.logradouro_aluno as la on l.id = la.id_logradouro
-                        left join academia.aluno as a on la.id_aluno = a.id
+                        t.turma_professor as TurmaProfessor
+                        FROM academia.aluno as a
+                        left join academia.logradouro_aluno as la on la.id_aluno = a.id
+                        left join  academia.logradouro as l  on l.id = la.id_logradouro
                         left join academia.aluno_filiacao as af on a.id = af.id_aluno
                         left join academia.filiacao as f on af.id_filiacao = f.id
                         left join academia.turma_aluno as ta on a.id = ta.id_aluno
-                        left join academia.turma as t on ta.id_turma = t.id
+                        left join academia.view_turma_professor as t on ta.id_turma = t.id
                         left join academia.matricula as ma on a.id = ma.id_aluno
                         where a.uif_id=@id
                         Order by a.id,l.id,f.id,t.id;";
@@ -285,6 +285,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         aluno.AlunoTurmas.Add(t);
                         aluno.AlunoLogradouro = l;
                         //aluno.Alun.Add(f);
+     
                         return aluno;
                     }, parametros, splitOn: "AlunoId,LogradouroId,FiliacaoId,TurmaId", commandType: CommandType.Text));
                 return alunoRetorno.FirstOrDefault();
@@ -329,6 +330,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                           t.id as AlunoTurmas_TurmaId,
                           t.des_turma as AlunoTurmas_TurmaDescricao,
                           t.cod_turma as AlunoTurmas_TurmaCodigo,
+                          t.turma_professor as AlunoTurmas_TurmaProfessor,
+                          t.turma_tipo as AlunoTurmas_TurmaTipo,
                           ma.id as AlunoMatricula_MatriculaId,
                           ma.valor_contrato as AlunoMatricula_MatriculaValorContrato,
                           ma.percentual_desconto as AlunoMatricula_MatriculaPercentualDesconto,
@@ -354,7 +357,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                           left join academia.aluno_filiacao as af on a.id = af.id_aluno
                           left join academia.filiacao as f on af.id_filiacao = f.id
                           left join academia.turma_aluno as ta on a.id = ta.id_aluno
-                          left join academia.turma as t on ta.id_turma = t.id
+                          left join academia.view_turma_professor as t on ta.id_turma = t.id
                           left join academia.matricula as ma on a.id = ma.id_aluno
                           left outer join academia.mensalidade as me on a.id = me.id_aluno and ma.id = me.id_matricula
                           where a.uif_id=@id

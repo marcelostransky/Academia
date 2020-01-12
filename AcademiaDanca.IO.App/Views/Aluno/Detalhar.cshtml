@@ -166,33 +166,23 @@
                 <!-- CONTACT ITEM -->
                 @if (@ViewBag.Aluno != null && @ViewBag.Aluno.AlunoTurmas != null)
                 {
-                    @foreach (var item in @ViewBag.Aluno.AlunoTurmas)
-                    {
-                        <div class="contact-item ripple row no-gutters align-items-center py-2 px-3 py-sm-4 px-sm-6 fuse-ripple-ready">
-                            <img class="avatar mx-4" alt="Abbott" src="~/images/avatars/turmadanca.jpeg">
+                    <table class="table">
+                        @foreach (var item in @ViewBag.Aluno.AlunoTurmas)
+                        {
+                        <tr>
+                            <td>
+                                <img class="avatar mx-4" alt="Abbott" src="~/images/avatars/turmadanca.jpeg">
+                            </td>
+                            <td>@item.TurmaCodigo</td>
+                            <td>@item.TurmaDescricao</td>
+                            <td>@item.TurmaTipo</td>
+                            <td>@item.TurmaProfessor</td>
 
-                            <div class="col text-truncate font-weight-bold">@item.TurmaCodigo</div>
-
-                            <div class="col email text-truncate px-1 d-none d-xl-flex">
-                                @item.TurmaDescricao
-                            </div>
-
-                            <div class="col phone text-truncate px-1 d-none d-xl-flex">
-                                @item.TurmaAno
-                            </div>
-
-                            <div class="col job-title text-truncate px-1 d-none d-sm-flex">
-                                @item.TurmaValor
-                            </div>
-
-                            <div class="col company text-truncate px-1 d-none d-sm-flex">
-                                Saois
-                            </div>
+                        </tr>
 
 
-                        </div>
-
-                    }
+                        }
+                    </table>
                 }<!-- CONTACT ITEM -->
 
             </div>

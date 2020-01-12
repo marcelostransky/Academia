@@ -1,4 +1,5 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
 using System;
@@ -20,5 +21,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<IEnumerable<ItemMatriculaQueryResultado>> ObterItensMatriculaPor(int id);
         Task<bool> CheckMatriculaItemTempExisteAsync(MatriculaItemComando comando);
         Task<IEnumerable<ItemMatriculaQueryResultado>> ObterMatriculaItensTempPor(Guid idMatriculaGuid);
+        Task<int> DeletarItemMatriculaTemp(string idMatriculaGuid, int idTurma);
+        Task AtualizaItemMatriculaTemp(MatriculaItemTemp matriculaItemTemp);
     }
 }

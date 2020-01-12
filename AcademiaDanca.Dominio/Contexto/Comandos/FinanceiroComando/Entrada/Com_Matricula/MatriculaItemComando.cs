@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada
+namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula
 {
     public class MatriculaItemComando : Notifiable, IComando
     {
