@@ -31,7 +31,7 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
             DateTime dataNascimento,
             Endereco endereco,
             Email email, Guid uifId
-            , string telefone, string celular, string foto, string cpf)
+            , string telefone, string celular, string foto, string cpf, string codLegado)
         {
             _turmas = new List<Turma>();
             _filiacoes = new List<Filiacao>();
@@ -44,6 +44,7 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
             Telefone = telefone;
             Celular = celular;
             Foto = foto;
+            CodLegado = codLegado;
             if (!string.IsNullOrEmpty(cpf))
                 Cpf = new Cpf(cpf);
 
@@ -63,6 +64,7 @@ namespace AcademiaDanca.Dominio.Contexto.Entidade
         public string Telefone { get; private set; }
         public string Celular { get; private set; }
         public string Foto { get; private set; }
+        public string CodLegado { get; private set; }
         public DateTime DataNascimento { get; private set; }
         public Endereco Endereco { get; private set; }
         public Email Email { get; set; }

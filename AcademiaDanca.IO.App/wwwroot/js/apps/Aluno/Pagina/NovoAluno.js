@@ -129,6 +129,7 @@ function BindItemMatricula(data) {
     }
 
 }
+//Preencher dados endereco por cep
 function BuscaCep(cep) {
     if (cep.value !== '') {
         var dataT = {
@@ -158,6 +159,7 @@ function BuscaCep(cep) {
     }
 
 }
+//Cadastrar base aluno
 $(function () {
     $.validator.addMethod("dateFormat",
         function (value, element) {

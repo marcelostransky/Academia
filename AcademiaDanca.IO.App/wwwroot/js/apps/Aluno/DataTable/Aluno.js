@@ -39,11 +39,7 @@ function MontarDataTable(nome) {
                     "mDataProp": "nome",
                     "bSortable": true
                 },
-                {
-                    "sTitle": "Email",
-                    "mDataProp": "email"
-
-                },
+               
                 {
                     "sTitle": "Data Nascimento",
                     "mDataProp": "dataNascimento"
@@ -51,11 +47,12 @@ function MontarDataTable(nome) {
                 },
                 {
                     "sTitle": "Tel",
-                    "mDataProp": "telefone"
+                    "mDataProp": "celular"
                 },
                 {
-                    "sTitle": "Cel",
-                    "mDataProp": "celular"
+                    "sTitle": "Status Matricula",
+                    "mDataProp": "statusMatricula",
+                    "sClass": "center"
                 },
                 {
                     "sTitle": "Foto",

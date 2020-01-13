@@ -30,14 +30,14 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno
             }
 
             //Criar Entidade
-            var aluno = new AcademiaDanca.Dominio.Contexto.Entidade.Aluno(comando.Id, comando.Nome, comando.DataNascimento, null, email, comando.UifId, comando.Telefone, comando.Celular, null, comando.Cpf);
+            var aluno = new AcademiaDanca.Dominio.Contexto.Entidade.Aluno(comando.Id, comando.Nome, comando.DataNascimento, null, email, comando.UifId, comando.Telefone, comando.Celular, null, comando.Cpf,null);
 
             AddNotifications(aluno.Notifications);
 
             //Validar ocorreu mudanca nos dados
             var alunoQuery = await _repositorio.ObterPorAsync(comando.Id);
             var alunoAtual = new AcademiaDanca.Dominio.Contexto.Entidade.Aluno(alunoQuery.AlunoId, alunoQuery.AlunoNome, alunoQuery.AlunodataNascimento, null,
-                new Vo.Email(alunoQuery.AlunoEmail), new Guid(alunoQuery.AlunoGuid), alunoQuery.AlunoTelefone, alunoQuery.AlunoCelular, null, alunoQuery.AlunoCpf);
+                new Vo.Email(alunoQuery.AlunoEmail), new Guid(alunoQuery.AlunoGuid), alunoQuery.AlunoTelefone, alunoQuery.AlunoCelular, null, alunoQuery.AlunoCpf,null);
            
             if (!aluno.Equals(alunoAtual))
             {

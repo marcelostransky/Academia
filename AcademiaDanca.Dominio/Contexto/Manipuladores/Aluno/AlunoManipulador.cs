@@ -32,7 +32,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno
             //    AddNotifications(new Vo.Email(comando.Email).Notifications);
 
             //Criar Entidade
-            var aluno = new AcademiaDanca.Dominio.Contexto.Entidade.Aluno(comando.Id, comando.Nome, comando.DataNascimento, null, email, comando.UifId, comando.Telefone, comando.Celular, comando.Foto, null);
+            var aluno = new AcademiaDanca.Dominio.Contexto.Entidade.Aluno(comando.Id, comando.Nome, comando.DataNascimento, null, email, comando.UifId, comando.Telefone, comando.Celular, comando.Foto, null,null);
 
             //Validar Comando
             comando.Valido();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using AcademiaDanca.IO.App.Enums;
 using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada;
 using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
@@ -11,6 +12,7 @@ using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AcademiaDanca.IO.App.Controllers
 {
@@ -24,14 +26,17 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly IAlunoRepositorio _repositorioAluno;
         private readonly ItemMatriculaManipulador _registrarItemMatriculaManipulador;
         private readonly DelMatriculaItemManipulador _DelItemMatriculaManipulador;
-
-        public MatriculaController(IFinanceiroRepositorio repositorio, ItemMatriculaManipulador itemMatriculaManipulador
-           ,IAlunoRepositorio repositorioAluno
-            , DelMatriculaItemManipulador  delItemMatriculaManipulador
+        private readonly ITurmaRepositorio _repositorioTurma;
+        public MatriculaController(IFinanceiroRepositorio repositorio
+            , ItemMatriculaManipulador itemMatriculaManipulador
+            , IAlunoRepositorio repositorioAluno
+            , DelMatriculaItemManipulador delItemMatriculaManipulador
+            , ITurmaRepositorio turmaRepositorio
            )
         {
             _repositorio = repositorio;
             _repositorioAluno = repositorioAluno;
+            _repositorioTurma = turmaRepositorio;
             _registrarItemMatriculaManipulador = itemMatriculaManipulador;
             _DelItemMatriculaManipulador = delItemMatriculaManipulador;
 
@@ -41,7 +46,29 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             return View();
         }
-
+        [Route("/Matricula/Aluno/{id}")]
+        public async Task<IActionResult> Aluno(Guid id)
+        {
+            var aluno = await _repositorioAluno.ObterPorAsync(id);
+            var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
+            var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
+            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
+            ViewBag.Id = Guid.NewGuid();
+            ViewBag.Mes = new SelectList(lista.Select(x => new SelectListItem
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            }), "Value", "Text");
+            ViewBag.Turmas = new SelectList(turmas.Select(x => new SelectListItem
+            {
+                Value = x.IdTurma.ToString(),
+                Text = $"{x.IdTurma}|{ x.CodTurma} | { x.DesTurma} | {x.NomeProfessor} | {Math.Round(x.Valor, 2)} | {x.Ano}"
+            }), "Value", "Text");
+            ViewBag.Aluno = aluno;
+            ViewBag.HashMatricula = Guid.NewGuid();
+            return await Task.Run(() => View());
+        }
         [Route("/Matricula/Item/{id}")]
         public async Task<IActionResult> ItemAsync(int id)
         {
@@ -65,10 +92,10 @@ namespace AcademiaDanca.IO.App.Controllers
         [HttpPost]
         public async Task<IActionResult> AddItemAsync(MatriculaItemComando comando)
         {
-            
+
 
             var resultado = await _registrarItemMatriculaManipulador.ManipuladorAsync(comando);
-            
+
             try
             {
                 return Json(resultado);

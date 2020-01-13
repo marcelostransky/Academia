@@ -265,7 +265,7 @@ namespace AcademiaDanca.IO.App.Controllers
             var util = new Util(_environment);
             if (!string.IsNullOrWhiteSpace(funcFoto.base64image))
             {
-                byte[] arquivoB64 = Convert.FromBase64String(funcFoto.base64image.Replace("data:image/jpeg;base64,",""));
+                byte[] arquivoB64 = Convert.FromBase64String(funcFoto.base64image.Replace("data:image/jpeg;base64,", ""));
                 var diretorio = util.ObterCaminhoArquivo($"{funcFoto.Id}.jpg", "Aluno");
                 System.IO.File.WriteAllBytes($"{diretorio}", arquivoB64);
                 comando.Id = funcFoto.Id;
@@ -322,15 +322,13 @@ namespace AcademiaDanca.IO.App.Controllers
                                  r.Id,
                                  Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Aluno/{r.Foto}\">",
                                  r.Nome,
-                                 r.Email,
-                                 r.Telefone,
                                  r.Celular,
                                  DataNascimento = r.DataNascimento.ToShortDateString(),
+                                 StatusMatricula = (r.Id % 2 == 0) ? $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/verde.png\">" : $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/vermelho.png\">",
                                  acao = ObterMenuAcaoDataTable(r)
 
-
                              })
-                                .DataTableResponse(request);
+                             .DataTableResponse(request);
 
                 return Ok(model);
 
@@ -346,7 +344,7 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             //var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            //menu.AppendFormat("<a href =\"/Financeiro/Matricula/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Matricula/Aluno/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
             //menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-cash-usd\"></i>    </a>", r.UifId);
             menu.AppendFormat("<a href =\"/Aluno/Detalhar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Detalhar Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.UifId);
             menu.AppendFormat("<a href =\"/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Aluno\"> <i class=\"icon-border-color\"></i>    </a>", r.UifId);

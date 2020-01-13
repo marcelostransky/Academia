@@ -399,6 +399,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             parametros.Add("sp_uif_id", aluno.UifId);
             parametros.Add("sp_telefone", aluno.Telefone);
             parametros.Add("sp_celular", aluno.Celular);
+            parametros.Add("sp_celular", aluno.Celular);
+            parametros.Add("sp_cod_legado", aluno.CodLegado);
             await _contexto
                 .Connection
                 .ExecuteAsync("sp_insert_aluno",
