@@ -69,6 +69,29 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.HashMatricula = Guid.NewGuid();
             return await Task.Run(() => View());
         }
+        [Route("/Matricula/Aluno/Editar/{id}")]
+        public async Task<IActionResult> Editar(Guid id)
+        {
+            var aluno = await _repositorioAluno.ObterPorAsync(id);
+            var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+            int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
+            var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
+            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
+            ViewBag.Id = Guid.NewGuid();
+            ViewBag.Mes = new SelectList(lista.Select(x => new SelectListItem
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            }), "Value", "Text");
+            ViewBag.Turmas = new SelectList(turmas.Select(x => new SelectListItem
+            {
+                Value = x.IdTurma.ToString(),
+                Text = $"{x.IdTurma}|{ x.CodTurma} | { x.DesTurma} | {x.NomeProfessor} | {Math.Round(x.Valor, 2)} | {x.Ano}"
+            }), "Value", "Text");
+            ViewBag.Aluno = aluno;
+            ViewBag.HashMatricula = Guid.NewGuid();
+            return await Task.Run(() => View());
+        }
         [Route("/Matricula/Item/{id}")]
         public async Task<IActionResult> ItemAsync(int id)
         {

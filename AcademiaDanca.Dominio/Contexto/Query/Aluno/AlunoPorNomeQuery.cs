@@ -15,5 +15,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
         public DateTime DataNascimento { get; set; }
         public string DataToShortDate { get { return DataNascimento.ToShortDateString(); } }
         public string Foto { get; set; }
+        public bool StatusMatricula { get; set; }
     }
 }

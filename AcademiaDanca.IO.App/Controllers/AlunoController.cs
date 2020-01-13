@@ -324,7 +324,7 @@ namespace AcademiaDanca.IO.App.Controllers
                                  r.Nome,
                                  r.Celular,
                                  DataNascimento = r.DataNascimento.ToShortDateString(),
-                                 StatusMatricula = (r.Id % 2 == 0) ? $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/verde.png\">" : $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/vermelho.png\">",
+                                 StatusMatricula = (r.StatusMatricula) ? $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/verde.png\">" : $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/vermelho.png\">",
                                  acao = ObterMenuAcaoDataTable(r)
 
                              })
@@ -344,7 +344,11 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             //var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"/Matricula/Aluno/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+            if (!r.StatusMatricula)
+                menu.AppendFormat("<a href =\"/Matricula/Aluno/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+            else
+                menu.AppendFormat("<a href =\"/Matricula/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+
             //menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-cash-usd\"></i>    </a>", r.UifId);
             menu.AppendFormat("<a href =\"/Aluno/Detalhar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Detalhar Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.UifId);
             menu.AppendFormat("<a href =\"/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Aluno\"> <i class=\"icon-border-color\"></i>    </a>", r.UifId);
