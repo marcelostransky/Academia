@@ -30,7 +30,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
             //Criar Entidade
             var matricula = new Matricula(comando.Id, comando.IdAluno, comando.TotalParcelas,
                 comando.DataContrato, comando.PercentualDesconto, comando.ValorDesconto, comando.ValorMatricula,
-               Convert.ToDecimal(comando.ValorContrato), comando.DiaVencimento, comando.DataIncialPagamento, ChaveRegistro.Gerar(), comando.Ano);
+               Convert.ToDecimal(comando.ValorContrato), comando.DiaVencimento, comando.DataIncialPagamento, ChaveRegistro.Gerar(), comando.Ano, comando.MesInicioPagamento);
 
             //check Matricula Existe
             if (await _repositorio.CheckMatriculaExisteAsync(matricula))

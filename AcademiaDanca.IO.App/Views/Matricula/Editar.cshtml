@@ -4,5 +4,458 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Editar</h2>
+
+<div class="content custom-scrollbar ps">
+    <div class="doc forms-doc page-layout simple full-width">
+
+
+        <!-- HEADER -->
+
+        <div class="page-header bg-primary text-auto row no-gutters align-items-center justify-content-between p-6">
+            <div class="logo row no-gutters justify-content-center align-items-start justify-content-sm-start">
+                <div class="logo-icon mr-3 mt-1">
+                    <i class="icon-account-location s-6"></i>
+                </div>
+                <div class="logo-text">
+                    <div class="h4">  Matrícula</div>
+                </div>
+            </div>
+
+
+
+
+        </div>
+
+        <div class="page-content">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+
+                <li class="nav-item">
+                    <label class="nav-link btn ">CÓDIGO ALUNO:@ViewBag.Matricula.MatriculaAluno.AlunoGuid   </label>
+                </li>
+                <li class="nav-item">
+                    <label class="nav-link btn ">NOME:@ViewBag.Matricula.MatriculaAluno.Nome   </label>
+                </li>
+                <li class="nav-item">
+                    <label class="nav-link btn ">CÓDIGO MATRÍCULA:@ViewBag.Matricula.MatriculaBase.MatriculaGuid   </label>
+                </li>
+
+
+            </ul>
+            <div class="tab-content">
+                <input type="hidden" id="hiddenIdAluno" value="@ViewBag.Matricula.MatriculaAluno.Id" />
+                <input type="hidden" id="hiddenHashAluno" value="@ViewBag.Matricula.MatriculaAluno.AlunoGuid" />
+                <input type="hidden" id="hiddenHashMatricula" value="@ViewBag.Matricula.MatriculaBase.MatriculaGuid" />
+
+
+                <div class="card p-6">
+                    <form id="formMatricula" class=" form formReset">
+                        <div class="form-row">
+                            <div class="col-md-3">
+                                <div class="form-group col-md-12">
+                                    <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
+                                    <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula" value="0">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
+                                    <input type="text" class="form-control" id="inputDescontoMatricula" name="inputDescontoMatricula" value="0">
+                                </div>
+                                <div class="col-12">
+                                    <table>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="inputTotalParcelas" class="col-form-label">N° Parcelas</label>
+                                                        <input type="hidden" id="totalParcelas" value="@ViewBag.Matricula.MatriculaBase.MatriculaTotalParcelas" />
+
+                                                        <select class="form-control" id="inputTotalParcelas" name="inputTotalParcelas">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
+                                                            <option value="3">3</option>
+                                                            <option value="4">4</option>
+                                                            <option value="5">5</option>
+                                                            <option value="6">6</option>
+                                                            <option value="7">7</option>
+                                                            <option value="8">8</option>
+                                                            <option value="9">9</option>
+                                                            <option value="10">10</option>
+                                                            <option value="11">11</option>
+                                                            <option value="12">12</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="inputDiaVencimento" class="col-form-label">Vencimento</label>
+                                                        <input type="hidden" id="diaSelecionado" value="@ViewBag.Matricula.MatriculaBase.MatriculaDiaVencimento" />
+                                                        <select class="form-control" id="inputDiaVencimento" name="inputDiaVencimento">
+                                                            <option value="1">1</option>
+                                                            <option value="5">5</option>
+                                                            <option value="10">10</option>
+                                                            <option value="15">15</option>
+                                                            <option value="20">20</option>
+                                                            <option value="25">25</option>
+                                                        </select>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <div class="form-group ">
+                                                        <label for="inputMesVencimento" class="col-form-label">Mes Início de Pagamento</label>
+                                                        @Html.DropDownList("Mes", null, "Selecione um mês", new { @class = "form-control   select" })
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <label for="inputVigencia" class="col-form-label">Ano/Vigencia</label>
+                                                        <input type="text" class="form-control" id="inputVigencia" value="@ViewBag.Matricula.MatriculaBase.MatriculaAno" name="inputVigencia">
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+
+                                <div class="form-group col-md-12">
+                                    <label for="inputUF" class="col-form-label">Turma</label>
+                                    <div class="col-md-10">
+                                        @Html.DropDownList("Turmas", null, "Selecione uma Turma", new { @class = "form-control   select" })
+                                    </div>
+
+                                    <div class="col-md-2">
+                                        <button type="button" onclick="Turma()" class="btn-primary btn-sm">+</button>
+
+                                    </div>
+                                </div>
+
+
+                                <div id="dadosTurmas" class="card">
+                                    <table id="tb_turma" class="table dataTable">
+                                        <thead>
+                                            <tr>
+                                                <td>Id</td>
+                                                <td>Código</td>
+                                                <td>Valor</td>
+                                                <td>Desconto</td>
+                                                <td>Total</td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var iten in @ViewBag.Matricula.MatriculaItens)
+                                            {
+                                                <tr id="@iten.IdTurma">
+                                                    <td>@iten.IdTurma</td>
+                                                    <td>@iten.CodTurma</td>
+                                                    <td>@iten.Valor</td>
+                                                    <td>@iten.ValorDesconto %</td>
+                                                    <td>@iten.ValorCalculado</td>
+                                                    <td><a href="#" onclick="javascript:DeletarLinhaTabelaTurma('49','0ad09870-d292-41e9-acbe-fd74dd380c98')" class="btn btn-icon fuse-ripple-ready" title="Excluir"> <i class="icon-delete-forever "></i> </a></td>
+                                                </tr>
+                                            }
+                                        </tbody>
+
+
+                                        <tfoot><tr><td></td><td></td><td></td><td>Total</td><td>@ViewBag.TotalDesconto</td><td></td></tr> </tfoot>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-md-3">
+                                <table class="table" style="text-align:center">
+                                    <tr>
+                                        <td colspan="2">Parcela</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Valor</td>
+                                        <td>Deconto</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input type="text" disabled class="form-control" id="inputValorParcela" name="inputValorParcela">
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control" id="inputDescontoParcela" name="inputDescontoParcela" value="0">
+                                        </td>
+                                    </tr>
+                                </table>
+
+                                @*<div class="col-12">
+                                        <div class="form-group col-md-6">
+                                            <label for="inputValorParcela" class="col-form-label">Valor Parcela</label>
+                                            </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="inputNome" class="col-form-label">Desconto Parcela</label>
+                                           </div>
+                                    </div>*@
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section CSS{ }
+@section Scripts{
+    <script src="~/Modulo/jquery-validation/dist/jquery.validate.js"></script>
+    <script src="~/Modulo/jquery-validation/messages_pt_BR.js"></script>
+    <script src="~/Modulo/Mask/maskmoney.js"></script>
+    <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#inputDiaVencimento option[value=' + $("#diaSelecionado").val() + ']').attr('selected', 'selected');
+            $('#inputTotalParcelas option[value=' + $("#totalParcelas").val() + ']').attr('selected', 'selected');
+        })
+        $("#inputValorMatricula").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+        $("#inputValorParcela").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+        $("#inputDescontoParcela").mask("%99");
+        $("#inputDescontoMatricula").mask("%99");
+        $("#inputVigencia").mask("9999");
+
+        function BindItemMatricula(data) {
+            $("#tb_turma tbody").html('');
+            $.each(data.itens, function (index, item) {
+                var tabela = $("#tb_turma tbody");
+                var linha = "<tr id=\"" + item.idTurma + "\"><td>" + item.idTurma +
+                    "</td><td>" + item.CodTurma +
+                    "</td><td>" + item.valor +
+                    "</td><td>" + item.valorDesconto +
+                    "%</td><td>" + item.valorCalculado +
+                    "</td><td><a href=\"#\" onclick=\"javascript:DeletarLinhaTabelaTurma('" + item.idTurma + "','" + document.getElementById('hiddenHashMatricula').value + "')\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir\"> <i class=\"icon-delete-forever \"></i> </a></td ></tr> ";
+                tabela.append(linha);
+            });
+            $("#tb_turma tfoot").html('');
+            if (parseFloat(data.totalDesconto) > 0) {
+                $("#tb_turma tfoot").html('');
+                document.getElementById("inputValorParcela").value = data.totalDesconto;
+                var tabela = $("#tb_turma");
+                var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + data.totalDesconto + "</td><td></td ></tr > </tfoot>";
+                tabela.append(linha);
+            }
+            else {
+                document.getElementById("inputValorParcela").value = 0;
+
+            }
+
+        }
+        function AdicionarLinhaTabelaTurma(turma) {
+            var dados = turma.text().split("|");
+            var dataT = {
+
+                IdMatriculaGuid: $("#hiddenHashMatricula").val(),
+                IdTurma: turma.val(),
+                Valor: dados[4]
+            };
+            var callback = function (data) {
+                const resultado = JSON.parse(data);
+                if (resultado.success) {
+                    BindItemMatricula(resultado.data);
+                    return false;
+                } else {
+                    var msg = '';
+                    $.each(JSON.parse(data).data, function (index, item) {
+                        msg = msg + item.property + ' - ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+
+                        text: msg
+                    });
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+            };
+            academia.helper.rest.utils.POST("/Matricula/Item/Add", dataT, callback, callbackErro, $('#loader'));
+            return false;
+        }
+        function DeletarLinhaTabelaTurma(turmaId, matriculaId) {
+            var dataT = {
+                IdTurma: turmaId,
+                IdMatricula: matriculaId
+            };
+
+            var callback = function (data) {
+
+                if (data.success) {
+
+
+                    PNotify.success({
+                        text: 'Deletado com sucesso.'
+                    });
+                    BindItemMatricula(data.data);
+
+                } else {
+                    var msg = '';
+                    $.each(JSON.parse(data).data, function (index, item) {
+                        msg = msg + item.property + ' : ' + item.message + '\n';
+                    });
+
+                    PNotify.error({
+                        title: msg
+                    });
+
+
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.DELETE("/Matricula/Item/Del", dataT, callback, callbackErro, $('#loader'));
+
+        }
+        function Turma() {
+            $("#dadosTurmas").show();
+            $("#dadosTurmas").removeClass('invisible');
+            $("#dadosTurmas").addClass("visible");
+            AdicionarLinhaTabelaTurma($('#Turmas option:selected'));
+
+        }
+        $(function () {
+            $("#formMatricula").validate({
+
+                ignore: [],
+                rules: {
+
+                    inputValorMatricula: {
+                        required: true
+
+
+                    },
+                    inputDescontoMatricula: {
+                        required: true
+
+
+                    },
+                    inputValorParcela: {
+                        required: true
+
+
+                    },
+                    inputDescontoParcela: {
+                        required: true
+
+
+                    },
+                    inputDiaVencimento: {
+                        required: true
+
+
+                    },
+                    inputTotalParcelas: {
+                        required: true
+
+
+                    },
+                    TipoFiliacao: {
+                        required: true
+                    },
+                    inputVigencia: {
+                        required: true
+                    },
+                    inputMesVencimento: {
+                        required: true
+                    }
+
+                },
+                messages: {
+
+
+                    inputValorMatricula: {
+                        required: "Campo Obrigatório."
+
+                    },
+                    inputDescontoMatricula: {
+                        required: "Campo Obrigatório."
+
+                    },
+                    inputValorParcela: {
+                        required: "Campo Obrigatório."
+
+                    },
+                    inputDescontoParcela: {
+                        required: "Campo Obrigatório."
+
+                    },
+                    inputDiaVencimento: {
+                        required: "Campo Obrigatório."
+
+                    },
+                    inputTotalParcelas: {
+                        required: "Campo Obrigatório."
+
+                    },
+                    TipoFiliacao: {
+                        required: "Informe o tipo de responsavel."
+                    }
+
+                },
+                submitHandler: function (form) {
+
+                    var dataT = {
+
+                        IdAluno: $("#hiddenIdAluno").val(),
+                        PercentualDesconto: $("#formMatricula #inputDescontoParcela").val().replace('%', ''),
+                        ValorMatricula: $("#formMatricula #inputValorMatricula").val().replace('R$', '').replace('.', ','),
+                        ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', '').replace('.', ','),
+                        DiaVencimento: $("#formMatricula #inputDiaVencimento").val(),
+                        TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
+                        DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
+                        DataContrato: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
+                        Ano: $("#formMatricula #inputVigencia").val(),
+                        IdMatriculaGuid: $("#hiddenHashMatricula").val(),
+                        MesInicioPagamento: $('#formMatricula #Mes').val()
+                    };
+                    var callback = function (data) {
+                        if (JSON.parse(data).success) {
+                            PNotify.success({
+                                title: 'Matriculado com sucesso.'
+                            });
+                            document.getElementById("formResponsavel").reset();
+                            return false;
+                        } else {
+                            var msg = '';
+                            $.each(JSON.parse(data).data, function (index, item) {
+                                msg = msg + item.property + ' > ' + item.message + '\n';
+                            });
+
+                            PNotify.info({
+                                title: msg
+                            });
+
+
+                        }
+                    };
+                    var callbackErro = function (data) {
+                        PNotify.error({
+                            title: 'Ocorreu um erro ao processar sua solicitação'
+                        });
+
+                    };
+
+                    academia.helper.rest.utils.POST("/Aluno/Matricular/", dataT, callback, callbackErro, $('#loader'));
+                    return false;
+                }
+            });
+        });
+    </script>
+}
+
 

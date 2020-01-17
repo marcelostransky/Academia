@@ -52,6 +52,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_data_criacao", matricula.DataCriacao);
                 parametros.Add("sp_total_parcelas", matricula.TotalParcelas);
                 parametros.Add("sp_ano", matricula.Ano);
+                parametros.Add("sp_mes_inicio_pagamento", matricula.MesInicioPagamento);
                 await _contexto
                     .Connection
                     .ExecuteAsync("sp_insert_matricula",
@@ -213,6 +214,9 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
         }
 
+
+
+
         public async Task<IEnumerable<ItemMatriculaQueryResultado>> ObterItensMatriculaPor(int id)
         {
             try
@@ -239,7 +243,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
             catch (Exception ex)
             {
-
                 throw;
             }
             finally
@@ -393,11 +396,11 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                                 `valor_calculado` = @sp_valor_calculado
                                 WHERE `id_matricula` = @sp_id_matricula
                                 AND `id_turma` =@sp_id_turma;";
-                 await _contexto
-                      .Connection
-                      .ExecuteAsync(query,
-                      parametros,
-                      commandType: System.Data.CommandType.Text);
+                await _contexto
+                     .Connection
+                     .ExecuteAsync(query,
+                     parametros,
+                     commandType: System.Data.CommandType.Text);
             }
             catch (Exception)
             {

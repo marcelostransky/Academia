@@ -22,6 +22,8 @@ namespace AcademiaDanca.IO.App.Controllers
     public class MatriculaController : Controller
     {
         private readonly IAcessoRepositorio _repositorioAcesso;
+        private readonly IMatriculaRepositorio _repositorioMatricula;
+
         private readonly IFinanceiroRepositorio _repositorio;
         private readonly IAlunoRepositorio _repositorioAluno;
         private readonly ItemMatriculaManipulador _registrarItemMatriculaManipulador;
@@ -32,6 +34,7 @@ namespace AcademiaDanca.IO.App.Controllers
             , IAlunoRepositorio repositorioAluno
             , DelMatriculaItemManipulador delItemMatriculaManipulador
             , ITurmaRepositorio turmaRepositorio
+            , IMatriculaRepositorio matriculaRepositorio
            )
         {
             _repositorio = repositorio;
@@ -39,6 +42,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _repositorioTurma = turmaRepositorio;
             _registrarItemMatriculaManipulador = itemMatriculaManipulador;
             _DelItemMatriculaManipulador = delItemMatriculaManipulador;
+            _repositorioMatricula = matriculaRepositorio;
 
         }
 
@@ -72,24 +76,34 @@ namespace AcademiaDanca.IO.App.Controllers
         [Route("/Matricula/Aluno/Editar/{id}")]
         public async Task<IActionResult> Editar(Guid id)
         {
-            var aluno = await _repositorioAluno.ObterPorAsync(id);
-            var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
-            int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
-            var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
-            var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
-            ViewBag.Id = Guid.NewGuid();
-            ViewBag.Mes = new SelectList(lista.Select(x => new SelectListItem
+            var matricula = await _repositorioMatricula.ObterMatriculaCompletoAsync(id);
+            var totalGeral = Convert.ToDecimal(0);
+            var totalDesconto = Convert.ToDecimal(0);
+            if (matricula != null && matricula.MatriculaItens != null && matricula.MatriculaItens.Count > 0)
             {
-                Value = x.ToString(),
-                Text = x.ToString()
-            }), "Value", "Text");
-            ViewBag.Turmas = new SelectList(turmas.Select(x => new SelectListItem
-            {
-                Value = x.IdTurma.ToString(),
-                Text = $"{x.IdTurma}|{ x.CodTurma} | { x.DesTurma} | {x.NomeProfessor} | {Math.Round(x.Valor, 2)} | {x.Ano}"
-            }), "Value", "Text");
-            ViewBag.Aluno = aluno;
-            ViewBag.HashMatricula = Guid.NewGuid();
+                totalGeral = matricula.MatriculaItens.Sum(t => t.Valor);
+                totalDesconto = matricula.MatriculaItens.Sum(t => t.ValorCalculado);
+
+                var aluno = await _repositorioAluno.ObterPorAsync(id);
+                var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
+                int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
+                var lista = Enum.GetValues(typeof(Mes)).Cast<int>().ToList();
+                var turmas = await _repositorioTurma.ObterTodosPorAsync(null, null, null, null, perfil.Equals("Professor") ? usuarioId : 0);
+                ViewBag.Mes = new SelectList(lista.Select(x => new SelectListItem
+                {
+                    Value = x.ToString(),
+                    Text = x.ToString()
+                }), "Value", "Text", matricula.MatriculaBase.MatriculaMesInicioPagamento);
+                ViewBag.Turmas = new SelectList(turmas.Select(x => new SelectListItem
+                {
+                    Value = x.IdTurma.ToString(),
+                    Text = $"{x.IdTurma}|{ x.CodTurma}|{ x.DesTurma}|{x.NomeProfessor}|{Math.Round(x.Valor, 2)}|{x.Ano}"
+                }), "Value", "Text");
+                ViewBag.Aluno = aluno;
+                ViewBag.HashMatricula = matricula.MatriculaBase.MatriculaGuid;
+                ViewBag.Matricula = matricula;
+                ViewBag.TotalDesconto = totalDesconto;
+            }
             return await Task.Run(() => View());
         }
         [Route("/Matricula/Item/{id}")]

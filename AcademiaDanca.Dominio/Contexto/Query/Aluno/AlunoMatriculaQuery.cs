@@ -15,6 +15,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Aluno
         public DateTime MatriculaDataInicialPagamento { get; set; }
         public decimal MatriculaValorMatricula { get; set; }
         public int MatriculaTotalParcelas { get; set; }
+        public int MatriculaMesInicioPagamento { get; set; }
+
         public int MatriculaAno { get; set; }
         public string MatriculaStatus { get; set; }
     }

@@ -112,7 +112,7 @@ function BindItemMatricula(data) {
     $.each(data.itens, function (index, item) {
         var tabela = $("#tb_turma tbody");
         var linha = "<tr id=\"" + item.idTurma + "\"><td>" + item.idTurma +
-            "</td><td>" + item.idTurma +
+            "</td><td>" + item.CodTurma +
             "</td><td>" + item.valor +
             "</td><td>" + item.valorDesconto +
             "%</td><td>" + item.valorCalculado +
@@ -742,7 +742,8 @@ $(function () {
                 DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
                 DataContrato: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
                 Ano: $("#formMatricula #inputVigencia").val(),
-                IdMatriculaGuid: $("#hiddenHashAluno").val()
+                IdMatriculaGuid: $("#hiddenHashAluno").val(),
+                MesInicioPagamento: $('#formMatricula #Mes').val()
             };
             var callback = function (data) {
                 if (JSON.parse(data).success) {

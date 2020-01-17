@@ -71,5 +71,7 @@ namespace Academia.Io.Tests
             percentual = percentual < 0 ? 0 : percentual;
             return valor - ((percentual * valor) / 100);
         }
+
+        
     }
 }

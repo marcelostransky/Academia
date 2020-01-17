@@ -21,6 +21,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
         public int DiaVencimento { get; private set; }
         public int TotalParcelas { get; private set; }
         public int Ano { get; private set; }
+        public int MesInicioPagamento { get; private set; }
         public DateTime DataIncialPagamento { get; private set; }
         
         public Guid ChaveRegistro { get; private set; }
@@ -37,7 +38,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             int diaVencimento,
             DateTime dataInicialPagamento,
             Guid chaveRegistro,
-            int ano
+            int ano ,
+            int mesInicioPagamento
             )
         {
             Id = id;
@@ -53,6 +55,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             TotalParcelas = totalParcelas;
             ValorDesconto = ObterValorComDesconto(valorDesconto);
             Ano = ano;
+            MesInicioPagamento = mesInicioPagamento;
             List<Turma> turmas = new List<Turma>(); 
         }
         public void AddTurma(Turma turma)

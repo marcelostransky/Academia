@@ -18,12 +18,13 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.C
         public decimal ValorMatricula { get; set; }
         public double ValorContrato { get; set; }
         public int DiaVencimento { get; set; }
+        public int MesInicioPagamento { get; set; }
         public int TotalParcelas { get; set; }
         public int Ano { get; set; }
         public DateTime DataIncialPagamento { get; set; }
         public Guid ChaveRegistro { get; set; }
         public List<MatriculaItemComando> Turmas { get; set; }
-
+        
         public MatricularComando()
         {
             Turmas = new List<MatriculaItemComando>();
@@ -34,6 +35,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.C
                .IsTrue(DiaVencimento > 0, "Dia Vencimento", "Informe o dia de vencimento")
                .IsTrue(ValorContrato > 0, "Valor Contrato", "Informe o valor do contrato")
                .IsTrue(Ano > 0, "Ano", "Informe o Ano")
+               .IsTrue(MesInicioPagamento > 0, "Mes Inicio Pagamento", "Informe o Mês início de pagamento")
                .IsTrue(TotalParcelas > 0, "TotalParcelas", "Informe o total de parcelas")
                .IsTrue((Id <= 0), "Id", "Id informado não é valido")
                .IsNotNullOrEmpty(DataIncialPagamento.ToShortDateString(), "Data Inicio Pagamento", "Informe a data inicial de pagamento")

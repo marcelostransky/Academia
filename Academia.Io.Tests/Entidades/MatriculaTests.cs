@@ -43,7 +43,7 @@ namespace Academia.Io.Tests.Entidades
         {
             var matricula = new Matricula(_id, _idAluno, _totalParcelas,  _dataContrato,
                 _percentualDesconto, _valorDesconto, _valorMatricula, _valorContrato, _diaVencimento,
-                _dataInicialPagamento, _chaveRegistro,2019);
+                _dataInicialPagamento, _chaveRegistro,2019,1);
             Assert.AreEqual(true, matricula.Valid);
         }
         [TestMethod]
@@ -51,7 +51,7 @@ namespace Academia.Io.Tests.Entidades
         {
             var matricula = new Matricula(_id, _idAluno, _totalParcelas, _dataContrato,
                _percentualDesconto, _valorDesconto, _valorMatricula, _valorContrato, _diaVencimento,
-               _dataInicialPagamento, _chaveRegistro, 2019);
+               _dataInicialPagamento, _chaveRegistro, 2019,1);
             Assert.AreEqual(100, matricula.ValorDesconto);
         }
 
@@ -60,7 +60,7 @@ namespace Academia.Io.Tests.Entidades
         {
             var matricula = new Matricula(_id, _idAluno, _totalParcelas, _dataContrato,
               _percentualDesconto, _valorDesconto, _valorMatricula, _valorContrato, _diaVencimento,
-              _dataInicialPagamento, _chaveRegistro, 2019);
+              _dataInicialPagamento, _chaveRegistro, 2019,1);
             var retorno = matricula.GerarListaMensalidades();
             Assert.AreEqual(5, retorno.Count);
         }

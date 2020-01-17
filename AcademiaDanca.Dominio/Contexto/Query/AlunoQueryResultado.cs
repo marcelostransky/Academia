@@ -7,6 +7,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query
     public class AlunoQueryResultado
     {
         public int Id { get;  set; }
+        public string AlunoGuid { get; set; }
+
         public string Nome { get;  set; }
         public string  Foto { get; set; }
         public DateTime DataNascimento { get;  set; }
