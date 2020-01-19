@@ -98,7 +98,13 @@
     <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
     <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
     <script src="~/js/apps/Aluno/DataTable/aluno.js"></script>
-    <script></script>
+    <script>
+        document.addEventListener('keypress', function (e) {
+            if (e.which == 13) {
+                MontarDataTable();
+            }
+        }, false);
+    </script>
 
 }
 

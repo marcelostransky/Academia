@@ -50,52 +50,40 @@
                 <div class="card p-6">
                     <form id="formMatricula" class=" form formReset">
                         <div class="form-row">
-                            <div class="col-md-3">
-                                <div class="form-group col-md-12">
-                                    <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
-                                    <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula" value="0">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
-                                    <input type="text" class="form-control" id="inputDescontoMatricula" name="inputDescontoMatricula" value="0">
-                                </div>
+                            <div class="col-md-4">
+
                                 <div class="col-12">
                                     <table>
                                         <tbody>
                                             <tr>
                                                 <td>
+                                                    <div class="form-group ">
+                                                        <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
+                                                        <label>@ViewBag.Matricula.MatriculaBase.MatriculaValorMatricula</label>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <div class="form-group ">
+                                                        <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
+                                                        <label>@ViewBag.Matricula.MatriculaBase.MatriculaPercentualDesconto</label>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
                                                     <div class="form-group">
                                                         <label for="inputTotalParcelas" class="col-form-label">N° Parcelas</label>
                                                         <input type="hidden" id="totalParcelas" value="@ViewBag.Matricula.MatriculaBase.MatriculaTotalParcelas" />
+                                                        <label>@ViewBag.Matricula.MatriculaBase.MatriculaTotalParcelas</label>
 
-                                                        <select class="form-control" id="inputTotalParcelas" name="inputTotalParcelas">
-                                                            <option value="1">1</option>
-                                                            <option value="2">2</option>
-                                                            <option value="3">3</option>
-                                                            <option value="4">4</option>
-                                                            <option value="5">5</option>
-                                                            <option value="6">6</option>
-                                                            <option value="7">7</option>
-                                                            <option value="8">8</option>
-                                                            <option value="9">9</option>
-                                                            <option value="10">10</option>
-                                                            <option value="11">11</option>
-                                                            <option value="12">12</option>
-                                                        </select>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="form-group">
                                                         <label for="inputDiaVencimento" class="col-form-label">Vencimento</label>
                                                         <input type="hidden" id="diaSelecionado" value="@ViewBag.Matricula.MatriculaBase.MatriculaDiaVencimento" />
-                                                        <select class="form-control" id="inputDiaVencimento" name="inputDiaVencimento">
-                                                            <option value="1">1</option>
-                                                            <option value="5">5</option>
-                                                            <option value="10">10</option>
-                                                            <option value="15">15</option>
-                                                            <option value="20">20</option>
-                                                            <option value="25">25</option>
-                                                        </select>
+                                                        <label>@ViewBag.Matricula.MatriculaBase.MatriculaDiaVencimento</label>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -103,21 +91,54 @@
                                                 <td>
                                                     <div class="form-group ">
                                                         <label for="inputMesVencimento" class="col-form-label">Mes Início de Pagamento</label>
-                                                        @Html.DropDownList("Mes", null, "Selecione um mês", new { @class = "form-control   select" })
+                                                        <label>@ViewBag.Matricula.MatriculaBase.MatriculaMesInicioPagamento</label>
                                                     </div>
                                                 </td>
                                                 <td>
                                                     <div class="form-group">
                                                         <label for="inputVigencia" class="col-form-label">Ano/Vigencia</label>
-                                                        <input type="text" class="form-control" id="inputVigencia" value="@ViewBag.Matricula.MatriculaBase.MatriculaAno" name="inputVigencia">
+                                                        <label>  @ViewBag.Matricula.MatriculaBase.MatriculaAno </label>
                                                     </div>
                                                 </td>
                                             </tr>
+                                            <tr>
+                                                <td>
+
+                                                    <label for="inputMesVencimento" class="col-form-label">Situação</label>
+
+
+                                                </td>
+                                                <td>
+                                                    <div class="form-group">
+                                                        <div class="preview-elements">
+                                                            <div class="form-check form-check-inline">
+                                                                <label class="form-check-label">
+                                                                    <input class="form-check-input" @(@ViewBag.Matricula.MatriculaBase.MatriculaStatus == "Ativo" ? "checked" : "") type="radio" name="inlineRadioOptions" id="inlineRadio1" value="1">
+                                                                    <span class="radio-icon fuse-ripple-ready"></span>
+                                                                    <span class="form-check-description">Ativo</span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <label class="form-check-label">
+                                                                    <input class="form-check-input" @(@ViewBag.Matricula.MatriculaBase.MatriculaStatus == "Inativo" ? "checked" : "") type="radio" name="inlineRadioOptions" id="inlineRadio2" value="0">
+                                                                    <span class="radio-icon fuse-ripple-ready"></span>
+                                                                    <span class="form-check-description">Inativo</span>
+                                                                </label>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
+                                </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-8">
 
                                 <div class="form-group col-md-12">
                                     <label for="inputUF" class="col-form-label">Turma</label>
@@ -163,38 +184,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-3">
-                                <table class="table" style="text-align:center">
-                                    <tr>
-                                        <td colspan="2">Parcela</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Valor</td>
-                                        <td>Deconto</td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <input type="text" disabled class="form-control" id="inputValorParcela" name="inputValorParcela">
-                                        </td>
-                                        <td>
-                                            <input type="text" class="form-control" id="inputDescontoParcela" name="inputDescontoParcela" value="0">
-                                        </td>
-                                    </tr>
-                                </table>
 
-                                @*<div class="col-12">
-                                        <div class="form-group col-md-6">
-                                            <label for="inputValorParcela" class="col-form-label">Valor Parcela</label>
-                                            </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="inputNome" class="col-form-label">Desconto Parcela</label>
-                                           </div>
-                                    </div>*@
-                                <div class="form-group col-md-12">
-                                    <button type="submit" class="btn btn-primary fuse-ripple-ready">Atualizar</button>
-                                </div>
-
-                            </div>
                         </div>
                     </form>
 
@@ -213,6 +203,11 @@
     <script src="~/Modulo/Mask/maskmoney.js"></script>
     <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
     <script>
+        document.addEventListener('keypress', function (e) {
+            if (e.which == 13) {
+                Turma();
+            }
+        }, false);
         $(document).ready(function () {
             $('#inputDiaVencimento option[value=' + $("#diaSelecionado").val() + ']').attr('selected', 'selected');
             $('#inputTotalParcelas option[value=' + $("#totalParcelas").val() + ']').attr('selected', 'selected');
@@ -238,7 +233,7 @@
             $("#tb_turma tfoot").html('');
             if (parseFloat(data.totalDesconto) > 0) {
                 $("#tb_turma tfoot").html('');
-                document.getElementById("inputValorParcela").value = data.totalDesconto;
+                //document.getElementById("inputValorParcela").value = data.totalDesconto;
                 var tabela = $("#tb_turma");
                 var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + data.totalDesconto + "</td><td></td ></tr > </tfoot>";
                 tabela.append(linha);
@@ -322,10 +317,17 @@
 
         }
         function Turma() {
-            $("#dadosTurmas").show();
-            $("#dadosTurmas").removeClass('invisible');
-            $("#dadosTurmas").addClass("visible");
-            AdicionarLinhaTabelaTurma($('#Turmas option:selected'));
+            if ($('#Turmas option:selected').val().length > 0) {
+                $("#dadosTurmas").show();
+                $("#dadosTurmas").removeClass('invisible');
+                $("#dadosTurmas").addClass("visible");
+                AdicionarLinhaTabelaTurma($('#Turmas option:selected'));
+            }
+            else {
+                PNotify.error({
+                    text: 'Informe uma turma'
+                });
+            }
 
         }
         $(function () {

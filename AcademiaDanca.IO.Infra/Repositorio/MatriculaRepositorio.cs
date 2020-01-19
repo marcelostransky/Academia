@@ -51,7 +51,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                           FROM  academia.aluno as a
                           join academia.matricula as ma on a.id = ma.id_aluno
                           left Join academia.matricula_turma as mt on ma.id = mt.id_matricula
-                          join academia.turma as t on mt.id_turma = t.id
+                          left join academia.turma as t on mt.id_turma = t.id
                           where  a.uif_id = @id
                           Order by a.id;";
                 var parametros = new DynamicParameters();
@@ -64,6 +64,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 AutoMapper.Configuration.AddIdentifier(typeof(MatriculaQueryResultado), "MatriculaId");
                 AutoMapper.Configuration.AddIdentifier(typeof(ItemMatriculaQueryResultado), "IdTurma");
                 matricula = (AutoMapper.MapDynamic<MatriculaQueryResultado>(matriculaRetorno)).FirstOrDefault();
+                CarregarItensTemp(matricula.MatriculaBase.MatriculaGuid);
+                
                 return matricula;
             }
             catch (Exception ex)
@@ -74,6 +76,23 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 _contexto.Dispose();
             }
+        }
+        public void CarregarItensTemp(string id)
+        {
+            var query = @" 
+                            Delete From academia.matricula_turma_temp  where id_matricula = @id;
+                            INSERT INTO `academia`.`matricula_turma_temp`
+                          (`id_matricula`,
+                           `id_turma`,
+                           `valor`,
+                           `desconto`,
+                           `valor_desconto`,
+                           `valor_calculado`)
+                            SELECT m.uif_id,ma.id_turma,ma.valor,ma.desconto,ma.valor_desconto,ma.valor_calculado FROM academia.matricula as m
+                            Join academia.matricula_turma as ma on m.id = id_matricula where id_matricula = @id;";
+            var parametros = new DynamicParameters();
+            parametros.Add("id", id);
+            _contexto.Connection.ExecuteAsync(query, param: parametros, commandType: CommandType.Text);
         }
     }
 }

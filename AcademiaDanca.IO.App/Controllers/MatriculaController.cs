@@ -18,12 +18,11 @@ namespace AcademiaDanca.IO.App.Controllers
 {
     [Authorize]
     [PermissaoAcesso(PaginaId = "MATR", Verbo = "Ler", TipoRetorno = "Html")]
-
     public class MatriculaController : Controller
     {
         private readonly IAcessoRepositorio _repositorioAcesso;
         private readonly IMatriculaRepositorio _repositorioMatricula;
-
+        private readonly IConfiguracaoRepositorio _configuracao;
         private readonly IFinanceiroRepositorio _repositorio;
         private readonly IAlunoRepositorio _repositorioAluno;
         private readonly ItemMatriculaManipulador _registrarItemMatriculaManipulador;
@@ -35,6 +34,7 @@ namespace AcademiaDanca.IO.App.Controllers
             , DelMatriculaItemManipulador delItemMatriculaManipulador
             , ITurmaRepositorio turmaRepositorio
             , IMatriculaRepositorio matriculaRepositorio
+            , IConfiguracaoRepositorio configuracao
            )
         {
             _repositorio = repositorio;
@@ -43,7 +43,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _registrarItemMatriculaManipulador = itemMatriculaManipulador;
             _DelItemMatriculaManipulador = delItemMatriculaManipulador;
             _repositorioMatricula = matriculaRepositorio;
-
+            _configuracao = configuracao;
         }
 
         public IActionResult Matricula(Guid alunoId)
@@ -53,6 +53,8 @@ namespace AcademiaDanca.IO.App.Controllers
         [Route("/Matricula/Aluno/{id}")]
         public async Task<IActionResult> Aluno(Guid id)
         {
+            var valorMatricula = $"R${(await _configuracao.ObterPorChaveAsync("Matricula")).Valor}";
+
             var aluno = await _repositorioAluno.ObterPorAsync(id);
             var perfil = User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             int usuarioId = Convert.ToInt32(User.Claims.FirstOrDefault(x => x.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/sid").Value);
@@ -71,6 +73,7 @@ namespace AcademiaDanca.IO.App.Controllers
             }), "Value", "Text");
             ViewBag.Aluno = aluno;
             ViewBag.HashMatricula = Guid.NewGuid();
+            ViewBag.ValorMatricula = valorMatricula;
             return await Task.Run(() => View());
         }
         [Route("/Matricula/Aluno/Editar/{id}")]
