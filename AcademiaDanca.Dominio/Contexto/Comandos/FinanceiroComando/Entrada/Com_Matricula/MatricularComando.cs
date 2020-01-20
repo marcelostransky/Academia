@@ -16,7 +16,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.C
         public decimal PercentualDesconto { get; set; }
         public decimal ValorDesconto { get; set; }
         public decimal ValorMatricula { get; set; }
-        public double ValorContrato { get; set; }
+        public decimal ValorContrato { get; set; }
         public int DiaVencimento { get; set; }
         public int MesInicioPagamento { get; set; }
         public int TotalParcelas { get; set; }

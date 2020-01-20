@@ -74,6 +74,7 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Aluno = aluno;
             ViewBag.HashMatricula = Guid.NewGuid();
             ViewBag.ValorMatricula = valorMatricula;
+            
             return await Task.Run(() => View());
         }
         [Route("/Matricula/Aluno/Editar/{id}")]

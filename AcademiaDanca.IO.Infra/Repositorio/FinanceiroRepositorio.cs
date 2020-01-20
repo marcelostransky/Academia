@@ -28,7 +28,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             parametros.Add("sp_ano", matricula.Ano);
             var existe = (await _contexto
                   .Connection
-                  .QueryAsync<int>("SELECT count(1) FROM academia.matricula where id_aluno = @sp_id_aluno and ano = @sp_ano",
+                  .QueryAsync<int>("SELECT count(1) FROM academia.matricula where id_aluno = @sp_id_aluno and ano = @sp_ano and status = 1",
                   parametros,
                   commandType: System.Data.CommandType.Text)).FirstOrDefault();
             _contexto.Dispose();

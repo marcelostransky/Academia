@@ -27,22 +27,26 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
         public async Task<IComandoResultado> ManipuladorAsync(MatricularComando comando)
         {
 
+            //Obter itens matricula
+            var turmas = (await _repositorio.ObterMatriculaItensTempPor(new Guid(comando.IdMatriculaGuid))).ToList();
+            
+            if (turmas.Count() <= 0)
+            {
+                AddNotification("Turmas", $"Informe pelo menos uma turma");
+            }
+            comando.ValorContrato = turmas.Sum(x => x.ValorCalculado);
             //Criar Entidade
             var matricula = new Matricula(comando.Id, comando.IdAluno, comando.TotalParcelas,
                 comando.DataContrato, comando.PercentualDesconto, comando.ValorDesconto, comando.ValorMatricula,
-               Convert.ToDecimal(comando.ValorContrato), comando.DiaVencimento, comando.DataIncialPagamento, ChaveRegistro.Gerar(), comando.Ano, comando.MesInicioPagamento);
+               comando.ValorContrato, comando.DiaVencimento, comando.DataIncialPagamento, ChaveRegistro.Gerar(), comando.Ano, comando.MesInicioPagamento);
 
             //check Matricula Existe
             if (await _repositorio.CheckMatriculaExisteAsync(matricula))
                 AddNotification("Matricula", $"Aluno informado ja possui matricula ativa para o ano de {comando.Ano} ");
 
-            //Obter itens matricula
-            var turmas = (await _repositorio.ObterMatriculaItensTempPor(new Guid(comando.IdMatriculaGuid))).ToList();
 
-            if (turmas.Count() <= 0)
-            {
-                AddNotification("Turmas", $"Informe pelo menos uma turma");
-            }
+            
+
 
             //Validar Comando
             comando.Valido();
@@ -72,7 +76,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
 
             }
             //Deletar Tem item matricula
-            await _repositorio.DeletarItemMatriculaTemp(comando.IdMatriculaGuid,0);
+            await _repositorio.DeletarItemMatriculaTemp(comando.IdMatriculaGuid, 0);
             //Persistir Mensalidades
             await _repositorio.GerarMensalidade(new Mensalidade(0, matricula.IdAluno, id, matricula.TotalParcelas, Convert.ToDecimal(matricula.ValorContrato), matricula.ValorDesconto, matricula.DataIncialPagamento));
 
