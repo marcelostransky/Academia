@@ -24,7 +24,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.C
         public DateTime DataIncialPagamento { get; set; }
         public Guid ChaveRegistro { get; set; }
         public List<MatriculaItemComando> Turmas { get; set; }
-        
+        public int TipoMatricula { get; set; }
         public MatricularComando()
         {
             Turmas = new List<MatriculaItemComando>();

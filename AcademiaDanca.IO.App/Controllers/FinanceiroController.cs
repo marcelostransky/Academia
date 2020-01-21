@@ -11,6 +11,7 @@ using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Leanwork.CodePack.DataTables;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AcademiaDanca.IO.App.Controllers
 {
@@ -23,17 +24,29 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly IFinanceiroRepositorio _repositorio;
         private readonly IAlunoRepositorio _repositorioAluno;
         private readonly RegistrarPagamentoMensalidadeManipulador _registrarManipulador;
+        private readonly IMensalidadeRepositorio _repositorioMensalidade;
+
         public FinanceiroController(IFinanceiroRepositorio repositorio,
-            IAlunoRepositorio repositorioAluno
+            IAlunoRepositorio repositorioAluno,
+            IMensalidadeRepositorio repositorioMensalidade
             , RegistrarPagamentoMensalidadeManipulador registrarManipulador)
         {
             _repositorio = repositorio;
             _repositorioAluno = repositorioAluno;
             _registrarManipulador = registrarManipulador;
+            _repositorioMensalidade = repositorioMensalidade;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var lista = await _repositorioMensalidade.ObterListaAnoDataVencimento();
+            var tipos = await _repositorioMensalidade.ObterTipoMensalidadeAsync();
+            ViewBag.Anos = new SelectList(lista.Select(x => new SelectListItem
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            }), "Value", "Text");
+            ViewBag.Tipos = new SelectList(tipos, "Id", "Descricao");
             return View();
         }
 
@@ -69,12 +82,12 @@ namespace AcademiaDanca.IO.App.Controllers
 
         }
         [PermissaoAcesso(PaginaId = "MENS", Verbo = "Ler", TipoRetorno = "Html")]
-        public async Task<IActionResult> MensalidadeAsync(Guid? id, string status, int? ano, jQueryDataTableRequestModel request)
+        public async Task<IActionResult> MensalidadeAsync(Guid? id, string status, int? ano, int? tipo, jQueryDataTableRequestModel request)
         {
             try
             {
 
-                var lista = (await _repositorio.ObterMensalidadesPorAlunoAsync(id, status, ano)).AsQueryable();
+                var lista = (await _repositorio.ObterMensalidadesPorAlunoAsync(id, status, ano, tipo)).AsQueryable();
 
                 if (request.sSearch != null && request.sSearch.Length > 0)
                 {
@@ -86,13 +99,14 @@ namespace AcademiaDanca.IO.App.Controllers
                              {
                                  r.AlunoNome,
                                  r.MensalidadeId,
+                                 r.TipoMensalidade,
                                  //Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Funcionario/{r.Foto}\">",
                                  r.Parcela,
                                  r.Valor,
                                  total = r.Valor - r.Desconto,
                                  dataVencimento = r.DataVencimento.ToShortDateString(),
                                  r.Desconto,
-                                 Pago = r.Pago ? $"<span class=\"badge badge-success\"> Pago - {Convert.ToDateTime(r.DataPagamento).ToShortDateString()} </ span > " : " <span class=\"badge badge-danger\"> Pendente</ span >",
+                                 Pago = r.Estorno ? $"<span class=\"badge badge-warning\"> Estornado - {r.DataEstorno.ToShortDateString()} </ span>" : (r.Pago ? $"<span class=\"badge badge-success\"> Pago - {Convert.ToDateTime(r.DataPagamento).ToShortDateString()} </ span > " : " <span class=\"badge badge-danger\"> Pendente</ span >"),
                                  acao = ObterMenuAcaoDataTable(r)
                              })
                                 .DataTableResponse(request);

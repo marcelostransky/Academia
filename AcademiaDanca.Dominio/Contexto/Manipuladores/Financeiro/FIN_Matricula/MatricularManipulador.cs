@@ -29,7 +29,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
 
             //Obter itens matricula
             var turmas = (await _repositorio.ObterMatriculaItensTempPor(new Guid(comando.IdMatriculaGuid))).ToList();
-            
+
             if (turmas.Count() <= 0)
             {
                 AddNotification("Turmas", $"Informe pelo menos uma turma");
@@ -45,7 +45,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
                 AddNotification("Matricula", $"Aluno informado ja possui matricula ativa para o ano de {comando.Ano} ");
 
 
-            
+
 
 
             //Validar Comando
@@ -77,8 +77,10 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
             }
             //Deletar Tem item matricula
             await _repositorio.DeletarItemMatriculaTemp(comando.IdMatriculaGuid, 0);
-            //Persistir Mensalidades
-            await _repositorio.GerarMensalidade(new Mensalidade(0, matricula.IdAluno, id, matricula.TotalParcelas, Convert.ToDecimal(matricula.ValorContrato), matricula.ValorDesconto, matricula.DataIncialPagamento));
+            //Persistir Boletos
+            await _repositorio.GerarMensalidade(new Mensalidade(0, matricula.IdAluno, id, matricula.TotalParcelas, Convert.ToDecimal(matricula.ValorContrato), matricula.ValorDesconto, matricula.DataIncialPagamento, 2));
+            //Persistir Boleto Matricula 
+            await _repositorio.GerarMensalidade(new Mensalidade(0, matricula.IdAluno, id, 1, Convert.ToDecimal(matricula.ValorMaricula), matricula.ValorDesconto, matricula.DataIncialPagamento, 1));
 
             // Retornar o resultado para tela
             return new ComandoResultado(true, "Matricula realizada com sucesso", new

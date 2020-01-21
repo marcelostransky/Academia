@@ -16,5 +16,9 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro
         public bool Pago { get; set; }
         public DateTime? DataPagamento { get; set; }
         public decimal Juros { get; set; }
+        public int IdTipoMensalidade { get; set; }
+        public string TipoMensalidade { get; set; }
+        public bool Estorno { get; set; }
+        public DateTime DataEstorno { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace AcademiaDanca.IO.App.Controllers
 {
@@ -18,6 +19,7 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly IAcessoRepositorio _repositorioAcesso;
         private readonly IFinanceiroRepositorio _repositorio;
         private readonly IAlunoRepositorio _repositorioAluno;
+        private readonly IMensalidadeRepositorio _repositorioMensalidade;
         private readonly RegistrarPagamentoMensalidadeManipulador _registrarManipulador;
         public MensalidadeController(IFinanceiroRepositorio repositorio,
             IAlunoRepositorio repositorioAluno
@@ -27,8 +29,14 @@ namespace AcademiaDanca.IO.App.Controllers
             _repositorioAluno = repositorioAluno;
             _registrarManipulador = registrarManipulador;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var lista = await _repositorioMensalidade.ObterListaAnoDataVencimento();
+            ViewBag.Ano = new SelectList(lista.Select(x => new SelectListItem
+            {
+                Value = x.ToString(),
+                Text = x.ToString()
+            }));
             return View();
         }
         [PermissaoAcesso(PaginaId = "MENS", Verbo = "Criar", TipoRetorno = "json")]
@@ -46,6 +54,6 @@ namespace AcademiaDanca.IO.App.Controllers
             }
 
         }
-        
+
     }
 }

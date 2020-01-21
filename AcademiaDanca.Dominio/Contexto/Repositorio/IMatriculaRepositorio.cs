@@ -9,5 +9,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
     public interface IMatriculaRepositorio
     {
         Task<MatriculaQueryResultado> ObterMatriculaCompletoAsync(Guid id);
+        Task<int> DeletarItemMatricula(int idMatricula, int idTurma);
+        Task<MatriculaSimplificadoQueryResultado> ObterPor(Guid id);
     }
 }

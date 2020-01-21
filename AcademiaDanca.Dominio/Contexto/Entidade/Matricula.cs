@@ -23,7 +23,7 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
         public int Ano { get; private set; }
         public int MesInicioPagamento { get; private set; }
         public DateTime DataIncialPagamento { get; private set; }
-        
+  
         public Guid ChaveRegistro { get; private set; }
 
         public Matricula(
@@ -39,7 +39,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             DateTime dataInicialPagamento,
             Guid chaveRegistro,
             int ano ,
-            int mesInicioPagamento
+            int mesInicioPagamento 
+            
             )
         {
             Id = id;
@@ -56,7 +57,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
             ValorDesconto = ObterValorComDesconto(valorDesconto);
             Ano = ano;
             MesInicioPagamento = mesInicioPagamento;
-            List<Turma> turmas = new List<Turma>(); 
+            List<Turma> turmas = new List<Turma>();
+            
         }
         public void AddTurma(Turma turma)
         {
@@ -68,16 +70,16 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Entidade
                 valorDesconto = (PercentualDesconto / 100 * ValorContrato);
             return valorDesconto;
         }
-        public IList<Mensalidade> GerarListaMensalidades()
-        {
-            var mensalidadesRetorno = new List<Mensalidade>();
-            var data = this.DataIncialPagamento;
-            for (int i = 1; i <= this.TotalParcelas; i++)
-            {
-                mensalidadesRetorno.Add(new Mensalidade(Id, IdAluno, Id, i, ValorContrato, ValorDesconto, data));
-                data = data.AddMonths(1);
-            }
-            return mensalidadesRetorno;
-        }
+        //public IList<Mensalidade> GerarListaMensalidades()
+        //{
+        //    var mensalidadesRetorno = new List<Mensalidade>();
+        //    var data = this.DataIncialPagamento;
+        //    for (int i = 1; i <= this.TotalParcelas; i++)
+        //    {
+        //        mensalidadesRetorno.Add(new Mensalidade(Id, IdAluno, Id, i, ValorContrato, ValorDesconto, data, TipoMatricula));
+        //        data = data.AddMonths(1);
+        //    }
+        //    return mensalidadesRetorno;
+        //}
     }
 }

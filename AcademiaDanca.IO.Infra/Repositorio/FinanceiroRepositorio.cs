@@ -83,6 +83,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                     parametros.Add("sp_desconto", mes.Desconto);
                     parametros.Add("sp_parcela", mes.Parcela);
                     parametros.Add("sp_id_aluno", mes.IdAluno);
+                    parametros.Add("sp_tipo_mensalidade", mes.TipoMensalidade);
 
                     await _contexto
                         .Connection
@@ -97,7 +98,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
         }
 
-        public async Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano)
+        public async Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano, int? tipo)
         {
 
             var limit = string.Empty;
@@ -109,21 +110,24 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
             if (uifIdAluno.Equals(null))
             {
-                limit = "limit 100";
+                limit = "limit 1000";
             }
             switch (status)
             {
                 case "Vencida":
-                    data = $" and M.Pago = 0 and  M.data_vencimento < @sp_data_consulta";
+                    data = $" and M.Pago = 0 and  M.data_vencimento < @sp_data_consulta and  ME.id Is Null";
                     break;
                 case "Avencer":
-                    data = $" and M.Pago = 0  and  M.data_vencimento > @sp_data_consulta";
+                    data = $" and M.Pago = 0  and  M.data_vencimento > @sp_data_consulta and  ME.id Is Null";
                     break;
                 case "Hoje":
                     data = $" and  M.data_vencimento = @sp_data_consulta";
                     break;
                 case "Pago":
-                    data = $" and  M.Pago = 1";
+                    data = $" and  M.Pago = 1 and  ME.id Is Null";
+                    break;
+                case "Estornado":
+                    data = $" and  ME.id Is Not Null";
                     break;
 
             }
@@ -132,18 +136,30 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_Ano", ano);
                 data += $" and  year(M.data_vencimento) = @sp_Ano";
             }
+            if (!tipo.Equals(null))
+            {
+                parametros.Add("sp_Tipo", tipo);
+                data += $" and  M.id_tipo_mensalidade = @sp_Tipo";
+            }
             var query = $@"SELECT  M.id as  MensalidadeId, 
-                                                            M.id_aluno as AlunoId,
-                                                            a.uif_id AS GuidAluno,
-                                                            M.parcela as Parcela,
-                                                            M.valor as Valor, M.data_vencimento as DataVencimento,
-                                                            M.desconto as Desconto,
-                                                            M.pago as Pago,
-                                                            M.data_pagamento as DataPagamento,
-                                                            M.juros as Juros,
-                                                            A.nome as AlunoNome FROM academia.mensalidade as M
-                                                            join academia.aluno as A on M.id_aluno = A.id
-                                                            where  a.uif_id = ifnull(@sp_id_aluno,a.uif_id) {data}  {limit}";
+                            M.id_aluno as AlunoId,
+                            a.uif_id AS GuidAluno,
+                            M.parcela as Parcela,
+                            M.valor as Valor, M.data_vencimento as DataVencimento,
+                            M.desconto as Desconto,
+                            M.pago as Pago,
+                            M.data_pagamento as DataPagamento,
+                            M.juros as Juros,
+                            M.id_tipo_mensalidade as IdTipoMensalidade,
+                            TM.descricao as TipoMensalidade,
+                            Case When ME.id Is Null Then false else true end as Estorno,
+                            ME.data as DataEstorno,
+                            A.nome as AlunoNome 
+                            FROM academia.mensalidade as M
+                            join academia.tipo_mensalidade as TM on M.id_tipo_mensalidade = TM.id
+                            join academia.aluno as A on M.id_aluno = A.id
+                            left join academia.mensalidade_estorno as ME on M.id = ME.id_mensalidade                            
+                            where  a.uif_id = ifnull(@sp_id_aluno,a.uif_id) {data}  {limit}";
             var resultado = (await _contexto
                   .Connection
                   .QueryAsync<MensalidadesQueryResultado>(query,
@@ -213,10 +229,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
 
         }
-
-
-
-
         public async Task<IEnumerable<ItemMatriculaQueryResultado>> ObterItensMatriculaPor(int id)
         {
             try
@@ -233,7 +245,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                       MT.valor as Valor,
                       MT.desconto as Desconto,
                       MT.valor_desconto as ValorDesconto,
-                      MT.valor_calculado as ValorValculado FROM academia.matricula_turma as MT
+                      MT.valor_calculado as ValorValculado 
+                      FROM academia.matricula_turma as MT
                       Join academia.turma as T ON MT.id_turma = T.id
                       Where MT.id_matricula = @sp_id_matricula",
                       parametros,
@@ -250,7 +263,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 _contexto.Dispose();
             }
         }
-
         public async Task<bool> CheckMatriculaItemTempExisteAsync(MatriculaItemComando comando)
         {
             var query = @"SELECT count(1) FROM academia.matricula_turma_temp 
@@ -309,6 +321,41 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
 
         }
+        public async Task<IEnumerable<ItemMatriculaQueryResultado>> ObterMatriculaItensPor(Guid id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_matricula", id.ToString());
+
+                var listaRetorno = (await _contexto
+                      .Connection
+                      .QueryAsync<ItemMatriculaQueryResultado>(@"SELECT 
+                      MT.id_matricula as IdMatriculaGuid,
+                      MT.id_turma as IdTurma,
+                      T.cod_turma as CodTurma,
+                      MT.valor as Valor,
+                      case when MT.desconto = 0 then false else true end as Desconto,
+                      MT.valor_desconto as ValorDesconto,
+                      MT.valor_calculado as ValorCalculado 
+                     FROM academia.matricula_turma as MT
+                      Join academia.matricula as M on MT.id_matricula = M.id
+                      Join academia.turma as T ON MT.id_turma = T.id
+                      Where M.uif_id = @sp_id_matricula",
+                      parametros,
+                      commandType: System.Data.CommandType.Text));
+
+                return listaRetorno;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
         public async Task<IEnumerable<ItemMatriculaQueryResultado>> ObterMatriculaItensTempPor(Guid id)
         {
             try
@@ -325,7 +372,8 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                       MT.valor as Valor,
                       case when MT.desconto = 0 then false else true end as Desconto,
                       MT.valor_desconto as ValorDesconto,
-                      MT.valor_calculado as ValorCalculado FROM academia.matricula_turma_temp as MT
+                      MT.valor_calculado as ValorCalculado 
+                      FROM academia.matricula_turma_temp as MT
                       Join academia.turma as T ON MT.id_turma = T.id
                       Where MT.id_matricula = @sp_id_matricula",
                       parametros,
@@ -343,7 +391,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 _contexto.Dispose();
             }
         }
-
         public async Task<int> DeletarItemMatriculaTemp(string idMatriculaGuid, int idTurma = 0)
         {
             try
@@ -374,7 +421,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 _contexto.Dispose();
             }
         }
-
         public async Task AtualizaItemMatriculaTemp(MatriculaItemTemp temp)
         {
             try
@@ -412,5 +458,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 _contexto.Dispose();
             }
         }
+       
     }
 }

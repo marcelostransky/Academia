@@ -55,12 +55,22 @@ namespace Academia.Io.Tests.Fakes
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<ItemMatriculaQueryResultado>> ObterMatriculaItensPor(Guid idMatriculaGuid)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<ItemMatriculaQueryResultado>> ObterMatriculaItensTempPor(Guid idMatriculaGuid)
         {
             throw new NotImplementedException();
         }
 
         public Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<List<MensalidadesQueryResultado>> ObterMensalidadesPorAlunoAsync(Guid? uifIdAluno, string status, int? ano, int? tipo)
         {
             throw new NotImplementedException();
         }

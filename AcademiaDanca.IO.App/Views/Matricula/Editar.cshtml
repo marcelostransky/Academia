@@ -45,10 +45,8 @@
                 <input type="hidden" id="hiddenIdAluno" value="@ViewBag.Matricula.MatriculaAluno.Id" />
                 <input type="hidden" id="hiddenHashAluno" value="@ViewBag.Matricula.MatriculaAluno.AlunoGuid" />
                 <input type="hidden" id="hiddenHashMatricula" value="@ViewBag.Matricula.MatriculaBase.MatriculaGuid" />
-
-
                 <div class="card p-6">
-                    <form id="formMatricula" class=" form formReset">
+                    <form id="formMatricula" class="form formReset">
                         <div class="form-row">
                             <div class="col-md-4">
 
@@ -151,8 +149,6 @@
 
                                     </div>
                                 </div>
-
-
                                 <div id="dadosTurmas" class="card">
                                     <table id="tb_turma" class="table dataTable">
                                         <thead>
@@ -173,7 +169,7 @@
                                                     <td>@iten.Valor</td>
                                                     <td>@iten.ValorDesconto %</td>
                                                     <td>@iten.ValorCalculado</td>
-                                                    <td><a href="#" onclick="javascript:DeletarLinhaTabelaTurma('49','0ad09870-d292-41e9-acbe-fd74dd380c98')" class="btn btn-icon fuse-ripple-ready" title="Excluir"> <i class="icon-delete-forever "></i> </a></td>
+                                                    <td><a href="#" onclick="javascript:DeletarLinhaTabelaTurma('@iten.IdTurma','@ViewBag.Matricula.MatriculaBase.MatriculaGuid')" class="btn btn-icon fuse-ripple-ready" title="Excluir"> <i class="icon-delete-forever "></i> </a></td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -238,10 +234,7 @@
                 var linha = "<tfoot><tr><td></td><td></td><td></td><td>Total</td><td>" + data.totalDesconto + "</td><td></td ></tr > </tfoot>";
                 tabela.append(linha);
             }
-            else {
-                document.getElementById("inputValorParcela").value = 0;
-
-            }
+           
 
         }
         function AdicionarLinhaTabelaTurma(turma) {
@@ -330,133 +323,170 @@
             }
 
         }
-        $(function () {
-            $("#formMatricula").validate({
-
-                ignore: [],
-                rules: {
-
-                    inputValorMatricula: {
-                        required: true
-
-
-                    },
-                    inputDescontoMatricula: {
-                        required: true
-
-
-                    },
-                    inputValorParcela: {
-                        required: true
-
-
-                    },
-                    inputDescontoParcela: {
-                        required: true
-
-
-                    },
-                    inputDiaVencimento: {
-                        required: true
-
-
-                    },
-                    inputTotalParcelas: {
-                        required: true
-
-
-                    },
-                    TipoFiliacao: {
-                        required: true
-                    },
-                    inputVigencia: {
-                        required: true
-                    },
-                    inputMesVencimento: {
-                        required: true
-                    }
-
-                },
-                messages: {
-
-
-                    inputValorMatricula: {
-                        required: "Campo Obrigatório."
-
-                    },
-                    inputDescontoMatricula: {
-                        required: "Campo Obrigatório."
-
-                    },
-                    inputValorParcela: {
-                        required: "Campo Obrigatório."
-
-                    },
-                    inputDescontoParcela: {
-                        required: "Campo Obrigatório."
-
-                    },
-                    inputDiaVencimento: {
-                        required: "Campo Obrigatório."
-
-                    },
-                    inputTotalParcelas: {
-                        required: "Campo Obrigatório."
-
-                    },
-                    TipoFiliacao: {
-                        required: "Informe o tipo de responsavel."
-                    }
-
-                },
-                submitHandler: function (form) {
-
-                    var dataT = {
-
-                        IdAluno: $("#hiddenIdAluno").val(),
-                        PercentualDesconto: $("#formMatricula #inputDescontoParcela").val().replace('%', ''),
-                        ValorMatricula: $("#formMatricula #inputValorMatricula").val().replace('R$', '').replace('.', ','),
-                        ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', '').replace('.', ','),
-                        DiaVencimento: $("#formMatricula #inputDiaVencimento").val(),
-                        TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
-                        DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
-                        DataContrato: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
-                        Ano: $("#formMatricula #inputVigencia").val(),
-                        IdMatriculaGuid: $("#hiddenHashMatricula").val(),
-                        MesInicioPagamento: $('#formMatricula #Mes').val()
-                    };
-                    var callback = function (data) {
-                        if (JSON.parse(data).success) {
-                            PNotify.success({
-                                title: 'Matriculado com sucesso.'
-                            });
-                            document.getElementById("formResponsavel").reset();
-                            return false;
-                        } else {
-                            var msg = '';
-                            $.each(JSON.parse(data).data, function (index, item) {
-                                msg = msg + item.property + ' > ' + item.message + '\n';
-                            });
-
-                            PNotify.info({
-                                title: msg
-                            });
-
-
-                        }
-                    };
-                    var callbackErro = function (data) {
-                        PNotify.error({
-                            title: 'Ocorreu um erro ao processar sua solicitação'
-                        });
-
-                    };
-
-                    academia.helper.rest.utils.POST("/Aluno/Matricular/", dataT, callback, callbackErro, $('#loader'));
+        $("#formMatricula").submit(function (event) {
+            event.preventDefault();
+            const situacao = document.querySelector("input[name=inlineRadioOptions]:checked").value === '1' ? true : false;
+            var dataT = {
+                IdMatriculaGuid: $("#hiddenHashMatricula").val(),
+                StatusMatricula: situacao
+            };
+            var callback = function (data) {
+                if (JSON.parse(data).success) {
+                    PNotify.success({
+                        title: 'Matriculado com sucesso.'
+                    });
+                    document.getElementById("formResponsavel").reset();
                     return false;
+                } else {
+                    var msg = '';
+                    $.each(JSON.parse(data).data, function (index, item) {
+                        msg = msg + item.property + ' > ' + item.message + '\n';
+                    });
+
+                    PNotify.info({
+                        title: msg
+                    });
+
+
                 }
-            });
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+
+            };
+
+            academia.helper.rest.utils.POST("/Matricula/Editar/", dataT, callback, callbackErro, $('#loader'));
+            return false;
         });
+        //$(function () {
+        //    $("#formMatricula").validate({
+
+        //        ignore: [],
+        //        rules: {
+
+        //            inputValorMatricula: {
+        //                required: true
+
+
+        //            },
+        //            inputDescontoMatricula: {
+        //                required: true
+
+
+        //            },
+        //            inputValorParcela: {
+        //                required: true
+
+
+        //            },
+        //            inputDescontoParcela: {
+        //                required: true
+
+
+        //            },
+        //            inputDiaVencimento: {
+        //                required: true
+
+
+        //            },
+        //            inputTotalParcelas: {
+        //                required: true
+
+
+        //            },
+        //            TipoFiliacao: {
+        //                required: true
+        //            },
+        //            inputVigencia: {
+        //                required: true
+        //            },
+        //            inputMesVencimento: {
+        //                required: true
+        //            }
+
+        //        },
+        //        messages: {
+
+
+        //            inputValorMatricula: {
+        //                required: "Campo Obrigatório."
+
+        //            },
+        //            inputDescontoMatricula: {
+        //                required: "Campo Obrigatório."
+
+        //            },
+        //            inputValorParcela: {
+        //                required: "Campo Obrigatório."
+
+        //            },
+        //            inputDescontoParcela: {
+        //                required: "Campo Obrigatório."
+
+        //            },
+        //            inputDiaVencimento: {
+        //                required: "Campo Obrigatório."
+
+        //            },
+        //            inputTotalParcelas: {
+        //                required: "Campo Obrigatório."
+
+        //            },
+        //            TipoFiliacao: {
+        //                required: "Informe o tipo de responsavel."
+        //            }
+
+        //        },
+        //        submitHandler: function (form) {
+
+        //            var dataT = {
+
+        //                IdAluno: $("#hiddenIdAluno").val(),
+        //                PercentualDesconto: $("#formMatricula #inputDescontoParcela").val().replace('%', ''),
+        //                ValorMatricula: $("#formMatricula #inputValorMatricula").val().replace('R$', '').replace('.', ','),
+        //                ValorContrato: $("#formMatricula #inputValorParcela").val().replace('R$', '').replace('.', ','),
+        //                DiaVencimento: $("#formMatricula #inputDiaVencimento").val(),
+        //                TotalParcelas: $("#formMatricula #inputTotalParcelas").val(),
+        //                DataIncialPagamento: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
+        //                DataContrato: $("#formMatricula #inputDiaVencimento").val() + "/" + $("#formMatricula #Mes").val() + "/" + $("#formMatricula #inputVigencia").val(),
+        //                Ano: $("#formMatricula #inputVigencia").val(),
+        //                IdMatriculaGuid: $("#hiddenHashMatricula").val(),
+        //                MesInicioPagamento: $('#formMatricula #Mes').val()
+        //            };
+        //            var callback = function (data) {
+        //                if (JSON.parse(data).success) {
+        //                    PNotify.success({
+        //                        title: 'Matriculado com sucesso.'
+        //                    });
+        //                    document.getElementById("formResponsavel").reset();
+        //                    return false;
+        //                } else {
+        //                    var msg = '';
+        //                    $.each(JSON.parse(data).data, function (index, item) {
+        //                        msg = msg + item.property + ' > ' + item.message + '\n';
+        //                    });
+
+        //                    PNotify.info({
+        //                        title: msg
+        //                    });
+
+
+        //                }
+        //            };
+        //            var callbackErro = function (data) {
+        //                PNotify.error({
+        //                    title: 'Ocorreu um erro ao processar sua solicitação'
+        //                });
+
+        //            };
+
+        //            academia.helper.rest.utils.POST("/Aluno/Matricular/", dataT, callback, callbackErro, $('#loader'));
+        //            return false;
+        //        }
+        //    });
+        //});
     </script>
 }
 

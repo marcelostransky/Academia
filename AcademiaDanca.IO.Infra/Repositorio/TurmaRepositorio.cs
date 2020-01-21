@@ -140,6 +140,28 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
             finally { _contexto.Dispose(); }
         }
+        public async Task<int> DeletarAlunoAsync(int idAluno, int idTurma)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_aluno", idAluno);
+                parametros.Add("sp_id_turma", idTurma);
+                var retorno = await _contexto
+                    .Connection
+                    .ExecuteAsync(@"update  `academia`.`turma_aluno` set status = 0
+                                    WHERE id_aluno =@sp_id_aluno  and id_turma =@sp_id_turma ",
+                    parametros,
+                    commandType: System.Data.CommandType.Text);
+
+                return retorno;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            finally { _contexto.Dispose(); }
+        }
 
 
         public async Task<int> EditarAsync(Turma turma)

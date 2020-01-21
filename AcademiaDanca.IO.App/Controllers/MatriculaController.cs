@@ -27,6 +27,7 @@ namespace AcademiaDanca.IO.App.Controllers
         private readonly IAlunoRepositorio _repositorioAluno;
         private readonly ItemMatriculaManipulador _registrarItemMatriculaManipulador;
         private readonly DelMatriculaItemManipulador _DelItemMatriculaManipulador;
+        private readonly EditMatriculaManipulador _EditMatriculaManipulador;
         private readonly ITurmaRepositorio _repositorioTurma;
         public MatriculaController(IFinanceiroRepositorio repositorio
             , ItemMatriculaManipulador itemMatriculaManipulador
@@ -35,6 +36,7 @@ namespace AcademiaDanca.IO.App.Controllers
             , ITurmaRepositorio turmaRepositorio
             , IMatriculaRepositorio matriculaRepositorio
             , IConfiguracaoRepositorio configuracao
+            , EditMatriculaManipulador  editMatriculaManipulador
            )
         {
             _repositorio = repositorio;
@@ -44,6 +46,7 @@ namespace AcademiaDanca.IO.App.Controllers
             _DelItemMatriculaManipulador = delItemMatriculaManipulador;
             _repositorioMatricula = matriculaRepositorio;
             _configuracao = configuracao;
+            _EditMatriculaManipulador = editMatriculaManipulador;
         }
 
         public IActionResult Matricula(Guid alunoId)
@@ -110,6 +113,24 @@ namespace AcademiaDanca.IO.App.Controllers
             }
             return await Task.Run(() => View());
         }
+        [HttpPost]
+        [Route("/Matricula/Editar/")]
+        public async Task<IActionResult> EditarAsync(EditMatriculaComando comando)
+        {
+            try
+            {
+                var resultado = await _EditMatriculaManipulador.ManipuladorAsync(comando);
+
+                return Json(new { msg = "OK" });
+            }
+            catch (Exception ex)
+            {
+
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
+
         [Route("/Matricula/Item/{id}")]
         public async Task<IActionResult> ItemAsync(int id)
         {

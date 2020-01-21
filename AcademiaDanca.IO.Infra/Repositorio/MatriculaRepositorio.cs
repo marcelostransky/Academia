@@ -88,11 +88,64 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                            `desconto`,
                            `valor_desconto`,
                            `valor_calculado`)
-                            SELECT m.uif_id,ma.id_turma,ma.valor,ma.desconto,ma.valor_desconto,ma.valor_calculado FROM academia.matricula as m
-                            Join academia.matricula_turma as ma on m.id = id_matricula where id_matricula = @id;";
+                            SELECT m.uif_id,ma.id_turma,ma.valor,ma.desconto,ma.valor_desconto,ma.valor_calculado 
+                            FROM academia.matricula as m
+                            Join academia.matricula_turma as ma on m.id = id_matricula where M.uif_id = @id;";
             var parametros = new DynamicParameters();
             parametros.Add("id", id);
             _contexto.Connection.ExecuteAsync(query, param: parametros, commandType: CommandType.Text);
         }
+
+        public async Task<MatriculaSimplificadoQueryResultado> ObterPor(Guid id)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id", id);
+                var query =  @"SELECT id as IdMatricula, id_aluno as IdAluno 
+                        FROM academia.matricula where uif_id = @sp_id;";
+                var matricula =await _contexto.Connection.QueryAsync<MatriculaSimplificadoQueryResultado>(
+                    query, param: parametros, commandType: CommandType.Text
+                    );
+                return matricula.FirstOrDefault();
+
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+            
+        }
+        public async Task<int> DeletarItemMatricula(int idMatricula, int idTurma = 0)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_turma", idTurma);
+                parametros.Add("sp_id_matricula", idMatricula);
+                var query = $"Delete From academia.matricula_turma Where id_matricula = @sp_id_matricula ";
+                if (idTurma > 0)
+                {
+                    query += " and id_turma = @sp_id_turma";
+                }
+                var deletado = (await _contexto
+                      .Connection
+                      .ExecuteAsync(query,
+                      parametros,
+                      commandType: System.Data.CommandType.Text));
+
+                return deletado;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
+
     }
 }

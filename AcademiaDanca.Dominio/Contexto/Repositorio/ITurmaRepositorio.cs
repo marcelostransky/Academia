@@ -25,5 +25,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<TurmaQuantitativoQueryResultado> CheckQuantitativoTurmaAsync(int id);
         Task<int> DeletarAsync(int id);
         Task<IEnumerable<DiaQueryResultado>> ObterDiaSemana();
+        Task<int> DeletarAlunoAsync(int idAluno, int idTurma);
     }
 }

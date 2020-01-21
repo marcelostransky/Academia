@@ -36,7 +36,7 @@
                     <a class="nav-link btn" id="filiacao-tab" data-toggle="tab" href="#filiacao-tab-pane" role="tab" aria-controls="filiacao-tab-pane">Filiação</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn" id="matricula-tab" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
+                    <a class="nav-link btn" id="matricula-tab" onclick="RedirecionaMatricula()" data-toggle="tab" href="#matricula-tab-pane" role="tab" aria-controls="matricula-tab-pane">Matricula</a>
                 </li>
             </ul>
             <div class="tab-content">
@@ -272,138 +272,138 @@
                     </div>
                 </div>
 
-                <div class="tab-pane fade" id="matricula-tab-pane" role="tabpanel" aria-labelledby="matricula-tab-pane">
-                    <div class="card p-6">
-                        <form id="formMatricula" style="display:none" class="invisible form formReset">
-                            <div class="form-row">
-                                <div class="col-md-3">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
-                                        <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula" value="0">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
-                                        <input type="text" class="form-control" id="inputDescontoMatricula" name="inputDescontoMatricula" value="0">
-                                    </div>
-                                    <div class="col-12">
-                                        <table>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label for="inputTotalParcelas" class="col-form-label">N° Parcelas</label>
-                                                            <select class="form-control" id="inputTotalParcelas" name="inputTotalParcelas">
-                                                                <option>1</option>
-                                                                <option>2</option>
-                                                                <option>3</option>
-                                                                <option>4</option>
-                                                                <option>5</option>
-                                                                <option>6</option>
-                                                                <option>7</option>
-                                                                <option>8</option>
-                                                                <option>9</option>
-                                                                <option>10</option>
-                                                                <option>11</option>
-                                                                <option>12</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label for="inputDiaVencimento" class="col-form-label">Vencimento</label>
-                                                            <select class="form-control" id="inputDiaVencimento" name="inputDiaVencimento">
-                                                                <option>1</option>
-                                                                <option>5</option>
-                                                                <option>10</option>
-                                                                <option>15</option>
-                                                                <option>20</option>
-                                                                <option>25</option>
-
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="form-group ">
-                                                            <label for="inputMesVencimento" class="col-form-label">Mes Início de Pagamento</label>
-                                                            @Html.DropDownList("Mes", null, "Selecione um mês", new { @class = "form-control   select" })
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <div class="form-group">
-                                                            <label for="inputVigencia" class="col-form-label">Ano/Vigencia</label>
-                                                            <input type="text" class="form-control" id="inputVigencia" name="inputVigencia">
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-
-                                    <div class="form-group col-md-12">
-                                        <label for="inputUF" class="col-form-label">Turma</label>
-                                        <div class="col-md-10">
-                                            @Html.DropDownList("Turmas", null, "Selecione uma Turma", new { @class = "form-control   select" })
+                @*<div class="tab-pane fade" id="matricula-tab-pane" role="tabpanel" aria-labelledby="matricula-tab-pane">
+                        <div class="card p-6">
+                            <form id="formMatricula" style="display:none" class="invisible form formReset">
+                                <div class="form-row">
+                                    <div class="col-md-3">
+                                        <div class="form-group col-md-12">
+                                            <label for="inputValorMatricula" class="col-form-label">Valor Matricula</label>
+                                            <input type="text" class="form-control" id="inputValorMatricula" name="inputValorMatricula" value="0">
                                         </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="inputDescontoMatricula" class="col-form-label">Desconto Matricula</label>
+                                            <input type="text" class="form-control" id="inputDescontoMatricula" name="inputDescontoMatricula" value="0">
+                                        </div>
+                                        <div class="col-12">
+                                            <table>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <label for="inputTotalParcelas" class="col-form-label">N° Parcelas</label>
+                                                                <select class="form-control" id="inputTotalParcelas" name="inputTotalParcelas">
+                                                                    <option>1</option>
+                                                                    <option>2</option>
+                                                                    <option>3</option>
+                                                                    <option>4</option>
+                                                                    <option>5</option>
+                                                                    <option>6</option>
+                                                                    <option>7</option>
+                                                                    <option>8</option>
+                                                                    <option>9</option>
+                                                                    <option>10</option>
+                                                                    <option>11</option>
+                                                                    <option>12</option>
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <label for="inputDiaVencimento" class="col-form-label">Vencimento</label>
+                                                                <select class="form-control" id="inputDiaVencimento" name="inputDiaVencimento">
+                                                                    <option>1</option>
+                                                                    <option>5</option>
+                                                                    <option>10</option>
+                                                                    <option>15</option>
+                                                                    <option>20</option>
+                                                                    <option>25</option>
 
-                                        <div class="col-md-2">
-                                            <button type="button" onclick="Turma()" class="btn-primary btn-sm">+</button>
-
+                                                                </select>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>
+                                                            <div class="form-group ">
+                                                                <label for="inputMesVencimento" class="col-form-label">Mes Início de Pagamento</label>
+                                                                @Html.DropDownList("Mes", null, "Selecione um mês", new { @class = "form-control   select" })
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="form-group">
+                                                                <label for="inputVigencia" class="col-form-label">Ano/Vigencia</label>
+                                                                <input type="text" class="form-control" id="inputVigencia" name="inputVigencia">
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+
+                                        <div class="form-group col-md-12">
+                                            <label for="inputUF" class="col-form-label">Turma</label>
+                                            <div class="col-md-10">
+                                                @Html.DropDownList("Turmas", null, "Selecione uma Turma", new { @class = "form-control   select" })
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <button type="button" onclick="Turma()" class="btn-primary btn-sm">+</button>
+
+                                            </div>
+                                        </div>
 
 
-                                    <div id="dadosTurmas" class="card invisible">
-                                        <table id="tb_turma" class="table dataTable">
-                                            <thead>
-                                                <tr>
-                                                    <td>Id</td>
-                                                    <td>Código</td>
-                                                    <td>Valor</td>
-                                                   
-                                                    <td>Desconto</td>
-                                                    <td>Total</td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                
-                                            </tbody>
-                                        </table>
+                                        <div id="dadosTurmas" class="card invisible">
+                                            <table id="tb_turma" class="table dataTable">
+                                                <thead>
+                                                    <tr>
+                                                        <td>Id</td>
+                                                        <td>Código</td>
+                                                        <td>Valor</td>
+
+                                                        <td>Desconto</td>
+                                                        <td>Total</td>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
                                     </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group col-md-12">
+                                            <label for="inputValorParcela" class="col-form-label">Valor</label>
+                                            <input type="text" class="form-control" id="inputValorParcela" name="inputValorParcela">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label for="inputNome" class="col-form-label">Desconto</label>
+                                            <input type="text" class="form-control" id="inputDescontoParcela" name="inputDescontoParcela" value="0">
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
+                                        </div>
 
+                                    </div>
                                 </div>
-                                <div class="col-md-3">
-                                    <div class="form-group col-md-12">
-                                        <label for="inputValorParcela" class="col-form-label">Valor</label>
-                                        <input type="text" class="form-control" id="inputValorParcela" name="inputValorParcela">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <label for="inputNome" class="col-form-label">Desconto</label>
-                                        <input type="text" class="form-control" id="inputDescontoParcela" name="inputDescontoParcela" value="0">
-                                    </div>
-                                    <div class="form-group col-md-12">
-                                        <button type="submit" class="btn btn-primary fuse-ripple-ready">Gravar</button>
-                                    </div>
+                            </form>
+                            <div class="base invisible col-12">
+                                <center style="margin-top: 5%">
+                                    <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
 
-                                </div>
+                                        <div class="card-body">
+                                            <h4 class="card-title">Ops! :-(</h4>
+                                            <p class="card-text">Informe os dados base do aluno.</p>
+                                        </div>
+                                    </div>
+                                </center>
                             </div>
-                        </form>
-                        <div class="base invisible col-12">
-                            <center style="margin-top: 5%">
-                                <div class="card text-white bg-danger mb-3" style="max-width: 30rem;">
-
-                                    <div class="card-body">
-                                        <h4 class="card-title">Ops! :-(</h4>
-                                        <p class="card-text">Informe os dados base do aluno.</p>
-                                    </div>
-                                </div>
-                            </center>
                         </div>
-                    </div>
-                </div>
+                    </div>*@
             </div>
         </div>
     </div>
@@ -426,6 +426,17 @@
     <script src="~/js/components/WebCam/webcam.min.js"></script>
     <script src="~/js/Helper/WebCam.js"></script>
     <script>
+        function RedirecionaMatricula() {
+            const alunoId = $("#hiddenIdAluno").val();
+            const alunoHashId = $("#hiddenHashAluno").val();
+            if (alunoId.length <= 0) {
+                PNotify.error({
+                    text: 'Informe os dados de aluno'
+                });
+                return false;
+            }
+            window.location = `/Matricula/Aluno/${alunoHashId}`;
+        }
         function ligar_camera() {
 
             mostrar_camera();

@@ -25,30 +25,39 @@
 
                     <ul class="nav flex-column">
                         <li>
-                            <div class="p-2">
-                                <center style="padding-top:27px">
-                                    <button id="abrirSelectAluno" type="button" onclick="ModalAluno()" class="btn btn-secondary btn-fab"><i class="icon icon-magnify"></i></button>
-                                    <button id="fecharSelectAluno" onclick="LimparFiltroAluno()" class="btn btn-sm btn-fab btn-secondary" style="display:none">x</button>
-                                </center>
-                            </div>
-                        </li>
-                        <li id="lialuno" class="nav-item invisible">
+                            <table class="table">
+                                <tr>
+                                    <td style="width:80%">
+                                        <div class="fuse-ripple-ready ">
+                                            <input type="hidden" id="alunoId" />
+                                            <span id="alunoNome">Aluno</span>
 
-                            <div class="nav-link ripple fuse-ripple-ready ">
-                                <input type="hidden" id="alunoId" />
-                                <i class="icon-account-location s-6"></i>
-                                <span id="alunoNome"></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <center style="padding-top:7px; padding-bottom:5px">
+                                            <button id="abrirSelectAluno" style="height:4px" type="button" onclick="ModalAluno()" class="btn btn-sm btn-secondary btn-fab"><i class="icon icon-magnify"></i></button>
+                                            <button id="fecharSelectAluno" onclick="LimparFiltroAluno()" class="btn btn-sm btn-fab btn-secondary" style="display:none">x</button>
+                                        </center>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        @Html.DropDownList("Anos", null, "Filtrar por Ano", new { @class = "form-control   select" })
+                                    </td>
 
-                            </div>
+                                </tr>
+                                <tr>
+                                    <td colspan="2">
+                                        @Html.DropDownList("Tipos", null, "Filtrar por Tipo", new { @class = "form-control   select" })
+                                    </td>
 
+                                </tr>
+                            </table>
                         </li>
-                        <li class="divider"></li>
-                        <li class="subheader">
-                            Ano
-                        </li>
-                        <li class="nav-item">
-                            <input style="padding-right:25px;  text-align:center; font-weight:bold" id="inputAno" placeholder="Digite o ano de pesquisa" type="text" class="form-control h8" />
-                        </li>
+
+
+
                         <li class="subheader">
                             Status
                         </li>
@@ -76,6 +85,17 @@
                                 <span>Pago</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable('Estornado');" href="#">
+                                <i class="icon s-4 icon-label" ></i>
+                                <span>Estornado</span>
+                            </a>
+                        </li>
+                        <li>
+                            <center>
+                                <button id="btnLimparFiltro" class="btn btn-sm btn-secondary">Limpar Fitros</button>
+                            </center>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-md-10">
@@ -90,6 +110,8 @@
 
     <div class="ps__rail-x" style="left: 0px; bottom: 0px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 0px; height: 841px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 0px; height: 637px;"></div></div>
 </div>
+
+
 <div id="modalPagamentoMensaliade" style="height:650px" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
@@ -111,11 +133,13 @@
                                     <tbody>
                                         <tr>
                                             <td class="h10">Aluno</td>
+                                            <td class="h10">Tipo</td>
                                             <td class="h10">Codigo</td>
                                             <td class="h10">Parcela</td>
                                         </tr>
                                         <tr>
                                             <td id="mAluno" class="h10"></td>
+                                            <td id="mTipo" class="h10"></td>
                                             <td id="mCodigo" class="h10"></td>
                                             <td id="mParcela" class="h10"></td>
                                         </tr>
@@ -195,7 +219,7 @@
                                 <hr />
 
                             </div>
-                            <div class="ps__rail-x" style="left: 0px; bottom: -221px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 221px; height: 641px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 66px; height: 193px;"></div></div>
+                            <div class="badge- ps__rail-x" style="left: 0px; bottom: -221px;"><div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div></div><div class="ps__rail-y" style="top: 221px; height: 641px; right: 0px;"><div class="ps__thumb-y" tabindex="0" style="top: 66px; height: 193px;"></div></div>
                         </div>
                         <!-- / CONTENT -->
                     </div>
@@ -210,8 +234,8 @@
 </div>
 
 
-<div id="modalFinanceiroAluno" style="height:600px" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+<div id="modalFinanceiroAluno" style="height:400px" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLiveLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLiveLabel">Lista de Alunos</h5>
@@ -239,7 +263,7 @@
                                 </button>
                             </span>
 
-                        </div>       
+                        </div>
 
                     </div>
                     <!-- / HEADER -->
@@ -248,7 +272,6 @@
                         <!-- CONTENT -->
                         <!-- CONTENT TOOLBAR -->
                         <!-- / CONTENT TOOLBAR -->
-
                         <div class="page-content custom-scrollbar ps ps--active-y">
                             <div style="max-height:600px" class="todo-items w-100">
                                 <hr />
@@ -258,11 +281,7 @@
                                             <td>Foto</td>
                                             <td style="width:30%">Nome</td>
                                             <td>Data Nascimento</td>
-
-                                            <td>Telefone</td>
-                                            <td>Celular</td>
-                                            <td>Detalhe</td>
-
+                                            <td></td>
                                         </tr>
                                     </thead>
                                     <tbody></tbody>
@@ -283,299 +302,300 @@
 </div>
 
 @section Css{
-<style>
-    .doc > .page-header {
-        height: 6.5rem;
-    }
-    /*.btn-fab {
+    <style>
+        .doc > .page-header {
+            height: 6.5rem;
+        }
+        /*.btn-fab {
             line-height: 5.6rem;
             width: 20.6rem;
             min-width: 10.6rem;
             height: 10.6rem;
             min-height: 20.6rem;
         }*/
-</style>
+    </style>
 }
 @section Scripts{
     @*
 
-<script src="~/Modulo/datatables/jquery.dataTables.min.js"></script>*@
-<!-- Data tables -->
-<script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
-<script src="~/Modulo/Mask/maskmoney.js"></script>
-<script>
-    $("#inputAno").mask("9999");
-    $("#inputJuros").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
-    function RegistrarPagamento() {
-        var dataT = {
+        <script src="~/Modulo/datatables/jquery.dataTables.min.js"></script>*@
+    <!-- Data tables -->
+    <script src="~/Modulo/Mask/dist/jquery.mask.js"></script>
+    <script src="~/Modulo/Mask/maskmoney.js"></script>
+    <script>
 
-            IdMensalidade: $("#mCodigo").html(),
-            Pago: true,
-            Juros: $("#inputJuros").val().replace('R$', '').replace('.', ','),
-
-        };
-        var callback = function (data) {
-            var pagamento = JSON.parse(data);
-            if (pagamento.success) {
-                $('#modalPagamentoMensaliade').modal("hide");
-                var hoje = new Date();
-                $("#mPagamento").html(`${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()}`);
-                document.getElementById("financeiroMensalidades").rows[$("#mElemento").val()].cells[7].innerHTML = `<span class=\"badge badge-success\"> Pago - ${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()} </ span>`;
-                PNotify.success({
-                    title: pagamento.message
-                });
-
-
-            } else {
-                var msg = '';
-                $.each(pagamento.data, function (index, item) {
-                    msg = msg + item.property + ' - ' + item.message + '\n';
-                });
-
-                PNotify.info({
-                    title: msg
-                });
-
-                $('#modalPagamentoMensaliade').modal("show");
-            }
-        };
-        var callbackErro = function (data) {
-            PNotify.error({
-                title: 'Ocorreu um erro ao processar sua solicitação'
-            });
-            $('#modalPagamentoMensaliade').modal("show");
-        };
-
-        academia.helper.rest.utils.POST("/Financeiro/RegistrarPagamento/", dataT, callback, callbackErro, $('#loader'));
-
-    }
-</script>
-<script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
-<script>
-    $(document).ready(function () {
-        MontarDataTable(null);
-    })
-
-
-    function LimparFiltroAluno() {
-        $("#alunoId").val('');
-        $("#lialuno").removeClass("visible");
-        $("#lialuno").addClass("invisible");
-        $("#alunoNome").html('');
-        $("#abrirSelectAluno").show();
-        $("#fecharSelectAluno").hide();
-        MontarDataTable(null);
-    };
-    function pegar_valor_linha_tabela(elemento) {
-        var mAluno = $(elemento).closest('tr').find('td').eq('0').html().trim();
-        var mCodigo = $(elemento).closest('tr').find('td').eq('1').text().trim();
-        var mParcela = $(elemento).closest('tr').find('td').eq('2').text().trim();
-        var mVencimento = $(elemento).closest('tr').find('td').eq('3').text().trim();
-        var mValorParcela = $(elemento).closest('tr').find('td').eq('4').text().trim();
-        var mDesconto = $(elemento).closest('tr').find('td').eq('5').text().trim();
-        //$('#resultDescricao').val(modelo + ' [' + medida + '] [BRE' + bracoesq + '] [' + modulo + '] [BRD' + bracodir + '] [' + revestimento + ']');
-        $('#mAluno').html(mAluno);
-        $('#mCodigo').html(mCodigo);
-        $('#mParcela').html(mParcela);
-        $('#mVencimento').html(mVencimento);
-        $('#mPagamento').html('');
-        $('#mValorParcela').html(mValorParcela);
-        $('#mDesconto').html(mDesconto);
-        $('#mElemento').val(elemento.rowIndex);
-        $('#mTotal').html(CalcularTotal(mValorParcela, 0, mDesconto));
-
-        //$('#revestimento option:contains(' + revestimento + ')').prop('selected', true);
-        //var botao = document.getElementById("modulo");
-        //botao.click();
-    }
-    function CalcularTotal(valor, juros, desconto) {
-        var calculo = (parseFloat(valor) + parseFloat(juros)) - parseFloat(desconto);
-        return calculo;
-    }
-    function ModalAluno() {
-        $('#modalFinanceiroAluno').modal("show");
-
-    }
-    function ModalPagamento(linha) {
-        //alert(linha);
-        pegar_valor_linha_tabela(linha.parentElement.parentElement);
-        $('#modalPagamentoMensaliade').modal("show");
-
-    }
-    function SetarValorAluno(id, nome) {
-        $("#alunoId").val(id);
-        $("#lialuno").removeClass("invisible");
-        $("#lialuno").addClass("visible");
-        $("#alunoNome").html(nome);
-        $('#modalFinanceiroAluno').modal("hide");
-        MontarDataTable(null);
-        $("#financeiroAlunos").removeClass("visible");
-        $("#financeiroAlunos").addClass("invisible");
-        $("#abrirSelectAluno").hide();
-        $("#fecharSelectAluno").show();
-
-    }
-
-    function BuscarAlunoPorNome() {
-        //$('#modalFinanceiroAluno').modal("show");
-        if ($("#alunoNomeDigitado").val().length < 3) {
-            PNotify.error({
-                text: 'Informe pelo menos 3 caracteres do nome. ',
-
-            });
-            //alert("Informe pelo menos 3 caracteres do nome. ");
-            return;
-        }
-        var dataT = {
-            nome: $("#alunoNomeDigitado").val()
-        };
-        var callback = function (data) {
-            if (data.success) {
-                var linhas = '';
-                $.each(data.alunos, function (index, item) {
-                    var func =
-                        linhas = linhas + `"
-<tr><td><img class=\"avatar mr-4\" alt=\" ${item.nome} \" src=\"/images/avatars/Aluno/${item.foto}\"></td>
-<td>${item.nome}</td>
-<td>${item.dataToShortDate}</td>
-<td>${item.telefone}</td><td>${item.celular}</td>
-<td><button type=\"button\" class=\"btn btn-sm btn-secondary fuse-ripple-ready\" onclick="SetarValorAluno('${item.uifId}','${item.nome}')">Selecionar</button></td></tr>"`;
-
-                });
-                $("#financeiroAlunos tbody").html(linhas);
-                $("#alunoNomeDigitado").val('');
-                $("#financeiroAlunos").removeClass("invisible");
-                $("#financeiroAlunos").addClass("visible");
-                //$("#turmaAlunos tbody").add(linhas);
-
-            }
-        };
-        var callbackErro = function (data) {
-            PNotify.error({
-                title: 'Ocorreu um erro ao processar sua solicitação'
-            });
-
-        };
-
-        academia.helper.rest.utils.GET("/Financeiro/Alunos/", dataT, callback, callbackErro, $('#divLoad'));
-    }
-    function MontarDataTable(status) {
-        var id = $("#alunoId").val();
-        var ano = $("#inputAno").val();
-        $('#financeiroMensalidades').DataTable(
-            {
-                "sEmptyTable": "Nenhum registro encontrado",
-                "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
-                "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
-                "sInfoFiltered": "(Filtrados de _MAX_ registros)",
-                "sInfoPostFix": "",
-                "sInfoThousands": ".",
-                "sLengthMenu": "_MENU_ resultados por página",
-                "sLoadingRecords": "Carregando...",
-                "sProcessing": "Processando...",
-                "sZeroRecords": "Nenhum registro encontrado",
-                "sSearch": "Pesquisar",
-                "oPaginate": {
-                    "sNext": "Próximo",
-                    "sPrevious": "Anterior",
-                    "sFirst": "Primeiro",
-                    "sLast": "Último"
-                },
-                "oAria": {
-                    "sSortAscending": ": Ordenar colunas de forma ascendente",
-                    "sSortDescending": ": Ordenar colunas de forma descendente"
-                },
-                "bDestroy": true,
-                "bProcessing": true,
-                "bServerSide": true,
-                "sAjaxSource": `/Financeiro/MensalidadeAsync?id=${id}&status=${status}&ano=${ano}`,
-                "aoColumns": [
-                    {
-                        "sTitle": "Aluno",
-                        "mDataProp": "alunoNome",
-                        "bSortable": true
-
-                    },
-                    {
-                        "sTitle": "Código",
-                        "mDataProp": "mensalidadeId"
-
-                    },
-                    {
-                        "sTitle": "Parcela",
-                        "mDataProp": "parcela"
-
-                    },
-
-                    {
-                        "sTitle": "Data Vencimento",
-                        "mDataProp": "dataVencimento"
-                    },
-                    {
-                        "sTitle": "Valor",
-                        "mDataProp": "valor",
-
-                    },
-                    {
-                        "sTitle": "Desconto",
-                        "mDataProp": "desconto"
-                    },
-                    {
-                        "sTitle": "Total",
-                        "mDataProp": "total",
-
-                    },
-                    {
-                        "sTitle": "Status",
-                        "mDataProp": "pago"
-                    },
-                    {
-                        "sTitle": "Acao",
-                        "mDataProp": "acao",
-                        "className": 'dt-body-center details-control pointer',
-                        "bSortable": false
-
-                    }
-
-                ],
-                dom: 'rt<"dataTables_footer"ip>',
-
-                language: {
-                    lengthMenu: "Exibe _MENU_ Registros por pagina",
-                    search: "Procurar",
-                    paginate: { "previous": "Retornar", "next": "Avancar" },
-                    zeroRecords: "Nenhum registro encontrado",
-                    info: "Exibindo pagina _PAGE_ de _PAGES_",
-                    infoEmpty: "Sem registros",
-                    infoFiltered: "(filtrado de _MAX_ regitros totais)",
-                    processing: "Aguarde Estamos Processando..."
-                },
-
-                "filter": true,            // habilita o filtro(search box)
-                "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
-
-                pageLength: 10,
-                scrollY: 'auto',
-                scrollX: false,
-                responsive: true,
-                autoWidth: false,
-                scrollCollapse: true,
-                initComplete: function () {
-                    var api = this.api(),
-                        searchBox = $('#products-search-input');
-
-                    // Bind an external input as a table wide search box
-                    if (searchBox.length > 0) {
-                        searchBox.on('keyup', function (event) {
-                            api.search(event.target.value).draw();
-                        });
-                    }
-                }
+    </script>
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script>
+        $(document).ready(function () {
+            MontarDataTable(null);
+        })
+        $("#inputAno").mask("9999");
+        $("#inputJuros").maskMoney({ showSymbol: true, symbol: "R$", decimal: ",", thousands: "." });
+        $("#Anos").change(function () {
+            MontarDataTable(null);
+        });
+        $("#Tipos").change(function () {
+            MontarDataTable(null);
+        });
+        $("#btnLimparFiltro").click(
+            function () {
+                $("select").each(function () { this.selectedIndex = 0 });
+                LimparFiltroAluno();
             }
         );
-    }
-</script>
+        function RegistrarPagamento() {
+            var dataT = {
+                IdMensalidade: $("#mCodigo").html(),
+                Pago: true,
+                Juros: $("#inputJuros").val().replace('R$', '').replace('.', ','),
+            };
+            var callback = function (data) {
+                var pagamento = JSON.parse(data);
+                if (pagamento.success) {
+                    $('#modalPagamentoMensaliade').modal("hide");
+                    var hoje = new Date();
+                    $("#mPagamento").html(`${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()}`);
+                    document.getElementById("financeiroMensalidades").rows[$("#mElemento").val()].cells[7].innerHTML = `<span class=\"badge badge-success\"> Pago - ${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()} </ span>`;
+                    PNotify.success({
+                        title: pagamento.message
+                    });
+
+
+                } else {
+                    var msg = '';
+                    $.each(pagamento.data, function (index, item) {
+                        msg = msg + item.property + ' - ' + item.message + '\n';
+                    });
+
+                    PNotify.info({
+                        title: msg
+                    });
+
+                    $('#modalPagamentoMensaliade').modal("show");
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+                $('#modalPagamentoMensaliade').modal("show");
+            };
+            academia.helper.rest.utils.POST("/Financeiro/RegistrarPagamento/", dataT, callback, callbackErro, $('#loader'));
+        }
+        function LimparFiltroAluno() {
+            $("#alunoId").val('');
+            $("#lialuno").removeClass("visible");
+            $("#lialuno").addClass("invisible");
+            $("#alunoNome").html('Aluno');
+            $("#abrirSelectAluno").show();
+            $("#fecharSelectAluno").hide();
+            MontarDataTable(null);
+        };
+        function PegarValorLinhaTabela(elemento) {
+            var mAluno = $(elemento).closest('tr').find('td').eq('0').html().trim();
+            var mCodigo = $(elemento).closest('tr').find('td').eq('2').text().trim();
+            var mParcela = $(elemento).closest('tr').find('td').eq('3').text().trim();
+            var mVencimento = $(elemento).closest('tr').find('td').eq('4').text().trim();
+            var mValorParcela = $(elemento).closest('tr').find('td').eq('5').text().trim();
+            var mDesconto = $(elemento).closest('tr').find('td').eq('6').text().trim();
+            //$('#resultDescricao').val(modelo + ' [' + medida + '] [BRE' + bracoesq + '] [' + modulo + '] [BRD' + bracodir + '] [' + revestimento + ']');
+            $('#mAluno').html(mAluno);
+            $('#mCodigo').html(mCodigo);
+            $('#mParcela').html(mParcela);
+            $('#mVencimento').html(mVencimento);
+            $('#mPagamento').html('');
+            $('#mValorParcela').html(mValorParcela);
+            $('#mDesconto').html(mDesconto);
+            $('#mElemento').val(elemento.rowIndex);
+            $('#mTotal').html(CalcularTotal(mValorParcela, 0, mDesconto));
+
+            //$('#revestimento option:contains(' + revestimento + ')').prop('selected', true);
+            //var botao = document.getElementById("modulo");
+            //botao.click();
+        }
+        function CalcularTotal(valor, juros, desconto) {
+            var calculo = (parseFloat(valor) + parseFloat(juros)) - parseFloat(desconto);
+            return calculo;
+        }
+        function ModalAluno() {
+            $('#modalFinanceiroAluno').modal("show");
+        }
+        function ModalPagamento(linha) {
+            PegarValorLinhaTabela(linha.parentElement.parentElement);
+            $('#modalPagamentoMensaliade').modal("show");
+        }
+        function SetarValorAluno(id, nome) {
+            $("#alunoId").val(id);
+            $("#lialuno").removeClass("invisible");
+            $("#lialuno").addClass("visible");
+            $("#alunoNome").html(nome);
+            $('#modalFinanceiroAluno').modal("hide");
+            MontarDataTable(null);
+            $("#financeiroAlunos").removeClass("visible");
+            $("#financeiroAlunos").addClass("invisible");
+            $("#abrirSelectAluno").hide();
+            $("#fecharSelectAluno").show();
+        }
+        function BuscarAlunoPorNome() {
+            if ($("#alunoNomeDigitado").val().length < 3) {
+                PNotify.error({
+                    text: 'Informe pelo menos 3 caracteres do nome. ',
+                });
+                return;
+            }
+            var dataT = {
+                nome: $("#alunoNomeDigitado").val()
+            };
+            var callback = function (data) {
+                if (data.success) {
+                    var linhas = '';
+                    $.each(data.alunos, function (index, item) {
+                        var func =
+                            linhas = linhas + `"
+                                                <tr><td><img class=\"avatar mr-4\" alt=\" ${item.nome} \" src=\"/images/avatars/Aluno/${item.foto}\"></td>
+                                                <td>${item.nome}</td>
+                                                <td>${item.dataToShortDate}</td>
+
+
+                                                <td><button type=\"button\" class=\"btn btn-sm btn-secondary fuse-ripple-ready\" onclick="SetarValorAluno('${item.uifId}','${item.nome}')">Selecionar</button></td></tr>"`;
+                    });
+                    $("#financeiroAlunos tbody").html(linhas);
+                    $("#alunoNomeDigitado").val('');
+                    $("#financeiroAlunos").removeClass("invisible");
+                    $("#financeiroAlunos").addClass("visible");
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+            };
+            academia.helper.rest.utils.GET("/Financeiro/Alunos/", dataT, callback, callbackErro, $('#divLoad'));
+        }
+        function MontarDataTable(status) {
+            var id = $("#alunoId").val();
+            var ano = $("#Anos").val();
+            var tipo = $("#Tipos").val();
+            $('#financeiroMensalidades').DataTable(
+                {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "bDestroy": true,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": `/Financeiro/MensalidadeAsync?id=${id}&status=${status}&ano=${ano}&tipo=${tipo}`,
+                    "aoColumns": [
+                        {
+                            "sTitle": "Aluno",
+                            "mDataProp": "alunoNome",
+                            "bSortable": true
+
+                        },
+                        {
+                            "sTitle": "Tipo",
+                            "mDataProp": "tipoMensalidade"
+
+                        },
+                        {
+                            "sTitle": "Código",
+                            "mDataProp": "mensalidadeId"
+
+                        },
+                        {
+                            "sTitle": "Parcela",
+                            "mDataProp": "parcela"
+
+                        },
+
+                        {
+                            "sTitle": "Data Vencimento",
+                            "mDataProp": "dataVencimento"
+                        },
+                        {
+                            "sTitle": "Valor",
+                            "mDataProp": "valor",
+
+                        },
+                        {
+                            "sTitle": "Desconto",
+                            "mDataProp": "desconto"
+                        },
+                        {
+                            "sTitle": "Total",
+                            "mDataProp": "total",
+
+                        },
+                        {
+                            "sTitle": "Status",
+                            "mDataProp": "pago"
+                        },
+                        {
+                            "sTitle": "Acao",
+                            "mDataProp": "acao",
+                            "className": 'dt-body-center details-control pointer',
+                            "bSortable": false
+
+                        }
+
+                    ],
+                    dom: 'rt<"dataTables_footer"ip>',
+
+                    language: {
+                        lengthMenu: "Exibe _MENU_ Registros por pagina",
+                        search: "Procurar",
+                        paginate: { "previous": "Retornar", "next": "Avancar" },
+                        zeroRecords: "Nenhum registro encontrado",
+                        info: "Exibindo pagina _PAGE_ de _PAGES_",
+                        infoEmpty: "Sem registros",
+                        infoFiltered: "(filtrado de _MAX_ regitros totais)",
+                        processing: "Aguarde Estamos Processando..."
+                    },
+
+                    "filter": true,            // habilita o filtro(search box)
+                    "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
+
+                    pageLength: 10,
+                    scrollY: 'auto',
+                    scrollX: false,
+                    responsive: true,
+                    autoWidth: false,
+                    scrollCollapse: true,
+                    initComplete: function () {
+                        var api = this.api(),
+                            searchBox = $('#products-search-input');
+
+                        // Bind an external input as a table wide search box
+                        if (searchBox.length > 0) {
+                            searchBox.on('keyup', function (event) {
+                                api.search(event.target.value).draw();
+                            });
+                        }
+                    }
+                }
+            );
+        }
+    </script>
 
 
 

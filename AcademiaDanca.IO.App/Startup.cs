@@ -1,5 +1,6 @@
 ﻿using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.App.Models;
+using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_Matricula;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno;
@@ -65,6 +66,7 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<IAcessoRepositorio, AcessoRepositorio>();
             services.AddTransient<IConfiguracaoRepositorio, ConfiguracaoRepositorio>();
             services.AddTransient<IMatriculaRepositorio, MatriculaRepositorio>();
+            services.AddTransient<IMensalidadeRepositorio, MensalidadeRepositorio>();
             services.AddTransient<TipoTelefoneManipulador, TipoTelefoneManipulador>();
             services.AddTransient<ItemMatriculaManipulador, ItemMatriculaManipulador>();
             services.AddTransient<TipoFiliacaoManipulador, TipoFiliacaoManipulador>();
@@ -97,7 +99,8 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<EditarAlunoManipulador, EditarAlunoManipulador>();
             services.AddTransient<DelMatriculaItemManipulador, DelMatriculaItemManipulador>();
             services.AddTransient<DadosExternosManipulador, DadosExternosManipulador>();
-            
+            services.AddTransient<EditMatriculaManipulador, EditMatriculaManipulador>();
+
             services.AddScoped<RegrasAcessoModel>();
 
             //Settings.ConnectionString = $"{Configuration["connectionString"]}";

@@ -1,5 +1,6 @@
 ﻿using AcademiaDanca.IO.Dominio.Contexto.Entidade;
 using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro;
+using AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro.Mensalidade;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,5 +15,8 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<int> DeletarAsync(int id);
         Task<IEnumerable<MensalidadesQueryResultado>> ObterMensalidadesAsync();
         Task<MensalidadesQueryResultado> ObterMensalidadePorAsync(int id);
+        Task<List<string>> ObterListaAnoDataVencimento();
+        Task<List<TipoMensalidadeQueryResultado>> ObterTipoMensalidadeAsync();
+        Task<int> AtualizarValorAsync(int idMatricula, decimal valor);
      }
 }
