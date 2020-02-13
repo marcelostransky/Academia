@@ -30,7 +30,6 @@ namespace AcademiaDanca.IO.App.Controllers
             ViewBag.Mensagem = "";
             return View();
         }
-       
         [AllowAnonymous]
         [HttpPost]
         public async Task<IActionResult> Autenticar(string login, string senha)
@@ -51,24 +50,18 @@ namespace AcademiaDanca.IO.App.Controllers
             };
 
                 var userIdentity = new ClaimsIdentity(claims, "login");
-
                 ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                 await HttpContext.SignInAsync(principal);
-
-
                 return Redirect("/");
 
             }
             ViewBag.Mensagem = "Login ou senha inválido";
             return View();
         }
-
         private async Task<AutenticarFuncionarioQueryResultado> LoginUserAsync(string login, string senha)
         {
             return await _repositorio.Autenticar(new Credencial(0, login, senha));
         }
-
-
         public async Task<IActionResult> LogoffAsync()
         {
             await HttpContext.SignOutAsync();

@@ -65,7 +65,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 AutoMapper.Configuration.AddIdentifier(typeof(ItemMatriculaQueryResultado), "IdTurma");
                 matricula = (AutoMapper.MapDynamic<MatriculaQueryResultado>(matriculaRetorno)).FirstOrDefault();
                 CarregarItensTemp(matricula.MatriculaBase.MatriculaGuid);
-                
+
                 return matricula;
             }
             catch (Exception ex)
@@ -102,9 +102,12 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 var parametros = new DynamicParameters();
                 parametros.Add("sp_id", id);
-                var query =  @"SELECT id as IdMatricula, id_aluno as IdAluno 
+                var query = @"SELECT 
+                        id as IdMatricula, 
+                        id_aluno as IdAluno,
+                        case when status = 1 then true else false end as status
                         FROM academia.matricula where uif_id = @sp_id;";
-                var matricula =await _contexto.Connection.QueryAsync<MatriculaSimplificadoQueryResultado>(
+                var matricula = await _contexto.Connection.QueryAsync<MatriculaSimplificadoQueryResultado>(
                     query, param: parametros, commandType: CommandType.Text
                     );
                 return matricula.FirstOrDefault();
@@ -114,7 +117,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
                 _contexto.Dispose();
             }
-            
+
         }
         public async Task<int> DeletarItemMatricula(int idMatricula, int idTurma = 0)
         {
@@ -140,6 +143,31 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             {
 
                 throw;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
+        public async Task<int> InativarAsync(int idMatricula)
+        {
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_id_matricula", idMatricula);
+                var query = $"Update  academia.matricula set status = 0 Where id = @sp_id_matricula ";
+
+                var inativado = (await _contexto
+                      .Connection
+                      .ExecuteAsync(query,
+                      parametros,
+                      commandType: System.Data.CommandType.Text));
+
+                return inativado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Sistema não conseguiu inativar a matricula.<br>Erro: [{ex.Message}]");
             }
             finally
             {

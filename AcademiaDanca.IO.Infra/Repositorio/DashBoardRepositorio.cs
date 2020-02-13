@@ -19,21 +19,30 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             _contexto = contexto;
         }
 
-        public async Task<IEnumerable<QuantitativoAlunoAgendaMensalidadeQueryResultado>> ObterQuantitativoAsync()
+        public async Task<IEnumerable<QuantitativoAlunoAgendaMensalidadeQueryResultado>> ObterQuantitativoAsync(int? ano, int? mes)
         {
-            //var parametros = new DynamicParameters();
-            //parametros.Add("sp_id", id);
-            //parametros.Add("sp_id_turma", idTurma);
-            //parametros.Add("sp_id_sala", idSala);
-            //parametros.Add("sp_id_dia", idDia);
-            //parametros.Add("sp_id_professor", idProfessor);
-            //parametros.Add("sp_id_tipo_turma", idTurmaTipo);
-            //parametros.Add("sp_hora", hora);
-            var lista = await _contexto
-                .Connection
-                .QueryAsync<QuantitativoAlunoAgendaMensalidadeQueryResultado>("sp_sel_dash_board",  commandType: CommandType.StoredProcedure);
-            _contexto.Dispose();
-            return lista;
+            try
+            {
+                var parametros = new DynamicParameters();
+                parametros.Add("sp_ano", ano);
+
+                //parametros.Add("sp_id_turma", idTurma);
+                //parametros.Add("sp_id_sala", idSala);
+                //parametros.Add("sp_id_dia", idDia);
+                //parametros.Add("sp_id_professor", idProfessor);
+                //parametros.Add("sp_id_tipo_turma", idTurmaTipo);
+                //parametros.Add("sp_hora", hora);
+                var lista = await _contexto
+                    .Connection
+                    .QueryAsync<QuantitativoAlunoAgendaMensalidadeQueryResultado>("sp_sel_dash_board", parametros, commandType: CommandType.StoredProcedure);
+
+                return lista;
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+
         }
     }
 }

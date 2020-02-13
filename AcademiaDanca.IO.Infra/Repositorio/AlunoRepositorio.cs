@@ -47,11 +47,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 return id;
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
             finally
             {
                 _contexto.Dispose();
@@ -73,11 +68,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                       commandType: System.Data.CommandType.Text)).FirstOrDefault();
 
                 return existe > 0;
-            }
-            catch (Exception)
-            {
-
-                throw;
             }
             finally
             {
@@ -101,11 +91,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
 
                 return total;
             }
-            catch (Exception)
-            {
 
-                throw;
-            }
             finally
             {
                 _contexto.Dispose();
@@ -159,11 +145,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 return (await _contexto.Connection.QueryAsync<AlunoSimplificadoQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
 
             }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
             finally
             {
                 _contexto.Dispose();
@@ -187,11 +168,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("id", id);
                 return (await _contexto.Connection.QueryAsync<AlunoSimplificadoQuery>(query, parametros, commandType: CommandType.Text)).FirstOrDefault();
 
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
             }
             finally
             {
@@ -283,14 +259,10 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                         aluno.AlunoTurmas.Add(t);
                         aluno.AlunoLogradouro = l;
                         //aluno.Alun.Add(f);
-     
+
                         return aluno;
                     }, parametros, splitOn: "AlunoId,LogradouroId,FiliacaoId,TurmaId", commandType: CommandType.Text));
                 return alunoRetorno.FirstOrDefault();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
             }
             finally
             {
@@ -362,7 +334,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                           Order by a.id,l.id,f.id,t.id;";
                 var parametros = new DynamicParameters();
                 parametros.Add("id", id);
-                AlunoQuery aluno = new AlunoQuery();
+                var aluno = new AlunoQuery();
 
                 var alunoRetorno = (await _contexto.Connection.QueryAsync<dynamic>(query,
                   parametros, commandType: CommandType.Text));
@@ -374,11 +346,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 AutoMapper.Configuration.AddIdentifier(typeof(AlunoMensalidadeQuery), "MensalidadeId");
                 aluno = (AutoMapper.MapDynamic<AlunoQuery>(alunoRetorno)).FirstOrDefault();
                 return aluno;
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
             }
             finally
             {
@@ -428,10 +395,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                     commandType: System.Data.CommandType.StoredProcedure);
                 return parametros.Get<int>("sp_id");
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
+
             finally
             {
                 _contexto.Dispose();
@@ -454,11 +418,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                     parametros,
                     commandType: System.Data.CommandType.StoredProcedure);
                 return inserido;
-            }
-            catch (Exception)
-            {
-
-                throw;
             }
             finally
             {
@@ -485,7 +444,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             }
             catch (Exception ex)
             {
-                throw;
+                throw new Exception($"Ocorreu um erro ao tentar vincular o aluno na turma:[{turmaAluno.IdTurma}]");
             }
             finally { _contexto.Dispose(); }
         }
@@ -510,9 +469,13 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var listaAluno = await _contexto
                   .Connection
                   .QueryAsync<AlunoPorNomeQuery>(@"
-                                      SELECT A.email as Email, A.id as Id, A.uif_id as UifId, 
-                                      A.nome as Nome, A.telefone as Telefone, A.celular as Celular, 
-                                      A.data_nascimento as DataNascimento, A.foto as Foto 
+                                      SELECT A.email as AlunoEmail, A.id as AlunoId, 
+                                      A.uif_id as AlunoUifId, 
+                                      A.nome as AlunoNome, 
+                                      A.telefone as AlunoTelefone, 
+                                      A.celular as AlunoCelular, 
+                                      A.data_nascimento as DataNascimento, 
+                                      A.foto as AlunoFoto 
                                       FROM academia.turma as T
                                       Join academia.turma_aluno as TA on T.id = TA.id_turma
                                       Join academia.aluno as A On TA.id_aluno = A.id
@@ -540,6 +503,42 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                  commandType: System.Data.CommandType.StoredProcedure);
             _contexto.Dispose();
             return editado;
+        }
+
+        public async Task<IEnumerable<AlunoPorNomeQuery>> ObterTodosPorAsync(bool? matriculado)
+        {
+            var parametros = new DynamicParameters();
+            parametros.Add("sp_status", matriculado);
+
+            var condicao = string.Empty;
+            var query = @"
+                        SELECT a.id as AlunoId,
+                        a.foto as AlunoFoto,
+                        a.nome as AlunoNome,
+                        a.email as AlunoEmail,
+                        a.cpf as AlunoCpf,
+                        a.data_nascimento as DataNascimento,
+                        a.telefone as AlunoTelefone,
+                        a.celular as AlunoCelular,
+                        M.Status as Matriculado
+                         FROM academia.aluno as A
+                        Left Join academia.matricula as M On A.id = M.id_aluno ";
+            if (matriculado != null)
+            {
+                if (matriculado == true)
+                    condicao = " where M.Status = 1;";
+                else
+                    condicao = "where (M.Status  <> 1) or (M.Status is null)";
+            }
+
+            query += condicao;
+            var listaAluno = await _contexto
+                  .Connection
+                  .QueryAsync<AlunoPorNomeQuery>(query,
+                  parametros,
+                  commandType: System.Data.CommandType.Text);
+            _contexto.Dispose();
+            return listaAluno;
         }
     }
 }

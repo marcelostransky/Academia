@@ -53,49 +53,86 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
         {
             //Recuperar Matricula
             var matricula = await _repositorioMatricula.ObterPor(new Guid(comando.IdMatriculaGuid));
-            //Recuperar itens
+
+            if (!matricula.Status)
+                AddNotification("Matricula", "Matricula ja esta inativada. Operação não realizada.");
+            
+            //Validar Comando
+            comando.Valido();
+
+            //Recuperar itens matricula modificado
             var turmasTemp = (await _repositorio.ObterMatriculaItensTempPor(new Guid(comando.IdMatriculaGuid))).ToList();
-            var turmas = (await _repositorio.ObterMatriculaItensPor(new Guid(comando.IdMatriculaGuid))).ToList();
-            var turmasExclusao = ObterDiferencaLista(turmas, turmasTemp);
 
-            //Deletar turmas 
-            var deletado = await _repositorioMatricula.DeletarItemMatricula(matricula.IdMatricula, 0);
-
-            //Excluir aluno da turma
-            if (deletado > 0 && turmasExclusao.Count > 0)
-            {
-                foreach (var item in turmasExclusao)
-                    _repositorioTurma.DeletarAlunoAsync(matricula.IdAluno, item.IdTurma);
-            }
-
-            //Verificar trumas > 0
-            if (turmas.Count <= 0)
+            //Verificar total trumas > 0
+            if (turmasTemp.Count <= 0)
                 AddNotification("Item", $"Informe Pelo Menos Uma Turma");
 
-            //Persistir Item
-            foreach (var item in turmasTemp)
+            //Recupera itens matricula
+            var turmas = (await _repositorio.ObterMatriculaItensPor(new Guid(comando.IdMatriculaGuid))).ToList();
+
+            //Obter as turmas excluidas para inativar o aluno
+            var turmasExclusao = ObterDiferencaLista(turmas, turmasTemp);
+
+            AddNotifications(comando.Notifications);
+            if (Invalid)
             {
-                await _repositorio.RegistrarItemMatricula(new MatriculaItem(
-                 matricula.IdMatricula,
-                item.IdTurma,
-                item.Valor,
-                item.Desconto,
-                item.ValorDesconto,
-                item.ValorCalculado
-                 ));
-                //Enturmar Aluno
-                await _repositorioAluno.SalvarTurmaAsync(new TurmaAluno(item.IdTurma, matricula.IdAluno));
+                return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);
+            }
+
+            if (comando.StatusMatricula)
+            {
+                //Deletar turmas 
+                var deletado = await _repositorioMatricula.DeletarItemMatricula(matricula.IdMatricula, 0);
+
+                //Excluir aluno da turma
+                if (deletado > 0 && turmasExclusao.Count > 0)
+                {
+                    foreach (var item in turmasExclusao)
+                        await _repositorioTurma.DeletarAlunoAsync(matricula.IdAluno, item.IdTurma);
+                }
+
+                //Persistir Item
+                foreach (var item in turmasTemp)
+                {
+                    await _repositorio.RegistrarItemMatricula(new MatriculaItem(
+                     matricula.IdMatricula,
+                    item.IdTurma,
+                    item.Valor,
+                    item.Desconto,
+                    item.ValorDesconto,
+                    item.ValorCalculado
+                     ));
+                    //Enturmar Aluno
+                    await _repositorioAluno.SalvarTurmaAsync(new TurmaAluno(item.IdTurma, matricula.IdAluno));
+
+                }
+
+                var novoValorMensalidade = turmasTemp.Sum(x => x.ValorCalculado);
+
+                //Atualiza Mensalidade
+                await _repositorioMensalidade.AtualizarValorAsync(matricula.IdMatricula, novoValorMensalidade);
+
+            }
+            else if (!comando.StatusMatricula)
+            {
+                //Inativar matricula
+                if (await _repositorioMatricula.InativarAsync(matricula.IdMatricula) > 0)
+                {
+                    //Inativar Turma
+                    foreach (var item in turmas)
+                        await _repositorioTurma.DeletarAlunoAsync(matricula.IdAluno, item.IdTurma);
+
+                    //Inativar Pagamentos Pendente
+
+                }
 
             }
 
-            var novoValorMensalidade = turmasTemp.Sum(x => x.ValorCalculado);
-            //Atualiza Mensalidade
-            var valorAtualizado = await _repositorioMensalidade.AtualizarValorAsync(matricula.IdMatricula, novoValorMensalidade);
-            
-            
             return new ComandoResultado(true, "Item Atualizado com Sucesso", new
             {
-                msg = "OK"
+                Id = matricula.IdMatricula,
+                Nome = "Atualizado",
+                Status = true
             });
         }
     }

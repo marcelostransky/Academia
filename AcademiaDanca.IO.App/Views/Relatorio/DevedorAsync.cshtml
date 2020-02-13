@@ -1,0 +1,208 @@
+﻿
+@{
+    ViewData["Title"] = "Devedor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-layout carded left-sidebar single-scroll">
+
+    <div class="top-bg bg-primary text-auto"></div>
+
+    <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+        <!-- HEADER -->
+        <div class="header p-6">
+            <span class="h4"> <img style="height:150px" src="~/images/2247753.png" /></span>
+        </div>
+        <!-- / HEADER -->
+
+        <div class="content">
+            <!-- DEMO CONTENT -->
+            <div class="demo-sidebar">
+                @* @Html.Partial("~/Areas/Admin/Views/Shared/_MenuAcesso.cshtml")*@
+
+            </div>
+            <!-- / DEMO CONTENT -->
+        </div>
+
+    </aside>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        <!-- HEADER -->
+        <div class="page-header py-6 light-fg">
+
+            <div class="d-flex flex-row align-items-center">
+
+                <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="demo-sidebar">
+                    <i class="icon icon-menu"></i>
+                </button>
+                <span class="h4">Relatório Mensalidades Pendente</span>
+
+            </div>
+
+        </div>
+        <!-- / HEADER -->
+
+        <div class="page-content-card">
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar col-12 p-6">
+                <table style="width:100%">
+                    <tr>
+                        <td>Alunos</td>
+                        <td style="text-align:right">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="exported()" value="Export">
+                                Exportar Excel
+                            </button>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="demo-content">
+                <center>
+                    <div class=" p-6 col-10">
+                        <table id="devedorDataTable" class="table table-responsive "></table>
+                    </div>
+                </center>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- / PAGE CONTENT WRAPPER -->
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script>
+
+
+    function exported(e) {
+        $.ajax({
+            type: "POST",
+            url: '/Export/Excel/Alunos', //call your controller and action
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        }).done(function (data) {
+
+            //get the file name for download
+            if (data.name != "") {
+                //use window.location.href for redirect to download action for download the file
+                window.location.href = `/Relatorio/Download?fileName=${data.name}`;
+            }
+        });
+    }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            MontarDataTable();
+        });
+        function MontarDataTable() {
+
+            $('#devedorDataTable').DataTable(
+                {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "bDestroy": true,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": "/Relatorio/ListarMensalidadesVencidas",
+                    "aoColumns": [
+
+                        {
+                            "sTitle": "Matricula",
+                            "mDataProp": "matriculaId",
+                            "sWidth": "5%"
+                        },
+                        {
+                            "sTitle": "AlunoId",
+                            "mDataProp": "alunoId",
+                            "sWidth": "5%",
+                            "bSortable": false
+                        },
+                        {
+                            "sTitle": "Aluno",
+                            "mDataProp": "alunoNome"
+                        },
+                        {
+                            "sTitle": "CodMensa.",
+                            "mDataProp": "mensalidadeId"
+                        },
+                        {
+                            "sTitle": "Tipo",
+                            "mDataProp": "tipoMensalidadeDescricao"
+                        },
+                        {
+                            "sTitle": "Parcela",
+                            "mDataProp": "mensalidadeParcela"
+                        },
+                        {
+                            "sTitle": "Vencimento",
+                            "mDataProp": "data"
+                        },
+                        {
+                            "sTitle": "Valor",
+                            "mDataProp": "valor"
+                        },
+                        {
+                            "sTitle": "N Dias Atraso",
+                            "mDataProp": "mensalidadeTotalAtraso",
+                            "sWidth": "5%"
+                        }
+
+
+
+                    ],
+                    dom: 'rt<"dataTables_footer"ip>',
+
+                    language: {
+                        lengthMenu: "Exibe _MENU_ Registros por pagina",
+                        search: "Procurar",
+                        paginate: { "previous": "Retornar", "next": "Avancar" },
+                        zeroRecords: "Nenhum registro encontrado",
+                        info: "Exibindo pagina _PAGE_ de _PAGES_",
+                        infoEmpty: "Sem registros",
+                        infoFiltered: "(filtrado de _MAX_ regitros totais)",
+                        processing: "Aguarde Estamos Processando..."
+                    },
+
+                    "filter": true,            // habilita o filtro(search box)
+                    "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
+
+                    pageLength: 10,
+                    scrollY: 'auto',
+                    scrollX: false,
+                    responsive: true,
+                    autoWidth: false,
+                    scrollCollapse: true
+
+                }
+            );
+        }
+
+    </script>
+
+}

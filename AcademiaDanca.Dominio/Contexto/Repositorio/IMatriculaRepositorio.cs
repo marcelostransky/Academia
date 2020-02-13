@@ -11,5 +11,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<MatriculaQueryResultado> ObterMatriculaCompletoAsync(Guid id);
         Task<int> DeletarItemMatricula(int idMatricula, int idTurma);
         Task<MatriculaSimplificadoQueryResultado> ObterPor(Guid id);
+        Task<int> InativarAsync(int idMatricula);
     }
 }

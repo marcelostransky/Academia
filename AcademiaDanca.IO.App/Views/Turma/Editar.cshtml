@@ -63,18 +63,8 @@
                                                             <input type="hidden" id="IdProfessorAtual" name="IdProfessorAtual" value="@ViewBag.Turma.IdProfessor">
 
                                                         </div>
-                                                        <div class="form-group col-md-6">
-                                                            <input type="number" class="form-control" id="inputAno" name="inputAno" placeholder="Ano Turma" value="@ViewBag.Turma.Ano">
-                                                            <label for="inputAno" class="col-form-label">Ano</label>
-                                                            <input type="hidden" id="AnoAtual" name="AnoAtual" value="@ViewBag.Turma.Ano">
 
-                                                        </div>
-                                                        <div class="form-group col-md-6">
-                                                            <input type="text" class="form-control" id="inputValor" name="inputValor" placeholder="Valor" value="@ViewBag.Turma.Valor">
-                                                            <label for="inputValor" class="col-form-label">Valor</label>
-                                                            <input type="hidden" id="ValorAtual" name="ValorAtual" value="@ViewBag.Turma.Valor">
-
-                                                        </div>
+                                                       
                                                         <div class="form-group col-md-6">
                                                             <label for="inputAno" class="col-form-label">Status</label>
 
@@ -225,17 +215,12 @@
                             DesTurma: $("#formTurma #inputNome").val(),
                             IdProfessor: $("#formTurma #Professores").val(),
                             IdTipoTurma: $("#formTurma #TipoTurma").val(),
-                            Ano: $("#formTurma #inputAno").val(),
-
                             CodTurmaAtual: $("#formTurma #CodTurmaAtual ").val(),
                             DesTurmaAtual: $("#formTurma #DesTurmaAtual").val(),
                             IdTipoTurmaAtual: $("#formTurma #IdTipoTurmaAtual").val(),
                             AnoAtual: $("#formTurma #AnoAtual").val(),
                             StatusAtual: $("#formTurma #StatusAtual").val() == '1' ? true : false,
                             IdProfessorAtual: $("#formTurma #IdProfessorAtual").val(),
-                            Valor: $("#formTurma #inputValor").val().replace('R$', '').replace('.', ','),
-                            ValorAtual: $("#formTurma #ValorAtual").val().replace('R$', '').replace('.', ','),
-
                             Status: $("#formTurma #status").val() == '1' ? true : false
                         }
                         var callback = function (data) {

@@ -169,7 +169,7 @@
                 if (data.success) {
                     var linhas = '';
                     $.each(data.alunos, function (index, item) {
-                        linhas = linhas + " <tr><td>  <img class=\"avatar mr-4\" alt=\"" + item.nome + "\" src=\"/images/avatars/Aluno/" + item.foto + "\"></td><td>" + item.nome + "</td><td>" + item.dataToShortDate + "</td><td>" + item.telefone + "</td><td>" + item.celular + "</td><td><a href=\"/Aluno/Detalhar/" + item.uifId + "\"  target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\"> <i class=\"icon-account-search s-6\"></i></a></td></tr>";
+                        linhas = linhas + " <tr><td>  <img class=\"avatar mr-4\" alt=\"" + item.alunoNome + "\" src=\"/images/avatars/Aluno/" + item.alunoFoto + "\"></td><td>" + item.alunoNome + "</td><td>" + item.alunoDataToShortDate + "</td><td>" + item.alunoTelefone + "</td><td>" + item.alunoCelular + "</td><td><a href=\"/Aluno/Detalhar/" + item.alunoUifId + "\"  target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\"> <i class=\"icon-account-search s-6\"></i></a></td></tr>";
 
                     });
                     $("#turmaAlunos tbody").html(linhas);
@@ -208,20 +208,15 @@
                 PNotify.error({
                     title: 'Ocorreu um erro ao processar sua solicitação'
                 });
-
             };
-
             academia.helper.rest.utils.GET("/Turma/Calendario/Agendamentos", dataT, callback, callbackErro, $('#loader'));
-
         }
-
     </script>
     <script>
         function Deletar(linha) {
             var dataT = {
                 id: $(linha).closest('tr').find('td').eq('0').html()
             }
-
             var callback = function (data) {
 
                 if (data.success) {
@@ -229,8 +224,6 @@
                     PNotify.success({
                         text: 'Deletado com sucesso.'
                     });
-                   
-
                 } else {
                     var msg = '';
                     $.each(data.data, function (index, item) {
@@ -240,8 +233,6 @@
                     PNotify.error({
                         text: data.message + '|' + msg
                     });
-
-
                 }
             }
             var callbackErro = function (data) {

@@ -1,0 +1,301 @@
+﻿
+@{
+    ViewData["Title"] = "EsperadoRealizado";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="page-header bg-primary text-auto p-6 row no-gutters align-items-center justify-content-between">
+    <h1 class="doc-title h4" id="content">Financeiro Esperado e Realizado</h1>
+    <div class="col-sm-4">
+        <div class="col search-wrapper px-2">
+
+            <div class="input-group">
+                @Html.DropDownList("Anos", null, "Filtrar por Ano", new { @class = "form-control   select" })
+            </div>
+
+
+        </div>
+    </div>
+</div>
+<div id="project-EsperadoRealizado" class="page-layout simple right-sidebar">
+
+    <div class="page-content-wrapper custom-scrollbar">
+
+        <!-- CONTENT -->
+        <div class="page-content">
+
+
+            <div class="tab-content">
+                <div class="tab-pane fade show active p-3" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab">
+
+                    <!-- WIDGET GROUP -->
+                    <div class="widget-group row no-gutters">
+
+                        <!-- WIDGET 1 -->
+                        <div class="col-12 col-sm-6 col-xl-6 p-0">
+
+
+                            <div id="chart"></div>
+
+                        </div>
+                        <!-- / WIDGET 1 -->
+                        <!-- WIDGET 2 -->
+                        <div class="col-12 col-sm-6 col-xl-6 p-3 ">
+                            <div id="chartAno"></div>
+                        </div>
+
+
+                        <!-- WIDGET 5 -->
+                        <div class="col-12 col-sm-12 col-xl-12">
+
+                            <div class="widget widget5 card">
+
+                                <div class="widget-content p-4">
+
+
+
+                                    <div id="tabela">
+                                        <table id="tbEsperadoRealizado" style="width: 100%" class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <td>Ano</td>
+                                                    <td>Mês</td>
+                                                    <td>Total Aluno Esperado</td>
+                                                    <td>Total Aluno Realizado</td>
+                                                    <td>Total Mensalidade Esperado</td>
+                                                    <td>Total Mensalidade Realizado</td>
+                                                    <td>Total Esperado</td>
+                                                    <td>Total Realizado</td>
+                                                </tr>
+                                            <thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / WIDGET 5 -->
+
+                    </div>
+                    <!-- / WIDGET GROUP -->
+                </div>
+
+
+            </div>
+
+        </div>
+        <!-- / CONTENT -->
+
+    </div>
+
+
+</div>
+
+
+@section Css{
+
+    <link href="~/node_modules/ApexChartr/dist/apexcharts.css" rel="stylesheet" />
+}
+@section Scripts{
+
+    <script src="~/node_modules/ApexChartr/dist/apexcharts.js"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            MontarPagina();
+
+        });
+        $("#Anos").change(function () {
+            $("#chartAno").html('');
+            $("#chart").html('');
+            MontarPagina();
+        });
+        function MontarPagina() {
+
+            let esperado = [];
+            let realizado = [];
+            var dataT = {
+                ano: $("#Anos").val()
+            };
+            var callback = function (data) {
+
+                if (data.length > 0) {
+                    $.each(data, function (index, item) {
+
+                        esperado.push(item.valorTotalEsperado);
+                        realizado.push(item.valorTotalRealizado);
+
+                    });
+                    MontarGrafico(esperado, realizado);
+
+                    MontarGraficoAno(esperado, realizado);
+                    MontarTabela(data);
+                }
+
+                else {
+                    var msg = 'Sistema não retornou dados para o ano selecionado';
+
+
+                    PNotify.error({
+
+                        text: msg
+                    });
+                }
+            };
+            var callbackErro = function (data) {
+                PNotify.error({
+                    text: 'Ocorreu um erro ao processar sua solicitação'
+                });
+            };
+            academia.helper.rest.utils.GET("/Financeiro/EsperadoRealizado/Grafico", dataT, callback, callbackErro, $('#loader'));
+            return false;
+
+        }
+        function MontarGrafico(dadosEsperado, dadosRealizado) {
+            var options = {
+                series: [{
+                    name: 'Esperado',
+                    //data: [440.20, 555.30, 57, 56, 61, 58, 63, 60, 66, 111.52, 1000.10, 10]
+                    data: dadosEsperado
+                }, {
+                    name: 'Realizado',
+                    data: dadosRealizado
+                }],
+                chart: {
+                    type: 'bar',
+                    height: 350
+                },
+                plotOptions: {
+                    bar: {
+                        horizontal: false,
+                        columnWidth: '55%',
+                        endingShape: 'rounded'
+                    },
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    show: true,
+                    width: 2,
+                    colors: ['transparent']
+                },
+                xaxis: {
+                    categories: ['Jan', 'Fev', 'Mar', 'Ar', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                },
+                yaxis: {
+                    title: {
+                        text: 'R$ (Total por Mês)'
+                    }
+                },
+                fill: {
+                    opacity: 1
+                },
+                tooltip: {
+                    y: {
+                        formatter: function (val) {
+                            return "R$ " + val + " Total"
+                        }
+                    }
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#chart"), options);
+            chart.render();
+        }
+        function MontarGraficoAno(dadosEsperado, dadosRealizado) {
+
+            var esperado = [].reduce.call(dadosEsperado, function (somatorio, el) {
+                return somatorio + parseFloat(el, 10) || 0;
+            }, 0);
+            var realizado = [].reduce.call(dadosRealizado, function (somatorio, el) {
+                return somatorio + parseFloat(el, 10) || 0;
+            }, 0);
+            var options = {
+                colors: ['#FF4500', '#7FFF00', '#9C27B0'],
+                series: [{
+                    name: 'Esperado',
+                    data: [esperado.toFixed(2)],
+
+                },
+                {
+                    name: 'Realizado',
+                    data: [realizado.toFixed(2)],
+
+                }],
+
+                chart: {
+                    height: 350,
+                    type: 'bar',
+                },
+                plotOptions: {
+                    bar: {
+                        columnWidth: '100%'
+                    }
+                },
+                dataLabels: {
+                    enabled: false
+                },
+                stroke: {
+                    width: 2
+                },
+
+                grid: {
+                    row: {
+                        colors: ['#fff', '#f2f2f2']
+                    }
+                },
+                xaxis: {
+                    labels: {
+                        rotate: -45
+                    },
+                    categories: [$("#Anos").val()]
+
+                },
+                yaxis: {
+                    title: {
+                        text: 'R$ (Total no Ano)',
+                    },
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shade: 'light',
+                        type: "horizontal",
+                        shadeIntensity: 0.25,
+                        gradientToColors: undefined,
+                        inverseColors: true,
+                        opacityFrom: 0.85,
+                        opacityTo: 0.85,
+                        stops: [50, 0, 100]
+                    },
+
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#chartAno"), options);
+            chart.render();
+        }
+        function MontarTabela(data) {
+            let tabela = $("#tbEsperadoRealizado tbody");
+            let linhas = ''
+            $("#tbEsperadoRealizado tbody").html('');
+            $.each(data, function (index, item) {
+                linhas = ` <tr>
+                                                                                <td>${item.ano}</td>
+                                                                                <td>${item.mes}</td>
+                                                                                <td>${item.alunoTotalEsperado}</td>
+                                                                                <td>${item.alunoTotalRealizado}</td>
+                                                                                <td>${item.mensalidadeTotalEsperado}</td>
+                                                                                <td>${item.mensalidadeTotalRealizado}</td>
+                                                                                <td>${item.valorTotalEsperado}</td>
+                                                                                <td>${item.valorTotalRealizado}</td>
+                                                                            </tr>`;
+                tabela.append(linhas);
+            });
+        }
+    </script>
+}
+

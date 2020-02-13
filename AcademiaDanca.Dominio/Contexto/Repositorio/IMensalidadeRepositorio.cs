@@ -18,5 +18,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
         Task<List<string>> ObterListaAnoDataVencimento();
         Task<List<TipoMensalidadeQueryResultado>> ObterTipoMensalidadeAsync();
         Task<int> AtualizarValorAsync(int idMatricula, decimal valor);
-     }
+        Task<int> EstornarAsync(int idMensalidade, int idUsuario);
+    }
 }

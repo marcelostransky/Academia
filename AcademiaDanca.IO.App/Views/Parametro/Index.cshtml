@@ -1,0 +1,178 @@
+﻿
+@{
+    ViewData["Title"] = "Parametros";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="page-layout carded left-sidebar single-scroll">
+
+    <div class="top-bg bg-primary text-auto"></div>
+
+    <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+        <!-- HEADER -->
+        <div class="header p-6">
+            <span class="h4"> <img style="height:150px" src="~/images/permissions-reset-icon.png" /></span>
+        </div>
+        <!-- / HEADER -->
+
+        <div class="content">
+            <!-- DEMO CONTENT -->
+            <div class="demo-sidebar">
+
+
+            </div>
+            <!-- / DEMO CONTENT -->
+        </div>
+
+    </aside>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        <!-- HEADER -->
+        <div class="page-header py-6 light-fg">
+
+            <div class="d-flex flex-row align-items-center">
+
+                <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="demo-sidebar">
+                    <i class="icon icon-menu"></i>
+                </button>
+                <span class="h4">Configuração Sistema</span>
+
+            </div>
+
+        </div>
+        <!-- / HEADER -->
+
+        <div class="page-content-card">
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar col p-6">
+                Parametros
+
+            </div>
+            <div class="demo-content">
+                <center>
+                    <div class=" p-6 col-10">
+                        @if (ViewBag.Parametros != null && ViewBag.Parametros.Count > 0)
+                        {<div class="source-preview-wrapper">
+                                <div class="preview">
+                                    <div class="preview-elements">
+                                        <form id="formFuncionario">
+                                            <table id="tbParametro" class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <td>Código</td>
+                                                        <td>Chave</td>
+                                                        <td>Valor</td>
+                                                        <td>Descricao</td>
+
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (var item in ViewBag.Parametros)
+                                                    {
+                                                        <tr>
+                                                            <td>@item.Id</td>
+                                                            <td>@item.Chave</td>
+                                                            <td>
+                                                                <input type="text" class="form-control" id="inputValor_@item.Id" value="@item.Valor" placeholder="Valor">
+                                                                <input type="hidden" class="form-control" id="inputHiden_@item.Id" name="inputHiden_@item.Id" value="@item.Valor">
+                                                            </td>
+                                                            <td>@item.Descricao</td>
+
+                                                        </tr>
+
+                                                    }
+                                                </tbody>
+                                            </table>
+                                            <button type="button" onclick=" Enviar()" class="btn btn-primary fuse-ripple-ready">Slavar</button>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </center>
+            </div>
+        </div>
+
+    </div>
+    <!-- / PAGE CONTENT WRAPPER -->
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+
+    <script type="text/javascript">
+
+        function Atualizar() {
+            if (true) {
+                var dataT = {
+                    Parametros: ObterItemEditar()
+                }
+                var callback = function (data) {
+                  
+                    if (data.success) {
+                        PNotify.success({
+                            title: data.message
+                        });
+
+                    }
+                    else {
+                        var msg = '';
+                        $.each(perfil.data, function (index, item) {
+                            msg = msg + item.property + ' - ' + item.message + '\n';
+                        });
+
+                        PNotify.info({
+                            title: msg
+                        });
+
+                    }
+                };
+                var callbackErro = function (data) {
+                    var erro = data.responseText;
+                    PNotify.error({
+                        title: `Ocorreu um erro ao processar sua solicitação. <br> Erro [${erro.msg}]`
+                    });
+
+                };
+
+                academia.helper.rest.utils.PUT("/Parametro/Editar/", dataT, callback, callbackErro, $('#loader'));
+            }
+            else {
+
+                PNotify.info({
+                    title: 'Informe a descrição do perfil'
+                });
+
+
+            }
+
+        }
+        //document.querySelector('#formFuncionario').addEventListener('submit', function (event) {
+        function Enviar() {
+            event.preventDefault();
+            Atualizar();
+        }
+        //})
+        function ObterItemEditar() {
+            var linhas = document.querySelector('#tbParametro tbody').getElementsByTagName("tr");
+            var parametros = [];
+            $.each(linhas, function (index, tr) {
+
+                var mChave = $(tr).closest('tr').find('td').eq('1').text().trim();
+                var mValor = $(tr).closest('tr').find('td').eq('2').children()[0].value;
+                var mValorAtual = $(tr).closest('tr').find('td').eq('2').children()[1].value;
+                parametros.push({ Chave: mChave, Valor: mValor, ValorAtual: mValorAtual });
+            });
+            return parametros;
+        }
+    </script>
+}
+
+

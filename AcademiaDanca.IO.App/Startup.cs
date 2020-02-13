@@ -4,9 +4,11 @@ using AcademiaDanca.IO.Dominio.Contexto.Comandos.FinanceiroComando.Entrada.Com_M
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Acesso;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Aluno;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Configuracao;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.DadosExternos;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricula;
+using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.Fin_Mensalidade;
 using AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto;
 using AcademiaDanca.IO.Dominio.Contexto.Repositorio;
 using AcademiaDanca.IO.Infra;
@@ -67,6 +69,8 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<IConfiguracaoRepositorio, ConfiguracaoRepositorio>();
             services.AddTransient<IMatriculaRepositorio, MatriculaRepositorio>();
             services.AddTransient<IMensalidadeRepositorio, MensalidadeRepositorio>();
+            services.AddTransient<IRelatorioRepositorio, RelatorioRepositorio>();
+            services.AddTransient<IParametroRepositorio, ParametroRepositorio>();
             services.AddTransient<TipoTelefoneManipulador, TipoTelefoneManipulador>();
             services.AddTransient<ItemMatriculaManipulador, ItemMatriculaManipulador>();
             services.AddTransient<TipoFiliacaoManipulador, TipoFiliacaoManipulador>();
@@ -100,6 +104,9 @@ namespace AcademiaDanca.IO.App
             services.AddTransient<DelMatriculaItemManipulador, DelMatriculaItemManipulador>();
             services.AddTransient<DadosExternosManipulador, DadosExternosManipulador>();
             services.AddTransient<EditMatriculaManipulador, EditMatriculaManipulador>();
+            services.AddTransient<EstornarMensalidadeManipulador, EstornarMensalidadeManipulador>();
+            services.AddTransient<EditarParametroManipulador, EditarParametroManipulador>();
+            
 
             services.AddScoped<RegrasAcessoModel>();
 

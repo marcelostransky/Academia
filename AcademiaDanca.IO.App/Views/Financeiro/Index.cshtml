@@ -87,7 +87,7 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable('Estornado');" href="#">
-                                <i class="icon s-4 icon-label" ></i>
+                                <i class="icon s-4 icon-label"></i>
                                 <span>Estornado</span>
                             </a>
                         </li>
@@ -357,7 +357,7 @@
                     $('#modalPagamentoMensaliade').modal("hide");
                     var hoje = new Date();
                     $("#mPagamento").html(`${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()}`);
-                    document.getElementById("financeiroMensalidades").rows[$("#mElemento").val()].cells[7].innerHTML = `<span class=\"badge badge-success\"> Pago - ${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()} </ span>`;
+                    document.getElementById("financeiroMensalidades").rows[$("#mElemento").val()].cells[8].innerHTML = `<span class=\"badge badge-success\"> Pago - ${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()} </ span>`;
                     PNotify.success({
                         title: pagamento.message
                     });
@@ -438,6 +438,42 @@
             $("#abrirSelectAluno").hide();
             $("#fecharSelectAluno").show();
         }
+        function Estornar(linha,id) {
+
+            var dataT = {
+                idMensalidade: id
+            };
+            var callback = function (data) {
+                if (data.success) {
+                    PegarValorLinhaTabela(linha.parentElement.parentElement);
+                    var hoje = new Date();
+                    document.getElementById("financeiroMensalidades").rows[$("#mElemento").val()].cells[8].innerHTML = `<span class=\"badge badge-warning\"> stornado - ${hoje.getDate()}/${hoje.getMonth()}/${hoje.getFullYear()} </ span>`;
+                    PNotify.success({
+                        title: data.message
+                    });
+
+
+                } else {
+                    var msg = '';
+                    $.each(pagamento.data, function (index, item) {
+                        msg = msg + item.property + ' - ' + item.message + '\n';
+                    });
+
+                    PNotify.info({
+                        title: msg
+                    });
+
+                    $('#modalPagamentoMensaliade').modal("show");
+                }
+            }
+
+            var callbackErro = function (data) {
+                PNotify.error({
+                    title: 'Ocorreu um erro ao processar sua solicitação'
+                });
+            };
+            academia.helper.rest.utils.PUT("/Mensalidade/Estornar", dataT, callback, callbackErro, $('#divLoad'));
+        }
         function BuscarAlunoPorNome() {
             if ($("#alunoNomeDigitado").val().length < 3) {
                 PNotify.error({
@@ -454,12 +490,12 @@
                     $.each(data.alunos, function (index, item) {
                         var func =
                             linhas = linhas + `"
-                                                <tr><td><img class=\"avatar mr-4\" alt=\" ${item.nome} \" src=\"/images/avatars/Aluno/${item.foto}\"></td>
-                                                <td>${item.nome}</td>
-                                                <td>${item.dataToShortDate}</td>
+                                                            <tr><td><img class=\"avatar mr-4\" alt=\" ${item.alunoNome} \" src=\"/images/avatars/Aluno/${item.alunoFoto}\"></td>
+                                                            <td>${item.alunoNome}</td>
+                                                            <td>${item.alunoDataToShortDate}</td>
 
 
-                                                <td><button type=\"button\" class=\"btn btn-sm btn-secondary fuse-ripple-ready\" onclick="SetarValorAluno('${item.uifId}','${item.nome}')">Selecionar</button></td></tr>"`;
+                                                            <td><button type=\"button\" class=\"btn btn-sm btn-secondary fuse-ripple-ready\" onclick="SetarValorAluno('${item.alunoUifId}','${item.alunoNome}')">Selecionar</button></td></tr>"`;
                     });
                     $("#financeiroAlunos tbody").html(linhas);
                     $("#alunoNomeDigitado").val('');

@@ -15,6 +15,10 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro
         public string AlunoNome { get; set; }
         public bool Pago { get; set; }
         public DateTime? DataPagamento { get; set; }
+        public string DataFormatada
+        {
+            get => DataVencimento.ToShortDateString();
+        }
         public decimal Juros { get; set; }
         public int IdTipoMensalidade { get; set; }
         public string TipoMensalidade { get; set; }

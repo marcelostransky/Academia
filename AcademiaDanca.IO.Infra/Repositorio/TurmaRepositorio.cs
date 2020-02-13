@@ -175,7 +175,6 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                 parametros.Add("sp_des_turma", turma.DesTurma);
                 parametros.Add("sp_id_tipo_turma", turma.TurmaTipo.Id);
                 parametros.Add("sp_id_professor", turma.Professor.Id);
-
                 parametros.Add("sp_status", turma.Status);
                 var retorno = await _contexto
                     .Connection
@@ -201,9 +200,12 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             var listaAluno = await _contexto
                   .Connection
                   .QueryAsync<AlunoPorNomeQuery>(@"
-                                      SELECT A.email as Email, A.id as Id, A.uif_id as UifId, 
-                                      A.nome as Nome, A.telefone as Telefone, A.celular as Celular, 
-                                      A.data_nascimento as DataNascimento, A.foto as Foto 
+                                      SELECT A.email as AlunoEmail, A.id as AlunoId,
+                                      A.uif_id as AlunoUifId, 
+                                      A.nome as AlunoNome, A.telefone as AlunoTelefone, 
+                                      A.celular as AlunoCelular, 
+                                      A.data_nascimento as DataNascimento, 
+                                      A.foto as AlunoFoto 
                                       FROM academia.turma as T
                                       Join academia.turma_aluno as TA on T.id = TA.id_turma
                                       Join academia.aluno as A On TA.id_aluno = A.id

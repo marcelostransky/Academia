@@ -1,0 +1,222 @@
+﻿
+@{
+    ViewData["Title"] = "ListarAlunosAsync";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="page-layout carded left-sidebar single-scroll">
+
+    <div class="top-bg bg-primary text-auto"></div>
+
+    <aside class="page-sidebar" data-fuse-bar="demo-sidebar" data-fuse-bar-media-step="md">
+
+        <!-- HEADER -->
+        <div class="header p-6">
+            <span class="h4"> <img style="height:150px" src="~/images/2247753.png" /></span>
+        </div>
+        <!-- / HEADER -->
+
+        <div class="content">
+            <!-- DEMO CONTENT -->
+            <div class="demo-sidebar">
+                <ul class="nav flex-column">
+                    <li class="subheader">
+                        Filtros
+                    </li>
+                  
+                    <li class="nav-item">
+                        <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable(true)" href="#">
+                            <i class="icon s-4 icon-label"></i>
+                            <span>Matriculados</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable(false);" href="#">
+                            <i class="icon s-4 icon-label"></i>
+                            <span>Não Matriculados</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link ripple fuse-ripple-ready" onclick="MontarDataTable('');" href="#">
+                            <i class="icon s-4 icon-label"></i>
+                            <span>Todos</span>
+                        </a>
+                    </li>
+                </ul>
+
+            </div>
+            <!-- / DEMO CONTENT -->
+        </div>
+
+    </aside>
+
+    <!-- PAGE CONTENT WRAPPER -->
+    <div class="page-content-wrapper">
+        <!-- HEADER -->
+        <div class="page-header py-6 light-fg">
+
+            <div class="d-flex flex-row align-items-center">
+
+                <button type="button" class="sidebar-toggle-button btn btn-icon d-block d-lg-none mr-2 fuse-ripple-ready" data-fuse-bar-toggle="demo-sidebar">
+                    <i class="icon icon-menu"></i>
+                </button>
+                <span class="h4">Lista de Alunos</span>
+
+            </div>
+
+        </div>
+        <!-- / HEADER -->
+
+        <div class="page-content-card">
+            <!-- CONTENT TOOLBAR -->
+            <div class="toolbar col-12 p-6">
+                <table style="width:100%">
+                    <tr>
+                        <td>Alunos</td>
+                        <td style="text-align:right">
+                            <button type="button" class="btn btn-sm btn-secondary" onclick="exported()" value="Export">
+                                Exportar Excel
+                            </button>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="demo-content">
+                <center>
+                    <div class=" p-6 col-10">
+                        <table id="devedorDataTable" class="table table-responsive "></table>
+                    </div>
+                </center>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- / PAGE CONTENT WRAPPER -->
+</div>
+
+@section Scripts{
+    <script type="text/javascript" src="/node_modules/datatables.net/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="/node_modules/datatables-responsive/js/dataTables.responsive.js"></script>
+    <script>
+
+
+    function exported(e) {
+        $.ajax({
+            type: "POST",
+            url: `/Export/Excel/Alunos`, //call your controller and action
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+        }).done(function (data) {
+
+            //get the file name for download
+            if (data.name != "") {
+                //use window.location.href for redirect to download action for download the file
+                window.location.href = `/Relatorio/Download?fileName=${data.name}`;
+            }
+        });
+    }
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            MontarDataTable();
+        });
+        function MontarDataTable(e) {
+
+            $('#devedorDataTable').DataTable(
+                {
+                    "sEmptyTable": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando de _START_ até _END_ de _TOTAL_ registros",
+                    "sInfoEmpty": "Mostrando 0 até 0 de 0 registros",
+                    "sInfoFiltered": "(Filtrados de _MAX_ registros)",
+                    "sInfoPostFix": "",
+                    "sInfoThousands": ".",
+                    "sLengthMenu": "_MENU_ resultados por página",
+                    "sLoadingRecords": "Carregando...",
+                    "sProcessing": "Processando...",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sSearch": "Pesquisar",
+                    "oPaginate": {
+                        "sNext": "Próximo",
+                        "sPrevious": "Anterior",
+                        "sFirst": "Primeiro",
+                        "sLast": "Último"
+                    },
+                    "oAria": {
+                        "sSortAscending": ": Ordenar colunas de forma ascendente",
+                        "sSortDescending": ": Ordenar colunas de forma descendente"
+                    },
+                    "bDestroy": true,
+                    "bProcessing": true,
+                    "bServerSide": true,
+                    "sAjaxSource": `/Relatorio/ListarAlunos?status=${e}`,
+                    "aoColumns": [
+                         {
+                            "sTitle": "",
+                            "mDataProp": "foto"
+                        },
+
+                        {
+                            "sTitle": "Codigo",
+                            "mDataProp": "codigo"
+                        },
+                        
+                        {
+                            "sTitle": "Aluno",
+                            "mDataProp": "aluno"
+                        },
+                        {
+                            "sTitle": "Email",
+                            "mDataProp": "alunoEmail"
+                        },
+                        {
+                            "sTitle": "Telefone",
+                            "mDataProp": "alunoTelefone"
+                        },
+                        {
+                            "sTitle": "Celular",
+                            "mDataProp": "alunoCelular"
+                        },
+                        {
+                            "sTitle": "Data Nascimento",
+                            "mDataProp": "data"
+                        },
+                        {
+                            "sTitle": "Matricula",
+                            "mDataProp": "alunoStatusMatricula"
+                        }
+                    ],
+                    dom: 'rt<"dataTables_footer"ip>',
+
+                    language: {
+                        lengthMenu: "Exibe _MENU_ Registros por pagina",
+                        search: "Procurar",
+                        paginate: { "previous": "Retornar", "next": "Avancar" },
+                        zeroRecords: "Nenhum registro encontrado",
+                        info: "Exibindo pagina _PAGE_ de _PAGES_",
+                        infoEmpty: "Sem registros",
+                        infoFiltered: "(filtrado de _MAX_ regitros totais)",
+                        processing: "Aguarde Estamos Processando..."
+                    },
+
+                    "filter": true,            // habilita o filtro(search box)
+                    "lengthMenu": [[3, 5, 10, 25, 50, -1], [3, 5, 10, 25, 50, "Todos"]],
+
+                    pageLength: 10,
+                    scrollY: 'auto',
+                    scrollX: false,
+                    responsive: true,
+                    autoWidth: false,
+                    scrollCollapse: true
+
+                }
+            );
+        }
+
+    </script>
+
+}

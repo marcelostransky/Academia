@@ -113,7 +113,7 @@ namespace AcademiaDanca.IO.App.Controllers
             }
             return await Task.Run(() => View());
         }
-        [HttpPost]
+        [HttpPut]
         [Route("/Matricula/Editar/")]
         public async Task<IActionResult> EditarAsync(EditMatriculaComando comando)
         {
@@ -121,7 +121,7 @@ namespace AcademiaDanca.IO.App.Controllers
             {
                 var resultado = await _EditMatriculaManipulador.ManipuladorAsync(comando);
 
-                return Json(new { msg = "OK" });
+                return Json(resultado);
             }
             catch (Exception ex)
             {

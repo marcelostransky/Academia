@@ -91,7 +91,7 @@ namespace AcademiaDanca.IO.Infra.Repositorio
                        query, param: parametro, commandType: CommandType.Text);
                 return atualizado;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new Exception("Ocorreu um erro ao atualizar os valores da mensalidade");
             }
@@ -105,5 +105,43 @@ namespace AcademiaDanca.IO.Infra.Repositorio
             throw new NotImplementedException();
         }
 
+        public async Task<int> EstornarAsync(int idMensalidade, int idUsuario)
+        {
+            try
+            {
+                var parametro = new DynamicParameters();
+                parametro.Add("sp_id_mensalidade", idMensalidade);
+                parametro.Add("sp_id_usuario", idUsuario);
+                parametro.Add("sp_data", DateTime.Now);
+                var query = @"
+                INSERT INTO `academia`.`mensalidade_estorno`
+                (
+                    `id_mensalidade`,
+                    
+                    `id_funciobario`,
+                    `data`)
+                     VALUES
+                (
+                    @sp_id_mensalidade,
+                    @sp_id_usuario,
+                    @sp_data);
+                   
+                    UPDATE `academia`.`mensalidade`
+                    SET
+                   `pago` = 0
+                    WHERE `id` = @sp_id_mensalidade;";
+                var estornado = await _contexto.Connection.ExecuteAsync(
+                       query, param: parametro, commandType: CommandType.Text);
+                return estornado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro ao atualizar os valores da mensalidade");
+            }
+            finally
+            {
+                _contexto.Dispose();
+            }
+        }
     }
 }

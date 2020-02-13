@@ -8,6 +8,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Repositorio
 {
    public interface IDashBoardRepositorio
     {
-        Task<IEnumerable<QuantitativoAlunoAgendaMensalidadeQueryResultado>> ObterQuantitativoAsync();
+        Task<IEnumerable<QuantitativoAlunoAgendaMensalidadeQueryResultado>> ObterQuantitativoAsync(int? ano, int? mes);
     }
 }

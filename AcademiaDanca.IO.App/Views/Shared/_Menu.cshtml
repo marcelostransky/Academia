@@ -9,10 +9,10 @@
             constantes.forEach(function (valor) {
                 $(`.${valor}`).remove();
             });
-             $("#sidenav").show();
+            $("#sidenav").show();
         })
 
-       
+
     }
 </script>
 <ul class="nav flex-column custom-scrollbar" style="display:none" id="sidenav" data-children=".nav-item">
@@ -41,8 +41,8 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link ripple " href="/Relatorio/" data-url="/Relatorio/">
-                    <span>Relatório</span>
+                <a class="nav-link ripple" href="/Financeiro/EsperadoRealizado" data-url="apps-dashboards-server.html">
+                    <span>Esperado/Realizado</span>
                 </a>
             </li>
         </ul>
@@ -134,6 +134,29 @@
 
         </ul>
     </li>
+    <li class="nav-item" role="tab" id="heading-simple">
+        <a class="nav-link ripple with-arrow fuse-ripple-ready collapsed" data-toggle="collapse" data-target="#collapse-simple" href="#" aria-expanded="false" aria-controls="collapse-simple" data-parent="#collapse-page-layouts">
+            <i class="icon s-6 icon-chart-bar"></i>
+            <span>Relatório</span>
+        </a>
+        <ul id="collapse-simple" class="collapse" role="tabpanel" aria-labelledby="heading-simple" data-children=".nav-item" style="">
+
+            <li class="nav-item">
+                <a class="nav-link ripple fuse-ripple-ready" href="/relatorio/Devedor/" data-url="apps-dashboards-server.html">
+                 
+                    <span>Devedores</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link ripple fuse-ripple-ready" href="/relatorio/listar/aluno" data-url="apps-dashboards-server.html">
+                    <span>Lista de Alunos</span>
+                </a>
+            </li>
+
+           
+        </ul>
+    </li>
     <li class="nav-item SEGU" role="tab" id="heading-authentication">
 
         <a class="nav-link ripple with-arrow collapsed" data-toggle="collapse" data-target="#collapse-authentication" href="#" aria-expanded="false" aria-controls="collapse-authentication">
@@ -144,15 +167,14 @@
         </a>
         <ul id="collapse-authentication" class='collapse ' role="tabpanel" aria-labelledby="heading-authentication" data-children=".nav-item">
             <li class="nav-item">
-                <a class="nav-link ripple " href="/Admin/Pagina" data-url="home">
-
-                    <span>Valor Hora</span>
+                <a class="nav-link ripple " href="/Parametro" data-url="home">
+                    <span>Parametros</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link ripple " href="/Admin/Pagina" data-url="home">
 
-                    <span>Acesso</span>
+                    <span>Segurança</span>
                 </a>
             </li>
         </ul>

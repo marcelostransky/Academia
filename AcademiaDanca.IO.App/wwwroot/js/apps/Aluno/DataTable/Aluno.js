@@ -30,13 +30,13 @@ function MontarDataTable(nome) {
             "aoColumns": [
                 {
                     "sTitle": "Id",
-                    "mDataProp": "id",
+                    "mDataProp": "alunoId",
                     "bSortable": true
 
                 },
                 {
                     "sTitle": "Nome",
-                    "mDataProp": "nome",
+                    "mDataProp": "alunoNome",
                     "bSortable": true
                 },
                
@@ -47,7 +47,7 @@ function MontarDataTable(nome) {
                 },
                 {
                     "sTitle": "Tel",
-                    "mDataProp": "celular"
+                    "mDataProp": "alunoTelefone"
                 },
                 {
                     "sTitle": "Status Matricula",

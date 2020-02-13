@@ -91,6 +91,11 @@ namespace Academia.Io.Tests.Fakes
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<AlunoPorNomeQuery>> ObterTodosPorAsync(bool? matriculado)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<TotalTurmasQuery> ObterTotalTurmaAsync(Guid id)
         {
             throw new NotImplementedException();

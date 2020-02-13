@@ -106,7 +106,7 @@ namespace AcademiaDanca.IO.App.Controllers
                                  total = r.Valor - r.Desconto,
                                  dataVencimento = r.DataVencimento.ToShortDateString(),
                                  r.Desconto,
-                                 Pago = r.Estorno ? $"<span class=\"badge badge-warning\"> Estornado - {r.DataEstorno.ToShortDateString()} </ span>" : (r.Pago ? $"<span class=\"badge badge-success\"> Pago - {Convert.ToDateTime(r.DataPagamento).ToShortDateString()} </ span > " : " <span class=\"badge badge-danger\"> Pendente</ span >"),
+                                 Pago = (r.Estorno && !r.Pago) ? $"<span class=\"badge badge-warning\"> Estornado - {r.DataEstorno.ToShortDateString()} </ span>" : (r.Pago ? $"<span class=\"badge badge-success\"> Pago - {Convert.ToDateTime(r.DataPagamento).ToShortDateString()} </ span > " : " <span class=\"badge badge-danger\"> Pendente</ span >"),
                                  acao = ObterMenuAcaoDataTable(r)
                              })
                                 .DataTableResponse(request);
@@ -121,6 +121,24 @@ namespace AcademiaDanca.IO.App.Controllers
         }
 
         [PermissaoAcesso(PaginaId = "MENS", Verbo = "Ler", TipoRetorno = "Html")]
+        public async Task<IActionResult> MensalidadePorStatusAsync(string status)
+        {
+            try
+            {
+
+                var lista = (await _repositorio.ObterMensalidadesPorAlunoAsync(null, status, null, null));
+
+                return Ok(lista);
+
+            }
+            catch (System.Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
+                return Json(ex.Message);
+            }
+        }
+
+        [PermissaoAcesso(PaginaId = "MENS", Verbo = "Ler", TipoRetorno = "Html")]
         public IActionResult Matricular(Guid id)
         {
             return View();
@@ -129,11 +147,13 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            menu.AppendFormat("<a href =\"#\" onclick=ModalCalendario({0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Mensalidade\"> <i class=\"icon-border-color\"></i>    </a>", r.MensalidadeId);
             if (!r.Pago)
             {
                 menu.AppendFormat("<a href =\"#\" onclick=ModalPagamento(this)  class=\"btn btn-icon fuse-ripple-ready\" title=\"Registrar Pagamento\"> <i class=\"icon-barcode-scan \"></i>    </a>", r.MensalidadeId);
             }
+            else
+                menu.AppendFormat("<a href =\"#\" onclick=Estornar(this,{0}) class=\"btn btn-icon fuse-ripple-ready\" title=\"Estornar Mensalidade\"> <i class=\"icon-backburger\"></i>    </a>", r.MensalidadeId);
+
             return menu.ToString();
         }
 

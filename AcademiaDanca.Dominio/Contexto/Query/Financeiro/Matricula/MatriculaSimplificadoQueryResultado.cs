@@ -8,5 +8,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Query.Financeiro.Matricula
     {
         public int IdMatricula { get; set; }
         public int IdAluno { get; set; }
+        public bool Status { get; set; }
     }
 }

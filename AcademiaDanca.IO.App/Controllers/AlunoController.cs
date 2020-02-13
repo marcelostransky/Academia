@@ -295,10 +295,10 @@ namespace AcademiaDanca.IO.App.Controllers
             {
                 return Json(resultado);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 Response.StatusCode = (int)HttpStatusCode.ExpectationFailed;
-                return Json(resultado);
+                return Json(ex.Message);
             }
 
         }
@@ -307,22 +307,22 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             try
             {
-                var lista = (await _repositorio.ObterTodosPorAsync(nome)).AsQueryable();
+                var lista = (await _repositorio.ObterTodosPorAsync(nome)).OrderBy(X => X.AlunoNome).AsQueryable();
 
                 if (request.sSearch != null && request.sSearch.Length > 0)
                 {
-                    lista = lista.Where(x => x.Nome.ToUpper().Contains(request.sSearch.ToUpper()));
+                    lista = lista.Where(x => x.AlunoNome.ToUpper().Contains(request.sSearch.ToUpper()));
                 }
 
                 var model = (from r in lista
                              select new
                              {
-                                 r.Id,
-                                 Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Aluno/{r.Foto}\">",
-                                 r.Nome,
-                                 r.Celular,
+                                 r.AlunoId,
+                                 Foto = $" <img class=\"rounded img-thumbnail\" style=\" height: 50px;\" src=\"/images/avatars/Aluno/{r.AlunoFoto}\">",
+                                 r.AlunoNome,
+                                 r.AlunoTelefone,
                                  DataNascimento = r.DataNascimento.ToShortDateString(),
-                                 StatusMatricula = (r.StatusMatricula) ? $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/verde.png\">" : $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/vermelho.png\">",
+                                 StatusMatricula = (r.AlunoStatusMatricula) ? $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/verde.png\">" : $" <img class=\"rounded img-thumbnail\" alt=\"Inativo\" style=\" height: 20px;\" src=\"/images/backgrounds/vermelho.png\">",
                                  acao = ObterMenuAcaoDataTable(r)
 
                              })
@@ -342,15 +342,15 @@ namespace AcademiaDanca.IO.App.Controllers
         {
             //var perfil = HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Papel").Value;
             StringBuilder menu = new StringBuilder();
-            if (!r.StatusMatricula)
-                menu.AppendFormat("<a href =\"/Matricula/Aluno/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+            if (!r.AlunoStatusMatricula)
+                menu.AppendFormat("<a href =\"/Matricula/Aluno/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.AlunoUifId);
             else
-                menu.AppendFormat("<a href =\"/Matricula/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.UifId);
+                menu.AppendFormat("<a href =\"/Matricula/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Matricila\"> <i class=\"icon-content-paste\"></i>    </a>", r.AlunoUifId);
 
             //menu.AppendFormat("<a href =\"/Financeiro/Mensalidade/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Mensalidade\"> <i class=\"icon-cash-usd\"></i>    </a>", r.UifId);
-            menu.AppendFormat("<a href =\"/Aluno/Detalhar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Detalhar Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.UifId);
-            menu.AppendFormat("<a href =\"/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Aluno\"> <i class=\"icon-border-color\"></i>    </a>", r.UifId);
-            menu.AppendFormat("<a href =\"/Aluno/Excluir/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir Aluno\"> <i class=\"icon-delete-forever\"></i>    </a>", r.UifId);
+            menu.AppendFormat("<a href =\"/Aluno/Detalhar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Detalhar Aluno\"> <i class=\"icon-account-circle\"></i>    </a>", r.AlunoUifId);
+            menu.AppendFormat("<a href =\"/Aluno/Editar/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Editar Aluno\"> <i class=\"icon-border-color\"></i>    </a>", r.AlunoUifId);
+            menu.AppendFormat("<a href =\"/Aluno/Excluir/{0}\" target=\"_blank\" class=\"btn btn-icon fuse-ripple-ready\" title=\"Excluir Aluno\"> <i class=\"icon-delete-forever\"></i>    </a>", r.AlunoUifId);
             return menu.ToString();
         }
     }

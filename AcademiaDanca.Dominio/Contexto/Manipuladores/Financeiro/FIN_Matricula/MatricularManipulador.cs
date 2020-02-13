@@ -44,10 +44,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
             if (await _repositorio.CheckMatriculaExisteAsync(matricula))
                 AddNotification("Matricula", $"Aluno informado ja possui matricula ativa para o ano de {comando.Ano} ");
 
-
-
-
-
             //Validar Comando
             comando.Valido();
             AddNotifications(comando.Notifications);
@@ -55,7 +51,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.Financeiro.FIN_Matricu
             {
                 return new ComandoResultado(false, "Por favor, corrija os campos abaixo", Notifications);
             }
-
 
             //Persistir Dados
             var id = await _repositorio.MatricularAsync(matricula);

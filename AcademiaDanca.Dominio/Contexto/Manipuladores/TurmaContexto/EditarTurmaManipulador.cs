@@ -28,12 +28,6 @@ namespace AcademiaDanca.IO.Dominio.Contexto.Manipuladores.TurmaContexto
             var funcionario = new Funcionario(comando.IdProfessor);
             var turma = new Turma(comando.Id, comando.CodTurma, comando.DesTurma, funcionario, tipoTurma, comando.Status);
 
-            if ( (comando.Valor == comando.ValorAtual && comando.Status == comando.StatusAtual && comando.IdProfessor == comando.IdProfessorAtual) && await _repositorio.CheckTurmaAsync(turma))
-            {
-                AddNotification("Turma", "Não foi detectado alteração no dados apresentado. Operação não realizada");
-            }
-
-
             //Validar Comando
             comando.Valido();
             AddNotifications(comando.Notifications);
