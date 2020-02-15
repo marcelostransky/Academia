@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using AcademiaDanca.IO.App.Filtros;
 using AcademiaDanca.IO.App.Helper;
 using AcademiaDanca.IO.App.Models;
 using AcademiaDanca.IO.Dominio.Contexto.Entidade;
